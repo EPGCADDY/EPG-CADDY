@@ -35,3 +35,8 @@ assert.equal(creations,1,'Taps on different players must not combine');other.onc
 console.log('PASS LIVE row refresh retains double tap, uses latest score, isolates stars and different players');
 
 assert.match(ui.header("FAMILIA","El Pulté",ui.date("2026-10-01"),"four_ball"),/FAMILIA[\s\S]*El Pulté · FOUR BALL · 1 DE OCTUBRE DE 2026/);
+
+const {readFileSync}=await import('node:fs');const fixedCSS=readFileSync('scores-ui.css','utf8');
+assert.match(fixedCSS,/body\{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none\}/);
+assert.match(fixedCSS,/body :is\(input,textarea,\[contenteditable="true"\]\)\{-webkit-user-select:text;user-select:text/);
+console.log('PASS fixed Scores/tournament text and iOS callouts; editable registration fields retain selection');

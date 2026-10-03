@@ -3278,3 +3278,31 @@ Orden más reciente: todos los Scores juntos; SCORES POR CATEGORÍA y MIS FAVORI
 - `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · agrupación, nombre, release, regresión o control B8.
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · agrupación, nombre, release, regresión o control B8.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · agrupación, nombre, release, regresión o control B8.
+
+
+### R24-B9 · 2 octubre 2026 · Cursor de hoyo, títulos fijos y eliminación visible
+Reporte del propietario IMG_5660/5661: comenzó hoyo1, detalle mostraba5–8; nombres de torneos permiten selección iOS; eliminación oculta. SQL de solo lectura LAB br-small-mouse-av0f24o9 confirmó stream de Santa Delfina con hoyos5–8 en origen, no desplazamiento de render. Causa reproducida: roundManualEntry restablecía el hoyo visible para la ronda nueva, pero conservaba activePlayerId y roundScoreKeypadState del hoyo previo. B9 limpia estado al confirmar nueva ronda, sincroniza cursor/render y restablece1 al borrar scores. Regresión prev5→nueva1/10 y cursor desincronizado PASS. No reindexar rondas válidas que comiencen en otro hoyo. Recuperación específica registrada como audit42 LAB: conserva snapshot íntegro antes de cambio, roundId exacto y Gross por jugador. API autenticada devuelve manifiesto; cliente aplica una sola vez 5–8→1–4, recalcula con motor oficial y vuelve a publicar. Rechaza otra ronda, Gross distinto o destinos ocupados. No hay reindexación genérica. Aplicación real en dispositivo del propietario pendiente de actualización.
+Títulos estáticos de Scores/torneos y descendientes de botones sin selección/callout iOS; campos editables conservan selección. Eliminación visible en listado de torneos, Scores de evento, grupos particulares con autoridad devuelta por API existente; lleva al mismo diálogo con nombre/motivo/comprobante, sin ampliar permisos ni eliminar automáticamente. Historial añade ELIMINAR RONDA visible y conserva pulsación prolongada. Rollback B8 aed466dee4cd4e796f9485dcdc21bc8608ac09c4. Banco integral/navegador/publicación pendientes al registrar.
+- `index-grupal.html` · cursor, títulos, eliminación, prueba, release o control B9.
+- `live-hub.js` · cursor, títulos, eliminación, prueba, release o control B9.
+- `live-hub.html` · cursor, títulos, eliminación, prueba, release o control B9.
+- `scores-ui.css` · cursor, títulos, eliminación, prueba, release o control B9.
+- `personal-events.js` · cursor, títulos, eliminación, prueba, release o control B9.
+- `private-rounds.js` · cursor, títulos, eliminación, prueba, release o control B9.
+- `event-administration-ui.js` · cursor, títulos, eliminación, prueba, release o control B9.
+- `test-scores-ui.mjs` · cursor, títulos, eliminación, prueba, release o control B9.
+- `test-v398-manual-opening-hole.mjs` · cursor, títulos, eliminación, prueba, release o control B9.
+- `release.json` · cursor, títulos, eliminación, prueba, release o control B9.
+- `service-worker.js` · cursor, títulos, eliminación, prueba, release o control B9.
+- `ROADMAP_OVERALL.md` · cursor, títulos, eliminación, prueba, release o control B9.
+- `ROADMAP_A_DETALLE.md` · cursor, títulos, eliminación, prueba, release o control B9.
+- `CONTROL_PROYECTO_SCIRE/ACEPTACION_R147_2_4_24.md` · cursor, títulos, eliminación, prueba, release o control B9.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · cursor, títulos, eliminación, prueba, release o control B9.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · cursor, títulos, eliminación, prueba, release o control B9.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · cursor, títulos, eliminación, prueba, release o control B9.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · cursor, títulos, eliminación, prueba, release o control B9.
+
+- `api/personal-events.js` · manifiesto de recuperación auditada limitado al evento autorizado.
+- `live-control.js` · consulta de recuperación al montar ronda propia ya vinculada.
+
+- `test-lab-tournament-navigation.mjs` · fixture actualizado con renderer real y prueba de botón visible sólo para autoridad.

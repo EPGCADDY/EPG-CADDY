@@ -46,8 +46,8 @@ console.log("PASS R76: arquitectura TORNEOS conserva intención, muestra categor
 // Exercise the actual portal renderer in both entry and saved-event states.
 const nodes=new Map();
 function element(id){if(!nodes.has(id)){const hidden=new Set();nodes.set(id,{innerHTML:'',attributes:{},classList:{toggle(name,on){on?hidden.add(name):hidden.delete(name)},contains:name=>hidden.has(name)},setAttribute(name,value){this.attributes[name]=value},querySelectorAll(){return []}})}return nodes.get(id)}
-const portal={$:element,root:{location:{search:''},document:{querySelector:()=>element('monitor-switch')}},URLSearchParams,tournamentPortalOpen:true,registeredTournamentsOpen:false,tournamentEntryOpen:false,activeMonitor:'general',demoMode:()=>false,state:{tournaments:[]},escapeHtml:hub.escapeHtml||((s)=>s)};
-const renderer=source.slice(source.indexOf('  function renderTournamentShelf(){'),source.indexOf('  function resetGeneralView(){'));
+const portal={$:element,root:{location:{search:''},document:{querySelector:()=>element('monitor-switch')}},URLSearchParams,administrationEvents:[],tournamentPortalOpen:true,registeredTournamentsOpen:false,tournamentEntryOpen:false,activeMonitor:'general',demoMode:()=>false,state:{tournaments:[]},escapeHtml:hub.escapeHtml||((s)=>s)};
+const renderer=source.slice(source.indexOf('  function renderEventDeletion(){'),source.indexOf('  function resetGeneralView(){'));
 vm.runInNewContext(renderer+';renderTournamentShelf()',portal);
 assert.equal(element('hubTournamentShelf').classList.contains('hidden'),false);
 assert.equal(element('hubTournamentCards').classList.contains('hidden'),true);
@@ -124,3 +124,10 @@ assert.match(scoresCSS,/#hubShowIndividual[^{}]*\{[^}]*display\s*:\s*none/,'Appr
 assert.match(scoresCSS,/#hubSearchResults[^{}]*\{[^}]*display\s*:\s*none/,'Inline search filters the approved compact table');
 assert.match(scoresCSS,/\.monitor-switch\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)\}/);
 console.log('PASS approved four entries and search results are not overridden by Scores CSS');
+
+// Deletion is a separate action, shown only for API-confirmed authority.
+portal.state.tournaments=[{token:'personal_allowed',label:'PROPIO'},{token:'personal_other',label:'AJENO'}];portal.administrationEvents=[{id:'allowed',event_kind:'tournament'}];portal.tournamentPortalOpen=true;vm.runInNewContext('renderTournamentShelf()',portal);
+assert.equal((element('hubTournamentCards').innerHTML.match(/ELIMINAR TORNEO/g)||[]).length,1);assert.match(element('hubTournamentCards').innerHTML,/data-delete-event="allowed"/);assert.doesNotMatch(element('hubTournamentCards').innerHTML,/data-delete-event="other"/);
+portal.tournamentPortalOpen=false;portal.state.generalToken='personal_allowed';vm.runInNewContext('renderEventDeletion()',portal);assert.equal(element('hubDeleteEvent').hidden,false);
+portal.state.generalToken='personal_other';vm.runInNewContext('renderEventDeletion()',portal);assert.equal(element('hubDeleteEvent').hidden,true);
+console.log('PASS visible deletion for authorized own event only; unrelated event has no delete action');
