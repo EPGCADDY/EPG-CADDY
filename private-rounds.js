@@ -35,7 +35,7 @@
     const heading=(snapshot={})=>'<header class="group-scores-heading"><h2>SCORES MI GRUPO</h2><p>'+escape([snapshot.course||active()?.course||active()?.courseName,root.GSCScoresUI?.date(snapshot.playedAt||active()?.playedAt||active()?.startedAt)].filter(Boolean).join(' · '))+'</p></header>';
     dialog.querySelector('h2').outerHTML=heading();
     const help=root.document.createElement('p');help.className='group-scores-help';help.textContent='DOBLE TOQUE EN EL JUGADOR: VER 18 SCORES';dialog.querySelector('section').appendChild(help);
-    if(item.creator&&showCode)dialog.querySelector('#privateShare').onclick=async()=>{const message="Ronda "+item.name+"\n"+item.joinCode;try{if(root.navigator.share){await root.navigator.share({title:item.name,text:message});close()}else{await root.navigator.clipboard.writeText(message);status("CÓDIGO COPIADO")}}catch(e){if(e.name!=="AbortError")status("CÓDIGO: "+item.joinCode)}};
+    if(item.creator&&showCode)dialog.querySelector('#privateShare').onclick=()=>root.GSCWhatsAppInvitations.open({kind:'private',code:item.joinCode,creatorName:item.creatorName||item.configuration?.creatorName||''},close);
     const current=dialog;
     async function refresh(){
       if(dialog!==current)return;let result=item.personal?await root.GSCPersonalEvents.request("read",{eventId:item.id,eventKind:"private"}):await request("read_private_round",{kind:"tournament",viewerToken:item.viewerToken,limit:50});

@@ -1,0 +1,70 @@
+{
+  "release": "R159",
+  "type": "LOCAL_REAL_CHROMIUM_QA_FIXTURES",
+  "physicalIphone": false,
+  "whatsappDelivered": false,
+  "cases": [
+    {
+      "width": 390,
+      "kind": "private",
+      "firstMessage": "GOLF SCORE CARD GT\nTe han invitado a participar en la ronda de Jaime Kirste.",
+      "secondMessage": "QA23456789",
+      "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_DOS_MENSAJES/390-private.png",
+      "sha256": "ded2e0d05b7ec5736b2fa7921b95ec9fc6315f6b12bb0b1cc69c65810399d878",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "kind": "private",
+      "test": "cancellation/retry/source preserved",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "kind": "tournament",
+      "firstMessage": "GOLF SCORE CARD GT\nTe han invitado a participar en el torneo de Jaime Kirste.",
+      "secondMessage": "QA23456789",
+      "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_DOS_MENSAJES/390-tournament.png",
+      "sha256": "fbffdc1eb505cce23ab88616a79c8d1b379990b4cdc2ecdd92e35e4ef3505c51",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "kind": "tournament",
+      "test": "cancellation/retry/source preserved",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "kind": "private",
+      "firstMessage": "GOLF SCORE CARD GT\nTe han invitado a participar en la ronda de Jaime Kirste.",
+      "secondMessage": "QA23456789",
+      "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_DOS_MENSAJES/430-private.png",
+      "sha256": "b6fe07124189ab60253e8741af567ec2a21e4d540463f27dd46f14201f5453f1",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "kind": "private",
+      "test": "cancellation/retry/source preserved",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "kind": "tournament",
+      "firstMessage": "GOLF SCORE CARD GT\nTe han invitado a participar en el torneo de Jaime Kirste.",
+      "secondMessage": "QA23456789",
+      "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R159_DOS_MENSAJES/430-tournament.png",
+      "sha256": "595ab0df4eaf11bbe2bf2f6fee6ceea1aa081e96a70c1034c296c132dde36806",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "kind": "tournament",
+      "test": "cancellation/retry/source preserved",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "status": "PASS"
+}
