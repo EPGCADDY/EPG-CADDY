@@ -175,7 +175,7 @@ body.scores-tournament-directory #hubState,body.scores-tournament-directory #hub
 </head>
 <body class="scores-tournament-directory">
   <main class="hub">
-    <button class="scores-return" id="hubScoresReturn" type="button" hidden>← VER SCORES</button>
+    <button class="scores-return" id="hubScoresReturn" data-gsc-close aria-label="Cerrar Scores" type="button">← VER SCORES</button>
     <header class="head">
       <img src="/assets/official-logos/golf-score-card-gt-horizontal-original.webp" alt="Golf Score Card GT">
       <div><h1 id="hubPageTitle">SCORES TORNEO</h1></div><div id="hubEventName" class="scores-event"></div><div id="hubEventMeta" class="scores-meta"></div>
@@ -268,12 +268,13 @@ body.scores-tournament-directory #hubState,body.scores-tournament-directory #hub
         <input id="hubImportLink" type="url" placeholder="Pega el enlace de la ronda" aria-label="Enlace de la ronda en vivo">
         <button class="primary" id="hubImportButton" type="button">ADJUNTAR</button>
       </div></details>
-      <div class="picker" id="hubPicker">
+
+    </section>
+
+      <div class="picker" id="hubPicker"><button type="button" data-gsc-close id="hubPickerClose" aria-label="Cerrar selección de favoritos">×</button>
         <h3>¿A QUIÉN QUIERES SEGUIR?</h3>
         <div class="picker-grid" id="hubPickerGrid"></div>
       </div>
-    </section>
-
     <footer class="footer">SOLO LECTURA</footer><div id="hubScoresHelp" class="scores-help" hidden>DOBLE TOQUE EN EL JUGADOR: VER 18 SCORES<br>☆ AGREGA · ★ QUITA FAVORITO</div>
   </main>
   <a id="gscShortcutsButton" href="/index-grupal.html" aria-label="Abrir Menú"><span>MENÚ</span></a>
