@@ -1201,3 +1201,31 @@ Pedido IMG_5675: SCORES TORNEO muestra exclusivamente todos los torneos en curso
 - `scripts/manual-screen-parity-gate.mjs` · nombre RONDAS GUARDADAS alineado con opción del menú; paridad operativa conservada R154.
 
 Ampliación expresa 20:01: BUSCAR JUGADOR se retira del menú principal y se muestra junto a General/Categorías/Favoritos en el torneo seleccionado. Su título BUSCAR JUGADOR persiste. CREAR TORNEO es exclusivamente la acción y el diálogo de creación; ningún título de Scores usa esa etiqueta. Pruebas y contratos de menú actualizados: `test-lab-shortcuts-navigation.mjs`, `test-lab-global-operational-audit.mjs`.
+
+
+## R155 · comprobación visible de Buscar jugador en torneo · 2 de octubre de 2026
+
+Recorrido real R154 detectó regla heredada en scores-ui.css que ocultaba hubShowIndividual aun después de retirar la regla HTML. Se retira esa regla; Buscar jugador se muestra entre opciones de torneo seleccionado, permanece fuera del menú principal. Scores Torneo vacío comprobado en origen instalado sin Crear torneo, Grupos particulares u opciones ajenas. General/Categorías/Favoritos/Búsqueda se revisan en demo identificado; no se afirma prueba física iPhone ni torneo de usuario inexistente. Selección de texto bloqueada por CSS en títulos/botones y campos de entrada conservados. Actualización LAB estable comprobada con tarjeta QA R148 scores hoyos1/2 preservados. Rollback R154 aa0f1f39a6c51d7640bb2c5e7d433e44ff919c7e. Publicación autorizada en los tres destinos de matriz.
+- `scores-ui.css` · modificación o control R155.
+- `release.json` · modificación o control R155.
+- `service-worker.js` · modificación o control R155.
+- `index-grupal.html` · modificación o control R155.
+- `ROADMAP_OVERALL.md` · modificación o control R155.
+- `ROADMAP_A_DETALLE.md` · modificación o control R155.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · modificación o control R155.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · modificación o control R155.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · modificación o control R155.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · modificación o control R155.
+- `test-lab-tournament-navigation.mjs` · modificación o control R155.
+
+
+### R155 · pertenencia real y salida de grupo
+Sin pertenencia real: **NO PERTENECES A NINGÚN GRUPO**. La tarjeta individual no se presenta como grupo. **SALIR DEL GRUPO** junto a **INGRESAR A GRUPO** desvincula únicamente el stream propio y su roster, conserva jugadores, scores y temporizador, y permite volver a entrar con código. API niega salida de otra cuenta y conserva administración del creador. Pruebas VM y base real: PASS.
+- `api/personal-events.js` · modificación y prueba R155.
+- `api/live.js` · modificación y prueba R155.
+- `live-control.js` · modificación y prueba R155.
+- `private-rounds.js` · modificación y prueba R155.
+- `test-r24-event-creation-feedback.mjs` · modificación y prueba R155.
+- `test-event-directory-code.mjs` · modificación y prueba R155.
+- `test-r155-private-group-exit.mjs` · modificación y prueba R155.
+- `scripts/build-manual-lab.mjs` · modificación y prueba R155.

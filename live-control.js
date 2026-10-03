@@ -249,6 +249,12 @@
     const latest=liveState();if(latest.privateStream?.streamId===stream.streamId){if(result.ok){latest.privateStream.revision=Number(result.revision)||0;if(latest.privateStream.pendingMutationId===stream.pendingMutationId){latest.privateStream.pendingSnapshot=null;latest.privateStream.pendingMutationId=null}}saveState(latest)}
     privatePublishing=false;finishPrivatePublish?.();privatePublishCompletion=null;finishPrivatePublish=null;if(result.ok&&liveState().privateStream?.pendingSnapshot)void publishPrivateLatest();return result.ok;
   }
+  async function disconnectPrivateRound(roundValue,alreadyDetached=false){
+    let state=liveState();const stream=state.privateStream;
+    if(stream?.roundId===roundValue?.id&&stream.publisherSecret&&!alreadyDetached){const result=await request('leave_private_round',{},stream.publisherSecret);if(!result.ok)return result}
+    clearTimeout(privatePublishTimer);privatePublishTimer=null;clearTournamentConnectRetry();
+    state=liveState();if(state.privateStream?.roundId===roundValue?.id)delete state.privateStream;if(state.privateRound?.roundId===roundValue?.id)delete state.privateRound;saveState(state);renderActive();return{ok:true,left:true};
+  }
   async function disconnectTournament(){
     const state=liveState(),stream=state.stream;if(!stream?.publisherSecret)return{ok:true,left:false};
     const result=await request("leave_tournament",{},stream.publisherSecret);
@@ -262,5 +268,5 @@
     return result;
   }
   root.addEventListener?.("online",()=>{void publishPrivateLatest()});
-  return{STORAGE_KEY,POLICY_VERSION,buildLiveSnapshot,playerTotals,holeEntry,publicAppOrigin,viewerUrl,hubUrl,request,mount,onRoundPersisted,prepareTournamentScores,publishLatest,quickShareGroup,connectPrivateRound,connectPersonalEvent,publishPrivateLatest,createTournamentDirect,connectTournamentById,joinTournamentWithFallback,disconnectTournament};
+  return{STORAGE_KEY,POLICY_VERSION,buildLiveSnapshot,playerTotals,holeEntry,publicAppOrigin,viewerUrl,hubUrl,request,mount,onRoundPersisted,prepareTournamentScores,publishLatest,quickShareGroup,connectPrivateRound,connectPersonalEvent,publishPrivateLatest,createTournamentDirect,connectTournamentById,joinTournamentWithFallback,disconnectTournament,disconnectPrivateRound};
 });

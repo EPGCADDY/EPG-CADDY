@@ -83,6 +83,7 @@ export async function privateRoundAction(sql,req,body,action){
     const result=await publish(scoped,req,body);await refreshPrivateRoundLifecycle(sql);return result;
   }
   if(action==="read_private_round")return readLive(scoped,req,body);
+  if(action==="leave_private_round")return leaveTournament(scoped,req);
   if(action==="revoke_private_round")return revokeTournament(scoped,req);
   throw liveError("LIVE_ACTION_UNSUPPORTED",404);
 }
@@ -480,7 +481,7 @@ async function joinTournament(sql,req,body){
 
 async function leaveTournament(sql,req){
   const secret=authorizationSecret(req);if(!SECRET_PATTERN.test(secret))throw liveError("LIVE_PUBLISHER_UNAUTHORIZED",401);
-  const rows=await sql`UPDATE live_streams SET tournament_id=NULL,updated_at=now() WHERE publisher_secret_hash=${tokenHash(secret)} AND tournament_id IS NOT NULL RETURNING id,tournament_id`;
+  const rows=await sql`WITH owned AS (SELECT id,tournament_id FROM live_streams WHERE publisher_secret_hash=${tokenHash(secret)} AND tournament_id IS NOT NULL FOR UPDATE), detached AS (UPDATE live_streams SET tournament_id=NULL,updated_at=now() FROM owned WHERE live_streams.id=owned.id RETURNING live_streams.id,owned.tournament_id) SELECT id,tournament_id FROM detached`;
   if(!rows.length)return{ok:true,left:false};
   await sql`UPDATE live_tournaments SET revision=revision+1,updated_at=now() WHERE id=${rows[0].tournament_id}`;
   await sql`INSERT INTO live_events (stream_id, tournament_id, event_type, actor_hash) VALUES (${rows[0].id}, ${rows[0].tournament_id}, 'left_tournament', ${tokenHash(secret)})`;
@@ -536,7 +537,7 @@ export async function handleLive(req,res,databaseGetter=getDatabase,accountResol
   if(req.method!=="POST"){res.setHeader("Allow","POST");return res.status(405).json({ok:false,code:"METHOD_NOT_ALLOWED"})}
   try{
     const body=await readJson(req,600_000),action=cleanText(body.action,40).toLowerCase();
-    const privateAction=["create_private_round","list_private_rounds","join_private_round","join_private_round_by_id","create_private_stream","publish_private_round","read_private_round","revoke_private_round"].includes(action);
+    const privateAction=["create_private_round","list_private_rounds","join_private_round","join_private_round_by_id","create_private_stream","publish_private_round","read_private_round","revoke_private_round","leave_private_round"].includes(action);
     if((CONTROL_ACTIONS.has(action)||privateAction)&&!isAllowedAppOrigin(req))throw liveError("ORIGIN_NOT_ALLOWED",403);
     let sql;
     try{sql=databaseGetter()}catch(error){

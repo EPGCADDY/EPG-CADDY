@@ -120,7 +120,7 @@ assert.match(element('hubSearchResults').innerHTML,/ · CATEGORÍA (?:T?\d+|—)
 console.log('PASS spectator search displays general and category standings without changing favorites');
 
 const scoresCSS=fs.readFileSync('scores-ui.css','utf8');
-assert.match(scoresCSS,/#hubShowIndividual[^{}]*\{[^}]*display\s*:\s*none/,'Approved three tabs use the visible inline player search');
+assert.doesNotMatch(scoresCSS,/#hubShowIndividual[^{}]*\{[^}]*display\s*:\s*none/,'Requested four tournament options include visible Buscar jugador');
 assert.match(scoresCSS,/#hubSearchResults[^{}]*\{[^}]*display\s*:\s*none/,'Inline search filters the approved compact table');
 assert.match(scoresCSS,/\.monitor-switch\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)\}/);
 console.log('PASS approved four entries and search results are not overridden by Scores CSS');
@@ -140,3 +140,5 @@ assert.match(source,/setPageTitle\(scoresPageTitle\)/,'Refresh retains selected 
 console.log('PASS R154 active directory: all 8 server events, no local-only or admin actions; exact empty message; chosen titles preserved.');
 
 assert.doesNotMatch(fs.readFileSync("shortcuts-ui.js","utf8"),/item\("search","BUSCAR JUGADOR"/);assert.match(html,/<button id="hubShowIndividual" type="button">BUSCAR JUGADOR<\/button>/);assert.doesNotMatch(html,/body:not\(\.public-display\) #hubShowIndividual\{display:none\}/);console.log("PASS R154 Buscar jugador within tournament options only; no principal Menu entry");
+
+assert.doesNotMatch(fs.readFileSync("scores-ui.css","utf8"),/#hubShowIndividual\{display:none/);console.log("PASS R155 no legacy stylesheet hides tournament player search");

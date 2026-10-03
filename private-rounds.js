@@ -40,7 +40,7 @@
     async function refresh(){
       if(dialog!==current)return;let result=await request("read_private_round",{kind:"tournament",viewerToken:item.viewerToken,limit:50});
       if(dialog!==current)return;
-      if(!result.ok){if(["LIVE_REVOKED","LIVE_EXPIRED"].includes(result.code)){root.localStorage.removeItem(KEY);close();return}status(error(result.code));return}
+      if(!result.ok){if(["LIVE_REVOKED","LIVE_EXPIRED"].includes(result.code)){root.localStorage.removeItem(KEY);show("SCORES MI GRUPO","<p>NO PERTENECES A NINGÚN GRUPO</p>");return}status(error(result.code));return}
       const streams=[...(result.streams||[])],seen=new Set();let cursor=result.nextCursor;
       while(cursor&&!seen.has(cursor)){seen.add(cursor);const page=await request("read_private_round",{kind:"tournament",viewerToken:item.viewerToken,limit:50,cursor});if(!page.ok){status(error(page.code));return}streams.push(...(page.streams||[]));cursor=page.nextCursor}
       if(dialog!==current)return;
@@ -52,16 +52,25 @@
     }
     await refresh();
   }
-  function open(value){round=value||read(ACTIVE);const item=saved();if(item&&new Date(item.expiresAt||"2099-01-01")>new Date()&&(!item.roundId||item.roundId===active()?.id))return scores(item,true);show("GRUPO PARTICULAR",input("NOMBRE DEL GRUPO","privateName")+button("CREAR MI GRUPO","privateCreate"));dialog.querySelector('#privateCreate').onclick=create;dialog.querySelector('#privateName').focus()}
+  function open(value){round=value||read(ACTIVE);const item=saved();if(item&&new Date(item.expiresAt||"2099-01-01")>new Date()&&item.roundId===round?.id)return scores(item,true);show("GRUPO PARTICULAR",input("NOMBRE DEL GRUPO","privateName")+button("CREAR MI GRUPO","privateCreate"));dialog.querySelector('#privateCreate').onclick=create;dialog.querySelector('#privateName').focus()}
   function openCreate(value){round=value||read(ACTIVE);show("CREAR MI GRUPO",input("NOMBRE DEL GRUPO","privateName")+button("CREAR MI GRUPO","privateCreate"));dialog.querySelector('#privateCreate').onclick=create;dialog.querySelector('#privateName').focus()}
   function openGroupScores(value){
-    round=value||read(ACTIVE);
-    if(!round?.configured||!round.players?.length){show("SCORES MI GRUPO","<p>REGISTRA TU GRUPO E INICIA LA TARJETA.</p>");return}
-    const snapshot=root.GSCLiveControl.buildLiveSnapshot(round),rows=snapshot.players.map(player=>({player,snapshot,eventName:snapshot.tournament||"MI GRUPO"}));
-    const content='<p>'+escape([snapshot.course,root.GSCScoresUI.date(snapshot.playedAt)].filter(Boolean).join(' · '))+'</p><div data-group-scores style="overflow:auto"><table style="width:100%;border-collapse:collapse;text-align:center"><thead><tr><th>NOMBRE</th><th>HDCP</th><th>HOYO</th><th>GROSS</th><th>NETO</th><th>+/−</th></tr></thead><tbody>'+rows.map(({player},index)=>'<tr data-score-player="'+index+'" tabindex="0" aria-label="'+escape(player.name)+' · Ver 18 scores"><td style="padding:16px 4px;text-align:left">'+escape(player.name)+'</td><td>'+escape(player.handicap)+'</td><td>'+escape(player.holes?.length?Math.max(...player.holes.map(h=>h.hole)):'—')+'</td><td>'+escape(player.holes?.length?player.totals.gross:'—')+'</td><td style="color:#31ff00">'+escape(player.holes?.length?player.totals.net:'—')+'</td><td>'+escape(player.holes?.length?(player.totals.relativeToPar===0?'EVEN':(player.totals.relativeToPar>0?'+':'')+player.totals.relativeToPar):'—')+'</td></tr>').join('')+'</tbody></table></div><p>DOBLE TOQUE EN EL JUGADOR: VER 18 SCORES</p>';
-    show("SCORES MI GRUPO",content);root.GSCScoresUI.bindRows(dialog.querySelector('[data-group-scores]'),rows);
+    round=value||read(ACTIVE);const selection=read('gsc-tournament-connect-selection-v1');
+    if(selection?.personal&&selection.eventKind==='private'&&selection.roundId===round?.id&&typeof root.openRoundTournament==='function')return root.openRoundTournament(true,'general','private');
+    return openScores(round);
   }
-  function openScores(value){round=value||read(ACTIVE);const item=saved();if(item&&new Date(item.expiresAt||"2099-01-01")>new Date()&&(!item.roundId||item.roundId===active()?.id))return scores(item);show("SCORES MI GRUPO","<p>PRIMERO CREA O ÚNETE A UN GRUPO PARTICULAR.</p>")}
+  async function leaveGroup(value){
+    round=value||read(ACTIVE);const selection=read('gsc-tournament-connect-selection-v1'),item=saved(),personal=selection?.personal&&selection.eventKind==='private'&&selection.roundId===round?.id;
+    if(!personal&&(!item||item.roundId!==round?.id)){show('SALIR DEL GRUPO','<p>NO PERTENECES A NINGÚN GRUPO</p>');return{ok:true,left:false}}
+    show('SALIR DEL GRUPO','<p>SALIENDO…</p>');
+    if(personal){const result=await root.GSCPersonalEvents.request('leave',{eventId:selection.id,eventKind:'private'});if(!result.ok){status(root.GSCPersonalEvents.message(result.code));return result}}
+    const disconnected=await root.GSCLiveControl.disconnectPrivateRound(round,personal);if(!disconnected.ok){status(error(disconnected.code));return disconnected}
+    if(personal)root.localStorage.removeItem('gsc-tournament-connect-selection-v1');if(item?.roundId===round?.id)root.localStorage.removeItem(KEY);
+    if(personal&&round.personalEventId===selection.id){delete round.personalEventId;delete round.liveGroupLabel;round.tournament={name:''}}
+    if(root.location?.href){const url=new URL(root.location.href);if(url.searchParams.get('personalKind')==='private'){url.searchParams.delete('personalEvent');url.searchParams.delete('personalKind');root.history?.replaceState(null,'',url.toString())}}
+    root.GSCPrivateGroupLeft?.(round);if(personal)await root.GSCPersonalEvents.sync();show('SALIR DEL GRUPO','<p>HAS SALIDO DEL GRUPO · TUS SCORES SE CONSERVAN EN TU SCORE CARD</p>');return disconnected;
+  }
+  function openScores(value){round=value||read(ACTIVE);const item=saved();if(item&&new Date(item.expiresAt||"2099-01-01")>new Date()&&item.roundId===round?.id)return scores(item);show("SCORES MI GRUPO","<p>NO PERTENECES A NINGÚN GRUPO</p>")}
   async function list(title="GRUPOS PARTICULARES"){
     round=read(ACTIVE);show(title,'<div data-rounds></div>');status("CARGANDO GRUPOS…");const current=dialog;async function refresh(){if(dialog!==current)return;const legacy=await request("list_private_rounds",{}),personal=await root.GSCPersonalEvents?.sync();if(dialog!==current)return;if(!legacy.ok&&!personal?.ok){status(error(legacy.code));return}const rounds=new Map((legacy.rounds||[]).map(item=>[item.id,item]));for(const item of personal?.privateItems||[])rounds.set(item.event.eventId,{...item.event,id:item.event.eventId,name:item.label});const authorities=await root.GSCPersonalEvents?.administrationEvents?.()||[];if(dialog!==current)return;const result={rounds:[...rounds.values()]}
     const target=dialog.querySelector('[data-rounds]');target.innerHTML=result.rounds.length?result.rounds.map(item=>button(escape(item.name),"private-"+item.id)+(authorities.some(event=>event.id===item.id&&event.event_kind==='private')?button("ELIMINAR GRUPO","delete-private-"+item.id):"")).join(""):'<p>NO HAY GRUPOS PARTICULARES DISPONIBLES.</p>';status("");
@@ -71,5 +80,5 @@
   }
   let connecting=false;
   async function syncPending(value){const item=saved();if(connecting||!item?.creator||item.roundId||!value?.configured)return;connecting=true;try{const result=await root.GSCLiveControl.connectPrivateRound(item.id,item.joinCode,value);if(result.ok)store({...item,roundId:value.id})}finally{connecting=false}}
-  root.GSCPrivateRounds={open,openCreate,openScores,openGroupScores,list,close,syncPending};
+  root.GSCPrivateRounds={open,openCreate,openScores,openGroupScores,leaveGroup,list,close,syncPending};
 })(globalThis);

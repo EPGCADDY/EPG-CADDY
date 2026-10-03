@@ -103,7 +103,7 @@ body.hub-scores-view:not(.private-live-view):not(.public-display) #hubTournament
 body.hub-scores-view:not(.private-live-view):not(.public-display) #hubState:not(.warning):not(.error){display:none}
 body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch{position:static;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
 body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch button{min-height:56px;border-radius:12px;font-size:clamp(12px,3.3vw,17px);color:#31ff00;background:transparent}
-body.hub-scores-view:not(.private-live-view):not(.public-display) #hubShowIndividual{display:none}
+
 body.hub-scores-view:not(.private-live-view):not(.public-display) #hubGeneralPanel{padding:0;border:0;background:transparent;display:flex;flex-direction:column;gap:12px}
 body.hub-scores-view:not(.private-live-view):not(.public-display) #hubGeneralPanel>.search{grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:8px}
 body.hub-scores-view:not(.private-live-view):not(.public-display) #hubSearchButton,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubSearchResults{display:none!important}

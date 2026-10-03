@@ -65,6 +65,14 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
       await auditPersonal(sql,id,kind,account,'created',config);return res.status(200).json({...created,eventId:id,eventKind:kind,configuration:config,personal:true});
     }
     const id=body.eventId,member=await personalMember(sql,id,kind,account),scoped=eventScope(sql,kind);if(kind==='private')await refreshPrivateRoundLifecycle(sql);
+    if(body.action==='leave'){
+      if(kind!=='private')throw accessError('PERSONAL_EVENT_FORBIDDEN',403);
+      await scoped`WITH detached AS (UPDATE live_streams SET tournament_id=NULL,updated_at=now() WHERE id=${member.stream_id}::uuid AND tournament_id=${id}::uuid RETURNING id) UPDATE gsc_personal_members SET players='[]'::jsonb,group_label='',stream_id=NULL,role=CASE WHEN role='organizer' THEN role ELSE 'viewer' END WHERE event_id=${id}::uuid AND event_kind=${kind} AND account_id=${account.id}`;
+      await scoped`UPDATE live_tournaments SET revision=revision+1,updated_at=now() WHERE id=${id}::uuid`;
+      await auditPersonal(sql,id,kind,account,'left_group',{streamId:member.stream_id});
+      res.setHeader('Set-Cookie','gsc_personal_context=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0');
+      return res.status(200).json({ok:true,left:true});
+    }
     if(body.action==='read'){
       const rows=await scoped`SELECT id,name,mode,status,revision,expires_at FROM live_tournaments WHERE id=${id}::uuid`;
       if(!rows.length||rows[0].status==='revoked'||new Date(rows[0].expires_at)<=new Date())throw accessError('LIVE_EXPIRED',410);
