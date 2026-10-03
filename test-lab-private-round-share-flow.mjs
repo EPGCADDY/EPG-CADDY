@@ -22,12 +22,8 @@ assert.equal(JSON.parse(success.stored.get('golf-score-card-gt-private-round-v1'
 await success.make('[data-copy-event-code]').onclick();assert.equal(success.calls.find(call=>call.type==='copy').text,'ABCD234567');
 await success.make('[data-share-private-round]').onclick();
 await success.make('[data-send-invitation]').onclick();
-assert.equal(success.calls.find(call=>call.type==='share').payload.text,'GOLF SCORE CARD GT\nTe ha invitado a participar en el grupo de Jaime Kirste.');
-assert.equal(success.panel.removed,undefined,'First message must preserve second action');
-assert.equal(success.make('[data-send-code]').disabled,false);
-await success.make('[data-send-code]').onclick();
-assert.equal(success.calls.filter(call=>call.type==='share')[1].payload.text,'ABCD234567');
-assert.deepEqual(Object.keys(success.calls.filter(call=>call.type==='share')[1].payload),['text'],'Second message contains only the code, no title or URL');
+assert.equal(success.calls.find(call=>call.type==='share').payload.text,'GOLF SCORE CARD GT\nTe ha invitado a participar en el grupo de Jaime Kirste.\nCopia y pega el código en la pantalla inicial de registro.\nhttps://golf.example/index-grupal.html?inicio=1\n\nMODALIDAD\nMI GRUPO\nCódigo\n\n\nABCD234567');
+assert.equal(success.calls.filter(call=>call.type==='share').length,1);
 await success.make('[data-finish-whatsapp]').onclick();
 assert.ok(success.panel.removed);
 await new Promise(resolve=>setImmediate(resolve));
@@ -38,6 +34,6 @@ await cancelled.make('[data-continue-private-round]').onclick();assert.ok(cancel
 console.log('PASS R147 private round share: code → WhatsApp/native recipients → Score Card; cancellation preserves retry and direct continuation.');
 
 const tournament=setup();tournament.context.GSCPersonalEvents.presentCreatedTournament({eventId,name:'Copa Santa Delfina',joinCode:'ABCD234567',configuration:{creatorName:'Jaime Kirste'}});
-assert.equal(tournament.make('h3').textContent,'TORNEO CREADO');await tournament.make('[data-share-private-round]').onclick();await tournament.make('[data-send-invitation]').onclick();await tournament.make('[data-send-code]').onclick();
-assert.equal(tournament.calls.find(call=>call.type==='share').payload.text,'GOLF SCORE CARD GT\nTe ha invitado a participar en el torneo Copa Santa Delfina.');assert.equal(tournament.calls.filter(call=>call.type==='share')[1].payload.text,'ABCD234567');
-console.log('PASS R159: creator invitation and code-only second message, group/tournament, first share preserves next action, cancellation/retry and explicit Score Card return.');
+assert.equal(tournament.make('h3').textContent,'TORNEO CREADO');await tournament.make('[data-share-private-round]').onclick();await tournament.make('[data-send-invitation]').onclick();
+assert.equal(tournament.calls.find(call=>call.type==='share').payload.text,'GOLF SCORE CARD GT\nTe ha invitado a participar en el torneo Copa Santa Delfina.\nCopia y pega el código en la pantalla inicial de registro.\nhttps://golf.example/index-grupal.html?inicio=1\n\nMODALIDAD\nTORNEO\nCódigo\n\n\nABCD234567');assert.equal(tournament.calls.filter(call=>call.type==='share').length,1);
+console.log('PASS R161: single invitation and final code, group/tournament, one share preserves source, cancellation/retry and explicit Score Card return.');

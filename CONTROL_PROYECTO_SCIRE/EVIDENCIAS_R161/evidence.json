@@ -1,0 +1,82 @@
+{
+  "release": "R161",
+  "type": "LOCAL_REAL_CHROMIUM_QA_FIXTURES",
+  "physicalIphone": false,
+  "whatsappDelivered": false,
+  "cases": [
+    {
+      "width": 390,
+      "test": "TORNEO opens without input focus; tap permits typing",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "kind": "private",
+      "test": "one share with invitation, two blank lines, code last",
+      "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R161/390-private.png",
+      "sha256": "ec0ac4900c40f1328b4fc0294619a0862218b9aa84d545f773c0defb044c58e3",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "kind": "tournament",
+      "test": "one share with invitation, two blank lines, code last",
+      "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R161/390-tournament.png",
+      "sha256": "dcbf945ca713a80df437685ce92f0dc686a66d125ecc136a8f01662de3a98afb",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "direct enrolled Family scores without tournament chooser",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "Menu directory remains separate",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "Administration title and menu matching; no overflow",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "test": "TORNEO opens without input focus; tap permits typing",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "kind": "private",
+      "test": "one share with invitation, two blank lines, code last",
+      "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R161/430-private.png",
+      "sha256": "8fb5632050e10c51cf0c4bf3e3a7b01ea669e72bede7235b5431268f32373f3a",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "kind": "tournament",
+      "test": "one share with invitation, two blank lines, code last",
+      "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R161/430-tournament.png",
+      "sha256": "274b66aa8cfbf9252c376c5889c1a6111c78d72182eb226e085407091b96dfe5",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "test": "direct enrolled Family scores without tournament chooser",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "test": "Menu directory remains separate",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "test": "Administration title and menu matching; no overflow",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "status": "PASS"
+}

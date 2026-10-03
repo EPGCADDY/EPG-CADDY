@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>LABORATORIO</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20261003-R160">
+  <meta name="gscg-release" content="LABORATORIO-20261003-R161">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -4126,7 +4126,7 @@ async function openRoundTournament(scores=false,monitor="general",eventKind="tou
   location.assign(url.toString());
 }
 
-$("roundTournamentScoresButton").addEventListener("click",()=>openRoundTournament(true,"directory"));
+$("roundTournamentScoresButton").addEventListener("click",()=>openRoundTournament(true,"general"));
 function renderActiveTournamentHeading(){
  let selection,legacy,state;try{selection=JSON.parse(localStorage.getItem('gsc-tournament-connect-selection-v1')||'null');legacy=JSON.parse(localStorage.getItem('golf-score-card-gt-private-round-v1')||'null');state=JSON.parse(localStorage.getItem('golf-score-card-gt-live-control-v1')||'null')}catch{}
  let name='',kind='',config={};

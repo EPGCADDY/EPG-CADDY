@@ -22,3 +22,8 @@ backCtx.root.currentRoundReturnPath=()=>'/index-grupal.html?personalAccount=curr
 assert.match(fs.readFileSync('scores-ui.css','utf8'),/body\.hub-scores-view\.hub-search-mode:not\(\.public-display\) #hubLeaderWrap\{display:block!important\}/,'Compact scores must remain visible when searching from the menu');
 
 await ctx.route(true,'directory');const directory=navigations.at(-1);assert.equal(directory.searchParams.get('directory'),'1');assert.equal(directory.searchParams.get('personalEvent'),null);assert.equal(JSON.stringify(round),original);assert.ok(directory.searchParams.get('returnTo'));console.log('PASS Scores torneo opens active directory and preserves card return path');
+
+assert.match(card,/roundTournamentScoresButton"\).addEventListener\("click",\(\)=>openRoundTournament\(true,"general"\)\)/);
+await ctx.route(true,'general');const direct=navigations.at(-1);assert.equal(direct.searchParams.get('directory'),null);assert.equal(direct.searchParams.get('personalEvent'),'current-tournament');
+assert.match(hub,/token==='personal_'\+params.get\('personalEvent'\)/,'Scores entry must keep the exact authorized tournament instead of reopening directory');
+console.log('PASS R161 card direct current tournament; Menu retains separate directory');

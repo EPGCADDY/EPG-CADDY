@@ -1273,3 +1273,34 @@ Causa raíz del desvío: se interpretó el toque sobre el código como función 
 
 ## RC-R160 · segundo mensaje omitido y nombre administrativo
 Evidencia propietario: IMG_5699, 3 octubre 17:12 Guatemala; sólo invitación recibida. Confirmación expresa: no tocó segundo envío, esperaba ambos automáticamente. Causa: la interfaz dependía de un regreso y segundo toque poco destacados y no conservaba el paso ante recarga. Escape: pruebas validaron dos llamadas explícitas pero no comprensión ni recuperación. Control: instrucción inicial SON DOS ENVÍOS; estado FALTA ENVIAR EL CÓDIGO y foco; recuperación temporal por mismo origen; pruebas de recarga antes/después del primero, repetición, cancelación del segundo, caducidad y cierre. Sin prometer automatización/delivery. La API de compartir exige activación por llamada; cloud no verifica WhatsApp físico. IMG_5697 requiere ADMINISTRAR TORNEOS Y GRUPOS: título y rutas de acceso corregidos, sin modificar autorización/acciones. Estado técnico en validación; recepción real NO VERIFICADA.
+
+
+## R161 · mensaje único y Scores directos · 3 octubre 2026
+Base y rollback R160 main94f33470af4555878d23a1eb555763481d490e45. Orden17:51: un solo mensaje WhatsApp, invitación en primeras líneas, dos líneas en blanco, código únicamente al final. Sustituye dos envíos R159/R160: un share text sin URL/title; cancela/reintenta sin perder origen, bloqueo doble toque, se retira recuperación de segundo envío anterior. No afirma entrega real ni copia con toque dentro de WhatsApp.
+Score Card SCORES TORNEO abre evento de la tarjeta actual validando membresía y publicando por escritor oficial; shortcut scores conserva evento exacto y evita portal Family intermedio. Menú SCORES TORNEO conserva directory=1 y selección de otros eventos. Sin código/membresía no accede a datos privados. No cambia motor, voz, permisos, roster o scores.
+Aceptación: mensaje exacto una llamada, dos líneas vacías y código final; cancela/error/doble toque; vínculo de tarjeta actual, otros torneos sólo directorio explícito, retorno conserva tarjeta. Pruebas dirigidas y Chromium QA; WhatsApp real/iPhone no verificados. Publicación pendiente del banco y Preview.
+- `index-grupal.html` · implementación, prueba o evidencia R161.
+- `live-hub.js` · implementación, prueba o evidencia R161.
+- `whatsapp-invitations.js` · implementación, prueba o evidencia R161.
+- `test-menu-scorecard-tournament-sync.mjs` · implementación, prueba o evidencia R161.
+- `test-r159-whatsapp-two-messages.mjs` · implementación, prueba o evidencia R161.
+- `test-lab-private-round-share-flow.mjs` · implementación, prueba o evidencia R161.
+- `scripts/review-r161.mjs` · implementación, prueba o evidencia R161.
+- `release.json` · implementación, prueba o evidencia R161.
+- `service-worker.js` · implementación, prueba o evidencia R161.
+- `ROADMAP_OVERALL.md` · implementación, prueba o evidencia R161.
+- `ROADMAP_A_DETALLE.md` · implementación, prueba o evidencia R161.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · implementación, prueba o evidencia R161.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · implementación, prueba o evidencia R161.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · implementación, prueba o evidencia R161.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · implementación, prueba o evidencia R161.
+- `CONTROL_PROYECTO_SCIRE/ACEPTACION_R161.md` · implementación, prueba o evidencia R161.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R161/evidence.json` · implementación, prueba o evidencia R161.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R161/390-private.png` · implementación, prueba o evidencia R161.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R161/390-tournament.png` · implementación, prueba o evidencia R161.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R161/390-administrar.png` · implementación, prueba o evidencia R161.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R161/430-private.png` · implementación, prueba o evidencia R161.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R161/430-tournament.png` · implementación, prueba o evidencia R161.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R161/430-administrar.png` · implementación, prueba o evidencia R161.
+
+Ampliación17:53: instrucción Copia y pega el código en la pantalla inicial de registro; inmediatamente enlace absoluto del mismo origen a /index-grupal.html?inicio=1; después MODALIDAD / TORNEO o MI GRUPO / Código; dos líneas vacías y código real al final. Una llamada share text, sin URL separada duplicada.
