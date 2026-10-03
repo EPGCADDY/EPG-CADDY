@@ -1169,3 +1169,8 @@ Navegador LAB R150: código incorrecto se rechazó correctamente; código válid
 ## R152 · formulario intermedio no solicitado · IMG_5672
 
 Causa: eliminación exigía transcribir nombre y motivo en UI pese a pedido de operación simple. Escape: formulario administrativo no contrastado con flujo solicitado. Control: una confirmación que identifica evento y botón ELIMINAR; nombre/motivo internos conservan contrato y comprobante. Prueba VM exige cero inputs, cero solicitudes al abrir y una solicitud al confirmar; permiso de API sigue obligatorio. No se elimina Santa Delfina ni datos del propietario durante pruebas.
+
+
+## R153 · reportes residuales en administración · IMG_5673
+
+Causa: el listado de comprobantes permanecía visible tras simplificar eliminación. Pedido: retirar todos de pantalla. Corrección: quitar sección HTML y renderizado de recibos, conservando únicamente eventos disponibles y la confirmación simple. Control: revisión de la página real sin COMPROBANTES DE ELIMINACIÓN ni RONDA ELIMINADA; API administrativa existente conserva permisos.
