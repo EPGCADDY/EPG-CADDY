@@ -2428,3 +2428,5 @@ Revisión automática rechazó git push de fix/r156-tournament-invitation al rep
 
 ### R156 · autorización de subida · 2 octubre 2026 21:23 Guatemala
 El propietario autorizó explícitamente la subida. El conector GitHub confirmó propietario EPGCADDY, mismo ID de la cuenta conectada, permisos admin/push en EPGCADDY/EPG-CADDY. Se levanta el bloqueo de autorización; Preview y navegador siguen pendientes, sin promoción de Producción.
+
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIA_R156_ADMINISTRACION.jpg` · captura auténtica de Administración R156 en Preview; permisos secundarios cerrados.
