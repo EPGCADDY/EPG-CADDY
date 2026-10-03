@@ -95,7 +95,7 @@
    const code=panel.querySelector('input').value.trim(),bound=linkInvitation?.joinCode===code?linkInvitation:null;
    const result=await request('join-code',{...(bound?{eventId:bound.eventId}:{}),eventKind:'tournament',joinCode:code,players:snapshot.players,groupLabel:snapshot.groupLabel,mode:snapshot.mode,course:snapshot.course});status(panel,result);if(!result.ok)return;
    remember(result);await sync();if(await onJoined(result)){linkInvitation=null;close()}else status(panel,{ok:false,code:'NETWORK_ERROR'});
-  }finally{b.disabled=false}};panel.querySelector('input').focus();
+  }finally{b.disabled=false}};
  }
  async function organizerInvitations(){
   const synced=await sync(),panel=dialog('ID DE TORNEO','<div data-owned-events></div>');status(panel,synced);if(!synced.ok)return;
@@ -126,7 +126,7 @@
    if(eventKind!=='private'&&owned?.joinCode){const access=await request('read',{eventId:selected.id,eventKind});if(access.ok&&access.membership.role==='organizer'){const foldCourse=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toUpperCase();if(access.tournament.configuration.mode!==snapshot.mode||foldCourse(access.tournament.configuration.course)!==foldCourse(snapshot.course)){const failure=dialog('INGRESAR AL GRUPO','');status(failure,{ok:false,code:access.tournament.configuration.mode!==snapshot.mode?'LIVE_TOURNAMENT_MODE_MISMATCH':'LIVE_TOURNAMENT_COURSE_MISMATCH'});return}const assigned=await request('assign',{eventId:selected.id,eventKind,accountId:access.accountCode,players:snapshot.players,groupLabel:snapshot.groupLabel});if(!assigned.ok){const failure=dialog('ASIGNAR MI GRUPO','');status(failure,assigned);return}const enrollment={ok:true,eventId:selected.id,eventKind,name:selected.name,configuration:access.tournament.configuration};remember(enrollment);await sync();if(await onJoined(enrollment)){close();return}const creator=dialog('CÓDIGO PARA COMPARTIR','<h4>'+escape(selected.name)+'</h4><output>'+escape(owned.joinCode)+'</output><button data-copy-code>COPIAR CÓDIGO</button>');creator.querySelector('[data-copy-code]').onclick=async()=>{try{await root.navigator.clipboard.writeText(owned.joinCode);status(creator,{ok:true})}catch{status(creator,{ok:false,code:'SHARE_UNAVAILABLE'})}};return}}
    const panel=dialog('INGRESE EL CÓDIGO','<h4>'+escape(selected.name)+'</h4><p>Ingresa el código que te compartió el creador.</p><label for="activeTournamentCode">INGRESE EL CÓDIGO</label><input id="activeTournamentCode" maxlength="10" autocomplete="off" autocapitalize="characters"><button class="primary" type="button" data-join-active>ENTRAR</button>');
    panel.querySelector('[data-join-active]').onclick=async()=>{const b=panel.querySelector('[data-join-active]');b.disabled=true;try{const result=await request('join-code',{eventId:selected.id,eventKind,joinCode:panel.querySelector('input').value.trim(),players:snapshot.players,groupLabel:snapshot.groupLabel,mode:snapshot.mode,course:snapshot.course});status(panel,result);if(!result.ok)return;remember(result);await sync();const connected=await onJoined(result);if(connected)close();else status(panel,{ok:false,code:'NETWORK_ERROR'})}finally{b.disabled=false}};
-   panel.querySelector('input').focus();
+   // Opening the code dialog keeps focus on its close control; keyboard waits for an input tap.
   });
  }
  async function viewDirectoryEvent(event,onOpened){

@@ -3,7 +3,7 @@ import fs from 'node:fs';import vm from 'node:vm';
 const source=fs.readFileSync('personal-events.js','utf8'),id='11111111-1111-4111-8111-111111111111';
 function fixture({valid=true,role='scorer',readRole=role}={}){
  const requests=[],fields=new Map(),stored=new Map();let prepared;
- const field=k=>{if(!fields.has(k))fields.set(k,{value:'',textContent:'',disabled:false,focus(){},insertAdjacentHTML(_pos,html){this.html=(this.html||'')+html}});return fields.get(k)};
+ const field=k=>{if(!fields.has(k))fields.set(k,{value:'',textContent:'',disabled:false,focusCount:0,focus(){this.focusCount++},insertAdjacentHTML(_pos,html){this.html=(this.html||'')+html}});return fields.get(k)};
  const panel={setAttribute(){},querySelector:field,querySelectorAll(){return[]},remove(){}};
  const location={origin:'https://example.test',href:'https://example.test/index-grupal.html?inicio=1&invitation=1#evento='+id+'&codigo=ABCD234567'};
  const root={URL,URLSearchParams,encodeURIComponent,Intl,Date,Map,Set,Array,String,Number,Math,JSON,Promise,location,history:{replaceState(_a,_b,url){location.href=url}},document:{activeElement:{focus(){}},getElementById(){return null},createElement(){return panel},body:{appendChild(){}},addEventListener(){}},localStorage:{getItem:k=>stored.get(k)||null,setItem:(k,v)=>stored.set(k,v)},GSCLiveControl:{buildLiveSnapshot:r=>r},GSCPrepareEventInvitation:i=>prepared=i,
@@ -20,7 +20,7 @@ const old=api.eventInvitationUrl({eventId:id,name:'CMI',joinCode:'ABCD234567'}),
 assert.match(old,/\/torneo\/CMI#/);assert.match(renamed,/\/torneo\/COPA-UNIVERSALES-2026#/);assert.equal(new URL(old).hash,new URL(renamed).hash,'Renaming preserves event and access identity');
 assert.equal(await api.openLinkInvitation(),true);assert.equal(f.root.location.href.includes('codigo'),false,'Remove invitation secret from current address after reading it');assert.equal(f.field('h3').textContent,'NUEVO NOMBRE','Server name overrides an old slug');f.field('[data-register-invitation]').onclick();assert.equal(f.prepared.eventId,id);
 let joined=0;const snapshot={players:[{id:'p1',name:'QA',holes:[{hole:1,gross:5}]}],groupLabel:'QA',mode:'general',course:'El Pulté',duration:99};const before=JSON.stringify(snapshot);
-await api.joinTournament(snapshot,async()=>{joined++;return true});assert.equal(f.requests.some(r=>r.action==='directory'),false,'Tournament modality requests only code');assert.equal(f.field('input').value,'ABCD234567');
+await api.joinTournament(snapshot,async()=>{joined++;return true});assert.equal(f.requests.some(r=>r.action==='directory'),false,'Tournament modality requests only code');assert.equal(f.field('input').value,'ABCD234567');assert.equal(f.field('input').focusCount,0,'Opening TORNEO never focuses the code input or summons its keyboard');
 f.field('input').value='WRONG23456';await f.field('[data-join-active]').onclick();assert.equal(joined,0);assert.match(f.field('[data-status]').textContent,/CÓDIGO INCORRECTO/);
 f.field('input').value='ABCD234567';await f.field('[data-join-active]').onclick();assert.equal(joined,1);assert.equal(JSON.stringify(snapshot),before,'Joining cannot mutate stored scores or elapsed time');
 const bad=fixture({valid:false});assert.equal(await bad.root.GSCPersonalEvents.openLinkInvitation(),false);assert.equal(bad.requests.some(r=>r.action==='read'),false);assert.equal(bad.prepared,undefined);
