@@ -1,5 +1,6 @@
 import {authorizeTestOrganizer} from './tests/helpers/authorize-organizer.mjs';
 import assert from 'node:assert/strict';
+import vm from 'node:vm';
 import {readFile} from 'node:fs/promises';
 import {PGlite} from '@electric-sql/pglite';
 import {handlePersonalEvents} from './api/personal-events.js';
@@ -24,3 +25,15 @@ const grant=await call(handleEventAdministration,{action:'issue',...event,recipi
 assert.equal((await call(handleEventAdministration,{action:'delete',...event,confirmName:c.name,reason:'Vencido'})).status,403);
 account={id:'creator',name:'Creador'};const unfinished=await call(handlePersonalEvents,{action:'create',eventKind:'tournament',name:'INCOMPLETO',...config});globalOwner=true;account={id:'app-owner',name:'Propietario'};assert.equal((await call(handleEventAdministration,{action:'delete',eventId:unfinished.eventId,eventKind:'tournament',confirmName:unfinished.name,reason:'Control pleno del propietario'})).status,200);
 await db.close();console.log('PASS event administration: owner full access; creator own event; recipient-bound single redemption; other player denied; delegates cannot delegate; name required; deletion receipt; exact 24h expiry; owner retained.');
+
+// R152: one confirmation, no typed name/reason, no deletion before its click.
+const uiSource=await readFile('event-administration-ui.js','utf8');
+const removeSource=uiSource.slice(uiSource.indexOf('function remove(e){'),uiSource.indexOf('\nasync function grants'));
+for(const ok of [true,false]){
+ const button={disabled:false};let content='',requests=[],closed=0,refreshed=0;
+ const context={open:html=>{content=html},escape:s=>String(s).replaceAll('<','&lt;'),$:id=>id==='confirmDelete'?button:{close:()=>closed++},event:e=>({eventId:e.id,eventKind:e.event_kind}),call:async(action,payload)=>{requests.push({action,payload});return {ok}},showStatus(){},refresh:async()=>{refreshed++}};
+ vm.createContext(context);vm.runInContext(removeSource,context);context.remove({id:'selected-id',event_kind:'tournament',name:'Evento <ejemplo>'});
+ assert.match(content,/CONFIRMAR ELIMINAR/);assert.match(content,/Evento &lt;ejemplo>/);assert.doesNotMatch(content,/<input|Escribe exactamente|Motivo|confirmName/);assert.equal(requests.length,0,'opening confirmation never deletes');
+ await button.onclick();assert.equal(requests.length,1);assert.equal(requests[0].action,'delete');assert.equal(requests[0].payload.eventId,'selected-id');assert.equal(requests[0].payload.confirmName,'Evento <ejemplo>');assert.ok(requests[0].payload.reason);assert.equal(closed,ok?1:0);assert.equal(refreshed,ok?1:0);assert.equal(button.disabled,ok);
+}
+console.log('PASS R152 single deletion confirmation: selected event; no text fields; one request on click; error stays visible and enables retry.');

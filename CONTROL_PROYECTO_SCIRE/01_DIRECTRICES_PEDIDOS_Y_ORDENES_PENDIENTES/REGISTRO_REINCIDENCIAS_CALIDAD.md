@@ -1164,3 +1164,8 @@ Orden IMG_5666: SCORES MI GRUPO y SCORES TORNEO en la primera fila, uno a la par
 
 ## R151 · 2 octubre 2026 · reingreso por código con escritor ya vinculado
 Navegador LAB R150: código incorrecto se rechazó correctamente; código válido en el mismo grupo perdió la vinculación de publicación y mostró error. Causa: join-code limpiaba stream_id aunque roster/grupo fueran iguales y cliente reutilizaba conexión cacheada sin volver a enlazar. Corrección: conserva stream_id solamente para roster/grupo exactos; grupo distinto obliga nueva vinculación. Ingreso explícito marca connected:false y fuerza revalidación/enlace autenticado por el escritor existente antes de publicar. No amplía permisos ni borra scores. Pruebas SQL de reingreso y cambio de grupo; VM de conexión cacheada y reingreso explícito. Rollback c3ddc3b86e1008fd5593b886996c40d1844cc7d1. La entrega R150 pasó ACTUALIZAR en navegador LAB conservando Gross9/Neto7/hoyo3; IMG_5667 del propietario permanece R147.2.4.24 pese a aviso ACTUALIZADO, no se declara actualización de su dispositivo. Enlace manual directo de recuperación entregado. Banco y reingreso real R151 pendientes al registrar.
+
+
+## R152 · formulario intermedio no solicitado · IMG_5672
+
+Causa: eliminación exigía transcribir nombre y motivo en UI pese a pedido de operación simple. Escape: formulario administrativo no contrastado con flujo solicitado. Control: una confirmación que identifica evento y botón ELIMINAR; nombre/motivo internos conservan contrato y comprobante. Prueba VM exige cero inputs, cero solicitudes al abrir y una solicitud al confirmar; permiso de API sigue obligatorio. No se elimina Santa Delfina ni datos del propietario durante pruebas.
