@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>LABORATORIO</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20261002-R156">
+  <meta name="gscg-release" content="LABORATORIO-20261003-R157">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1177,13 +1177,13 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
 <div class="overlay" id="officialCorrectionOverlay" aria-hidden="true"><section class="new-round-card stableford-result-card"><div class="screen-back-row"><button class="screen-back-button" type="button" id="cancelOfficialCorrection">ATRÁS</button></div><h1>CORRECCIÓN OFICIAL</h1><div class="stableford-result-fields"><label class="wide">JUGADOR<select id="officialCorrectionPlayer"></select></label><label>HOYO<select id="officialCorrectionHole"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option></select></label><label>SCORE ACTUAL<input id="officialCorrectionCurrent" type="text" readonly aria-readonly="true"></label><label>NUEVO GROSS<input id="officialCorrectionGross" type="number" min="1" max="30" inputmode="numeric"></label><label class="wide">MOTIVO<input id="officialCorrectionReason" type="text" maxlength="120" autocomplete="off"></label><label class="wide">RESPONSABLE<input id="officialCorrectionAuthorizedBy" type="text" maxlength="60" placeholder="NOMBRE DEL RESPONSABLE" autocomplete="off"></label></div><div class="setup-status" id="officialCorrectionStatus"></div><button class="nr-button" type="button" id="saveOfficialCorrection">GUARDAR CORRECCIÓN</button></section></div>
 
 <div class="overlay" id="cardLibraryOverlay" aria-hidden="true"><section class="card-library-panel"><div class="card-library-head"><h1>RONDAS GUARDADAS</h1><button class="screen-back-button" type="button" id="closeCardLibrary">ATRÁS</button></div><div class="card-library-filters"><select id="cardLibraryMode" aria-label="Modalidad"><option value="all">OVERALL · TODAS</option><option value="general">GENERAL / MEDAL</option><option value="stableford">STABLEFORD</option><option value="match_play">MATCH PLAY</option><option value="four_ball">FOUR BALL</option><option value="universales">UNIVERSALES</option></select><select id="cardLibraryCourse" aria-label="Campo"><option value="all">OVERALL · TODOS LOS CAMPOS</option></select><input id="cardLibraryQuery" type="search" placeholder="JUGADOR / TORNEO / FECHA" aria-label="Buscar jugador, torneo o fecha" autocomplete="off"></div><div class="card-library-status" id="cardLibraryStatus" role="status" aria-live="polite"></div><div class="card-library-actions" id="cardLibraryActions"><button type="button" id="cardLibraryOpenGlobal">ABRIR GLOBAL</button><button type="button" id="cardLibraryImageGlobal">IMAGEN GLOBAL</button><button type="button" id="cardLibraryPdfGlobal">PDF GLOBAL</button><select id="cardLibraryPlayer" aria-label="Jugador de tarjeta personal"></select><button type="button" id="cardLibraryOpenPersonal">ABRIR PERSONAL</button><button type="button" id="cardLibraryImagePersonal">IMAGEN PERSONAL</button><button type="button" id="cardLibraryPdfPersonal">PDF PERSONAL</button><button type="button" id="cardLibraryPdfAll">PDF TODAS</button><button type="button" id="cardLibraryStats">ESTADÍSTICAS</button><button type="button" id="cardLibraryDeleteSelected">ELIMINAR RONDA</button></div><div class="card-library-list" id="cardLibraryList"></div><div class="card-library-pager hidden" id="cardLibraryPager"><button type="button" id="cardLibraryPrevious">ANTERIOR</button><span id="cardLibraryPage">PÁGINA 1 DE 1</span><button type="button" id="cardLibraryNext">SIGUIENTE</button></div></section></div>
-<div class="overlay" id="cardLibraryDeleteOverlay" aria-hidden="true"><section class="card-library-delete-card" role="dialog" aria-modal="true" aria-labelledby="cardLibraryDeleteTitle"><h1 id="cardLibraryDeleteTitle">ELIMINAR RONDA</h1><p id="cardLibraryDeleteText">¿ELIMINAR ESTA RONDA DEL HISTORIAL?</p><div class="card-library-delete-actions"><button class="card-library-delete-cancel" type="button" id="cancelCardLibraryDelete">CANCELAR</button><button class="card-library-delete-confirm" type="button" id="confirmCardLibraryDelete">ELIMINAR</button></div></section></div>
+<div class="overlay" id="cardLibraryDeleteOverlay" aria-hidden="true"><section class="card-library-delete-card" role="dialog" aria-modal="true" aria-labelledby="cardLibraryDeleteTitle"><button type="button" data-gsc-close aria-label="Cerrar" onclick="closeCardLibraryDelete()">×</button><h1 id="cardLibraryDeleteTitle">ELIMINAR RONDA</h1><p id="cardLibraryDeleteText">¿ELIMINAR ESTA RONDA DEL HISTORIAL?</p><div class="card-library-delete-actions"><button class="card-library-delete-cancel" type="button" id="cancelCardLibraryDelete">CANCELAR</button><button class="card-library-delete-confirm" type="button" id="confirmCardLibraryDelete">ELIMINAR</button></div></section></div>
 
 <div class="overlay" id="historyInsightsOverlay" aria-hidden="true"><section class="history-insights-panel"><div class="screen-back-row"><button type="button" class="screen-back-button" id="closeHistoryInsights">ATRÁS</button></div><h1>ESTADÍSTICAS DE MIS RONDAS</h1><div class="history-insights-query"><input id="historyInsightsQuery" type="search" placeholder="PROMEDIO ÚLTIMO MES HOYO 18" aria-label="Consulta histórica escrita" autocomplete="off"><button type="button" id="runHistoryInsights">CONSULTAR</button></div><div class="history-insights-quick"><button type="button" data-history-query="REPORTE DEL ÚLTIMO MES">PROMEDIOS</button><button type="button" data-history-query="MEJOR Y PEOR DEL ÚLTIMO MES">MEJOR / PEOR</button><button type="button" data-history-query="CONSISTENCIA DEL ÚLTIMO MES">CONSISTENCIA</button><button type="button" data-history-query="TENDENCIA DEL ÚLTIMO MES">TENDENCIA</button><button type="button" data-history-query="ESTADÍSTICAS DE PUNTOS STABLEFORD DEL ÚLTIMO MES">PUNTOS STABLEFORD</button></div><output class="history-insights-result" id="historyInsightsResult">ESCRIBE UNA CONSULTA O ELIGE UNA OPCIÓN.</output><p class="history-insights-note">CONSULTA PRIVADA DEL HISTORIAL GUARDADO EN ESTE DISPOSITIVO.</p></section></div>
 
 <div class="overlay" id="registrationMissingOverlay" aria-hidden="true">
   <section class="registration-missing-card" role="dialog" aria-modal="true" aria-labelledby="registrationMissingTitle">
-    <h1 id="registrationMissingTitle">DATO FALTANTE</h1>
+    <button type="button" data-gsc-close aria-label="Cerrar" onclick="document.getElementById('registrationMissingCorrect').click()">×</button><h1 id="registrationMissingTitle">DATO FALTANTE</h1>
     <div class="registration-missing-player" id="registrationMissingPlayer">—</div>
     <div class="registration-missing-message" id="registrationMissingMessage">—</div>
     <div class="registration-missing-actions">
@@ -1195,7 +1195,7 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
 
 <div class="overlay" id="setupOverlay">
   <section class="new-round-card" id="setupStep1">
-    <div class="screen-back-row"><button class="screen-back-button hidden" type="button" id="cancelSetup">ATRÁS</button></div>
+    <div class="screen-back-row"><button class="screen-back-button" type="button" id="cancelSetup">ATRÁS</button></div>
     <div class="registration-upper">
     <div class="nr-head"><img class="official-logo-target" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Golf Score Card Guatemala"></div>
     <div class="field-title course-selection-title">SELECCIONA CAMPO</div><div class="course-options" id="courseOptions" role="radiogroup" aria-label="Campo de golf"></div>
@@ -3313,7 +3313,7 @@ function openSetup(mode="new"){
   $("setupStatus").textContent=profileCorrectionMode?"CORRIGE MANUALMENTE NOMBRE, HANDICAP Y/O MARCAS · LOS SCORES EXISTENTES SE CONSERVAN":rosterEditMode?"CORRIGE LOS DATOS DE LOS JUGADORES · LOS SCORES EXISTENTES SE CONSERVAN":"";
   $("startRoundButton").textContent=profileCorrectionMode?"ACTUALIZAR DATOS":rosterEditMode?"ACTUALIZAR RONDA":"INICIAR RONDA";
   $("setupOk").textContent=profileCorrectionMode?"CONFIRMAR CAMBIOS":"OK";
-  $("cancelSetup").classList.toggle("hidden",!round.configured);
+  $("cancelSetup").classList.remove("hidden");
   $("setupMicWrap")?.classList.toggle("hidden",profileCorrectionMode);
   document.body?.classList.add("gsc-setup-open");
   showInstallControl();
@@ -3402,7 +3402,7 @@ function ensurePrincipalEntry(){
   return true;
 }
 function closeSetup(){
-  if(!round.configured)return;
+  if(!round.configured){captureVisibleRegistrationValues();persistDraftState();window.GSCShortcutsUI?.open();return;}
   {}
   {}
   // Al volver a la TARJETA se elimina por completo el transporte de REGISTRO.
@@ -4581,6 +4581,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   const click=id=>document.getElementById(id)?.click();
   const scroll=id=>document.getElementById(id)?.scrollIntoView({block:"start",behavior:"smooth"});
   const handlers={
+    "registration":()=>openRegistrationPreservingActiveRound(),
     "friends-round":()=>openFriendsRoundDraft(),
     "private-round":()=>openPrivateRoundDraft(),
     "create-round":()=>createPrivateRoundFromMenu(),
