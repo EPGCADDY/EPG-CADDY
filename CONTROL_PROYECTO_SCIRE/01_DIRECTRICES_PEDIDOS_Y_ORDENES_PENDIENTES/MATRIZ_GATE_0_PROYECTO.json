@@ -6,7 +6,21 @@
     "repository": "https://github.com/EPGCADDY/EPG-CADDY",
     "branch": "main",
     "productionBaselineCommit": "0dc1ba7a62b6bd6aec92752c539ca641cf950e26",
-    "productionUrl": "https://epg-caddy.vercel.app/"
+    "productionUrl": "https://epg-caddy.vercel.app/",
+    "laboratoryDelivery": {
+      "project": "golf-sc-gt-lab",
+      "ownerInstalledOrigin": "https://golf-sc-gt-lab-git-lab-r146-entry-ope-6b36ee-epgcaddys-projects.vercel.app",
+      "ownerInstalledBranch": "lab/r146-entry-open-24h-invites-20260930",
+      "secondaryAlias": "https://golf-sc-gt-lab.vercel.app",
+      "policy": "Actualizar ambos destinos al mismo commit aprobado; el alias secundario no sustituye el origen instalado del propietario. Preservar origen y almacenamiento.",
+      "requiredVerification": [
+        "same approved commit on both destinations",
+        "READY deployment on ownerInstalledOrigin",
+        "release.json visible release matches",
+        "ACTUALIZAR on the same origin; no reinstall or storage deletion"
+      ],
+      "confirmedByOwner": "2026-10-02 · IMG_5668(1) y confirmación explícita del propietario"
+    }
   },
   "logic": "all",
   "applicationEntryPolicy": {
@@ -15,8 +29,17 @@
     "requiresOwnerCredentials": false,
     "requiresGlobalEntryCode": false,
     "ownerLoginGate": "removed",
-    "scope": ["Registration", "local scorecard", "Scores"],
-    "resourceAuthorizationRemainsIndependent": ["private tournament membership", "central publishing and editing", "optional account backup", "optional single-use 24-hour guest invitation"],
+    "scope": [
+      "Registration",
+      "local scorecard",
+      "Scores"
+    ],
+    "resourceAuthorizationRemainsIndependent": [
+      "private tournament membership",
+      "central publishing and editing",
+      "optional account backup",
+      "optional single-use 24-hour guest invitation"
+    ],
     "twentyFourHourInvitation": "retained as an optional independent invite; expiry applies only to that guest session and never to ordinary app entry",
     "regression": "Una solicitud anónima a Registro no redirige a login/código; la invitación opcional de 24 horas conserva su canje y vencimiento; APIs privados conservan autorización por recurso."
   },

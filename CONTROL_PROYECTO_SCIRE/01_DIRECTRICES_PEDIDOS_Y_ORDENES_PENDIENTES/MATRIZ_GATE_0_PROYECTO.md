@@ -61,3 +61,10 @@ Orden expresa del propietario: 13 de septiembre de 2026. Aplica a toda tarea de 
 7. Conservar archivos, versión/commit, resultados, fallos y pendientes en el punto de recuperación. No pedir otra autorización para acciones ya autorizadas; sólo interrumpir por una necesidad real y explicada.
 8. La falta de ejecución visible es un incumplimiento operativo, aunque las pruebas técnicas pasen. Registrar la reincidencia y corregir el proceso. Este documento fija la obligación; por sí solo no ejecuta un temporizador ni garantiza el cumplimiento del agente.
 9. Queda prohibido cerrar el turno mientras exista trabajo autorizado pendiente y una siguiente acción técnica ejecutable. Un reporte de estado no reemplaza esa acción ni autoriza detenerse.
+
+
+## R151 · destino obligatorio del laboratorio del propietario
+
+Origen instalado confirmado: https://golf-sc-gt-lab-git-lab-r146-entry-ope-6b36ee-epgcaddys-projects.vercel.app
+
+Rama: `lab/r146-entry-open-24h-invites-20260930`. Proyecto: `golf-sc-gt-lab`. El alias secundario https://golf-sc-gt-lab.vercel.app no sustituye este destino. Toda actualización autorizada debe alcanzar ambos destinos con el mismo commit, deployment READY y versión visible. Conservar origen y almacenamiento; nunca solicitar reinstalación ni borrado para corregir una omisión de publicación. Evidencia de origen: IMG_5668(1) y confirmación del propietario, 2 de octubre de 2026.
