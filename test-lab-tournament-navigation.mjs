@@ -29,12 +29,12 @@ const live=fs.readFileSync('live-control.js','utf8');
 assert.doesNotMatch(live,/async function quickShareGroup\(\)\{\s*openLivePanel\(\)/,'Compartir nativo no debe abrir administración antes de compartir');
 console.log('PASS torneo: regreso portal, favoritos únicos, ranking completo, mensajes y compartir visibles');
 
-assert.match(html,/id="hubPageTitle">TORNEOS<\/h1>/);
-assert.match(html,/>GENERAL<\/button>/);
-assert.match(html,/>CATEGORÍA<\/button>/);
-assert.match(html,/>BUSCAR JUGADORES<\/button>/);
+assert.match(html,/id="hubPageTitle">SCORES TORNEO<\/h1>/);
+assert.match(html,/>SCORES GENERAL<\/button>/);
+assert.match(html,/>SCORES POR CATEGORÍA<\/button>/);
+assert.match(html,/>BUSCAR JUGADOR<\/button>/);
 assert.match(html,/>MIS FAVORITOS<\/button>/);
-assert.match(source,/add\?"BUSCAR JUGADORES":categories\?"RESULTADOS POR CATEGORÍA":individual\?"MIS FAVORITOS":"RESULTADOS GENERALES"/);
+assert.match(source,/add\?"BUSCAR JUGADOR":categories\?"SCORES POR CATEGORÍA":individual\?"MIS FAVORITOS":"SCORES GENERAL"/);
 assert.doesNotMatch(html,/#hubShowCategories\{display:none!important\}/,'RESULTADOS POR CATEGORÍA no puede estar oculto');
 assert.match(html,/class="viewer-entry hidden" id="hubTournamentEntry"/,'AGREGAR POR ENLACE debe permanecer secundario y oculto hasta solicitarlo');
 assert.match(html,/>\+ AGREGAR TORNEO<\/button>/,'La función de agregar torneo debe ser explícita');
@@ -46,14 +46,14 @@ console.log("PASS R76: arquitectura TORNEOS conserva intención, muestra categor
 // Exercise the actual portal renderer in both entry and saved-event states.
 const nodes=new Map();
 function element(id){if(!nodes.has(id)){const hidden=new Set();nodes.set(id,{innerHTML:'',attributes:{},classList:{toggle(name,on){on?hidden.add(name):hidden.delete(name)},contains:name=>hidden.has(name)},setAttribute(name,value){this.attributes[name]=value},querySelectorAll(){return []}})}return nodes.get(id)}
-const portal={$:element,root:{location:{search:''},document:{querySelector:()=>element('monitor-switch')}},URLSearchParams,administrationEvents:[],tournamentPortalOpen:true,registeredTournamentsOpen:false,tournamentEntryOpen:false,activeMonitor:'general',demoMode:()=>false,state:{tournaments:[]},escapeHtml:hub.escapeHtml||((s)=>s)};
+const portal={$:element,root:{location:{search:''},document:{body:{classList:{toggle(){}}},querySelector:()=>element('monitor-switch')}},URLSearchParams,setPageTitle(){},registeredDirectory:[],administrationEvents:[],tournamentPortalOpen:true,registeredTournamentsOpen:false,tournamentEntryOpen:false,activeMonitor:'general',demoMode:()=>false,state:{tournaments:[]},escapeHtml:hub.escapeHtml||((s)=>s)};
 const renderer=source.slice(source.indexOf('  function renderEventDeletion(){'),source.indexOf('  function resetGeneralView(){'));
 vm.runInNewContext(renderer+';renderTournamentShelf()',portal);
 assert.equal(element('hubTournamentShelf').classList.contains('hidden'),false);
-assert.equal(element('hubTournamentCards').classList.contains('hidden'),true);
-assert.equal(element('hubSavedEventActions').classList.contains('hidden'),true);
+assert.equal(element('hubTournamentCards').classList.contains('hidden'),false);
+assert.equal(element('hubSavedEventActions').classList.contains('hidden'),false);
 assert.equal(element('monitor-switch').classList.contains('hidden'),true,'Results controls appear after event selection');
-assert.match(element('hubTournamentCards').innerHTML,/TODAVÍA NO HAY TORNEOS GUARDADOS/);
+assert.match(element('hubTournamentCards').innerHTML,/NINGÚN TORNEO EN CURSO/);
 assert.doesNotMatch(element('hubTournamentCards').innerHTML,/DEMOSTRACIÓN/,'No synthetic event is injected into the real entry');
 portal.registeredTournamentsOpen=true;
 vm.runInNewContext('renderTournamentShelf()',portal);
@@ -127,7 +127,16 @@ console.log('PASS approved four entries and search results are not overridden by
 
 // Deletion is a separate action, shown only for API-confirmed authority.
 portal.state.tournaments=[{token:'personal_allowed',label:'PROPIO'},{token:'personal_other',label:'AJENO'}];portal.administrationEvents=[{id:'allowed',event_kind:'tournament'}];portal.tournamentPortalOpen=true;vm.runInNewContext('renderTournamentShelf()',portal);
-assert.equal((element('hubTournamentCards').innerHTML.match(/ELIMINAR TORNEO/g)||[]).length,1);assert.match(element('hubTournamentCards').innerHTML,/data-delete-event="allowed"/);assert.doesNotMatch(element('hubTournamentCards').innerHTML,/data-delete-event="other"/);
+assert.doesNotMatch(element('hubTournamentCards').innerHTML,/ELIMINAR TORNEO|data-delete-event/,'Scores directory contains only active tournaments');
 portal.tournamentPortalOpen=false;portal.state.generalToken='personal_allowed';vm.runInNewContext('renderEventDeletion()',portal);assert.equal(element('hubDeleteEvent').hidden,false);
 portal.state.generalToken='personal_other';vm.runInNewContext('renderEventDeletion()',portal);assert.equal(element('hubDeleteEvent').hidden,true);
 console.log('PASS visible deletion for authorized own event only; unrelated event has no delete action');
+
+// R154: canonical directory has no saved-event limit and excludes local-only entries.
+portal.registeredDirectory=Array.from({length:8},(_,i)=>({id:String(i),token:'personal_'+i,label:'ACTIVO '+i}));portal.tournamentPortalOpen=true;vm.runInNewContext('renderTournamentShelf()',portal);
+assert.equal((element('hubTournamentCards').innerHTML.match(/data-tournament=/g)||[]).length,8);assert.doesNotMatch(element('hubTournamentCards').innerHTML,/PROPIO|AJENO|ELIMINAR|CREAR/);
+for(const label of ['SCORES GENERAL','SCORES POR CATEGORÍA','MIS FAVORITOS','BUSCAR JUGADOR']){const titleCtx={$:element,root:{document:{}}};vm.runInNewContext(source.slice(source.indexOf('  function setPageTitle(value){'),source.indexOf(' function showTournamentPortal(){'))+';setPageTitle('+JSON.stringify(label)+')',titleCtx);assert.equal(element('hubPageTitle').textContent,label);assert.equal(titleCtx.root.document.title,label+' · Golf Score Card GT')}
+assert.match(source,/setPageTitle\(scoresPageTitle\)/,'Refresh retains selected screen title');assert.doesNotMatch(source,/setPageTitle\('SCORES'\)/);
+console.log('PASS R154 active directory: all 8 server events, no local-only or admin actions; exact empty message; chosen titles preserved.');
+
+assert.doesNotMatch(fs.readFileSync("shortcuts-ui.js","utf8"),/item\("search","BUSCAR JUGADOR"/);assert.match(html,/<button id="hubShowIndividual" type="button">BUSCAR JUGADOR<\/button>/);assert.doesNotMatch(html,/body:not\(\.public-display\) #hubShowIndividual\{display:none\}/);console.log("PASS R154 Buscar jugador within tournament options only; no principal Menu entry");

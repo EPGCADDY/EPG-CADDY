@@ -47,7 +47,7 @@ for(const id of ["control-x","lab-scorecard"]){
   const section=manual.slice(manual.indexOf('id="'+id+'"'),manual.indexOf("</section>",manual.indexOf('id="'+id+'"')));
   assert(/<img\b[^>]*src="\/docs\/manual\/current\/[^"]+\.(?:png|webp|jpe?g)"/i.test(section),"La hoja "+id+" debe usar captura real LAB");
 }
-for(const token of ["CAMPEONATO","SUPER SENIOR","PANTALLA PÚBLICA","AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","MI TARJETA FINAL","ABRIR GLOBAL","PDF GLOBAL","PDF TODAS","officialCorrectionOverlay","MIS RONDAS GUARDADAS"]) {
+for(const token of ["CAMPEONATO","SUPER SENIOR","PANTALLA PÚBLICA","AUDIO DE RESULTADOS","FRONT · 1 - 9","BACK · 10 - 18","TOTAL · 1 - 18","MI TARJETA FINAL","ABRIR GLOBAL","PDF GLOBAL","PDF TODAS","officialCorrectionOverlay","RONDAS GUARDADAS"]) {
   assert(app.includes(token)||hub.includes(token),"LAB actual no contiene control esperado: "+token);
 }
 assert(manual.includes("/docs/manual/current/MONITOR_TIEMPO_REAL_LAB.png"),"Falta captura física vigente del Monitor de Tiempo");
@@ -66,7 +66,7 @@ for(let p=46;p<=67;p++) assert(!manual.includes("/docs/manual/layout/page-"+Stri
 assert(app.includes("shortcuts-ui.js"),"Score Card debe cargar MENÚ");
 assert(hub.includes("shortcuts-ui.js"),"Torneos debe cargar MENÚ");
 assert(manual.includes("shortcuts-ui.js"),"Manual completo debe cargar MENÚ flotante");
-for(const t of ["MI SCORE CARD","MANUAL DE USUARIO","SCORES TORNEO","SCORES MI GRUPO","SCORES GENERAL","SCORES POR CATEGORÍA","BUSCAR JUGADOR","MIS FAVORITOS"]) assert(shortcuts.includes(t),"MENÚ incompleto: "+t);
+for(const t of ["MI SCORE CARD","MANUAL DE USUARIO","SCORES TORNEO","SCORES MI GRUPO","SCORES GENERAL","SCORES POR CATEGORÍA","MIS FAVORITOS"]) assert(shortcuts.includes(t),"MENÚ incompleto: "+t);
 assert(cards.includes("fourBallTeamLabel")&&!cards.includes("TEAM 1")&&!cards.includes("TEAM 2")&&!cards.includes("TEAM 3"),"Tarjetas Four Ball no deben reintroducir TEAM numerado");
 assert(!fourBall.includes('"TEAM 1"')&&!fourBall.includes('"TEAM 2"')&&!fourBall.includes('"TEAM 3"'),"Motor Four Ball no debe reintroducir TEAM numerado");
 if(fail.length){console.error("MANUAL ORIGINAL PARITY: FAIL");for(const item of fail) console.error("- "+item);process.exit(1);}

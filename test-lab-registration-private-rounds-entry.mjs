@@ -20,7 +20,7 @@ assert.doesNotMatch(privateRounds, /personal\?\.items\|\|\[\]/,
   'Tournament personal events are not added to MI RONDA');
 assert.match(privateRounds, /personalEvent='\+encodeURIComponent\(item\.id\)\+'&personalKind=private/,
   'Selecting a personal round opens its private-event score view directly');
-assert.match(liveHub, /state\.tournaments\.filter\(item=>root\.GSCPersonalEvents\?\.descriptor\(item\.token\)\?\.eventKind!=='private'\)/,
+assert.match(liveHub, /request\('directory',\{eventKind:'tournament',activeOnly:true\}\)/,
   'The tournament shelf excludes private rounds');
 assert.match(liveHub, /descriptor\(state\.generalToken\)\)\?\.eventKind==='private'/,
   'Private-event scores use the private score presentation');

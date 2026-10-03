@@ -166,16 +166,19 @@
   body.hub-scores-view #hubBack{display:none}
 
 .round-create-dialog-card input,.round-create-dialog-card select{min-width:0;max-width:100%;box-sizing:border-box}
+body.hub-scores-view #hubPersonalOrganization,body.hub-scores-view #hubPersonalScoreCard,body.hub-scores-view #hubDeleteEvent{display:none!important}
+body.scores-tournament-directory #hubState,body.scores-tournament-directory #hubTournamentShelf>h2,body.scores-tournament-directory #hubRoundCreate,body.scores-tournament-directory #hubEnterExisting,body.scores-tournament-directory #hubRegisteredTournaments,body.scores-tournament-directory #hubSavedEventActions,body.scores-tournament-directory .event-delete{display:none!important}
+
 </style>
   <link rel="stylesheet" href="/scores-ui.css">
   <script src="/app-update.js" defer></script>
 </head>
-<body>
+<body class="scores-tournament-directory">
   <main class="hub">
     <button class="scores-return" id="hubScoresReturn" type="button" hidden>← VER SCORES</button>
     <header class="head">
       <img src="/assets/official-logos/golf-score-card-gt-horizontal-original.webp" alt="Golf Score Card GT">
-      <div><h1 id="hubPageTitle">TORNEOS</h1></div><div id="hubEventName" class="scores-event"></div><div id="hubEventMeta" class="scores-meta"></div>
+      <div><h1 id="hubPageTitle">SCORES TORNEO</h1></div><div id="hubEventName" class="scores-event"></div><div id="hubEventMeta" class="scores-meta"></div>
       <button class="back" id="hubBack" type="button">← Score Card</button>
     </header>
 
@@ -198,9 +201,9 @@
       </div>
     </section>
     <nav class="monitor-switch hidden" aria-label="Elegir función de torneos">
-      <button class="active" id="hubShowGeneral" type="button">GENERAL</button>
-      <button id="hubShowCategories" type="button">CATEGORÍA</button>
-      <button id="hubShowIndividual" type="button">BUSCAR JUGADORES</button>
+      <button class="active" id="hubShowGeneral" type="button">SCORES GENERAL</button>
+      <button id="hubShowCategories" type="button">SCORES POR CATEGORÍA</button>
+      <button id="hubShowIndividual" type="button">BUSCAR JUGADOR</button>
       <button id="hubAddToBoard" type="button">MIS FAVORITOS</button>
     </nav>
 

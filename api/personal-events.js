@@ -39,7 +39,7 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
     if(account.codeAccess&&account.entryRole==='viewer'&&!['identity','list','read','directory','view-code'].includes(body.action))throw accessError('PERSONAL_WRITER_FORBIDDEN');
     if(body.action==='directory'){
       const scoped=eventScope(sql,eventKind(body.eventKind||'tournament'));
-      const events=await scoped`SELECT id,name,mode FROM live_tournaments WHERE status IN ('active','finished') AND expires_at>now() ORDER BY updated_at DESC`;
+      const events=await scoped`SELECT id,name,mode FROM live_tournaments WHERE status IN ('active','finished') AND (${body.activeOnly===true}=false OR status='active') AND expires_at>now() ORDER BY updated_at DESC`;
       return res.status(200).json({ok:true,events});
     }
     if(body.action==='identity')return res.status(200).json({ok:true,personalCode:account.id,name:account.name});

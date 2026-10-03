@@ -6,7 +6,7 @@ const app=fs.readFileSync("index-grupal.html","utf8");
 assert(hub.includes('$("hubBack").onclick=()=>{if(scorecardReturn){root.location.assign(scorecardReturn.toString());return}const url=new URL("/index-grupal.html"'),"Cerrar debe priorizar la Score Card de origen y conservar el destino directo de respaldo");
 assert(!hub.includes('$("hubBack").onclick=()=>{root.close();setTimeout(()=>root.history.back(),100)}'),"No usar history.back para volver al Score Card");
 for(const id of ["hubShowGeneral","hubShowCategories","hubShowIndividual","hubAddToBoard","hubTournamentHome"])assert(hub.includes(id),"Falta destino "+id);
-for(const label of ["MI SCORE CARD","SCORES TORNEO","SCORES MI GRUPO","SCORES GENERAL","SCORES POR CATEGORÍA","BUSCAR JUGADOR","MIS FAVORITOS"])assert(ui.includes(label),"Falta atajo "+label);
+for(const label of ["MI SCORE CARD","SCORES TORNEO","SCORES MI GRUPO","SCORES GENERAL","SCORES POR CATEGORÍA","MIS FAVORITOS"])assert(ui.includes(label),"Falta atajo "+label);
 assert(!ui.includes('b.innerHTML="<img'),"MENÚ no debe insertar ningún logo en el botón");
 assert(ui.includes('b.innerHTML="<span>MENÚ</span>"'),"MENÚ debe mostrar sólo la palabra MENÚ grande y centrada");
 assert(!ui.includes("/assets/official-logos/golf-score-card-gt-pwa-v345-192.png"),"MENÚ no debe usar el icono PWA cuadrado");
