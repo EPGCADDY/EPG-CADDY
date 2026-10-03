@@ -3526,3 +3526,7 @@ Tabla continua de grupo, todos los integrantes, doble toque18, cierres uniformes
 - `test-r24-event-creation-feedback.mjs` · implementación, control o evidencia R158.
 
 - `test-manual-startup-sharing.mjs` · R158 actualiza mock de render de identificación, conserva negativo de arranque.
+
+
+## R158 · PUBLICADA · 3 octubre 2026, 10:36 Guatemala
+PR48 integrado: 8c92f66a1429ad02e5c4881e341b1c02390c98d9; árbol f6d7f68da3ec952d5119670b8c0d811c383f97a5 idéntico al candidato validado. main y lab/r146-entry-open-24h-invites-20260930 alineados sin force. READY: EPG main dpl_HocT2Qy8u8QufExbYUoJYdHBTG3W; LAB main dpl_8NqVuDDjyhmombdYxbN2VvAH48PM; LAB instalado dpl_BSbvWRE8CVnbWW1ebsJeZ9L4bzpC. Tres orígenes release.json HTTP200 R158. Chrome producción: ACTUALIZAR pasó R157 a R158; menú conserva Registro debajo de Manual. Evidencia auténtica CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R158_SCORES/produccion.jpg. Banco integral PASS, 78 casos Chromium QA PASS, cero errores de página; no prueba física iPhone. Rollback R157 d0ff81d1b653 mediante reversión sin borrar datos. Sin acción necesaria del propietario salvo ACTUALIZAR si su app aún muestra R157. Este cierre documental se archiva en rama docs/r158-published-evidence; producción permanece en el código validado.
