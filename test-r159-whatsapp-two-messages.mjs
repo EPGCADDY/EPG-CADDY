@@ -1,14 +1,14 @@
 import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';
-function setup({native=true,cancel=false,fail=false}={}){
+function setup({native=true,cancel=false,fail=false,storage=new Map()}={}){
  const nodes=new Map(),sent=[],navigated=[];let completed=0,removed=false,pending;
  const node=key=>{if(!nodes.has(key))nodes.set(key,{value:'',textContent:'',disabled:false,focus(){}});return nodes.get(key)};
  const panel={setAttribute(){},querySelector:node,remove(){removed=true}};
- const context={document:{createElement:()=>panel,body:{appendChild(){}}},location:{assign:url=>navigated.push(url)},navigator:{}};
+ const context={document:{createElement:()=>panel,body:{appendChild(){}}},location:{assign:url=>navigated.push(url)},navigator:{},localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)}};
  if(native)context.navigator.share=async data=>{sent.push(data);if(cancel)throw Object.assign(Error(),{name:'AbortError'});if(fail)throw Error('unavailable');if(pending)await pending};
  vm.runInNewContext(fs.readFileSync('whatsapp-invitations.js','utf8'),context);return {context,nodes,node,sent,navigated,get completed(){return completed},get removed(){return removed},open:(options)=>context.GSCWhatsAppInvitations.open(options,()=>completed++),setPending:value=>pending=value};
 }
 for(const kind of ['private','tournament']){
- const s=setup();s.open({kind,creatorName:'Jaime Kirste',code:'ABCDEF0123456789ABCD'});
+ const s=setup();s.open({kind,eventName:'Jaime Kirste',creatorName:'Jaime Kirste',code:'ABCDEF0123456789ABCD'});
  await s.node('[data-send-code]').onclick();assert.equal(s.sent.length,0,'Second send is locked before first');
  await s.node('[data-send-invitation]').onclick();assert.equal(s.sent.length,1);assert.match(s.sent[0].text,/Jaime Kirste/);assert.doesNotMatch(s.sent[0].text,/ABCDEF|http/);assert.equal(s.removed,false);assert.equal(s.node('[data-send-code]').disabled,false);
  await s.node('[data-send-code]').onclick();assert.equal(s.sent[1].text,'ABCDEF0123456789ABCD');assert.deepEqual(Object.keys(s.sent[1]),['text']);
@@ -22,3 +22,22 @@ const blank=setup();blank.open({kind:'private',code:'1234567890'});await blank.n
 const fallback=setup({native:false});fallback.open({kind:'private',creatorName:'QA',code:'ABCDEF0123456789ABCD'});await fallback.node('[data-send-invitation]').onclick();await fallback.node('[data-send-code]').onclick();assert.equal(new URL(fallback.navigated[1]).searchParams.get('text'),'ABCDEF0123456789ABCD');assert.equal(fallback.completed,0,'Opening WhatsApp never claims delivery or closes source');
 const double=setup();double.open({kind:'private',creatorName:'QA',code:'1234567890'});let done;double.setPending(new Promise(resolve=>done=resolve));const first=double.node('[data-send-invitation]').onclick();await double.node('[data-send-invitation]').onclick();assert.equal(double.sent.length,1);done();await first;
 console.log('PASS R159 two WhatsApp messages: full code only; sender name; stage order; cancellation; error; double tap; missing creator; fallback; no automatic send or delivery claims.');
+
+const storage=new Map(),origin=setup({storage});
+origin.open({kind:'tournament',eventName:'Copa QA',creatorName:'QA',code:'RECOVER123'});
+let released;origin.setPending(new Promise(resolve=>released=resolve));
+const attempt=origin.node('[data-send-invitation]').onclick();
+const restored=setup({storage});assert.equal(restored.context.GSCWhatsAppInvitations.resume(),true);
+assert.equal(restored.node('[data-whatsapp-heading]').textContent,'FALTA ENVIAR EL CÓDIGO');assert.equal(restored.node('[data-send-code]').disabled,false);
+assert.equal(restored.sent.length,0,'Recovery never shares automatically');
+const restoredAgain=setup({storage});assert.equal(restoredAgain.context.GSCWhatsAppInvitations.resume(),true,'Pending code survives repeated reload');
+await restoredAgain.node('[data-send-code]').onclick();assert.equal(restoredAgain.sent[0].text,'RECOVER123');assert.deepEqual(Object.keys(restoredAgain.sent[0]),['text']);assert.equal(storage.size,0,'Code handed to share clears recovery marker, without claiming delivery');
+released();await attempt;
+const cancelledCode=setup({storage,cancel:true});assert.equal(cancelledCode.context.GSCWhatsAppInvitations.resume(),true);await cancelledCode.node('[data-send-code]').onclick();assert.equal(storage.size,1);assert.equal(cancelledCode.node('[data-send-code]').disabled,false);assert.match(cancelledCode.node('[data-whatsapp-status]').textContent,/CANCELADO/);
+cancelledCode.context.GSCWhatsAppInvitations.close();assert.equal(storage.size,0,'Explicit close discards pending marker');
+const expired=new Map([['gsc-whatsapp-code-pending-v1',JSON.stringify({kind:'private',creatorName:'QA',code:'OLD',savedAt:Date.now()-46*60*1000})]]);assert.equal(setup({storage:expired}).context.GSCWhatsAppInvitations.resume(),false);assert.equal(expired.size,0);
+const cancelledFirstStorage=new Map(),cancelledFirst=setup({storage:cancelledFirstStorage,cancel:true});cancelledFirst.open({kind:'private',creatorName:'QA',code:'CANCEL'});await cancelledFirst.node('[data-send-invitation]').onclick();assert.equal(cancelledFirstStorage.size,0);
+console.log('PASS R160: pending second message restored before/after first share; repeated reload; explicit code-only tap; cancellation keeps retry; expiry; explicit close; no automatic share.');
+const closedStorage=new Map(),closedShare=setup({storage:closedStorage});closedShare.open({kind:'private',creatorName:'QA',code:'CLOSED'});let closeResolve;closedShare.setPending(new Promise(resolve=>closeResolve=resolve));const inFlight=closedShare.node('[data-send-invitation]').onclick();closedShare.context.GSCWhatsAppInvitations.close();closeResolve();await inFlight;assert.equal(closedStorage.size,0,'A late share completion cannot restore a dismissed code');
+
+assert.deepEqual(Array.from(setup().context.GSCWhatsAppInvitations.messages('private','Jaime Kirste','CODE123')),['GOLF SCORE CARD GT\nTe ha invitado a participar en el grupo de Jaime Kirste.','CODE123']);assert.deepEqual(Array.from(setup().context.GSCWhatsAppInvitations.messages('tournament','Copa Universales','CODE123')),['GOLF SCORE CARD GT\nTe ha invitado a participar en el torneo Copa Universales.','CODE123']);

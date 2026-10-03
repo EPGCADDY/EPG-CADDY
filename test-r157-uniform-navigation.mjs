@@ -8,6 +8,8 @@ vm.runInNewContext(render+';render()',{hubState:()=>({}),page:()=> 'scorecard',i
 const actions=[...html.matchAll(/data-shortcut="([^"]+)"/g)].map(m=>m[1]);
 assert.equal(actions[actions.indexOf('manual')+1],'registration');
 assert.equal(actions.filter(a=>a==='registration').length,1);
+assert.equal(actions.includes('administration'),false,'Administration belongs only to Organizer');
+const organizer=source.slice(source.indexOf('function organizer()'),source.indexOf('function open()'));assert(organizer.includes("item('administration','ADMINISTRAR TORNEOS Y GRUPOS'"));
 const dispatch=source.slice(source.indexOf('function act(action)'),source.indexOf('function normalizeCloseControls()'));
 let opened=0,closed=0,navigated;
 const round={id:'active',scores:[5,4],clock:'unchanged'};
