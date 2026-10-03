@@ -2434,3 +2434,9 @@ El propietario autorizó explícitamente la subida. El conector GitHub confirmó
 - `CONTROL_PROYECTO_SCIRE/EVIDENCIA_R156_TORNEO_VALIDO.jpg` · tarjeta real vinculada a torneo de prueba, sin código visible.
 
 - `CONTROL_PROYECTO_SCIRE/EVIDENCIA_R156_CONFIRMACION_FINAL.jpg` · confirmación auténtica del receptor sin OK de Registro repetido, Preview e8955c4.
+
+
+### R156 · cierre de publicación
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIA_R156_PRODUCCION.jpg` · Organizador auténtico del dominio estable publicado; ID DE TORNEO dentro de Organizador.
+- Ambos ROADMAPS, aceptación y continuidad · autorización, commit df65a48, cuatro deployments READY, release R156 HTTP200, observabilidad y rollback.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · sello actualizado del cierre documental.
