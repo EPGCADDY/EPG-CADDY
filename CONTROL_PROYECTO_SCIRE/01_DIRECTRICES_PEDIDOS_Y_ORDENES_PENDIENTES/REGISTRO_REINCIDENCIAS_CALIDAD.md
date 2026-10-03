@@ -1245,3 +1245,7 @@ El propietario autorizó explícitamente la subida. El conector GitHub confirmó
 
 ## R156 · validación real detectó confirmación redundante después del código
 Causa: openAssignedPersonalScoreCard reutilizaba Registro tras validar jugadores, forzando otro OK. Escape: VM de join sólo comprobaba callback y destino, sin último estado de interfaz. Detectado internamente por Chrome con torneo de prueba. Control permanente: regresión de confirmación con membresía real simulada y verificación de pantalla REVISAR ANTES DE EMPEZAR; escritor oficial INICIAR RONDA conservado. Ajuste en revisión, Producción intacta.
+
+
+## R157 · controles y paneles de alturas diferentes
+IMG_5690/5691: Organizador sin menú y arriba; ID de torneo con otra X. Causa: regla de 100 px y cierres de glifos/tamaños diversos; botón menú detrás de su overlay. Escape: revisión previa del flujo sin comparar geometría de todas las superficies. Corrección: layout común, toolbar fijo, glifo/tamaño único sin reemplazar eventos. Navegador local detectó además margin de botón heredado en Administración; corregido y comprobado. Control permanente: test-r157-uniform-navigation.mjs y scripts/review-r157-mobile-layout.mjs. 28 casos a 430×932 PASS con fixtures; no 100% físico. El propietario cerró la ampliación y ordenó publicar hasta este alcance.

@@ -2440,3 +2440,7 @@ El propietario autorizó explícitamente la subida. El conector GitHub confirmó
 - `CONTROL_PROYECTO_SCIRE/EVIDENCIA_R156_PRODUCCION.jpg` · Organizador auténtico del dominio estable publicado; ID DE TORNEO dentro de Organizador.
 - Ambos ROADMAPS, aceptación y continuidad · autorización, commit df65a48, cuatro deployments READY, release R156 HTTP200, observabilidad y rollback.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · sello actualizado del cierre documental.
+
+
+## R157 · navegación uniforme
+shortcuts-ui.js comparte altura/centrado y normaliza la X conservando sus handlers. event-administration.html incluye controles comunes y menú en diálogo nativo. index-grupal.html añade router de Registro sin borrar ronda/borrador. test-r157-uniform-navigation.mjs y scripts/review-r157-mobile-layout.mjs documentan 28 casos locales Chromium a 430×932 con QA, no iPhone físico ni 100% de la matriz. Cierre de ampliación y publicación ordenados por el propietario. Ver CONTROL_PROYECTO_SCIRE/ACEPTACION_R157_NAVEGACION.md y CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R157_BROWSER/evidence.json. Rollback R156 416d7658c6fb.
