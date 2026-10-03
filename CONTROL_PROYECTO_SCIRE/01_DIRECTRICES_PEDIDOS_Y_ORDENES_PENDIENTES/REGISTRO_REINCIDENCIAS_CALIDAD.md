@@ -1229,3 +1229,19 @@ Sin pertenencia real: **NO PERTENECES A NINGÚN GRUPO**. La tarjeta individual n
 - `test-event-directory-code.mjs` · modificación y prueba R155.
 - `test-r155-private-group-exit.mjs` · modificación y prueba R155.
 - `scripts/build-manual-lab.mjs` · modificación y prueba R155.
+
+
+## R156 · enlace duplicado y contexto perdido; administración recargada
+Causa comprobada: compartir incluía URL en text y url; URL inicio=1 no llevaba evento/código. Creación duplicada fuera de Organizador; permisos administrativos visibles mezclados con operación básica. Escape: prueba anterior exigía URL genérica y no simulaba receptor; no contrastaba las pantallas administrativas con uso simple. Control permanente: test-r156-tournament-invitation.mjs y banco completo; nombre remoto/identidad estable, validación de código, negativos de rol, no mutación de scores/reloj; controles de administración cerrados. PASS automático local; navegador y publicación pendientes. Se identificó y leyó IMG_5688/5689 al estar disponibles, sin afirmar revisión anterior.
+
+
+### R156 · cierre local y bloqueo de entrega
+Revisión automática rechazó git push de fix/r156-tournament-invitation al repositorio canónico. No se ha eludido por otro transporte. Preview/navegador público pendientes y Producción sin promoción. Falta autorización explícita del propietario para subir esta rama. La descarga local de Chromium falló como ZIP incompleto; no prueba de navegador ni iPhone.
+- `test-tournament-code-round-binding.mjs` · exige ocultar la superficie histórica de código de torneo en tarjeta, también al creador; Organizador conserva compartir, grupos privados conservan contrato.
+
+
+### R156 · autorización de subida · 2 octubre 2026 21:23 Guatemala
+El propietario autorizó explícitamente la subida. El conector GitHub confirmó propietario EPGCADDY, mismo ID de la cuenta conectada, permisos admin/push en EPGCADDY/EPG-CADDY. Se levanta el bloqueo de autorización; Preview y navegador siguen pendientes, sin promoción de Producción.
+
+## R156 · validación real detectó confirmación redundante después del código
+Causa: openAssignedPersonalScoreCard reutilizaba Registro tras validar jugadores, forzando otro OK. Escape: VM de join sólo comprobaba callback y destino, sin último estado de interfaz. Detectado internamente por Chrome con torneo de prueba. Control permanente: regresión de confirmación con membresía real simulada y verificación de pantalla REVISAR ANTES DE EMPEZAR; escritor oficial INICIAR RONDA conservado. Ajuste en revisión, Producción intacta.

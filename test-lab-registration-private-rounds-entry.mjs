@@ -11,7 +11,7 @@ assert.doesNotMatch(html,/id="openMyRoundsButton"/,'MI RONDA removed from Regist
 const modalities=html.slice(html.indexOf('aria-label="Modalidades"'),html.indexOf('aria-label="Registro manual"'));
 assert.doesNotMatch(modalities,/registrationEventButton|openMyRoundSetup|provisionalScorecardButton|CREAR TORNEO|CREAR RONDA/);
 assert.match(fs.readFileSync('shortcuts-ui.js','utf8'),/item\("create-round","CREAR MI GRUPO"/);
-assert.match(fs.readFileSync('shortcuts-ui.js','utf8'),/item\("create-tournament","CREAR TORNEO"/);
+assert.match(fs.readFileSync('shortcuts-ui.js','utf8'),/item\('create-tournament','CREAR TORNEO'/);
 assert.match(privateRounds, /async function list\(title="GRUPOS PARTICULARES"\)[\s\S]*show\(title,/,
   'The existing private-round list accepts a Registration title without changing its default entry');
 assert.match(privateRounds, /personal\?\.privateItems\|\|\[\]/,
