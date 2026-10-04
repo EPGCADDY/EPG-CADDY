@@ -19,6 +19,8 @@ try{
  assert.match(restored.headers.get('location'),/live-hub\.html\?personalEvent=saved-event/,'Implicit personal return keeps its authorized event');
  globalThis.fetch=async()=>new Response(JSON.stringify({ok:false,code:'ACCESS_REQUIRED'}),{status:401});
  const api=await accessGate(new Request('https://lab.example/api/live-share',{method:'POST'}));assert.equal(api.headers.get('x-middleware-next'),'1');
+ const directory=await accessGate(new Request('https://lab.example/api/tournament-score-directory',{method:'POST'}));assert.equal(directory.headers.get('x-middleware-next'),'1','public Scores directory POST reaches its own read-only handler without app login');
+ const directoryGet=await accessGate(new Request('https://lab.example/api/tournament-score-directory',{method:'GET'}));assert.equal(directoryGet.status,401,'only the directory POST passes the gate');
  const sync=await accessGate(new Request('https://lab.example/api/sync',{method:'POST'}));assert.equal(sync.status,401,'protected sync API remains behind its own account/event checks');
  console.log('PASS middleware: Registration and Scores open without owner sign-in; private APIs remain protected');
 }finally{globalThis.fetch=prior}
