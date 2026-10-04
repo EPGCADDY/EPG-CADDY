@@ -463,7 +463,7 @@
   }
   async function start(){
     // Render the authorized entry immediately while account verification is pending.
-    tournamentPortalOpen=!demoMode()&&!parseHubHash(root.location.hash)&&!new URLSearchParams(root.location.search||'').has('liveEvent');renderAll();
+    const initialParams=new URLSearchParams(root.location.search||'');tournamentPortalOpen=!demoMode()&&!parseHubHash(root.location.hash)&&!initialParams.has('liveEvent')&&!(initialParams.get('shortcut')==='scores'&&initialParams.has('personalEvent'));renderAll();
     $('hubEnterExisting').onclick=()=>{enterExistingTournament=true;registeredTournamentsOpen=true;renderTournamentShelf();$('hubSavedEventActions')?.classList.remove('hidden')};$('hubCreateRound').onclick=openRoundCreate;$('hubRegisteredTournaments').onclick=()=>{enterExistingTournament=false;registeredTournamentsOpen=!registeredTournamentsOpen;renderTournamentShelf()};
     const directory=await root.GSCPersonalEvents?.request('directory',{eventKind:'tournament',activeOnly:true});if(directory?.ok)registeredDirectory=directory.events.map(event=>({...event,token:'personal_'+event.id,label:event.name}));
     const personal=await root.GSCPersonalEvents?.sync();administrationEvents=await root.GSCPersonalEvents?.administrationEvents?.()||[];state=loadState();if(personal?.ok){state.tournaments=await root.GSCPersonalEvents.reconcile(state.tournaments);state.generalToken=await root.GSCPersonalEvents.canonicalToken(state.generalToken)}state.tournaments=state.tournaments.filter(item=>!item.token.startsWith("personal_"));if(personal?.ok)for(const item of personal.items)state=upsertTournamentState(state,item.token,item.label).state;const oneUse=await root.GSCOneUseLive?.open();const imported=oneUse?.ok?oneUse:parseHubHash(root.location.hash);if(imported&&!oneUse)clearHash();const params=new URLSearchParams(root.location.search||""),shared=params.get("shared")==="1";tournamentPortalOpen=!demoMode()&&!imported;root.document.body.classList.toggle("shared-view",shared);
@@ -495,7 +495,7 @@
     if(params.get("shortcut")==="create"&&!shared)await openRoundCreate();
     if(params.get("shortcut")==="scores"&&!shared){
       const token=state.generalToken,privateEvent=root.GSCPersonalEvents?.descriptor(token)?.eventKind==='private';
-      if(token&&privateEvent&&params.get('personalKind')==='private')await selectSavedTournament(token);
+      if(token&&params.get('personalEvent')&&token==='personal_'+params.get('personalEvent')&&((privateEvent&&params.get('personalKind')==='private')||(!privateEvent&&params.get('personalKind')==='tournament')))await selectSavedTournament(token);
       else{showTournamentPortal();registeredTournamentsOpen=true;renderTournamentShelf();setStatus("SELECCIONA UN TORNEO PARA VER SUS SCORES","");}
     }
     const shortcut=params.get("shortcut"),monitor=params.get("monitor")||shortcut;
