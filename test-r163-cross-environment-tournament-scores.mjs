@@ -1,7 +1,14 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {PGlite} from '@electric-sql/pglite';
-import {handleTournamentScoreDirectory} from './api/tournament-score-directory.js';
+import {handleTournamentScoreDirectory,tournamentDirectoryEnvironment,tournamentDirectoryPeerUrl} from './api/tournament-score-directory.js';
+
+assert.equal(tournamentDirectoryEnvironment({VERCEL_URL:'golf-sc-gt-lab-abc123.vercel.app'}),'lab');
+assert.equal(tournamentDirectoryEnvironment({},'golf-sc-gt-lab.vercel.app'),'lab');
+assert.equal(tournamentDirectoryPeerUrl({VERCEL_URL:'golf-sc-gt-lab-abc123.vercel.app'}),'https://epg-caddy.vercel.app/api/tournament-score-directory');
+assert.equal(tournamentDirectoryEnvironment({VERCEL_URL:'epg-caddy-abc123.vercel.app'}),'production');
+assert.equal(tournamentDirectoryEnvironment({},'epg-caddy.vercel.app'),'production');
+assert.equal(tournamentDirectoryPeerUrl({},'epg-caddy.vercel.app'),'https://golf-sc-gt-lab.vercel.app/api/tournament-score-directory');
 
 const stores={};
 const uuid=index=>`00000000-0000-4000-8000-${String(index).padStart(12,'0')}`;
@@ -21,11 +28,13 @@ for(const source of ['production','lab']){
 
 async function call(source,body){
   let status=200,data;
-  await handleTournamentScoreDirectory({method:'POST',body,headers:{}},{setHeader(){},status(value){status=value;return this},json(value){data=value;return this}},()=>stores[source].sql,async(_url,options)=>{
+  const host=source==='lab'?'golf-sc-gt-lab.vercel.app':'epg-caddy.vercel.app';
+  const env={VERCEL_URL:source==='lab'?'golf-sc-gt-lab-deployment.vercel.app':'epg-caddy-deployment.vercel.app'};
+  await handleTournamentScoreDirectory({method:'POST',body,headers:{host}},{setHeader(){},status(value){status=value;return this},json(value){data=value;return this}},()=>stores[source].sql,async(_url,options)=>{
     const peer=source==='lab'?'production':'lab',peerBody=JSON.parse(options.body);let peerStatus=200,peerData;
-    await handleTournamentScoreDirectory({method:'POST',body:peerBody,headers:{}},{setHeader(){},status(value){peerStatus=value;return this},json(value){peerData=value;return this}},()=>stores[peer].sql,undefined,{GSC_ENVIRONMENT:source});
+    await handleTournamentScoreDirectory({method:'POST',body:peerBody,headers:{}},{setHeader(){},status(value){peerStatus=value;return this},json(value){peerData=value;return this}},()=>stores[peer].sql,undefined,{VERCEL_URL:peer==='lab'?'golf-sc-gt-lab-peer.vercel.app':'epg-caddy-peer.vercel.app'});
     return{ok:peerStatus<400,status:peerStatus,json:async()=>peerData};
-  },{GSC_ENVIRONMENT:source});
+  },env);
   return{status,...data};
 }
 
