@@ -1304,3 +1304,7 @@ Aceptación: mensaje exacto una llamada, dos líneas vacías y código final; ca
 - `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R161/430-administrar.png` · implementación, prueba o evidencia R161.
 
 Ampliación17:53: instrucción Copia y pega el código en la pantalla inicial de registro; inmediatamente enlace absoluto del mismo origen a /index-grupal.html?inicio=1; después MODALIDAD / TORNEO o MI GRUPO / Código; dos líneas vacías y código real al final. Una llamada share text, sin URL separada duplicada.
+
+
+## R162 · escape ID y código reutilizable · IMG_5711/5712
+Causa: UI ID sólo mostraba nombre; código guardado dependía del último torneo local. Join de torneo aceptaba hash permanente sin consumo. Escape: banco anterior no exigía lista de códigos persistente ni reenvío a segunda cuenta. Control permanente: servidor por evento, permisos propietario, consumo atómico SQL; test-r162-single-use-tournament-code.mjs y scripts/review-r162.mjs. Estado pruebas dirigidas PASS; publicación pendiente.

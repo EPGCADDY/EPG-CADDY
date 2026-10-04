@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>LABORATORIO</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="LABORATORIO-20261003-R161">
+  <meta name="gscg-release" content="LABORATORIO-20261003-R162">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -1712,7 +1712,7 @@ function syncDraftModeSelection(preferredKey=undefined){
   return selected
 }
 function persistDraftState(){
-  try{const key=activeDraftStorageKey();if(!draftPlayers.length&&!manualDraftRows.some(manualRowHasData)&&!activeDraftGameKey()){localStorage.removeItem(key);return}localStorage.setItem(key,JSON.stringify({manualRows:manualDraftRows.map(row=>({...row})),players:draftPlayers.map((p,i)=>normalizePlayer(p,i)),tournament:normalizeTournament(draftTournament),course:COURSE_CATALOG[draftCourse]?draftCourse:"pulte",mode:draftRoundMode,sideGames:draftSideGames(),skins:window.GSCSkins.normalizeConfig(draftSkins),savedAt:new Date().toISOString()}))}catch(e){console.error("No se pudo persistir el registro en curso:",e)}
+  try{const key=activeDraftStorageKey();if(!draftPlayers.length&&!manualDraftRows.some(manualRowHasData)&&!activeDraftGameKey()&&!localStorage.getItem('gsc-tournament-entry-draft-v1')){localStorage.removeItem(key);return}localStorage.setItem(key,JSON.stringify({manualRows:manualDraftRows.map(row=>({...row})),players:draftPlayers.map((p,i)=>normalizePlayer(p,i)),tournament:normalizeTournament(draftTournament),course:COURSE_CATALOG[draftCourse]?draftCourse:"pulte",mode:draftRoundMode,sideGames:draftSideGames(),skins:window.GSCSkins.normalizeConfig(draftSkins),savedAt:new Date().toISOString()}))}catch(e){console.error("No se pudo persistir el registro en curso:",e)}
 }
 function loadDraftState(){
   try{const raw=JSON.parse(localStorage.getItem(activeDraftStorageKey())||"null");if(!raw||!Array.isArray(raw.players)||!raw.players.length)return[];return raw.players.slice(0,6).map(normalizePlayer)}catch{return[]}
@@ -4156,7 +4156,7 @@ window.GSCPrepareEventInvitation=invitation=>{
  if(round.configured)persist();
  const config=invitation.configuration,key=Object.keys(COURSE_CATALOG).find(key=>[COURSE_CATALOG[key].name,COURSE_CATALOG[key].displayName].some(name=>name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase()===String(config.course).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase()));
  if(!key){$('setupStatus').textContent='CAMPO DEL TORNEO NO DISPONIBLE';return false}
- openRegistrationPreservingActiveRound();draftCourse=key;draftRoundMode=config.mode;draftTournament={name:invitation.name};persistDraftState();renderDraft();$('setupStatus').textContent='TORNEO '+invitation.name+' · COMPLETA TUS JUGADORES Y TOCA TORNEO';return true;
+ localStorage.setItem('gsc-tournament-entry-draft-v1',JSON.stringify(invitation));openRegistrationPreservingActiveRound();draftCourse=key;draftRoundMode=config.mode;draftTournament={name:invitation.name};persistDraftState();renderDraft();$('setupStatus').textContent='TORNEO '+invitation.name+' · REGISTRA TUS JUGADORES Y PRESIONA OK';return true;
 };
 setTimeout(()=>window.GSCPersonalEvents.openLinkInvitation(),0);
 
@@ -4209,7 +4209,7 @@ $("detectedBody").addEventListener("change",e=>{
   updateGeneralSetupValidity();
 });
 for(const [id,eventKind] of [['registrationJoinTournament','tournament'],['registrationJoinRound','private']])$(id).addEventListener('click',()=>{
- captureVisibleRegistrationValues();if(!syncDraftPlayersFromManualRows({strict:true,renderAfter:false}))return;persistDraftState();
+ captureVisibleRegistrationValues();if(eventKind==='tournament'&&!menuCreationHasCompleteRoster()){persistDraftState();window.GSCPersonalEvents.openTournamentBeforeRegistration();return}if(!syncDraftPlayersFromManualRows({strict:true,renderAfter:false}))return;persistDraftState();
  if(draftPlayers.some(player=>!player.tournamentCategory)){$('setupStatus').textContent='SELECCIONA LA CATEGORÍA DE CADA JUGADOR';return}
  const registration={...round,configured:true,registrationDraft:true,course:COURSE_CATALOG[draftCourse].name,mode:draftRoundMode,players:draftPlayers,liveGroupLabel:draftPlayers.map(player=>player.name).join(' / ').slice(0,120)};
  window.GSCPersonalEvents.joinTournament(registration,result=>window.GSCPersonalEvents.openAssignedCard({eventId:result.eventId,eventKind}),eventKind);
@@ -4253,7 +4253,11 @@ async function guardVisibleRegistrationBeforeOk(event){
 }
 $("setupOk").addEventListener("click",guardVisibleRegistrationBeforeOk,true);
 
-$("setupOk").addEventListener("click",async()=>{captureVisibleRegistrationValues();if(!(await reviewMissingCategoryAndHandicap()))return;if(!syncDraftPlayersFromManualRows({strict:true,renderAfter:false}))return;if(profileCorrectionMode){startConfirmedRound();return};renderDraft();showStep2();;});
+async function completePendingTournamentRegistration(){
+ const result=await window.GSCPersonalEvents.joinPendingRegistration({players:draftPlayers,groupLabel:draftPlayers.map(p=>p.name).join(' / ').slice(0,120),mode:draftRoundMode,course:COURSE_CATALOG[draftCourse].name});if(!result)return true;if(!result.ok){$('setupStatus').textContent=window.GSCPersonalEvents.message(result.code);return false}
+ localStorage.setItem('gsc-tournament-connect-selection-v1',JSON.stringify({personal:true,id:result.eventId,eventKind:'tournament',label:result.name,mode:result.configuration.mode,configuration:result.configuration,players:draftPlayers,groupLabel:draftPlayers.map(p=>p.name).join(' / ').slice(0,120),registrationApproved:true}));localStorage.removeItem('gsc-tournament-entry-draft-v1');await window.GSCPersonalEvents.sync();return true;
+}
+$("setupOk").addEventListener("click",async()=>{captureVisibleRegistrationValues();if(!(await reviewMissingCategoryAndHandicap()))return;if(!syncDraftPlayersFromManualRows({strict:true,renderAfter:false}))return;if(profileCorrectionMode){startConfirmedRound();return};if(!(await completePendingTournamentRegistration()))return;renderDraft();showStep2();;});
 $("clearAllRegistration").addEventListener("click",clearAllRegistrationPlayers);
 $("normalRoundButton").addEventListener("click",()=>selectGeneralRoundMode("general"));$("matchPlayRoundButton").addEventListener("click",()=>selectGeneralRoundMode("match_play"));$("fourBallRoundButton").addEventListener("click",()=>selectGeneralRoundMode("four_ball"));$("universalesRoundButton").addEventListener("click",()=>selectGeneralRoundMode("universales"));$("skinsRoundButton").addEventListener("click",selectSkinsRoundMode);
 function saveSkinsDraftConfig(){draftSkins=window.GSCSkins.normalizeConfig({enabled:true,scoreType:$("skinsScoreType").value,tiePolicy:$("skinsTiePolicy").value,unitValue:$("skinsUnitValue").value,currency:selectedDraftCurrency("skins")});persistDraftState();renderSideGameDrafts();updateGeneralSetupValidity()}
