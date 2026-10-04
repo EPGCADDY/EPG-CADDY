@@ -28,6 +28,8 @@ await db.close();console.log('PASS event administration: owner full access; crea
 
 // R152: one confirmation, no typed name/reason, no deletion before its click.
 const uiSource=await readFile('event-administration-ui.js','utf8');
+const returnTargetSource=uiSource.match(/function preserveReturnTarget\(\)\{[^\n]*\}/)?.[0];assert.ok(returnTargetSource,'Admin back link must use the preserved round destination');
+for(const [search,expected] of [['?returnTo=%2Findex-grupal.html%3FpersonalEvent%3Devent-a%26personalKind%3Dprivate%26personalAccount%3Daccount-a%26round_return%3D1','/index-grupal.html?personalEvent=event-a&personalKind=private&personalAccount=account-a&round_return=1'],['?returnTo=https%3A%2F%2Fevil.example%2Findex-grupal.html','/fallback'],['?returnTo=%2Flive-hub.html','/fallback']]){const link={href:'/fallback'},context={URL,URLSearchParams,document:{querySelector:()=>link},location:{origin:'https://lab.example',search}};vm.createContext(context);vm.runInContext(returnTargetSource+';preserveReturnTarget();',context);assert.equal(link.href,expected,'Admin return preserves the active round only on the same origin and scorecard path')}
 const removeSource=uiSource.slice(uiSource.indexOf('function remove(e){'),uiSource.indexOf('\nasync function grants'));
 for(const ok of [true,false]){
  const button={disabled:false};let content='',requests=[],closed=0,refreshed=0;

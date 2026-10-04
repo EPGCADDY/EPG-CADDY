@@ -576,3 +576,9 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 # R19 · Seguridad de invitaciones
 
 - CERRADO EN CANDIDATO LAB: cada enlace de invitado se consume únicamente en el primer dispositivo y no puede reutilizarse ni reenviarse después del canje.
+
+
+## R166 · torneos visibles y Scores del grupo para dueño legacy
+- Recuperar eventos del propietario original cuando falta la fila de membresía; conservar denegación a terceros y códigos de uso único.
+- Corregir sincronización de release en `release.json`, `service-worker.js` e `index-grupal.html`.
+- Automático: pruebas PostgreSQL R162, permisos personales, R158 Scores grupo, administración y Gate 0 PASS. Build Preview y recorrido visual completo siguen pendientes; Producción intacta.

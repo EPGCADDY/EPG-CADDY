@@ -4,6 +4,8 @@ const db=new PGlite();for(const f of ['database/004_live_scorecards.sql','databa
 await authorizeTestOrganizer(sql,'creator');
 const config={course:'EL PULTÉ GOLF',playedAt:'2026-10-02',mode:'general',categories:['a']},player={id:'p1',name:'Jugador',handicap:10,tournamentCategory:'a'};
 const a=await call({action:'create',eventKind:'tournament',name:'Family',...config});
+await sql`DELETE FROM gsc_personal_members WHERE event_id=${a.eventId}::uuid AND account_id='creator'`;
+const recovered=await call({action:'list'});assert.equal(recovered.events.find(event=>event.eventId===a.eventId)?.role,'organizer','Creator authority survives a missing legacy membership row');
 const payload={action:'organizer-entry-code',eventKind:'tournament',eventId:a.eventId};const first=await call(payload);assert.equal(first.ok,true);assert.equal((await call(payload)).joinCode,first.joinCode,'Pending code survives repeat requests');
 const join={action:'join-code',eventKind:'tournament',eventId:a.eventId,joinCode:first.joinCode,players:[player],groupLabel:'UNO',mode:'general',course:config.course};
 account={id:'outsider',name:'Otro'};assert.equal((await call(payload)).status,403);const peek=await call({action:'inspect-tournament-code',joinCode:first.joinCode});assert.equal(peek.eventId,a.eventId);assert.equal(peek.name,'Family');assert.equal((await sql`SELECT consumed_at FROM gsc_tournament_entry_codes WHERE code=${first.joinCode}`)[0].consumed_at,null,'Inspecting before players never consumes the code');assert.equal((await call({...join,course:'WRONG'})).code,'LIVE_TOURNAMENT_COURSE_MISMATCH');assert.equal((await call(join)).ok,true,'Invalid configuration cannot consume code');

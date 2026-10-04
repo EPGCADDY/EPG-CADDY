@@ -2573,3 +2573,10 @@ Riesgos: ingreso repetido por reenvío, pérdida de código, acceso ajeno, consu
 - `scores-ui.css` · evita mostrar botones para enviar/copiar el código antes del primer envío.
 - `scripts/build-manual-lab.mjs` · incorpora regresión R163.
 - `index-grupal.html`, `service-worker.js`, `release.json`, ambos ROADMAPS, continuidad, aceptación, inventario y registro de calidad · versión R163.
+
+
+## R166 · recuperación del dueño en eventos legacy
+- `api/personal-events.js`, `api/_lib/personal-event-access.js` · listado/lectura organizadora cuando `owner_account_id` coincide aunque falte fila legacy de membresía; no concede acceso a terceros.
+- `index-grupal.html`, `service-worker.js`, `release.json` · metadatos R166 alineados para aplicación web e instalación.
+- `test-r162-single-use-tournament-code.mjs`, `test-personal-event-permissions.mjs` · regresiones de dueño, código single-use y Scores del grupo.
+- `CONTROL_PROYECTO_SCIRE/ACEPTACION_R166.md`, ambos ROADMAPS, registro de reincidencias y sello V311 · aceptación, causa y archivos del candidato. Preview pendiente de gates completos y recorrido visual.
