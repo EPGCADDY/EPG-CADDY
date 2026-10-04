@@ -17,7 +17,9 @@ export async function handleTournamentScoreDirectory(req,res,databaseGetter=getD
   if(action==='list'){
    const rows=await sql`SELECT id,name,status FROM live_tournaments WHERE status='active' AND expires_at>now() ORDER BY updated_at DESC`;
    let peer=[],partial=false;try{const response=await fetcher(tournamentDirectoryPeerUrl(env),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'list-local'}),cache:'no-store'});if(response.ok){const result=await response.json();if(result.ok)peer=result.events||[];else partial=true}else partial=true}catch{partial=true}
-   return res.status(200).json({ok:true,partial,events:[...rows.map(row=>({...row,source})),...peer.filter(row=>row.source!==source)]});
+   const peerSource=source==='lab'?'production':'lab';
+   const merged=new Map();for(const row of rows)merged.set(`${source}:${row.id}`,{...row,source});for(const row of peer)merged.set(`${peerSource}:${row.id}`,{...row,source:peerSource});
+   return res.status(200).json({ok:true,partial,events:[...merged.values()]});
   }
   if(action==='list-local'){
    const rows=await sql`SELECT id,name,status FROM live_tournaments WHERE status='active' AND expires_at>now() ORDER BY updated_at DESC`;
