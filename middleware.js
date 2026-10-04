@@ -23,6 +23,8 @@ export default async function accessGate(request){
     }catch{}
   }
   if(path==="/api/traffic"&&request.method==="GET"&&url.searchParams.get("action")==="status")return next();
+  // R163 lists and reads active public tournament scores; the handler is read-only and rejects other methods/actions.
+  if(path==="/api/tournament-score-directory"&&request.method==="POST")return next();
   if(PUBLIC_PATHS.has(path)||SCORECARD_ASSETS.has(path)||path.startsWith("/invite/")||path.startsWith("/assets/official-logos/"))return next();
   // LIVE is token/secret-authorized inside api/live itself. Keep it independent from app-access
   // so installed/PWA clients can create, publish, read and revoke a private LIVE stream.
