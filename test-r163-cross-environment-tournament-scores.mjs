@@ -23,7 +23,7 @@ async function call(source,body){
   let status=200,data;
   await handleTournamentScoreDirectory({method:'POST',body,headers:{}},{setHeader(){},status(value){status=value;return this},json(value){data=value;return this}},()=>stores[source].sql,async(_url,options)=>{
     const peer=source==='lab'?'production':'lab',peerBody=JSON.parse(options.body);let peerStatus=200,peerData;
-    await handleTournamentScoreDirectory({method:'POST',body:peerBody,headers:{}},{setHeader(){},status(value){peerStatus=value;return this},json(value){peerData=value;return this}},()=>stores[peer].sql,undefined,{GSC_ENVIRONMENT:peer});
+    await handleTournamentScoreDirectory({method:'POST',body:peerBody,headers:{}},{setHeader(){},status(value){peerStatus=value;return this},json(value){peerData=value;return this}},()=>stores[peer].sql,undefined,{GSC_ENVIRONMENT:source});
     return{ok:peerStatus<400,status:peerStatus,json:async()=>peerData};
   },{GSC_ENVIRONMENT:source});
   return{status,...data};
