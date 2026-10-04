@@ -1522,3 +1522,16 @@ Orden: MODALIDAD/TORNEO debe permitir pegar código sin jugadores y registrar de
 - `test-r162-single-use-tournament-code.mjs` · inspección no consume.
 - `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R162/evidence.json` · navegador ambas rutas PASS.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · sello actualizado.
+
+
+## R163 · Directorio global de torneos activos y código copiable · 3 octubre 2026
+SCORES TORNEO lista todos los eventos activos de la plataforma en todos los entornos conectados, sin filtrar por organizador/cuenta ni recortar a 100. Cada torneo conserva su origen y abre su propio marcador con General, Categorías, Buscar jugador y Favoritos. Sólo lectura entre bases; datos privados quedan fuera de la respuesta. WhatsApp ofrece mensaje de invitación separado, COMPARTIR SOLO EL CÓDIGO y COPIAR SOLO EL CÓDIGO.
+PASS dirigido: 20 organizadores por entorno (40 torneos activos) aparecen en ambos directorios de prueba y los 40 abren Scores correctos; datos sensibles excluidos. PASS integración de WhatsApp, separación de privadas y destinos del menú. Banco completo LAB, quality, roadmap e inventario PASS. Chromium local 390/430 para grupo/torneo PASS: primero invitación, luego código separado, copiar código solamente, cancelar/reintentar. Pendientes: publicar candidate en Preview y revisar ambos deployments; WhatsApp/iPhone físico no verificados. Producción sin modificar hasta gates remotos. Rollback R162 `c0a2005670dfafe129d77c0c44ba38c1207e2302`; sin migración/cambio de DB.
+- `api/tournament-score-directory.js` · lista y lectura pública, origen fijo y campos de score permitidos.
+- `live-hub.js` · menú reunido y lectura por entorno de origen.
+- `whatsapp-invitations.js` · invitación y código en mensajes separados, copiar código.
+- `test-r163-cross-environment-tournament-scores.mjs` · prueba PostgreSQL EPG/Family y privacidad de campos.
+- `test-r159-whatsapp-two-messages.mjs` · cambio R163: botón copia sólo el código y envío aislado.
+- `scripts/review-r159-whatsapp-two-messages.mjs`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R163_WHATSAPP/` · revisión Chromium local PASS a 390/430 px; no constituye prueba física.
+- `scores-ui.css` · conserva ocultos los controles de código antes del primer envío.
+- `scripts/build-manual-lab.mjs`, `index-grupal.html`, `service-worker.js`, `release.json` · integración R163.
