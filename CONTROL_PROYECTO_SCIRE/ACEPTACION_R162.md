@@ -40,3 +40,16 @@ Orden: MODALIDAD/TORNEO debe permitir pegar código sin jugadores y registrar de
 - `test-r162-single-use-tournament-code.mjs` · inspección no consume.
 - `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R162/evidence.json` · navegador ambas rutas PASS.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · sello actualizado.
+
+
+## R163 · Directorio global de torneos activos y código copiable · 3 octubre 2026
+SCORES TORNEO reúne todos los torneos activos de cada entorno de la plataforma, sin filtrar por organizador o cuenta y sin límite artificial de 100. Cada tarjeta mantiene su origen; abrirla presenta el torneo elegido en SCORES GENERAL, SCORES POR CATEGORÍA, BUSCAR JUGADOR y MIS FAVORITOS, leyendo sólo el entorno de origen. Es una federación de lectura, sin sincronizar ni escribir entre bases. La respuesta permitida excluye hashes, credenciales, teléfonos y campos ajenos al score. WhatsApp conserva instrucciones en el primer mensaje y ofrece COMPARTIR SOLO EL CÓDIGO y COPIAR SOLO EL CÓDIGO por separado.
+Aceptación local: fixtures PostgreSQL con 20 torneos activos por entorno y 20 organizadores por lado producen los 40 torneos en ambos directorios; cada torneo devuelve sus Scores correctos y campos privados ausentes. Pruebas integradas y banco completo LAB PASS. Chromium local PASS a 390 y 430 px para grupo y torneo: invitación primero, código separado después, copia exclusiva del código, cancelación y reintento. Revisión Chromium en deployments LAB/PROD y prueba física de WhatsApp/iPhone pendientes. Rollback a main c0a2005670dfafe129d77c0c44ba38c1207e2302 (R162); sin migración ni cambio de DB.
+- `api/tournament-score-directory.js` · lista y lectura pública, origen fijo y campos de score permitidos.
+- `live-hub.js` · menú reunido y lectura por entorno de origen.
+- `whatsapp-invitations.js` · invitación y código en mensajes separados, copiar código.
+- `test-r163-cross-environment-tournament-scores.mjs` · prueba PostgreSQL EPG/Family y privacidad de campos.
+- `test-r159-whatsapp-two-messages.mjs` · cambio R163: botón copia sólo el código y envío aislado.
+- `scripts/review-r159-whatsapp-two-messages.mjs` · revisión móvil ambos modos.
+- `scripts/build-manual-lab.mjs`, `index-grupal.html`, `service-worker.js`, `release.json`, `scores-ui.css` · integración R163.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R163_WHATSAPP/` · Chromium local 390/430, grupo/torneo; copiar sólo el código; no prueba física.

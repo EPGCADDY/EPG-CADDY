@@ -2558,3 +2558,18 @@ Riesgos: ingreso repetido por reenvío, pérdida de código, acceso ajeno, consu
 - `scripts/review-r162.mjs` · implementación/control/evidencia R162.
 - `service-worker.js` · implementación/control/evidencia R162.
 - `test-r162-single-use-tournament-code.mjs` · implementación/control/evidencia R162.
+
+
+## R163 · directorio global de torneos activos e invitación con código copiable
+- `api/tournament-score-directory.js` · lista todos los torneos activos en cada entorno, sin límite local ni filtro de organizador; abre Scores del origen, sin exponer hashes o contactos.
+- `live-hub.js` · muestra el directorio global y mantiene destinos General, Categorías, Buscar jugador y Favoritos para el torneo seleccionado.
+- `whatsapp-invitations.js` · separa la invitación y el código; permite COMPARTIR SOLO EL CÓDIGO y COPIAR SOLO EL CÓDIGO.
+- `test-r163-cross-environment-tournament-scores.mjs` · fixture de 20 organizadores y 40 torneos activos; valida cada Score y campos privados excluidos.
+- `test-r159-whatsapp-two-messages.mjs`, `test-lab-private-round-share-flow.mjs` · mensaje separado y copia exclusiva del código para torneo y grupo.
+- `test-lab-registration-private-rounds-entry.mjs`, `test-lab-tournament-navigation.mjs` · directorio global, separación de rondas y destinos del menú.
+- `test-lab-deployment-gate.mjs` · salida síncrona determinista de los pasos de deploy.
+- `scripts/project-quality-gate.mjs`, `test-project-quality-gate.mjs` · salida síncrona y comprobación local/Vercel/negativos.
+- `scripts/review-r159-whatsapp-two-messages.mjs`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R163_WHATSAPP/evidence.json`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R163_WHATSAPP/{390,430}-{private,tournament}.png` · Chromium local PASS grupo/torneo a 390/430 px, código separado y copia exclusiva; no certifica entrega WhatsApp ni iPhone.
+- `scores-ui.css` · evita mostrar botones para enviar/copiar el código antes del primer envío.
+- `scripts/build-manual-lab.mjs` · incorpora regresión R163.
+- `index-grupal.html`, `service-worker.js`, `release.json`, ambos ROADMAPS, continuidad, aceptación, inventario y registro de calidad · versión R163.

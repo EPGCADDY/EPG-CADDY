@@ -1308,3 +1308,16 @@ Ampliación17:53: instrucción Copia y pega el código en la pantalla inicial de
 
 ## R162 · escape ID y código reutilizable · IMG_5711/5712
 Causa: UI ID sólo mostraba nombre; código guardado dependía del último torneo local. Join de torneo aceptaba hash permanente sin consumo. Escape: banco anterior no exigía lista de códigos persistente ni reenvío a segunda cuenta. Control permanente: servidor por evento, permisos propietario, consumo atómico SQL; test-r162-single-use-tournament-code.mjs y scripts/review-r162.mjs. Estado pruebas dirigidas PASS; publicación pendiente.
+
+
+## R163 · DIRECTORIO MOSTRABA SÓLO EL ENTORNO ACTUAL Y WHATSAPP COPIABA TODA LA BURBUJA · 3 octubre 2026
+
+- Defecto: Scores Torneo mostraba sólo los torneos creados en la base de la aplicación abierta. En WhatsApp copiar el mensaje largo también copiaba todo el texto, impidiendo pegar sólo el código.
+- Causa: LAB y Producción usan bases aisladas; el menú consultaba sólo la local. La invitación y código compartían una burbuja WhatsApp.
+- Control: federar servidor-a-servidor lista/lectura de torneos activos con source fijo; Scores se leen desde entorno de origen y la respuesta excluye hashes, teléfono y campos fuera de lista. El código se comparte como mensaje independiente y botón de portapapeles.
+- Pruebas: `test-r163-cross-environment-tournament-scores.mjs`; `test-r159-whatsapp-two-messages.mjs`; banco integral, revisión de navegador y despliegue en curso.
+- Estado: CONTROL, TESTS DIRIGIDOS, BANCO COMPLETO LAB, QUALITY/ROADMAP/INVENTARIO Y CHROMIUM LOCAL 390/430 PASS. Preview remoto LAB/Producción y prueba física WhatsApp/iPhone pendientes; Producción R162 intacta.
+
+### Revisión de regresión R163 · controles heredados desactualizados
+Causa: la federación del directorio cambió el contrato de consulta y WhatsApp volvió a dos acciones explícitas; tres pruebas del menú/invitación aún afirmaban rutas y payloads anteriores. El fixture de directorio tampoco inicializaba `directoryPartial`, y el gate de build cortaba la salida asíncrona al ejecutar `process.exit()`.
+Corrección permanente: actualizar `test-lab-registration-private-rounds-entry.mjs`, `test-lab-private-round-share-flow.mjs` y `test-lab-tournament-navigation.mjs` al contrato R163; el gate sintético usa `fs.writeSync`; la prueba global llena 20 torneos por entorno y verifica los 40 resultados. `api/tournament-score-directory.js` elimina el límite de 100 para incluir cada torneo activo. `scores-ui.css` mantiene los controles de código ocultos antes del primer envío. `scripts/project-quality-gate.mjs` emite PASS/FAIL con escritura síncrona y `test-project-quality-gate.mjs` confirma el contrato. Chromium local 390/430 para grupo y torneo PASS, incluyendo cancelación/reintento; evidencia en `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R163_WHATSAPP/`. Banco integrado, quality, roadmap e inventario PASS. Preview remoto continúa pendiente; Producción permanece intacta.

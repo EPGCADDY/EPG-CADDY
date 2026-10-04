@@ -10,7 +10,7 @@ const gates=['project-quality-gate','roadmap-gate','inventory-gate','build-manua
 try{
   mkdirSync(join(directory,'scripts'));
   for(const failing of [0,2,3,-1]){
-    for(const [index,name] of gates.entries())writeFileSync(join(directory,'scripts',name+'.mjs'),`console.log(${JSON.stringify(name)});process.exit(${index===failing?23:0});`);
+    for(const [index,name] of gates.entries())writeFileSync(join(directory,'scripts',name+'.mjs'),`import{writeSync}from'node:fs';writeSync(1,${JSON.stringify(name+'\n')});process.exit(${index===failing?23:0});`);
     const result=spawnSync('sh',['-c',config.buildCommand],{cwd:directory,encoding:'utf8'});
     assert.equal(result.status,failing<0?0:23,'A failing release check must reject the deployment');
     assert.deepEqual(result.stdout.trim().split('\n'),gates.slice(0,failing<0?4:failing+1),'A rejected check must prevent every later build step');

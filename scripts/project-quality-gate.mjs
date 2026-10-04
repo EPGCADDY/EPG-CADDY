@@ -1,4 +1,4 @@
-import {existsSync,readFileSync} from 'node:fs';
+import {existsSync,readFileSync,writeSync} from 'node:fs';
 import {spawnSync} from 'node:child_process';
 
 const controlRoot='CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES';
@@ -6,8 +6,7 @@ const matrixPath=`${controlRoot}/MATRIZ_GATE_0_PROYECTO.json`;
 const simulatedMissing=process.env.GSCG_GATE_SELF_TEST==='missing-control';
 
 function fail(messages){
-  console.error('PROJECT_QUALITY_GATE FAIL');
-  for(const message of messages)console.error(`- ${message}`);
+  writeSync(2,['PROJECT_QUALITY_GATE FAIL',...messages.map(message=>`- ${message}`),''].join('\n'));
   process.exit(1);
 }
 
@@ -75,4 +74,4 @@ for(const path of ['ROADMAP_OVERALL.md','ROADMAP_A_DETALLE.md','GOLF_SCORE_CARD_
 }
 
 if(errors.length)fail(errors);
-console.log(`PROJECT_QUALITY_GATE PASS controls=${controls.length} inputs=7 gates=11 baseline=${baseline.slice(0,12)} production=${verifiedMain.slice(0,12)}`);
+writeSync(1,`PROJECT_QUALITY_GATE PASS controls=${controls.length} inputs=7 gates=11 baseline=${baseline.slice(0,12)} production=${verifiedMain.slice(0,12)}\n`);

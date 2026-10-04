@@ -46,7 +46,7 @@ console.log("PASS R76: arquitectura TORNEOS conserva intención, muestra categor
 // Exercise the actual portal renderer in both entry and saved-event states.
 const nodes=new Map();
 function element(id){if(!nodes.has(id)){const hidden=new Set();nodes.set(id,{innerHTML:'',attributes:{},classList:{toggle(name,on){on?hidden.add(name):hidden.delete(name)},contains:name=>hidden.has(name)},setAttribute(name,value){this.attributes[name]=value},querySelectorAll(){return []}})}return nodes.get(id)}
-const portal={$:element,root:{location:{search:''},document:{body:{classList:{toggle(){}}},querySelector:()=>element('monitor-switch')}},URLSearchParams,setPageTitle(){},registeredDirectory:[],administrationEvents:[],tournamentPortalOpen:true,registeredTournamentsOpen:false,tournamentEntryOpen:false,activeMonitor:'general',demoMode:()=>false,state:{tournaments:[]},escapeHtml:hub.escapeHtml||((s)=>s)};
+const portal={$:element,root:{location:{search:''},document:{body:{classList:{toggle(){}}},querySelector:()=>element('monitor-switch')}},URLSearchParams,setPageTitle(){},registeredDirectory:[],directoryPartial:false,administrationEvents:[],tournamentPortalOpen:true,registeredTournamentsOpen:false,tournamentEntryOpen:false,activeMonitor:'general',demoMode:()=>false,state:{tournaments:[]},escapeHtml:hub.escapeHtml||((s)=>s)};
 const renderer=source.slice(source.indexOf('  function renderEventDeletion(){'),source.indexOf('  function resetGeneralView(){'));
 vm.runInNewContext(renderer+';renderTournamentShelf()',portal);
 assert.equal(element('hubTournamentShelf').classList.contains('hidden'),false);

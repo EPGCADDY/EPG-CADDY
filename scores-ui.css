@@ -49,6 +49,7 @@ body.private-live-view .scores-compact td:nth-child(4){color:inherit}body.privat
 #gscWhatsAppInvitation label{display:block;margin:12px 0 6px;font-size:13px;color:#c9cecc}
 #gscWhatsAppInvitation input{box-sizing:border-box;width:100%;min-height:44px;padding:10px;background:#080b09;color:#fff;border:1px solid #454b47;border-radius:8px;font:16px Arial,sans-serif}
 #gscWhatsAppInvitation button:not([data-gsc-close]){display:block;box-sizing:border-box;width:100%;min-height:44px;margin:12px 0 0;padding:10px 14px;background:#080b09;color:#31ff00;border:1px solid #31ff00;border-radius:8px;font:700 14px Arial,sans-serif}
+#gscWhatsAppInvitation button[hidden]{display:none!important}
 #gscWhatsAppInvitation button.primary{background:#31ff00;color:#000}
 #gscWhatsAppInvitation button:disabled{opacity:.4}
 #gscWhatsAppInvitation output{display:block;overflow-wrap:anywhere;padding:16px 0 2px;color:#31ff00;font:700 18px Arial,sans-serif}
