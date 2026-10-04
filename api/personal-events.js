@@ -9,7 +9,7 @@ import {isAllowedAppOrigin,handleAppPreflight} from './_lib/cors.js';
 import {noStore,readJson} from './_lib/http.js';
 import {handleLive} from './live.js';
 import {refreshPrivateRoundLifecycle} from './_lib/private-round-lifecycle.js';
-import {accessError,viewPersonalEventCode,joinPersonalTournamentCode,eventKind,eventScope,ensurePersonalAccess,personalMember,organizer,assignedPlayers,validateAssignedConfiguration,issuePersonalInvite,consumePersonalInvite,auditPersonal,limitPersonalAccess} from './_lib/personal-event-access.js';
+import {inspectTournamentEntryCode,organizerEntryCode,accessError,viewPersonalEventCode,joinPersonalTournamentCode,eventKind,eventScope,ensurePersonalAccess,personalMember,organizer,assignedPlayers,validateAssignedConfiguration,issuePersonalInvite,consumePersonalInvite,auditPersonal,limitPersonalAccess} from './_lib/personal-event-access.js';
 
 const modes=['general','match_play','four_ball','stableford','universales'];
 const categories=['championship','a','b','c','d','female','senior','super_senior'];
@@ -46,6 +46,7 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
     if(body.action==='organizer-status'){try{const permission=await tournamentOrganizer(sql,req,account);return res.status(200).json({ok:true,canCreate:true,owner:permission.owner})}catch(error){if(error.code!=='TOURNAMENT_ORGANIZER_REQUIRED')throw error;return res.status(200).json({ok:true,canCreate:false,accountCode:account.id})}}
     if(body.action==='organizer-redeem')return res.status(200).json(await redeemTournamentOrganizer(sql,account,body.code));
     if(body.action==='view-code')return res.status(200).json(await viewPersonalEventCode(sql,body,account));
+    if(body.action==='inspect-tournament-code')return res.status(200).json(await inspectTournamentEntryCode(sql,body,account));
     if(body.action==='join-code')return res.status(200).json(await joinPersonalTournamentCode(sql,body,account));
     if(body.action==='redeem')return res.status(200).json(await consumePersonalInvite(sql,body,account));
     if(body.action==='list'){
@@ -81,6 +82,7 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
       const repairs=await sql`SELECT id,details FROM gsc_personal_audit WHERE event_id=${id}::uuid AND event_kind=${kind} AND action='hole_positions_corrected' ORDER BY id`;
       return res.status(200).json({ok:true,scoreRepairs:repairs.map(row=>({id:String(row.id),roundId:row.details.roundId,mapping:row.details.mapping,players:row.details.players})),accountCode:account.id,tournament:{...rows[0],status:member.event_status,configuration:member.configuration},membership:{role:member.role,groupLabel:member.group_label,players:member.players},streams:streams.map(row=>({id:row.id,scope:row.scope,groupLabel:row.group_label,revision:Number(row.revision),snapshot:row.current_snapshot?{...row.current_snapshot,personal:true,players:(row.current_snapshot.players||[]).map(player=>({...player,participantId:id+':'+row.group_label+':'+player.id}))}:null}))});
     }
+    if(body.action==='organizer-entry-code')return res.status(200).json(await organizerEntryCode(sql,id,kind,account));
     if(body.action==='share-code'){
       codeAccessEnabled();if(member.event_status!=='active'||!['organizer','player','scorer'].includes(member.role)||!member.players.length)throw accessError('PERSONAL_WRITER_FORBIDDEN');
       const grant=await issueEntryCode(sql,{issuerId:account.id,role:'viewer',eventId:id,eventKind:kind});
