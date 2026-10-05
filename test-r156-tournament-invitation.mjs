@@ -29,7 +29,7 @@ const menu=fs.readFileSync('shortcuts-ui.js','utf8'),normal=menu.slice(menu.inde
 const redirects=JSON.parse(fs.readFileSync('vercel.json')).redirects;assert.equal(redirects.find(r=>r.source==='/torneo/:nombre').destination,'/index-grupal.html?inicio=1&invitation=1');
 console.log('PASS R156: one code prompt; invalid access denied; link opens exact event using current name; rename preserves prior links; no player invitation controls; creator actions only in Organizador; scores/timer unchanged.');
 
-const admin=fs.readFileSync('event-administration.html','utf8'),adminUI=fs.readFileSync('event-administration-ui.js','utf8');assert.match(admin,/<details id="administrativePermissions"><summary>PERMISOS ADMINISTRATIVOS<\/summary>/);assert.doesNotMatch(admin,/<details id="administrativePermissions" open/);assert.match(adminUI,/<details><summary>PERMISOS<\/summary>/);assert.match(adminUI,/ownerLogin'\).hidden=!!result.owner/);console.log('PASS simplified administration: administrative permissions collapsed; per-event permissions collapsed; owner login hidden after authenticated owner listing; API permissions unchanged.');
+const admin=fs.readFileSync('event-administration.html','utf8'),adminUI=fs.readFileSync('event-administration-ui.js','utf8');assert.doesNotMatch(admin,/administrativePermissions|organizerPermissions|ownerLogin|ACTIVAR MI PERMISO/);assert.doesNotMatch(adminUI,/data-grants|data-revoke|function grants|function organizers/);console.log('PASS R167 simplified administration: permission panels and grant/revoke dialogs removed by owner order; API permissions unchanged.');
 
 
 const cardHTML=fs.readFileSync('index-grupal.html','utf8');

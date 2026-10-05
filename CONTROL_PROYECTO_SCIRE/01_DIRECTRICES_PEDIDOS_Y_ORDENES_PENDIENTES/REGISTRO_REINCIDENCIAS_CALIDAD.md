@@ -1328,3 +1328,25 @@ Control añadido: el dueño persistido se deriva como organizador sólo al cotej
 
 
 R166 — build detectó metadatos de release obsoletos en instalación LAB. `release.json` avanzó pero `service-worker.js` y `index-grupal.html` conservaron R163, haciendo fallar `test-lab-registration-private-rounds-entry.mjs`. Escape: la prueba de integración no se ejecutó localmente antes del primer envío a Preview. Control permanente: ejecutar `node test-lab-registration-private-rounds-entry.mjs` y `node scripts/build-manual-lab.mjs` en el candidato completo, además de alinear RELEASE_FALLBACK y gscg-release con release.json. Estado: corrección incorporada; build Preview pendiente.
+
+
+## R167 · Administración: WhatsApp visible, confirmación de copia y retiro de permisos
+Orden 4 octubre 18:50 Guatemala: retirar permisos administrativos, permisos de tarjetas y ventanas de generar/revocar. Causa del cuadro fuera de vista: Administración no cargaba scores-ui.css, único propietario del position:fixed/inset/z-index de scores-detail-backdrop. Copia informaba en status fuera de vista; ahora confirma junto al botón sólo después de writeText resuelto y muestra error local. Solicitud de código y permisos de servidor se conservan. Regresión VM PASS; Preview/navegador y publicación pendientes. QA explícito antes/después usa archivos baseline R166 capturados, APIs simuladas y share simulado; no acredita WhatsApp real/iPhone ni igualdad de bases aisladas. Rollback f23728439a73a5087e051f837049ac1dcd8cca6f.
+- `event-administration.html` · modificación/control R167.
+- `event-administration-ui.js` · modificación/control R167.
+- `test-event-administration.mjs` · modificación/control R167.
+- `test-r167-admin-share-feedback.mjs` · modificación/control R167.
+- `scripts/fixtures` · modificación/control R167.
+- `scripts/fixtures/r167-admin-browser.html` · modificación/control R167.
+- `scripts/build-manual-lab.mjs` · modificación/control R167.
+- `index-grupal.html` · modificación/control R167.
+- `service-worker.js` · modificación/control R167.
+- `release.json` · modificación/control R167.
+- `ROADMAP_OVERALL.md` · modificación/control R167.
+- `ROADMAP_A_DETALLE.md` · modificación/control R167.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · modificación/control R167.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · modificación/control R167.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · modificación/control R167.
+- `test-r156-tournament-invitation.mjs` · actualiza expectativa heredada de permisos al retiro ordenado R167; build remoto anterior se detuvo en esta expectativa, no se promovió.
+R167 QA: el fixture se ejecuta después del parser y omite auth-gate.js sólo en datos simulados porque su ruta de prueba no es Administración. La aplicación conserva auth-gate.js sin cambio.
+R167 navegador QA detectó X raíz sobre X del cuadro WhatsApp: raíz con z-index 2147483001 superaba backdrop 11000; ocultar sólo main>[data-gsc-close] mientras #gscWhatsAppInvitation existe. event-administration.html y test-r167-admin-share-feedback.mjs agregan control permanente. Antes posición static top820/bottom1664; después fixed top0/bottom844 en viewport844; confirmación de copia visible. Envíos QA separados verificados; clipboard virtual de CUA no permite leer el portapapeles nativo, no se acredita lectura física.
