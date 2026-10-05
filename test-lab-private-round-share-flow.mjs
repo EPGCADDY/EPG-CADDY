@@ -22,7 +22,7 @@ assert.equal(JSON.parse(success.stored.get('golf-score-card-gt-private-round-v1'
 await success.make('[data-copy-event-code]').onclick();assert.equal(success.calls.find(call=>call.type==='copy').text,'ABCD234567');
 await success.make('[data-share-private-round]').onclick();
 await success.make('[data-send-invitation]').onclick();
-assert.equal(success.calls.find(call=>call.type==='share').payload.text,'GOLF SCORE CARD GT\nTe ha invitado a participar en el grupo de Jaime Kirste.\nAbre este enlace y registra a tus jugadores.\nhttps://golf.example/index-grupal.html?inicio=1\n\nMODALIDAD\nMI GRUPO\nEl código llegará en el siguiente mensaje.');
+assert.equal(success.calls.find(call=>call.type==='share').payload.text,'GOLF SCORE CARD GT\nTe ha invitado a participar en el grupo de Jaime Kirste.\nAbre este enlace y registra a tus jugadores.\nhttps://golf.example/index-grupal.html?inicio=1\n\nMODALIDAD\nMI GRUPO\n\nCÓDIGO DE INGRESO\nABCD234567');
 await success.make('[data-send-code]').onclick();
 assert.equal(success.calls.filter(call=>call.type==='share').length,2);
 assert.equal(success.calls.filter(call=>call.type==='share')[1].payload.text,'ABCD234567');
@@ -38,5 +38,5 @@ console.log('PASS R147 private round share: code → WhatsApp/native recipients 
 
 const tournament=setup();tournament.context.GSCPersonalEvents.presentCreatedTournament({eventId,name:'Copa Santa Delfina',joinCode:'ABCD234567',configuration:{creatorName:'Jaime Kirste'}});
 assert.equal(tournament.make('h3').textContent,'TORNEO CREADO');await tournament.make('[data-share-private-round]').onclick();await tournament.make('[data-send-invitation]').onclick();
-assert.equal(tournament.calls.find(call=>call.type==='share').payload.text,'GOLF SCORE CARD GT\nTe ha invitado a participar en el torneo Copa Santa Delfina.\nAbre este enlace y registra a tus jugadores.\nhttps://golf.example/index-grupal.html?inicio=1\n\nMODALIDAD\nTORNEO\nEl código llegará en el siguiente mensaje.');await tournament.make('[data-send-code]').onclick();assert.equal(tournament.calls.filter(call=>call.type==='share')[1].payload.text,'ABCD234567');
-console.log('PASS R163 integration: invitation and standalone copy/share code for group/tournament, cancellation/retry and explicit Score Card return.');
+assert.equal(tournament.calls.find(call=>call.type==='share').payload.text,'GOLF SCORE CARD GT\nTe ha invitado a participar en el torneo Copa Santa Delfina.\nAbre este enlace y registra a tus jugadores.\nhttps://golf.example/index-grupal.html?inicio=1\n\nMODALIDAD\nTORNEO\n\nCÓDIGO DE INGRESO\nABCD234567');await tournament.make('[data-send-code]').onclick();assert.equal(tournament.calls.filter(call=>call.type==='share')[1].payload.text,'ABCD234567');
+console.log('PASS R173 integration: first invitation includes code and standalone copy/share code for group/tournament, cancellation/retry and explicit Score Card return.');
