@@ -512,6 +512,7 @@
     if(shortcut==="remove")$("hubRemoveGeneral")?.click();
     if(shortcut==="clear-board")$("hubClearFavorites")?.click();
     if(params.has("directory")){showTournamentPortal();registeredTournamentsOpen=true;renderTournamentShelf()}
+    const administrationSelection=registeredDirectory.find(item=>item.token===params.get('directoryEvent'));if(administrationSelection)await selectSavedTournament(administrationSelection.token);
     if(publicDisplay)activatePublicDisplay();
     return true;
   }

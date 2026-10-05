@@ -3898,3 +3898,10 @@ R167 navegador QA detectó X raíz sobre X del cuadro WhatsApp: raíz con z-inde
 - Persisten bloqueos de sincronización de registros LAB/Producción y revisión privada autenticada; no declarar 100% físico de iPhone.
 
 - R170: Administración vacía indica falta de eventos administrables en este entorno; no afirma ausencia de torneos públicos. La sincronización de registros permanece pendiente.
+
+## R171 · 2026-10-04 · Directorio global único en Administración y Scores
+- `api/event-administration.js` identifica el entorno de su lista autorizada; no altera autorización ni base de datos.
+- `event-administration-ui.js` reúne los torneos públicos de `/api/tournament-score-directory` con los grupos/eventos administrables locales, deduplicando por entorno, tipo e ID. Eventos públicos no autorizados no reciben códigos ni acciones de borrado. Error o lista parcial no equivale a vacío.
+- `live-hub.js`: VER SCORES abre exactamente el torneo seleccionado por entorno/ID.
+- `test-r167-admin-share-feedback.mjs`: cuarenta torneos en dos entornos, ID repetido entre entornos, grupo privado local, autoridad local, códigos ajenos excluidos y fallo de identidad. Revisión en navegador de ambas listas y apertura de cada torneo antes de publicar.
+- Pendiente/BLOQUEADO: grupos privados de otras cuentas/orígenes no se exponen públicamente ni se migran. No declarar sincronización privada ni 100% de revisión nativa iPhone.

@@ -1,4 +1,5 @@
 import {getDatabase} from './_lib/database.js';
+import {tournamentDirectoryEnvironment} from './tournament-score-directory.js';
 import {ensureTournamentOrganizers,issueTournamentOrganizer} from './_lib/tournament-organizers.js';
 import {requireOwner} from './_lib/app-access.js';
 import {requireAccountSession} from './_lib/account-auth.js';
@@ -22,7 +23,7 @@ export async function handleEventAdministration(req,res,database=getDatabase,own
  const items=await sql`SELECT id,name,status,expires_at,'tournament' AS event_kind FROM live_tournaments UNION ALL SELECT id,name,status,expires_at,'private' AS event_kind FROM live_private_rounds`;
  const events=[];for(const item of items){try{const authority=await eventAdminAuthority(sql,{eventId:item.id,eventKind:item.event_kind},account,owner);if(item.status!=='revoked'&&new Date(item.expires_at)>new Date())events.push({...item,authority:authority.authority})}catch(error){if(error.code!=='EVENT_ADMIN_REQUIRED')throw error}}
  const receipts=owner?await sql`SELECT * FROM gsc_event_deletions ORDER BY deleted_at DESC LIMIT 200`:await sql`SELECT * FROM gsc_event_deletions WHERE actor_account_id=${account.id} ORDER BY deleted_at DESC LIMIT 200`;
- return res.status(200).json({ok:true,owner,accountCode:account.id,events,receipts});
+ return res.status(200).json({ok:true,owner,accountCode:account.id,source:tournamentDirectoryEnvironment(process.env,req.headers?.host),events,receipts});
  }
  const event={eventId:body.eventId,eventKind:eventKind(body.eventKind)};
  if(body.action==='issue')return res.status(200).json(await issueEventAdmin(sql,event,account,owner,body));

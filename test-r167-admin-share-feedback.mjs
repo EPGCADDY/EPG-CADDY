@@ -18,3 +18,17 @@ for(const fails of [false,true]){
  const context={messages:{},window:{GSCPersonalEvents:{request:async(action,payload)=>{requested={action,...payload};return {ok:!fails,joinCode:'QA12345678',code:'DENIED'}},message:()=> 'ACCESO DENEGADO'},GSCWhatsAppInvitations:{open:options=>{opened++;assert.equal(options.code,'QA12345678');assert.equal(options.eventName,'EPG QA');return true}}}};vm.createContext(context);vm.runInContext(helpers,context);await context.shareTournament(button,{id:'qa-event',name:'EPG QA'});assert.equal(opened,fails?0:1);assert.equal(requested.eventId,'qa-event');assert.equal(button.disabled,false);assert.equal(status.textContent,fails?'ACCESO DENEGADO':'');
 }
 console.log('PASS R167: required dialog CSS, no permission controls, clipboard success/error/duplicate, exact event share and visible denial.');
+
+const directoryHelpers=source.slice(source.indexOf('function administrationRows'),source.indexOf('let refreshSequence'));
+const directoryContext={escape:s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),encodeURIComponent};vm.createContext(directoryContext);vm.runInContext(directoryHelpers,directoryContext);
+const publicEvents=['lab','production'].flatMap(source=>Array.from({length:20},(_,n)=>({source,id:'event-'+n,name:'Torneo '+n,status:'active'})));
+for(const source of ['lab','production']){
+ const local={ok:true,source,events:[{id:'event-0',name:'Torneo 0',event_kind:'tournament',authority:'owner'},{id:'private-1',name:'Mi Grupo',event_kind:'private',authority:'creator'}]};
+ const rows=directoryContext.administrationRows(local,{ok:true,events:publicEvents});assert.equal(rows.filter(row=>row.event_kind==='tournament').length,40);assert.equal(rows.length,41);
+ assert.equal(rows.filter(row=>row.canAdminister).length,2);assert.equal(rows.filter(row=>row.id==='event-0'&&row.event_kind==='tournament').length,2,'Same ID across environments must remain distinct');
+ const own=rows.find(row=>row.id==='event-0'&&row.source===source);assert.match(directoryContext.administrationCard(own,{'event-0':'CODE123456'}),/data-delete/);
+ const foreign=rows.find(row=>row.id==='event-0'&&row.source!==source);const card=directoryContext.administrationCard(foreign,{'event-0':'CODE123456'});assert.doesNotMatch(card,/data-delete|data-copy-tournament|data-share-tournament|CODE123456/);assert.match(card,/directoryEvent=directory_/);
+ const failed=directoryContext.administrationRows({ok:false},{ok:true,events:publicEvents});assert.equal(failed.length,40);assert.equal(failed.filter(row=>row.canAdminister).length,0);
+}
+assert.match(source,/LISTA GLOBAL INCOMPLETA/);assert.match(fs.readFileSync('live-hub.js','utf8'),/registeredDirectory\.find\(item=>item\.token===params\.get\('directoryEvent'\)\)/);
+console.log('PASS R171: same 40 global tournament identities in both Administration lists, local private group retained, homonyms and same IDs across origins distinct, foreign actions/codes excluded, failed identity preserves public list, exact Scores target.');
