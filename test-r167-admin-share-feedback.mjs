@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 const source=fs.readFileSync('event-administration-ui.js','utf8'),html=fs.readFileSync('event-administration.html','utf8');
+assert.match(html,/body\.gsc-admin-page:has\(#gscWhatsAppInvitation\) main>\[data-gsc-close\]\{visibility:hidden!important\}/);
 assert.match(html,/href="\/scores-ui.css"/);
 assert.doesNotMatch(html,/administrativePermissions|organizerPermissions|ACTIVAR MI PERMISO/);
 assert.doesNotMatch(source,/data-grants|data-revoke|function grants|function organizers/);
