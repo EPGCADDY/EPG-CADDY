@@ -3807,3 +3807,8 @@ R167 navegador QA detectó X raíz sobre X del cuadro WhatsApp: raíz con z-inde
 Administración y Scores consultan el directorio global cada 5 segundos mientras la página está visible, y al volver o recuperar conexión. Conservan las listas conocidas ante respuesta parcial/error; las consultas tienen límite de 8 segundos y no se superponen. Administración conserva ventanas abiertas y no vuelve a emitir códigos si los eventos locales no cambiaron. Scores no reemplaza la selección ni el detalle abierto; evita reconstruir tarjetas sin cambios. Verificación: test-r172-directory-auto-refresh.mjs y regresiones R167/R168/R158. QA de llegada usa fixture explícito scripts/fixtures/r172-auto-directory.html sin crear eventos reales. Latencia: siguiente consulta más respuesta del servidor; no se declara propagación instantánea ni revisión nativa de iPhone.
 
 Archivo R172: `directory-auto-refresh.js` — controlador compartido de consulta automática, reanudación y timeout para Administración y Scores.
+
+
+## R172 — reparación del sello de inventario (2026-10-05)
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: se corrigió `sourceDigest` para que coincida con los SHA de los 905 archivos activos del árbol Git de R172. La huella anterior no correspondía al contenido comprometido y bloqueó Vercel en INVENTORY GATE; los tres tamaños y SHA-256 de los PDF permanecen intactos.
+- Archivos de registro: `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
