@@ -81,5 +81,5 @@
   }
   let connecting=false;
   async function syncPending(value){const item=saved();if(connecting||!item?.creator||item.roundId||!value?.configured)return;connecting=true;try{const result=await root.GSCLiveControl.connectPrivateRound(item.id,item.joinCode,value);if(result.ok)store({...item,roundId:value.id})}finally{connecting=false}}
-  root.GSCPrivateRounds={open,openCreate,openScores,openGroupScores,leaveGroup,list,close,syncPending};
+  root.GSCPrivateRounds={openTournamentUnavailable:()=>show("SCORES TORNEO","<p>NO PERTENECES A NINGÚN TORNEO</p>"),open,openCreate,openScores,openGroupScores,leaveGroup,list,close,syncPending};
 })(globalThis);

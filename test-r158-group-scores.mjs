@@ -32,3 +32,19 @@ for(const kind of ['private','tournament'])for(const bound of [true,false]){
  for(const prefix of ['activeTournamentHeading','setupEventIdentification']){assert.equal(nodes[prefix].hidden,!bound);if(bound)assert.equal(nodes[prefix+'Name'].textContent,(kind==='private'?'MI GRUPO':'TORNEO')+' · QA EVENT')}
 }
 console.log('PASS R158 identification in Inicio and Score Card, exact current membership only.');
+
+// R170: the tournament button shows its own empty-membership screen.
+const tournamentOpening=app.slice(app.indexOf('async function openRoundTournament('),app.indexOf('$("roundTournamentScoresButton").addEventListener'));
+for(const scenario of ['none','group','foreign-round','empty-membership','joined','network']){
+ let notice=0,navigation='',requested=0;const status={textContent:''};
+ const selection=scenario==='none'?null:{personal:true,id:'event',roundId:scenario==='foreign-round'?'other':'current',eventKind:scenario==='group'?'private':'tournament'};
+ const context={URL,round,location:{origin:'https://example.test',href:'https://example.test/index-grupal.html',assign:url=>navigation=url},persist(){},currentRoundReturnPath:()=>'/index-grupal.html?round_return=1',localStorage:{getItem:()=>JSON.stringify(selection)},$:()=>status,window:{GSCPrivateRounds:{openTournamentUnavailable:()=>notice++},GSCLiveControl:{prepareTournamentScores:async()=>{}},GSCPersonalEvents:{request:async()=>{requested++;return scenario==='network'?{ok:false,code:'NETWORK_ERROR'}:{ok:true,membership:{players:scenario==='joined'?[{id:'player'}]:[]}}},message:()=> 'SIN CONEXIÓN'}}};
+ vm.runInNewContext(tournamentOpening+';this.openTournament=openRoundTournament',context);
+ await context.openTournament(true,'general');
+ assert.equal(JSON.stringify(round),before);
+ if(scenario==='joined'){assert.equal(notice,0);assert.match(navigation,/personalEvent=event/)}
+ else if(scenario==='network'){assert.equal(notice,0);assert.equal(status.textContent,'SIN CONEXIÓN');assert.equal(navigation,'')}
+ else {assert.equal(notice,1);assert.equal(navigation,'')}
+}
+assert.match(source,/openTournamentUnavailable:.*NO PERTENECES A NINGÚN TORNEO/);
+console.log('PASS R170: empty tournament membership screen, unrelated groups and rounds excluded, joined route retained, network error distinct, round unchanged.');

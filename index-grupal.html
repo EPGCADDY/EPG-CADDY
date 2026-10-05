@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/official-logos/golf-score-card-gt-apple-touch-v345-180.png">
 <title>LABORATORIO</title>
 <meta name="gscg-build" content="V363-RECORDED-MOBILE-BEHAVIOR-20260828">
-  <meta name="gscg-release" content="20261004-R169">
+  <meta name="gscg-release" content="20261004-R170">
 <meta name="gscg-explicit-new-round-entry" content="V364-EXPLICIT-NEW-ROUND-ENTRY-20260828">
 <meta name="gscg-active-round-recovery" content="V365-ACTIVE-ROUND-RECOVERY-20260828">
 <meta name="gscg-principal-entry-recovery" content="V366-PRINCIPAL-ENTRY-RECOVERY-20260828">
@@ -4115,9 +4115,10 @@ async function openRoundTournament(scores=false,monitor="general",eventKind="tou
     const selected=selection?.personal&&selection.roundId===round.id&&selection.eventKind===eventKind?selection:null;
     const currentEvent=current.searchParams.get('personalKind')===eventKind?current.searchParams.get('personalEvent'):null;
     const eventId=selected?.id||(round.personalEventId===currentEvent?currentEvent:null);
-    if(!eventId){$('status').textContent='ESTA TARJETA NO ESTÁ REGISTRADA EN '+(eventKind==='private'?'UNA RONDA':'UN TORNEO');return false}
+    if(!eventId){if(eventKind==='tournament')window.GSCPrivateRounds.openTournamentUnavailable();else $('status').textContent='NO PERTENECES A NINGÚN GRUPO';return false}
     const access=await window.GSCPersonalEvents.request('read',{eventId,eventKind});
-    if(!access.ok||!access.membership?.players?.length){$('status').textContent=window.GSCPersonalEvents.message(access.code||'PERSONAL_WRITER_FORBIDDEN');return false}
+    if(!access.ok){$('status').textContent=window.GSCPersonalEvents.message(access.code||'PERSONAL_WRITER_FORBIDDEN');return false}
+    if(!access.membership?.players?.length){if(eventKind==='tournament')window.GSCPrivateRounds.openTournamentUnavailable();else $('status').textContent='NO PERTENECES A NINGÚN GRUPO';return false}
     url.searchParams.set('shortcut','scores');url.searchParams.set('personalEvent',eventId);url.searchParams.set('personalKind',eventKind);
     if(["categories","search","board"].includes(monitor))url.searchParams.set('monitor',monitor);
     await window.GSCLiveControl?.prepareTournamentScores?.(round);
