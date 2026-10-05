@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+let now=0,id=0,timers=new Map(),listeners={},calls=0,states=[],resolvePending;
+const document={visibilityState:'visible',addEventListener:(n,f)=>listeners[n]=f,removeEventListener:n=>delete listeners[n]};
+const root={document,navigator:{onLine:true},AbortController,Date,Promise,setTimeout:(f,d)=>{timers.set(++id,{f,at:now+d});return id},clearTimeout:id=>timers.delete(id),addEventListener:(n,f)=>listeners[n]=f,removeEventListener:n=>delete listeners[n]};
+vm.runInNewContext(fs.readFileSync('directory-auto-refresh.js','utf8'),root);
+const flush=async()=>{for(let n=0;n<12;n++)await Promise.resolve()};
+async function advance(ms){now+=ms;for(const [key,t]of [...timers])if(t.at<=now){timers.delete(key);t.f()}await flush()}
+let hang=false;
+const loop=root.GSCDirectoryAutoRefresh.create({refresh:async signal=>{calls++;if(hang)return new Promise(r=>resolvePending=r);return{ok:true}},onState:s=>states.push(s)});
+loop.start();await flush();assert.equal(calls,1);await advance(4999);assert.equal(calls,1);await advance(1);assert.equal(calls,2);
+document.visibilityState='hidden';listeners.visibilitychange();await advance(10000);assert.equal(calls,2);
+document.visibilityState='visible';listeners.visibilitychange();await flush();assert.equal(calls,3);
+root.navigator.onLine=false;await advance(5000);assert.equal(calls,3);assert.equal(states.at(-1).ok,false);
+root.navigator.onLine=true;listeners.online();await flush();assert.equal(calls,4);
+hang=true;listeners.focus();await flush();listeners.focus();await flush();assert.equal(calls,5);hang=false;resolvePending({ok:true});await flush();assert.equal(calls,6,'resume during request runs once immediately');
+hang=true;await advance(5000);assert.equal(calls,7);await advance(8000);assert.equal(states.at(-1).ok,false,'hung request is bounded');hang=false;await advance(5000);assert.equal(calls,8);loop.stop();await advance(10000);assert.equal(calls,8);
+const source=fs.readFileSync('live-hub.js','utf8'),begin=source.indexOf('  async function refreshRegisteredDirectory('),end=source.indexOf('  let scoresPageTitle',begin);let answer={ok:true,events:[{id:'a',source:'lab',name:'Family'}]},renders=0;
+const ctx={root:{fetch:async()=>({ok:true,json:async()=>answer})},renderTournamentShelf:()=>renders++};
+vm.createContext(ctx);vm.runInContext('let registeredDirectory=[],directoryPartial=false,tournamentPortalOpen=true;'+source.slice(begin,end)+';this.refresh=refreshRegisteredDirectory;this.rows=()=>registeredDirectory;',ctx);
+await ctx.refresh();assert.equal(ctx.rows().length,1);await ctx.refresh();assert.equal(renders,1,'unchanged directory preserves focus');
+answer={ok:true,events:[...answer.events,{id:'b',source:'production',name:'Nuevo'}]};await ctx.refresh();assert.equal(ctx.rows().length,2);assert.equal(renders,2);
+answer={ok:false};await ctx.refresh();assert.equal(ctx.rows().length,2,'network error retains known tournaments');
+answer={ok:true,partial:true,events:[{id:'c',source:'lab',name:'Otro'}]};await ctx.refresh();assert.equal(ctx.rows().length,3,'partial directory preserves peer tournaments');
+console.log('R172 PASS: periodic polling, resume, offline, overlap, timeout, stop, arrival, unchanged focus and partial-cache preservation');

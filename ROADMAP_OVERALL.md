@@ -161,7 +161,7 @@
 
 - Desde una Score Card activa, tocar LIVE ejecuta directamente `quickShareGroup()` y abre la hoja nativa de compartir para elegir WhatsApp; no muestra ninguna pantalla intermedia. La regla común cubre General, Universales, Stableford, Match Play y Four Ball.
 - La invitación propietaria de 24 horas viaja como texto completo con `/access.html?invite=TOKEN`; WhatsApp conserva el token. `access.html` acepta query y el formato fragmento anterior, elimina el token visible y canjea exclusivamente por POST. Un GET de previsualización no consume la invitación.
-- No cambia scores, ronda activa, persistencia, controles de ACTUALIZAR ni privacidad.
+- No cambia scores, ronda activa, persistencia, contles de ACTUALIZAR ni privacidad.
 
 ## V407-R22 · LIVE abre la ronda activa en todas las modalidades · 9 de septiembre de 2026
 
@@ -999,7 +999,7 @@ Archivos de esta versión:
 - `test-v407-r9-manual-update.mjs`
 - `test-voice-result-integrity.mjs`
 
-`Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`: sello de microfono_compartido actualizado sólo por corrección universal autorizada; SHA previo conservado, aprobación física R32 pendiente. Banco V358 restaurado sin cambios; liberación de audio dentro de startAiUniversalListening.
+`Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`: sello de microfono_compartido actualizado sólo por corrección universal autorizada; SHA previo conservado, aprobación física R32 ndiente. Banco V358 restaurado sin cambios; liberación de audio dentro de startAiUniversalListening.
 
 
 ## 2026-09-13 · R33 · Error visible en comunicación universal
@@ -1476,7 +1476,7 @@ Pruebas manuales técnicas PASS; regresión amplía bloqueo a GPS y llamadas wea
 
 - FINAL R10 · AUDIO INDIVIDUAL POR NOMBRE 2026-09-22: se corrige exclusivamente el toque sobre el nombre del jugador. El listener pasa a delegación global en fase capture sobre `#scorecard .player-name[data-audio-player="1"]`, por lo que sigue funcionando después de cualquier re-render y aunque otros controles detengan propagación. La resolución usa primero `data-player-id` real y fallback por slot visual. Tocar un nombre reproduce sólo el acumulado de ese jugador. FRONT/BACK/TOTAL no se modifican.
 
-- FINAL R9 · FLUJO DE SELECCIÓN DE SCORE 2026-09-22: el ANOTADOR inicia sin ninguna casilla GROSS seleccionada. El usuario debe tocar manualmente la primera casilla a utilizar; esa casilla se marca con borde/resplandor verde. Al tocar 1–9 se registra el score y la selección verde pasa automáticamente a la casilla GROSS del siguiente jugador del mismo hoyo. Al registrar el último jugador, se limpia por completo la selección y la pantalla vuelve al estado normal. Cambiar de hoyo también limpia la selección. No se mueve ni rediseña ningún otro elemento.
+- FINAL R9 · FLUJO DE SELECCIÓN DE SCORE 2026-09-22: el ANOTADOR inicia sin ninguna casilla GROSS seleccionada. El usuario debe tocar manualmente la primera casilla a utilizar; esa casilla se marca con borde/resplandor verde. Al tocar 1–9 se registra el score y la selección verde pasa automáticamente a la casilla GROSS del siguiente jugador del mismo hoyo. Al registrar el último jugador, se limpia por completo la selección y la pantalla vuelve al estado normal. Cambiar de hoyo también limpia la selección. No se mueve ni rediseña nin otro elemento.
 
 - FINAL R10 · VERDE ACTIVO + CAPTURA SILENCIOSA + AUDIO INDIVIDUAL 2026-09-22: la primera casilla no se activa sola; el usuario toca una casilla GROSS para iniciar. La casilla activa se pinta fondo verde neón con texto negro. Tras registrar 1–9, el estado activo se conserva a través del render y se reaplica a la siguiente casilla GROSS; al último jugador se limpia por completo. La captura manual queda 100% silenciosa, incluyendo cierres automáticos de vuelta. El audio sólo se reproduce por acción explícita: tocar el nombre usa `player.id` y lee exclusivamente a ese jugador; FRONT/BACK/TOTAL siguen siendo controles separados de resumen.
 
@@ -3801,3 +3801,9 @@ R167 navegador QA detectó X raíz sobre X del cuadro WhatsApp: raíz con z-inde
 - `live-hub.js`: VER SCORES abre exactamente el torneo seleccionado por entorno/ID.
 - `test-r167-admin-share-feedback.mjs`: cuarenta torneos en dos entornos, ID repetido entre entornos, grupo privado local, autoridad local, códigos ajenos excluidos y fallo de identidad. Revisión en navegador de ambas listas y apertura de cada torneo antes de publicar.
 - Pendiente/BLOQUEADO: grupos privados de otras cuentas/orígenes no se exponen públicamente ni se migran. No declarar sincronización privada ni 100% de revisión nativa iPhone.
+
+
+## R172 — directorio automático (2026-10-04)
+Administración y Scores consultan el directorio global cada 5 segundos mientras la página está visible, y al volver o recuperar conexión. Conservan las listas conocidas ante respuesta parcial/error; las consultas tienen límite de 8 segundos y no se superponen. Administración conserva ventanas abiertas y no vuelve a emitir códigos si los eventos locales no cambiaron. Scores no reemplaza la selección ni el detalle abierto; evita reconstruir tarjetas sin cambios. Verificación: test-r172-directory-auto-refresh.mjs y regresiones R167/R168/R158. QA de llegada usa fixture explícito scripts/fixtures/r172-auto-directory.html sin crear eventos reales. Latencia: siguiente consulta más respuesta del servidor; no se declara propagación instantánea ni revisión nativa de iPhone.
+
+Archivo R172: `directory-auto-refresh.js` — controlador compartido de consulta automática, reanudación y timeout para Administración y Scores.
