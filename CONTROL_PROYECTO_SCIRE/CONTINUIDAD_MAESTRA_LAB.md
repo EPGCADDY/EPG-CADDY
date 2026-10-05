@@ -1535,3 +1535,4 @@ PASS dirigido: 20 organizadores por entorno (40 torneos activos) aparecen en amb
 - `scripts/review-r159-whatsapp-two-messages.mjs`, `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R163_WHATSAPP/` · revisión Chromium local PASS a 390/430 px; no constituye prueba física.
 - `scores-ui.css` · conserva ocultos los controles de código antes del primer envío.
 - `scripts/build-manual-lab.mjs`, `index-grupal.html`, `service-worker.js`, `release.json` · integración R163.
+- R173-B1: capturas LAB/PROD muestran R155 aunque HTML tenía meta R173; badge inicial de `index-grupal.html` corregido a R173, build interno sincronizado a `20261005-R173-B1` en `release.json` y `service-worker.js`. `test-update-delivery-control.mjs` verifica coherencia. Publicación B1 pendiente de PR, Preview y pantalla confirmada.

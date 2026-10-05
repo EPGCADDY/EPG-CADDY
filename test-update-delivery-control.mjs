@@ -45,6 +45,9 @@ console.log('PASS real R147.2.4 worker: network Manual bootstraps independent re
 
 // The real card update handler must keep the scoped personal card/account.
 const app=fs.readFileSync('index-grupal.html','utf8');
+const publishedRelease=JSON.parse(fs.readFileSync('release.json','utf8'));
+assert.equal(app.match(/<meta name="gscg-release" content="([^"]+)"/)[1],publishedRelease.release,'Visible shell metadata must match the published build');
+assert.equal(app.match(/id="appReleaseBadge"[^>]*>([^<]+)/)[1],`VERSIÓN ${publishedRelease.label}`,'The first visible app-version badge must match the release even before JavaScript runs');
 const returnHelper=app.slice(app.indexOf('function currentRoundReturnPath('),app.indexOf('async function openRoundTournament('));
 const install=app.slice(app.indexOf('async function installMandatoryUpdate('),app.indexOf('async function syncPublishedAppVersion('));
 for(const configured of [true,false])for(const origin of ['https://golf-sc-gt-lab.vercel.app','https://epg-caddy.vercel.app']){

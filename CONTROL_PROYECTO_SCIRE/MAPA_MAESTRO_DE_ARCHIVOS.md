@@ -2647,3 +2647,5 @@ Administración y Scores consultan el directorio global cada 5 segundos mientras
 R173: `event-administration-ui.js` muestra origen y alcance de tarjetas públicas; `api/personal-events.js` devuelve origen de lista autorizada; `personal-events.js` presenta alcance local de ID. Regresión en `test-r167-admin-share-feedback.mjs` y `test-r162-single-use-tournament-code.mjs`. Release/meta/SW sincronizados.
 
 R173: `whatsapp-invitations.js` prepara invitación con código incluido; `test-r159-whatsapp-two-messages.mjs` y `test-lab-private-round-share-flow.mjs` verifican payload/copia/cancelación/regreso. Recuperación Vercel confirmada HTTP 200 en ambos dominios (R172); R173 pendiente de nuevo Preview tras corregir el helper R162.
+
+R173-B1: `index-grupal.html` muestra R173 desde el HTML inicial; `release.json` y `service-worker.js` comparten `20261005-R173-B1` para forzar detección de la corrección visual. `test-update-delivery-control.mjs` impide discrepancia entre etiqueta y meta.
