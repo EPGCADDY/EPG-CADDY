@@ -3809,3 +3809,22 @@ Administración y Scores consultan el directorio global cada 5 segundos mientras
 Se recalculó `sourceDigest` sobre los SHA de Git de los 905 archivos activos. La huella anterior no correspondía al árbol comprometido y hacía fallar INVENTORY GATE. Vercel también detectó una expresión inválida en `index-grupal.html`; se restauró el límite `Math.min(18, Number(maxHole)||18)`. Los tres PDF permanecen sellados en `INVENTARIOS_V311.lock.json`.
 
 R172 — Se restauró íntegramente el historial anterior desde main y se conservaron únicamente las anotaciones de esta versión.
+
+## R172 — archivos incluidos en la consolidación (2026-10-05)
+La puerta de hoja de ruta registra el alcance integrado en main:
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
+- `ROADMAP_A_DETALLE.md`
+- `ROADMAP_OVERALL.md`
+- `directory-auto-refresh.js`
+- `event-administration-ui.js`
+- `event-administration.html`
+- `index-grupal.html`
+- `live-hub.html`
+- `live-hub.js`
+- `release.json`
+- `scripts/build-manual-lab.mjs`
+- `scripts/fixtures/r172-auto-directory.html`
+- `service-worker.js`
+- `test-r172-directory-auto-refresh.mjs`
