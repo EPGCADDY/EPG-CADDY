@@ -3838,3 +3838,7 @@ Verificación física de `golf-sc-gt-lab`: el grupo QA se creó, copió su códi
 
 ### R166 · manifiesto de release común a LAB y Producción
 `release.json` usa identificador neutral `20261004-R166`; los proyectos conservan la misma versión R166 en ambos entornos.
+
+
+### R166 · regeneración del sello después del ajuste de release
+`ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` quedan sincronizados con el manifiesto común R166.
