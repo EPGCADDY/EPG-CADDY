@@ -38,8 +38,11 @@ export async function ensurePersonalAccess(sql){
 }
 export async function limitPersonalAccess(sql,account,action){const maximum=['read','list','identity'].includes(action)?240:120,rows=await sql`INSERT INTO gsc_personal_limits(account_id,action,minute,count) VALUES(${account.id},${action},date_trunc('minute',now()),1) ON CONFLICT(account_id,action,minute) DO UPDATE SET count=gsc_personal_limits.count+1 RETURNING count`;if(rows[0].count>maximum)throw accessError('PERSONAL_RATE_LIMITED',429)}
 export async function personalMember(sql,eventId,kind,account){
-  const rows=await sql`SELECT m.*,e.owner_account_id,e.status AS event_status,e.configuration FROM gsc_personal_members m JOIN gsc_personal_events e USING(event_id,event_kind) WHERE m.event_id=${eventId}::uuid AND m.event_kind=${kind} AND m.account_id=${account.id} AND m.revoked_at IS NULL LIMIT 1`;
-  if(!rows.length)throw accessError('PERSONAL_EVENT_FORBIDDEN');return rows[0];
+  const rows=await sql`SELECT m.*,e.owner_account_id,e.status AS event_status,e.configuration FROM gsc_personal_events e LEFT JOIN gsc_personal_members m ON m.event_id=e.event_id AND m.event_kind=e.event_kind AND m.account_id=${account.id} AND m.revoked_at IS NULL WHERE e.event_id=${eventId}::uuid AND e.event_kind=${kind} AND (m.account_id=${account.id} OR e.owner_account_id=${account.id}) LIMIT 1`;
+  if(!rows.length)throw accessError('PERSONAL_EVENT_FORBIDDEN');
+  const member=rows[0];
+  if(!member.account_id)return{...member,account_id:account.id,role:'organizer',display_name:account.name||'Organizador',group_label:'',players:[],stream_id:null,revoked_at:null};
+  return member.owner_account_id===account.id&&member.role!=='organizer'?{...member,role:'organizer'}:member;
 }
 export async function organizer(sql,eventId,kind,account){const member=await personalMember(sql,eventId,kind,account);if(member.role!=='organizer'||member.owner_account_id!==account.id)throw accessError('PERSONAL_ORGANIZER_REQUIRED');return member}
 export async function auditPersonal(sql,id,kind,account,action,details={}){await sql`INSERT INTO gsc_personal_audit(event_id,event_kind,actor_account_id,action,details) VALUES(${id}::uuid,${kind},${account.id},${action},${JSON.stringify(details)}::jsonb)`}
