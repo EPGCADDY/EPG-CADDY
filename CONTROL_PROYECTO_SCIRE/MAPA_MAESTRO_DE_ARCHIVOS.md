@@ -2643,3 +2643,7 @@ R167 navegador QA detectó X raíz sobre X del cuadro WhatsApp: raíz con z-inde
 
 ## R172 — directorio automático (2026-10-04)
 Administración y Scores consultan el directorio global cada 5 segundos mientras la página está visible, y al volver o recuperar conexión. Conservan las listas conocidas ante respuesta parcial/error; las consultas tienen límite de 8 segundos y no se superponen. Administración conserva ventanas abiertas y no vuelve a emitir códigos si los eventos locales no cambiaron. Scores no reemplaza la selección ni el detalle abierto; evita reconstruir tarjetas sin cambios. Verificación: test-r172-directory-auto-refresh.mjs y regresiones R167/R168/R158. QA de llegada usa fixture explícito scripts/fixtures/r172-auto-directory.html sin crear eventos reales. Latencia: siguiente consulta más respuesta del servidor; no se declara propagación instantánea ni revisión nativa de iPhone.
+
+R173: `event-administration-ui.js` muestra origen y alcance de tarjetas públicas; `api/personal-events.js` devuelve origen de lista autorizada; `personal-events.js` presenta alcance local de ID. Regresión en `test-r167-admin-share-feedback.mjs` y `test-r162-single-use-tournament-code.mjs`. Release/meta/SW sincronizados.
+
+R173: `whatsapp-invitations.js` prepara invitación con código incluido; `test-r159-whatsapp-two-messages.mjs` y `test-lab-private-round-share-flow.mjs` verifican payload/copia/cancelación/regreso. Recuperación Vercel confirmada HTTP 200 en ambos dominios (R172); R173 pendiente de nuevo Preview tras corregir el helper R162.

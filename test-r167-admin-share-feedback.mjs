@@ -27,7 +27,7 @@ for(const source of ['lab','production']){
  const rows=directoryContext.administrationRows(local,{ok:true,events:publicEvents});assert.equal(rows.filter(row=>row.event_kind==='tournament').length,40);assert.equal(rows.length,41);
  assert.equal(rows.filter(row=>row.canAdminister).length,2);assert.equal(rows.filter(row=>row.id==='event-0'&&row.event_kind==='tournament').length,2,'Same ID across environments must remain distinct');
  const own=rows.find(row=>row.id==='event-0'&&row.source===source);assert.match(directoryContext.administrationCard(own,{'event-0':'CODE123456'}),/data-delete/);
- const foreign=rows.find(row=>row.id==='event-0'&&row.source!==source);const card=directoryContext.administrationCard(foreign,{'event-0':'CODE123456'});assert.doesNotMatch(card,/data-delete|data-copy-tournament|data-share-tournament|CODE123456/);assert.match(card,/directoryEvent=directory_/);
+ const foreign=rows.find(row=>row.id==='event-0'&&row.source!==source);const card=directoryContext.administrationCard(foreign,{'event-0':'CODE123456'});assert.doesNotMatch(card,/data-delete|data-copy-tournament|data-share-tournament|CODE123456/);assert.match(card,/directoryEvent=directory_/);assert.ok(card.includes('TORNEO · '+(foreign.source==='lab'?'LABORATORIO':'PRODUCCIÓN')));assert.match(card,/CONSULTA DE SCORES/);
  const failed=directoryContext.administrationRows({ok:false},{ok:true,events:publicEvents});assert.equal(failed.length,40);assert.equal(failed.filter(row=>row.canAdminister).length,0);
 }
 assert.match(source,/LISTA GLOBAL INCOMPLETA/);assert.match(fs.readFileSync('live-hub.js','utf8'),/registeredDirectory\.find\(item=>item\.token===params\.get\('directoryEvent'\)\)/);

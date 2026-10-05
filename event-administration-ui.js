@@ -16,7 +16,8 @@ function administrationRows(local,directory){
 function administrationCard(e,codes){
  const authorized=e.canAdminister,code=authorized&&e.event_kind==='tournament'?codes[e.id]:'';
  const scores=e.event_kind==='tournament'?'<a href="/live-hub.html?directoryEvent='+encodeURIComponent('directory_'+e.source+'_'+e.id)+'">VER SCORES</a>':'';
- return '<article data-event-id="'+escape(e.id)+'" data-event-source="'+escape(e.source)+'"><h3>'+escape(e.name)+'</h3><p>'+escape(e.event_kind==='private'?'GRUPO':'TORNEO')+'</p>'+scores+(code?'<p>ID DE TORNEO · UN SOLO USO</p><output>'+escape(code)+'</output><button data-copy-tournament="'+escape(e.id)+'">COPIAR ID</button><button data-share-tournament="'+escape(e.id)+'">COMPARTIR POR WHATSAPP</button>':'')+'<p data-event-status="'+escape(e.id)+'" role="status" aria-live="polite"></p>'+(authorized?'<button class="danger" data-delete="'+escape(e.id)+'">ELIMINAR</button>':'')+'</article>';
+ const origin=e.source==='lab'?'LABORATORIO':'PRODUCCIÓN';
+ return '<article data-event-id="'+escape(e.id)+'" data-event-source="'+escape(e.source)+'"><h3>'+escape(e.name)+'</h3><p>'+escape(e.event_kind==='private'?'GRUPO':'TORNEO')+' · '+origin+'</p>'+(!authorized?'<p>CONSULTA DE SCORES · ID Y GESTIÓN DISPONIBLES PARA SU ORGANIZADOR EN '+origin+'</p>':'')+scores+(code?'<p>ID DE TORNEO · UN SOLO USO</p><output>'+escape(code)+'</output><button data-copy-tournament="'+escape(e.id)+'">COPIAR ID</button><button data-share-tournament="'+escape(e.id)+'">COMPARTIR POR WHATSAPP</button>':'')+'<p data-event-status="'+escape(e.id)+'" role="status" aria-live="polite"></p>'+(authorized?'<button class="danger" data-delete="'+escape(e.id)+'">ELIMINAR</button>':'')+'</article>';
 }
 let refreshSequence=0,cachedLocal={ok:false},cachedDirectory={ok:false},cachedCodes={},lastRowsSignature='';
 async function refresh({automatic=false,signal}={}){

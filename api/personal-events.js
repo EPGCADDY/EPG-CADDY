@@ -1,4 +1,5 @@
 import {refreshEventLifecycles} from './_lib/event-lifecycle.js';
+import {tournamentDirectoryEnvironment} from './tournament-score-directory.js';
 import {tournamentOrganizer,redeemTournamentOrganizer} from './_lib/tournament-organizers.js';
 import {personalAccessEnabled} from './_lib/personal-access-activation.js';
 import {codeAccessEnabled,issueEntryCode} from './_lib/code-access.js';
@@ -52,7 +53,7 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
     if(body.action==='list'){
       const rows=await sql`SELECT e.event_id,e.event_kind,e.status,e.configuration,CASE WHEN e.owner_account_id=${account.id} THEN 'organizer' ELSE m.role END AS role,COALESCE(m.display_name,e.configuration->>'creatorName',${account.name||'Organizador'}) AS display_name,COALESCE(m.players,'[]'::jsonb) AS players,COALESCE(m.group_label,'') AS group_label FROM gsc_personal_events e LEFT JOIN gsc_personal_members m ON m.event_id=e.event_id AND m.event_kind=e.event_kind AND m.account_id=${account.id} AND m.revoked_at IS NULL WHERE e.owner_account_id=${account.id} OR m.account_id=${account.id}`;
       const events=[],aliases=[];for(const row of rows){const scoped=eventScope(sql,row.event_kind),live=await scoped`SELECT id,name,status,viewer_token_hash,expires_at FROM live_tournaments WHERE id=${row.event_id}::uuid`;if(live.length)aliases.push({eventId:row.event_id,eventKind:row.event_kind,hash:live[0].viewer_token_hash,removed:live[0].status==='revoked'||new Date(live[0].expires_at)<=new Date()});if(live.length&&live[0].status!=='revoked'&&new Date(live[0].expires_at)>new Date())events.push({eventId:row.event_id,eventKind:row.event_kind,name:live[0].name,status:row.status,role:row.role,configuration:row.configuration,players:row.players,groupLabel:row.group_label})}
-      return res.status(200).json({ok:true,events,aliases,accountCode:account.id});
+      return res.status(200).json({ok:true,events,aliases,accountCode:account.id,source:tournamentDirectoryEnvironment(process.env,req.headers?.['x-forwarded-host']||req.headers?.host||'')});
     }
     const kind=eventKind(body.eventKind||'tournament');
     if(body.action==='create'){
