@@ -3812,3 +3812,9 @@ Archivo R172: `directory-auto-refresh.js` — controlador compartido de consulta
 ## R172 — reparación del sello de inventario (2026-10-05)
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: se corrigió `sourceDigest` para que coincida con los SHA de los 905 archivos activos del árbol Git de R172. La huella anterior no correspondía al contenido comprometido y bloqueó Vercel en INVENTORY GATE; los tres tamaños y SHA-256 de los PDF permanecen intactos.
 - Archivos de registro: `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.
+
+
+## R172 — reparación de compilación y sello de inventario (2026-10-05)
+- `index-grupal.html`: `preferredManualHole` recupera el límite válido `Math.min(18, Number(maxHole)||18)`; Vercel detectó `Math.8` y paréntesis desbalanceados en el candidato.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: `sourceDigest` recalculado sobre los 905 blobs del árbol corregido; los tres tamaños y SHA-256 de los PDF permanecen intactos.
+- Registro del cambio en `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`.

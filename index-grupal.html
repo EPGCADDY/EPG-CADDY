@@ -3755,7 +3755,7 @@ function applyManualScoreEntries(entries){
   return result
 }
 function preferredManualHole({roundId,renderedRoundId,selectedHole,firstPending,maxHole=18}){
-  const limit=Math.max(1,Math.8,Number(maxHole)||18)),pending=Math.max(1,Math.min(limit,Number(firstPending)||1));
+  const limit=Math.max(1,Math.min(18,Number(maxHole)||18)),pending=Math.max(1,Math.min(limit,Number(firstPending)||1));
   if(String(renderedRoundId||"")!==String(roundId||""))return pending;
   return Math.max(1,Math.min(limit,Number(selectedHole)||pending))
 }
