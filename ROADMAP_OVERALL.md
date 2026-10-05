@@ -3738,3 +3738,7 @@ Verificación física de `golf-sc-gt-lab`: el grupo QA se creó, copió su códi
 
 ### R166 · regeneración del sello después del ajuste de release
 `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` quedan sincronizados con el manifiesto común R166.
+
+
+### R166 · identificador común en la aplicación y caché instalada
+`service-worker.js` y `index-grupal.html` usan el mismo identificador neutral que `release.json`; prueba `test-lab-registration-private-rounds-entry.mjs` valida el acuerdo.
