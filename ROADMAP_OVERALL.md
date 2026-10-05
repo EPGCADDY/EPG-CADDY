@@ -3730,3 +3730,7 @@ Verificación física de `golf-sc-gt-lab`: el grupo QA se creó, copió su códi
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · prevención de la discrepancia entre autoridad administrativa y membresía.
 - `index-grupal.html`, `service-worker.js`, `release.json` · identificadores R166 consistentes para actualización instalada y build visible.
 - `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` · registro doble de R166.
+
+
+### R166 · manifiesto de release común a LAB y Producción
+`release.json` usa identificador neutral `20261004-R166`; los proyectos conservan la misma versión R166 en ambos entornos.
