@@ -1478,3 +1478,6 @@ R177: la verificación de destino usa la sesión real emitida tras el canje, no 
 
 ### R178 · Recuperación de propietario heredado
 La lista ocultaba controles de administración porque torneos anteriores a la identidad personal carecían de vínculo de propietario. El reclamo ahora requiere la clave de organizador almacenada en el dispositivo y validada contra el hash del evento; incluye eventos vencidos no revocados para permitir su limpieza. Verificar Administración, Score Card y etiqueta `ELIMINAR TORNEO` en LAB antes de cualquier promoción.
+
+
+R178 · 6 octubre 2026 · Eliminar sin respuesta: causa disabled en filas del directorio sin autoridad reconocida; escape: se probó sólo la fila autorizada. Control permanente: botón público accionable, confirmación sin petición y cancelación sin borrado; permiso revalidado en API. Pruebas R167/R171 y R152 PASS. Publicación pendiente.

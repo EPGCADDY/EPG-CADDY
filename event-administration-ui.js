@@ -19,7 +19,7 @@ function administrationCard(e){
  const scores='<nav aria-label="SCORES '+escape(e.name)+'"><a href="'+escape(scoresHref(e,'general'))+'">SCORES · GENERAL</a><a href="'+escape(scoresHref(e,'categories'))+'">SCORES · CATEGORÍAS</a></nav>';
  const sharing=authorized?'<button data-share-event="'+key+'">COMPARTIR CÓDIGO</button>':'<button disabled aria-label="Compartir requiere permiso de organizador">COMPARTIR · ORGANIZADOR</button>';
  const deleteLabel='ELIMINAR '+kind;
- const deleting=authorized?'<button class="danger" data-delete="'+key+'">'+deleteLabel+'</button>':'<button class="danger" disabled aria-label="Eliminar requiere permiso de organizador">'+deleteLabel+'</button>';
+ const deleting='<button class="danger" data-delete="'+key+'">'+deleteLabel+'</button>';
  return '<article data-event-id="'+escape(e.id)+'" data-event-source="'+escape(e.source)+'"><h3>'+escape(e.name)+'</h3><p>'+kind+' · '+origin+'</p>'+(!authorized?'<p>CONSULTA DE SCORES · COMPARTIR Y ELIMINAR REQUIEREN AUTORIZACIÓN DEL ORGANIZADOR</p>':'')+scores+sharing+'<p data-event-status="'+key+'" role="status" aria-live="polite"></p>'+deleting+'</article>';
 }
 let refreshSequence=0,cachedLocal={ok:false},cachedDirectory={ok:false},cachedCodes={},lastRowsSignature='';
@@ -40,7 +40,7 @@ async function refresh({automatic=false,signal}={}){
  if(!directory.ok||directory.partial||result.partial)$('status').textContent+=' · LISTA GLOBAL INCOMPLETA · INICIA SESIÓN DE CUENTA Y REINTENTA';
  $('events').innerHTML='<h2>TORNEOS Y GRUPOS</h2>'+rows.map(e=>administrationCard(e)).join('');
  if(!rows.length)$('events').insertAdjacentHTML('beforeend','<p>'+(!directory.ok||directory.partial||!result.ok?'NO SE PUDO COMPROBAR LA LISTA COMPLETA · REINTENTA':'NO HAY TORNEOS ACTIVOS NI GRUPOS DISPONIBLES PARA TU CUENTA.')+'</p>');
- document.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>remove(rows.find(e=>e.canAdminister&&e.source+':'+e.event_kind+':'+e.id===b.dataset.delete)));
+ document.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>remove(rows.find(e=>e.source+':'+e.event_kind+':'+e.id===b.dataset.delete)));
  document.querySelectorAll('[data-copy-tournament]').forEach(b=>b.onclick=()=>copyTournamentId(b,codes[b.dataset.copyTournament]));
  document.querySelectorAll('[data-share-event]').forEach(b=>b.onclick=()=>shareEvent(b,rows.find(e=>e.canAdminister&&e.source+':'+e.event_kind+':'+e.id===b.dataset.shareEvent)));
  const params=new URLSearchParams(location.search),requested=rows.find(e=>e.canAdminister&&e.id===params.get('eventId')&&e.event_kind===params.get('eventKind'));if(requested&&!requestedEventOpened&&!automatic){requestedEventOpened=true;remove(requested)}
@@ -50,7 +50,7 @@ function event(e){return{eventId:e.id,eventKind:e.event_kind}}
 function preserveReturnTarget(){const link=document.querySelector('[data-gsc-close]'),target=new URLSearchParams(location.search).get('returnTo');if(!link||!target)return;try{const destination=new URL(target,location.origin);if(destination.origin===location.origin&&destination.pathname==='/index-grupal.html')link.href=destination.pathname+destination.search+destination.hash}catch{}}
 preserveReturnTarget();
 function open(content){$('action').innerHTML=content;$('actionStatus').textContent='';$('actionDialog').showModal()}
-function remove(e){const label='ELIMINAR '+(e.event_kind==='private'?'GRUPO':'TORNEO');open('<h2>'+(e.event_kind==='tournament'?'CONFIRMA ELIMINAR':'CONFIRMAR '+label)+'</h2><p>'+escape(e.name)+'</p><button class="danger" id="confirmDelete">'+label+'</button>');$('confirmDelete').onclick=async()=>{const b=$('confirmDelete');b.disabled=true;const local=e.source===cachedLocal.source,result=await call(local?'delete':'remote-delete',{...event(e),...(local?{}:{source:e.source}),confirmName:e.name,reason:'Eliminación confirmada por el usuario'});showStatus(result,'actionStatus');if(result.ok){$('actionDialog').close();await refresh()}else b.disabled=false}}
+function remove(e){if(!e)return;const label='ELIMINAR '+(e.event_kind==='private'?'GRUPO':'TORNEO');open('<h2>'+(e.event_kind==='tournament'?'CONFIRMA ELIMINAR':'CONFIRMAR '+label)+'</h2><p>'+escape(e.name)+'</p><p>¿DESEAS ELIMINAR ESTE '+(e.event_kind==='private'?'GRUPO':'TORNEO')+'?</p><button type="button" id="cancelDelete">CANCELAR</button><button class="danger" id="confirmDelete">'+label+'</button>');$('cancelDelete').onclick=()=>$('actionDialog').close();$('confirmDelete').onclick=async()=>{const b=$('confirmDelete');b.disabled=true;const local=e.source===cachedLocal.source,result=await call(local?'delete':'remote-delete',{...event(e),...(local?{}:{source:e.source}),confirmName:e.name,reason:'Eliminación confirmada por el usuario'});showStatus(result,'actionStatus');if(result.ok){$('actionDialog').close();await refresh()}else b.disabled=false}}
 window.addEventListener('gsc-account-ready',refresh);
 $('refresh').onclick=()=>refresh();
 // Prepare only a device identity, never create a tournament or round.
