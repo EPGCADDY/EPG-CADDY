@@ -4034,3 +4034,8 @@ La suite del Preview detectó que `index-grupal.html` conservaba el texto inicia
 
 R175 · regresión de acceso libre corregida · 6 octubre 2026
 El nuevo Preview encontró sintaxis inválida en las expresiones regulares de `test-lab-account-gate.mjs`. Se corrigió la extracción de `init()` y se hizo explícita la aserción que rechaza abrir el formulario por ausencia de sesión; la prueba no modifica el comportamiento de la app.
+
+
+## R176 · regeneración del inventario y compilación LAB · 6 octubre 2026
+
+Los tres inventarios V311 se regeneraron desde las 908 fuentes del árbol R176. La ejecución local de `PROJECT_QUALITY_GATE`, `ROADMAP GATE`, `INVENTORY GATE` y `build-manual-lab.mjs` pasó completa; el resultado del primer Preview confirmó que ambos ROADMAPS y el sello deben quedar incluidos en el mismo commit. Se registran juntos para repetir el Preview. Revisión visual y dispositivo pendientes; Producción intacta.
