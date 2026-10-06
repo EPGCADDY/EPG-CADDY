@@ -4149,7 +4149,7 @@ async function renderCreatorTournamentCode(){
  if(!privateBound)return;
  if(!round.configured||!eventId||!owned?.joinCode||(owned.tournamentId||owned.id)!==eventId||window.GSCPersonalEvents.membership('personal_'+eventId)?.role!=='organizer')return;
  $("creatorTournamentName").textContent=owned.name||selection?.label||'';$("copyCreatorTournamentCode").textContent=owned.joinCode;panel.hidden=false;
- $("copyCreatorTournamentCode").onclick=()=>{const message='Grupo '+(owned.name||selection?.label||'')+'\nCódigo: '+owned.joinCode;const link='https://wa.me/?text='+encodeURIComponent(message);navigator.clipboard?.writeText(owned.joinCode).then(()=>{$("creatorTournamentCodeStatus").textContent='CÓDIGO COPIADO · COMPARTIR EN WHATSAPP'},()=>{$("creatorTournamentCodeStatus").textContent='COMPARTIR EN WHATSAPP'});window.open(link,'_blank','noopener,noreferrer')};
+ $("copyCreatorTournamentCode").onclick=()=>{const message='Grupo '+(owned.name||selection?.label||'')+'\nCódigo: '+owned.joinCode;const link='https://wa.me/?text='+encodeURIComponent(message);navigator.clipboard?.writeText(owned.joinCode).then(()=>{$("creatorTournamentCodeStatus").textContent='CÓDIGO COPIADO · COMPARTIR EN WHATSAPP'},()=>{$("creatorTournamentCodeStatus").textContent='COMPARTIR EN WHATSAPP'});window.location.assign(link)};
 }
 window.GSCRefreshCreatorCode=()=>{renderActiveTournamentHeading();void renderCreatorTournamentCode()};
 setTimeout(()=>{renderActiveTournamentHeading();renderCreatorTournamentCode()},1500);
