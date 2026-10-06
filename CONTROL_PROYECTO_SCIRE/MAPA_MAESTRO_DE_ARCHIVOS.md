@@ -2691,3 +2691,5 @@ R173-B1: `index-grupal.html` muestra R173 desde el HTML inicial; `release.json` 
 | index-grupal.html, release.json, service-worker.js | Marcan y entregan R177. | Invalidación de caché instalada. |
 
 | test-r167-admin-share-feedback.mjs | Actualiza la regresión histórica al contrato R177 de compartir y permisos entre ambientes. | Se conservan checks de directorio público y homónimos. |
+
+| personal-events.js | Conserva texto accesible del estado sin torneos para compatibilidad del menú ID DE TORNEOS. | Vacío comprobado en ambos ambientes. |

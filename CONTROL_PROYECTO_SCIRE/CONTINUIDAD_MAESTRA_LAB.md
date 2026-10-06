@@ -1555,3 +1555,5 @@ La cuenta se valida en ambos servidores. El ID de torneo conserva su ambiente, e
 Estado: candidato; pendiente banco de pruebas completo, despliegue Preview y verificación real de navegador en ambos alias. Producción sin cambio hasta PASS integral.
 
 R177 test alignment: test-r167-admin-share-feedback.mjs ahora valida shareEvent, códigos y controles bloqueados para filas públicas sin autoridad; la prueba de IDs homónimos conserva la identidad ambiente+tipo+ID.
+
+R177 CI follow-up 2: se conserva el contrato visible de ID de torneos vacío y se indica el alcance de ambos ambientes.
