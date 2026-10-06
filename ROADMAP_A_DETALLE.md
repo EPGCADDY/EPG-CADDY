@@ -3966,3 +3966,7 @@ El diagnóstico R80 detectó que la tarjeta global de juego general imprimía s�
 
 ## R173-B1 CI follow-up · 5 octubre 2026 · dependencias
 El gate completo ejecutaba `build-manual-lab.mjs`, que invoca `test-r163-cross-environment-tournament-scores.mjs` y necesita `@electric-sql/pglite`; el workflow no instalaba dependencias. Se añade instalación reproducible de la versión fijada en `package.json` antes de los gates y se amplía el límite a 10 minutos. CI remoto pendiente.
+
+
+## R173-B1 CI follow-up · 5 octubre 2026 · paquete móvil
+El paquete nativo falló porque `scripts/build-mobile-web.mjs` todavía copiaba `voice-assistant.js`, retirado y sin referencias desde la aplicación o el Service Worker. Se elimina esa entrada obsoleta del conjunto de recursos; CI móvil pendiente.

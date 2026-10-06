@@ -1417,3 +1417,5 @@ RC-R173-B1-CI4 · 5 octubre 2026: test V307 también omitía el estado de empate
 RC-R173-B1-CI5 · 5 octubre 2026: el diagnóstico R80 matrix reveló que la tarjeta global general no mostraba la categoría, a diferencia de las demás modalidades. `strokeHalf` ahora presenta categoría y nombre. La matriz CI debe confirmarlo.
 
 RC-R173-B1-CI6 · 5 octubre 2026: ROADMAP CI ejecutaba el banco R163 sin instalar la dependencia fijada `@electric-sql/pglite@0.5.8`. Se incorpora instalación en el workflow y timeout de diez minutos; los checks deben volver a pasar.
+
+RC-R173-B1-CI7 · 5 octubre 2026: el gate del paquete nativo intentaba incluir `voice-assistant.js`, recurso retirado sin referencias en HTML ni Service Worker. Se elimina del empaquetador móvil. CI móvil debe confirmar que no quedan recursos faltantes.
