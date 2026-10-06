@@ -43,6 +43,6 @@ groupNodes.get('copyCreatorTournamentCode').onclick();
 await Promise.resolve();
 assert.deepEqual(groupCopied,['W2RE4FG8GH']);
 assert.equal(new URL(groupNavigated[0]).origin,'https://wa.me');
-assert.equal(new URL(groupNavigated[0]).searchParams.get('text'),'Grupo FRIENDS\\nCódigo: W2RE4FG8GH');
+assert.equal(new URL(groupNavigated[0]).searchParams.get('text'),'Grupo FRIENDS\nCódigo: W2RE4FG8GH');
 assert.deepEqual(groupOpened,[]);
 assert.equal(groupNodes.get('creatorTournamentCodeStatus').textContent,'CÓDIGO COPIADO · COMPARTIR EN WHATSAPP');
