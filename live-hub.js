@@ -523,7 +523,7 @@
     if(shortcut==="remove")$("hubRemoveGeneral")?.click();
     if(shortcut==="clear-board")$("hubClearFavorites")?.click();
     if(params.has("directory")){showTournamentPortal();registeredTournamentsOpen=true;renderTournamentShelf()}
-    const administrationSelection=resolveDirectoryEventToken(params.get('directoryEvent'),registeredDirectory);if(administrationSelection)await selectSavedTournament(administrationSelection);
+    const administrationSelection=resolveDirectoryEventToken(params.get('directoryEvent'),registeredDirectory);if(administrationSelection){await selectSavedTournament(administrationSelection);const requestedMonitor=params.get("monitor");if(["general","categories"].includes(requestedMonitor))showMonitor(requestedMonitor)}
     const automaticDirectory=root.GSCDirectoryAutoRefresh?.create({refresh:refreshRegisteredDirectory,onState:status=>{const label=$('hubDirectorySync');if(label){label.hidden=!tournamentPortalOpen;label.textContent=status.ok&&!status.partial?'TORNEOS ACTUALIZADOS · '+new Date(status.lastUpdated).toLocaleTimeString('es-GT',{timeZone:'America/Guatemala'}):'REINTENTO AUTOMÁTICO · CONSERVANDO LA LISTA'}}});automaticDirectory?.start({immediate:false});
     if(publicDisplay)activatePublicDisplay();
     return true;

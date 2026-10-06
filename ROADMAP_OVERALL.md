@@ -3931,3 +3931,36 @@ El nuevo Preview encontró sintaxis inválida en las expresiones regulares de `t
 - Regresión integrada en `test-lab-registration-return-state.mjs`: conserva jugadores/scores y niega el desvío para web, estado no reanudado y ronda vacía.
 - R176 en rama aislada basada en el Preview R175. LAB/Producción no promovidos; validar gates, Preview y recorrido de iPhone antes de cierre.
 - Archivos: `index-grupal.html`, `test-lab-registration-return-state.mjs`, ambos ROADMAPS.
+
+## R177 · Administración e ID de torneos federados · 6 de octubre de 2026
+
+La lista de Administración ahora consulta los eventos administrables del ambiente actual y del ambiente par, identifica cada evento por ambiente + tipo + ID y conserva grupos privados junto con torneos. La consulta remota revalida la misma cuenta en el servidor dueño; compartir y eliminar se reenvían sólo a LAB o Producción mediante rutas fijas y vuelven a comprobar permisos en ese ambiente. La identidad local exclusiva de un dispositivo no se convierte en una cuenta compartida: para sincronizar equipos distintos se necesita la sesión de cuenta/propietario reconocida por ambos ambientes. Los eventos ajenos del directorio público siguen en consulta solamente y no reciben código ni capacidad de borrado.
+
+- api/event-administration.js · lista federada autenticada, reenvío seguro de código y eliminación a la base propietaria.
+- api/personal-events.js · permite al organizador compartir un grupo activo aun si todavía no tiene jugadores asignados; sigue siendo código de lectura de un solo uso.
+- event-administration-ui.js · muestra grupos y torneos de los dos ambientes, controles de compartir/eliminar autorizados y accesos de Scores General/Categorías; las acciones usan ambiente + tipo + ID.
+- personal-events.js · ID DE TORNEOS enumera torneos activos administrables de ambos ambientes, genera y presenta el código, permite copiar, WhatsApp y eliminar con confirmación.
+- live-hub.js · conserva la vista General/Categorías al abrir Scores desde Administración.
+- test-r177-cross-device-admin.mjs · controla lista y acciones federadas, cookie de cuenta, separación de ambientes, IDs repetidos y accesos Scores.
+- scripts/build-manual-lab.mjs · integra la regresión R177 al banco de laboratorio.
+- index-grupal.html, release.json, service-worker.js · identificador común R177 y caché renovada.
+- ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md, MAPA_MAESTRO_DE_ARCHIVOS.md, CONTINUIDAD_MAESTRA_LAB.md, registro de reincidencias e inventario V311 · registro versionado y sello de fuentes.
+
+Estado: candidato R177. Debe pasar pruebas del repositorio, CI, Preview READY y recorrido de navegador en ambos alias. No se declara publicado ni se mezclan bases; la autorización de Producción previa permanece sujeta a cero FAIL y evidencia.
+
+R177 test alignment: test-r167-admin-share-feedback.mjs ahora valida shareEvent, códigos y controles bloqueados para filas públicas sin autoridad; la prueba de IDs homónimos conserva la identidad ambiente+tipo+ID.
+
+R177 CI follow-up 2: el mensaje vacío de ID DE TORNEOS conserva la expectativa R156 «NO TIENES TORNEOS» y ahora especifica que se consultaron los dos ambientes autorizados.
+
+
+### R177 · Ajuste federado de administración
+Se corrigió el relay de compartir/eliminar para reenviar la sesión autenticada al ambiente propietario (LAB/Producción), donde cada acción vuelve a validar permisos. Este ajuste queda reflejado en el gate y en los tres previews antes de promoción.
+
+
+R177 prueba de regresión: el harness de eliminación inicializa el ambiente local para validar el borrado del evento seleccionado; el test federado cubre por separado el relay remoto.
+
+
+R177 compatibilidad: código de solo lectura disponible para torneo activo antes de asignar jugadores; el test confirma que no crea cupos ni acceso de escritura.
+
+
+R177 verificación del código viewer: el test valida el evento desde la sesión autenticada creada al canjear el código, sin confiar en datos del cliente.

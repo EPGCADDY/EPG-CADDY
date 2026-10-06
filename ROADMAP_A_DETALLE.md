@@ -4031,3 +4031,36 @@ El nuevo Preview encontró sintaxis inválida en las expresiones regulares de `t
 ## R176 · Reapertura instalada vuelve a Registro · 6 octubre 2026
 
 En la app instalada, cuando iOS devuelve al primer plano una página conservada en memoria, los manejadores de visibilidad/focus/pageshow ahora detectan la ronda recuperada y muestran Registro de jugadores. La acción persiste la tarjeta y no altera gross/netos. Las rutas web ordinarias conservan su destino y no se crea otra ronda. Control: `test-lab-registration-return-state.mjs`, incluido en el banco de LAB. Rama aislada sobre el commit R175; Producción intacta mientras se validan los gates y el flujo en iPhone.
+
+## R177 · Administración e ID de torneos federados · 6 de octubre de 2026
+
+La lista de Administración ahora consulta los eventos administrables del ambiente actual y del ambiente par, identifica cada evento por ambiente + tipo + ID y conserva grupos privados junto con torneos. La consulta remota revalida la misma cuenta en el servidor dueño; compartir y eliminar se reenvían sólo a LAB o Producción mediante rutas fijas y vuelven a comprobar permisos en ese ambiente. La identidad local exclusiva de un dispositivo no se convierte en una cuenta compartida: para sincronizar equipos distintos se necesita la sesión de cuenta/propietario reconocida por ambos ambientes. Los eventos ajenos del directorio público siguen en consulta solamente y no reciben código ni capacidad de borrado.
+
+- api/event-administration.js · lista federada autenticada, reenvío seguro de código y eliminación a la base propietaria.
+- api/personal-events.js · permite al organizador compartir un grupo activo aun si todavía no tiene jugadores asignados; sigue siendo código de lectura de un solo uso.
+- event-administration-ui.js · muestra grupos y torneos de los dos ambientes, controles de compartir/eliminar autorizados y accesos de Scores General/Categorías; las acciones usan ambiente + tipo + ID.
+- personal-events.js · ID DE TORNEOS enumera torneos activos administrables de ambos ambientes, genera y presenta el código, permite copiar, WhatsApp y eliminar con confirmación.
+- live-hub.js · conserva la vista General/Categorías al abrir Scores desde Administración.
+- test-r177-cross-device-admin.mjs · controla lista y acciones federadas, cookie de cuenta, separación de ambientes, IDs repetidos y accesos Scores.
+- scripts/build-manual-lab.mjs · integra la regresión R177 al banco de laboratorio.
+- index-grupal.html, release.json, service-worker.js · identificador común R177 y caché renovada.
+- ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md, MAPA_MAESTRO_DE_ARCHIVOS.md, CONTINUIDAD_MAESTRA_LAB.md, registro de reincidencias e inventario V311 · registro versionado y sello de fuentes.
+
+Estado: candidato R177. Debe pasar pruebas del repositorio, CI, Preview READY y recorrido de navegador en ambos alias. No se declara publicado ni se mezclan bases; la autorización de Producción previa permanece sujeta a cero FAIL y evidencia.
+
+R177 test alignment: test-r167-admin-share-feedback.mjs ahora valida shareEvent, códigos y controles bloqueados para filas públicas sin autoridad; la prueba de IDs homónimos conserva la identidad ambiente+tipo+ID.
+
+R177 CI follow-up 2: el mensaje vacío de ID DE TORNEOS conserva la expectativa R156 «NO TIENES TORNEOS» y ahora especifica que se consultaron los dos ambientes autorizados.
+
+
+### R177 · Relay autenticado entre ambientes
+La administración federada envía las acciones remotas exclusivamente al ambiente opuesto y conserva la sesión del organizador. El origen valida nuevamente el permiso antes de emitir códigos o eliminar eventos; fallos del par se muestran como resultado parcial.
+
+
+R177 regresión: contexto de ambiente en prueba de eliminación y cobertura separada de borrar evento remoto autenticado.
+
+
+R177: validar código de torneo activo sin roster y mantener el acceso compartido en solo lectura hasta la asignación de jugadores.
+
+
+R177: comprobar el alcance del viewer mediante la sesión creada al canjear el código, no mediante el objeto de canje.

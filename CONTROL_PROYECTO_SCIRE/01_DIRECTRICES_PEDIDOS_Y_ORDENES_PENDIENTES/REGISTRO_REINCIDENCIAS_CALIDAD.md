@@ -1451,3 +1451,26 @@ RC-R173-B1-CI7 · 5 octubre 2026: el gate del paquete nativo intentaba incluir `
 - **Punto de escape:** la cobertura existente probaba la URL inicial PWA y la preservación al volver desde Torneos, no la reactivación de una página viva con ronda activa.
 - **Control permanente:** `reopenRegistrationAfterBackground()` cubre los tres eventos de ciclo de vida sólo para la PWA tras ocultarse; persiste la Score Card y abre Registro. La prueba exige jugadores/scores intactos y niega el desvío en web, estado no reanudado o ronda vacía.
 - **Evidencia/estado:** gates de Proyecto, ROADMAP, Inventario, banco LAB, Preview y dispositivo se validan en R176 antes de promover. Producción sin cambios.
+
+## R177 · Eventos fuera de Administración y códigos faltantes
+
+- Causa raíz: la Administración combinaba los eventos de la cuenta del ambiente local con el directorio público de torneos, pero no consultaba los eventos privados/torneos de la cuenta en el ambiente par. ID DE TORNEO leía sólo la membresía del ambiente local; grupos y torneos remotos quedaban fuera. El selector de Scores abría General y no aplicaba la categoría solicitada desde el vínculo.
+- Punto de escape: las regresiones de directorio comprobaban lectura pública, pero no la lista de cuenta entre ambos ambientes, códigos, eliminación por origen ni ambos botones de Scores desde cada fila.
+- Control permanente: test-r177-cross-device-admin.mjs y su inclusión en scripts/build-manual-lab.mjs; autoridad remota revalidada y acciones enlazadas a ambiente + tipo + ID.
+- Estado: candidato R177. Aún no PASS de CI/Preview/browser; no declarar actualizado hasta esos resultados.
+- R177 CI follow-up: el test R167 esperaba el nombre y payload de la función previa. Se alinea a shareEvent y comprueba compartir remoto/local y permisos deshabilitados sin alterar la protección de eventos ajenos.
+
+- R177 CI follow-up 2: test-r156-tournament-invitation.mjs encontró que el estado vacío ya no conservaba «NO TIENES TORNEOS». Se restaura el texto esperado y se añade que la búsqueda cubre ambos ambientes.
+
+
+### R177 · Registro de corrección
+Gate detectó que el relay federado no había quedado persistido en el API final. El relay fue completado y se exige repetir roadmap, inventario, pruebas federadas y los tres previews; no promover con un gate fallido.
+
+
+R177 cierre de test: se corrige el contexto de ambiente faltante en la regresión existente, sin cambiar la lógica de eliminación.
+
+
+R177 requisito validado: compartir torneo activo sin roster debe ser posible y permanecer read-only hasta que organizador asigne jugadores.
+
+
+R177: la verificación de destino usa la sesión real emitida tras el canje, no un campo inexistente de la respuesta.

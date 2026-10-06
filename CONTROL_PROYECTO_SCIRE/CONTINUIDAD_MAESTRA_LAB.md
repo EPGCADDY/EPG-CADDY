@@ -1546,3 +1546,27 @@ Base: cf79332641e4353413cc72fad64385339446ccb1. Se reprodujo en LAB el salto des
 ## Continuidad R176 · 6 octubre 2026
 
 Base: Preview R175 `f2e9cbbcaaf9cc4aee157adc71b73c0827c58df9`. La reapertura de la PWA desde segundo plano debe mostrar Registro de jugadores y preservar la ronda activa. Cambio en `index-grupal.html`; regresión en `test-lab-registration-return-state.mjs`; release/caché R176 alineados. Recorrer Preview y confirmar persistencia de roster y scores antes de cualquier promoción; Producción permanece en R174.
+
+## Continuidad R177 · 2026-10-06
+
+Objetivo: administración e ID de torneos reúnen los eventos activos administrables desde los dos dispositivos/ambientes, entregan códigos de compartir y acción Eliminar; Administración incorpora Scores General y Categorías.
+Fuente: EPGCADDY/EPG-CADDY main R176 4775d0ae6fa75ad4dbb9fe2ee66157d62c179188.
+La cuenta se valida en ambos servidores. El ID de torneo conserva su ambiente, el tipo y su UUID. Una identidad local anónima o de un único dispositivo no puede descubrir eventos privados de otro dispositivo; se muestra estado parcial cuando la cuenta remota no valida. Los torneos públicos sin autoridad conservan sólo Scores de lectura. Los datos LAB y Producción no se migran.
+Estado: candidato; pendiente banco de pruebas completo, despliegue Preview y verificación real de navegador en ambos alias. Producción sin cambio hasta PASS integral.
+
+R177 test alignment: test-r167-admin-share-feedback.mjs ahora valida shareEvent, códigos y controles bloqueados para filas públicas sin autoridad; la prueba de IDs homónimos conserva la identidad ambiente+tipo+ID.
+
+R177 CI follow-up 2: se conserva el contrato visible de ID de torneos vacío y se indica el alcance de ambos ambientes.
+
+
+### R177 · Corrección del relay
+El relay de acciones remotas conserva la sesión autenticada y revalida autorización en el ambiente propietario. Gate de roadmap e inventario y previews de LAB, Producción y recovery deben quedar en verde antes de promoción.
+
+
+R177 prueba: inicializar origen local en el test de eliminación y mantener cobertura independiente para relay remoto autenticado.
+
+
+R177 regresión de invitación: compartir antes de asignar roster solo emite acceso viewer, sin jugadores ni permisos de escritura.
+
+
+R177 prueba: validar el evento compartido leyendo la sesión derivada del token viewer.

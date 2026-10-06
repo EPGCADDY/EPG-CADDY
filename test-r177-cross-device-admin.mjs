@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import {readFile} from 'node:fs/promises';
+import {handleEventAdministration} from './api/event-administration.js';
+
+const calls=[];
+const sql=async(strings)=>{const query=strings.join(' ');if(query.includes('INSERT INTO gsc_personal_limits'))return[{count:1}];if(query.includes("SELECT id,name,status,expires_at,'tournament'"))return[];return[]};
+const owner=async()=>({id:'owner-account',name:'Owner'});
+const invoke=async(body,{host='golf-sc-gt-lab.vercel.app',cookie='session=valid',fetcher=async(url,init)=>{calls.push({url,init});return{status:200,json:async()=>({ok:true,events:[]})}}}={})=>{let status=200,result,headers={};await handleEventAdministration({method:'POST',headers:{host,origin:'https://'+host,cookie},body},{setHeader:(k,v)=>headers[k]=v,status(n){status=n;return this},json(value){result=value;return this}},()=>sql,owner,undefined,fetcher,{GSC_ENVIRONMENT:'lab'});return{status,result,headers}};
+const listed=await invoke({action:'list'});assert.equal(listed.status,200);assert.equal(listed.result.partial,false);assert.equal(calls.at(-1).url,'https://epg-caddy.vercel.app/api/event-administration');assert.deepEqual(JSON.parse(calls.at(-1).init.body),{action:'list-local'});assert.equal(calls.at(-1).init.headers.Cookie,'session=valid');
+const remoteEvent={id:'11111111-1111-4111-8111-111111111111',name:'Grupo remoto',event_kind:'private',status:'active',source:'production'};
+const withRemote=await invoke({action:'list'},{fetcher:async(url,init)=>({status:200,json:async()=>({ok:true,events:[remoteEvent]})})});assert.equal(withRemote.result.events[0].source,'production');assert.equal(withRemote.result.events[0].event_kind,'private');
+calls.length=0;const shared=await invoke({action:'remote-share',source:'production',eventId:remoteEvent.id,eventKind:'private'});assert.equal(shared.status,200);assert.equal(calls[0].url,'https://epg-caddy.vercel.app/api/personal-events');assert.deepEqual(JSON.parse(calls[0].init.body),{action:'share-code',eventId:remoteEvent.id,eventKind:'private'});
+calls.length=0;const deleted=await invoke({action:'remote-delete',source:'production',eventId:remoteEvent.id,eventKind:'private',confirmName:remoteEvent.name,reason:'confirmado'});assert.equal(deleted.status,200);assert.equal(calls[0].url,'https://epg-caddy.vercel.app/api/event-administration');assert.deepEqual(JSON.parse(calls[0].init.body),{action:'delete',eventId:remoteEvent.id,eventKind:'private',confirmName:remoteEvent.name,reason:'confirmado'});
+calls.length=0;const rejected=await invoke({action:'remote-delete',source:'lab',eventId:remoteEvent.id,eventKind:'private',confirmName:remoteEvent.name,reason:'confirmado'});assert.equal(rejected.status,400);assert.equal(calls.length,0,'same-environment relay must be rejected');
+const ui=await readFile('event-administration-ui.js','utf8'),personal=await readFile('personal-events.js','utf8'),hub=await readFile('live-hub.js','utf8');
+assert.match(ui,/remote-share/);assert.match(ui,/remote-delete/);assert.match(ui,/SCORES · GENERAL/);assert.match(ui,/SCORES · CATEGORÍAS/);
+assert.match(personal,/ID DE TORNEOS/);assert.match(personal,/remote-share/);assert.match(personal,/remote-delete/);assert.match(personal,/data-delete-owned-event/);
+assert.match(hub,/if\(\["general","categories"\]\.includes\(requestedMonitor\)\)showMonitor\(requestedMonitor\)/);
+const rowsSource=ui.match(/function administrationRows\(local,directory\)\{[\s\S]*?\n\}/)?.[0],hrefSource=ui.match(/function scoresHref\(e,monitor\)\{[^\n]*\}/)?.[0],cardSource=ui.match(/function administrationCard\(e\)\{[\s\S]*?\n\}/)?.[0];
+assert.ok(rowsSource&&hrefSource&&cardSource);
+const context={cachedLocal:{source:'lab'},escape:s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;')};vm.createContext(context);vm.runInContext(rowsSource+';'+hrefSource+';'+cardSource,context);
+const remoteRows=context.administrationRows({ok:true,source:'lab',events:[remoteEvent]}, {ok:true,events:[]});assert.equal(remoteRows[0].source,'production');assert.equal(remoteRows[0].canAdminister,true);
+const card=context.administrationCard(remoteRows[0]);assert.match(card,/ELIMINAR/);assert.match(card,/COMPARTIR CÓDIGO/);assert.match(card,/SCORES · GENERAL/);assert.match(card,/SCORES · CATEGORÍAS/);assert.match(card,/https:\/\/epg-caddy\.vercel\.app\/live-hub\.html/);
+console.log('PASS R177 federación LAB/Producción: lista autorizada cross-device, entorno y tipo preservados, share/delete reenviados con sesión al origen correcto, rechazo del mismo origen, Scores General/Categorías, y enlaces de grupos al entorno propietario.');

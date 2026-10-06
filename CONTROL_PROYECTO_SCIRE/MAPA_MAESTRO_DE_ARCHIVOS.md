@@ -2676,3 +2676,33 @@ R173-B1: `index-grupal.html` muestra R173 desde el HTML inicial; `release.json` 
 | `index-grupal.html`, `test-lab-registration-return-state.mjs` | En una PWA que vuelve del segundo plano con ronda activa, muestra Registro y conserva tarjeta, jugadores y scores. | Regresión de ciclo de vida; la web normal y ronda vacía conservan su ruta. |
 | `release.json`, `service-worker.js` | Identifican y distribuyen R176 con caché renovada. | ACTUALIZAR reconoce el release nuevo; Producción se mantiene hasta gates y verificación. |
 | Ambos ROADMAPS, este mapa, registro de reincidencias e inventario V311 | Documentan causa, cambio, control y sello. | Gates documental y de inventario. |
+
+## R177 · Administración e ID federados
+
+| Archivo | Función | Alcance |
+|---|---|---|
+| api/event-administration.js | Lista eventos que la cuenta puede administrar en ambos ambientes y remite acciones a su origen. | Ambiente + tipo + ID; el servidor remoto vuelve a autorizar. |
+| api/personal-events.js | Comparte código de lectura de grupos activos, incluso sin roster asignado. | Un solo uso y permiso vigente. |
+| event-administration-ui.js | Lista torneos y grupos con Scores General/Categorías, compartir y eliminar. | Acciones habilitadas sólo con autoridad del evento. |
+| personal-events.js | ID DE TORNEOS federado con código, copiar, WhatsApp y eliminar. | Sólo torneos activos administrables por la sesión actual. |
+| live-hub.js | Aplica General/Categorías al abrir el torneo seleccionado. | Conserva origen del evento. |
+| test-r177-cross-device-admin.mjs | Verifica federación, rechazo de origen incorrecto, controles y rutas de Scores. | Parte del banco de LAB. |
+| scripts/build-manual-lab.mjs | Ejecuta la nueva regresión. | Evita que la puerta la omita. |
+| index-grupal.html, release.json, service-worker.js | Marcan y entregan R177. | Invalidación de caché instalada. |
+
+| test-r167-admin-share-feedback.mjs | Actualiza la regresión histórica al contrato R177 de compartir y permisos entre ambientes. | Se conservan checks de directorio público y homónimos. |
+
+| personal-events.js | Conserva texto accesible del estado sin torneos para compatibilidad del menú ID DE TORNEOS. | Vacío comprobado en ambos ambientes. |
+
+
+### R177 · Administración federada
+`api/event-administration.js` fija el peer LAB/Producción y reenvía compartir/eliminar con la sesión; la validación se ejecuta en el origen del evento. `event-administration-ui.js` presenta ambiente y tipo del evento; `personal-events.js` incorpora ID de torneos y controles de código/eliminación.
+
+
+R177 pruebas: `test-event-administration.mjs` valida eliminación local y `test-r177-cross-device-admin.mjs` valida operaciones federadas.
+
+
+R177 flujo de código: `api/personal-events.js` emite código viewer a organizadores de torneos activos incluso antes del roster; `test-lab-code-entry.mjs` verifica ese límite de solo lectura.
+
+
+R177 cobertura: `test-lab-code-entry.mjs` comprueba el alcance del viewer leyendo la sesión del token canjeado.
