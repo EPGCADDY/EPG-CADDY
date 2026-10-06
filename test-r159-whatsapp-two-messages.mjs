@@ -20,3 +20,29 @@ const blank=setup();blank.open({kind:'private',code:'CODE123'});await blank.node
 const fallback=setup({native:false});fallback.open({kind:'private',creatorName:'QA',code:'CODE123'});await fallback.node('[data-send-invitation]').onclick();assert.match(new URL(fallback.navigated[0]).searchParams.get('text'),/MI GRUPO/);assert.ok(new URL(fallback.navigated[0]).searchParams.get('text').endsWith('\nCODE123'));await fallback.node('[data-send-code]').onclick();assert.equal(new URL(fallback.navigated[1]).searchParams.get('text'),'CODE123');
 const old=new Map([['gsc-whatsapp-code-pending-v1','old']]);assert.equal(setup({storage:old}).context.GSCWhatsAppInvitations.resume(),false);assert.equal(old.size,0);
 console.log('PASS R173 WhatsApp: first invitation contains URL and code; optional code-only share and copy are available immediately; tournament and group; cancellation, failure, blank creator, fallback and resume.');
+
+const deployedIndex=fs.readFileSync('index-grupal.html','utf8');
+const handlerMarker='$("copyCreatorTournamentCode").onclick=()=>{';
+const handlerStart=deployedIndex.indexOf(handlerMarker),handlerEnd=deployedIndex.indexOf('};',handlerStart)+2;
+assert.ok(handlerStart>=0&&handlerEnd>handlerStart,'Group ID share handler exists');
+const deployedGroupHandler=deployedIndex.slice(handlerStart,handlerEnd);
+assert.match(deployedGroupHandler,/window\.location\.assign\(link\)/,'WhatsApp must stay in the current browsing context');
+assert.doesNotMatch(deployedGroupHandler,/window\.open\s*\(/,'Group sharing must not create a blank tab');
+const groupNodes=new Map([['copyCreatorTournamentCode',{textContent:'W2RE4FG8GH',onclick:null}],['creatorTournamentCodeStatus',{textContent:''}]]);
+const groupCopied=[],groupNavigated=[],groupOpened=[];
+const groupContext={
+  $:id=>groupNodes.get(id),
+  navigator:{clipboard:{writeText:async code=>groupCopied.push(code)}},
+  window:{location:{assign:url=>groupNavigated.push(url)},open:(...args)=>groupOpened.push(args)},
+  owned:{name:'FRIENDS',joinCode:'W2RE4FG8GH'},
+  selection:{label:'FRIENDS'},
+  encodeURIComponent
+};
+vm.runInNewContext(deployedGroupHandler,groupContext);
+groupNodes.get('copyCreatorTournamentCode').onclick();
+await Promise.resolve();
+assert.deepEqual(groupCopied,['W2RE4FG8GH']);
+assert.equal(new URL(groupNavigated[0]).origin,'https://wa.me');
+assert.equal(new URL(groupNavigated[0]).searchParams.get('text'),'Grupo FRIENDS\\nCódigo: W2RE4FG8GH');
+assert.deepEqual(groupOpened,[]);
+assert.equal(groupNodes.get('creatorTournamentCodeStatus').textContent,'CÓDIGO COPIADO · COMPARTIR EN WHATSAPP');
