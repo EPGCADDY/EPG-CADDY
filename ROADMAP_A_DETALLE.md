@@ -1,3 +1,9 @@
+## R178 · Locución de resultado par como EVEN · 6 de octubre de 2026
+
+- Cuando el resultado relativo al par es cero, el audio dice “EVEN”. Las locuciones de resultados sobre y bajo el par se conservan.
+- Archivos de esta corrección: `index-grupal.html`, `service-worker.js`, `test-lab-player-points-audio.mjs` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+- Conserva el punto de corte `línea 185` y la activación `23 de agosto de 2026, 17:05:00, hora de Guatemala`.
+
 # ROADMAP A DETALLE
 
 ## R174 · 6 octubre 2026 · Recuperación de Scores de torneo federado en LAB

@@ -2233,7 +2233,7 @@ function saveEntry(x){
 }
 function ensureAnnouncedState(){if(!round.announced||typeof round.announced!=="object")round.announced={front:false,back:false,complete:false}}
 function segmentComplete(holes){return round.players.length>0&&round.players.every(p=>requiredHolesForPlayer(p,holes).every(h=>!!p.holes[h]))}
-function versusParSpeech(diff){return diff===0?"par":diff>0?`${diff} sobre par`:`${Math.abs(diff)} bajo par`}
+function versusParSpeech(diff){return diff===0?"EVEN":diff>0?`${diff} sobre par`:`${Math.abs(diff)} bajo par`}
 function segmentSpeech(title,holes){
   const lines=[];
   for(const p of round.players){
