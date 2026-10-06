@@ -3854,3 +3854,7 @@ El gate `test-v307-match-arrows-format.mjs` quedó desfasado: buscaba `· MEDAL 
 
 ## R173-B1 CI follow-up · 5 octubre 2026
 El control V307 tenía una segunda expectativa obsoleta: `matchSymbol` ahora representa el empate con `=` accesible además de las flechas de victoria/derrota. El test se alinea al comportamiento vigente; no cambia la aplicación. CI remoto pendiente.
+
+
+## R173-B1 CI follow-up · 5 octubre 2026 · matriz de categorías
+El diagnóstico R80 detectó que la tarjeta global de juego general imprimía sólo el nombre del jugador. Se corrigió `strokeHalf` para incluir categoría y nombre con el mismo formato accesible que las demás modalidades. CI remoto pendiente.
