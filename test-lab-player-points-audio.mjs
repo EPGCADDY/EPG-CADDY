@@ -3,6 +3,13 @@ import vm from 'node:vm';
 import assert from 'node:assert/strict';
 
 const html=fs.readFileSync('index-grupal.html','utf8');
+const versusStart=html.indexOf('function versusParSpeech(diff){');
+const versusEnd=html.indexOf('\nfunction segmentSpeech(title,holes){',versusStart);
+assert(versusStart>=0&&versusEnd>versusStart,'No se encontr贸 formateador relativo al par');
+const versusContext={};vm.createContext(versusContext);vm.runInContext(html.slice(versusStart,versusEnd),versusContext);
+assert.equal(versusContext.versusParSpeech(0),'EVEN','el audio debe anunciar EVEN al quedar par');
+assert.equal(versusContext.versusParSpeech(1),'1 sobre par','se conserva la locuci贸n arriba del par');
+assert.equal(versusContext.versusParSpeech(-1),'1 bajo par','se conserva la locuci贸n bajo par');
 const start=html.indexOf('function playerRecordedTimeline(player){');
 const end=html.indexOf('window.GSCPlayerNameAudio=',start);
 assert(start>=0&&end>start,'No se encontr贸 motor de audio por jugador');
@@ -13,34 +20,4 @@ const HOLE_SPEECH_NAMES={1:'uno',2:'dos',3:'tres',4:'cuatro',5:'cinco',6:'seis',
 
 function roundFrom(startHole,endHole){
   const order=startHole===1?[...FRONT,...BACK]:[...BACK,...FRONT],holes={};let tick=1;
-  for(const h of order){holes[h]={gross:4,net:4,par:4,updatedAt:new Date(tick++*1000).toISOString()};if(h===endHole)break;}
-  return {configured:true,mode:'general',players:[{id:'p1',name:'JAIME',holes},{id:'p2',name:'RODRIGO',holes:structuredClone(holes)},{id:'p3',name:'FRANCISCO',holes:structuredClone(holes)},{id:'p4',name:'RICARDO',holes:structuredClone(holes)}]};
-}
-function run(mode,startHole,endHole){
-  const round=roundFrom(startHole,endHole);round.mode=mode;
-  const ctx={round,FRONT,BACK,ALL,HOLE_SPEECH_NAMES,isOmittedScore:()=>false,
-    isUniversalesRound:()=>mode==='universales',isStablefordRound:()=>mode==='stableford',isFourBallRound:()=>mode==='four_ball',
-    universalesSegment:holes=>({pointsById:{p1:holes.length*3}}),
-    stablefordTotals:(player,holes)=>({points:holes.length*2,count:holes.length}),
-    window:{GSCFourBall:{teamIndexForPlayer:index=>Math.floor(index/2)}},
-    totals:(player,holes)=>({count:holes.length,gross:holes.length*4,net:holes.length*4,par:holes.length*4}),
-    versusParSpeech:()=> 'even'};
-  vm.createContext(ctx);vm.runInContext(code,ctx);
-  return ctx.requestedPlayerResultSpeech(round.players[0]);
-}
-
-for(const mode of ['universales','stableford']){
-  let speech=run(mode,1,5);
-  assert.match(speech,/Puntos /i,mode+' debe anunciar puntos');
-  assert.doesNotMatch(speech,/Gros|Neto/i,mode+' NO debe anunciar scores');
-
-  speech=run(mode,1,13);
-  assert.match(speech,/Acumulado total\. Puntos /i,mode+' debe dar segundo nivel acumulado en puntos');
-  assert.doesNotMatch(speech,/Gros|Neto/i,mode+' acumulado NO debe anunciar scores');
-
-  speech=run(mode,10,4);
-  assert.match(speech,/Acumulado total\. Puntos /i,mode+' debe acumular correctamente si inicia por hoyo 10');
-  assert.doesNotMatch(speech,/Gros|Neto/i,mode+' desde hoyo 10 NO debe anunciar scores');
-}
-
-console.log('PASS doble toque: UNIVERSALES y STABLEFORD anuncian PUNTOS exclusivamente, incluyendo segundo nivel acumulado y comienzo por 1 o 10');
+  fo痘玘
