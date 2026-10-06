@@ -45,6 +45,6 @@ export async function handleTournamentScoreDirectory(req,res,databaseGetter=getD
    const tournament=tournaments[0];return res.status(200).json({ok:true,kind:'tournament',tournament:{...tournament,revision:Number(tournament.revision)},streams:rows.map(row=>{const safe=safeStream(row);return{id:safe.id,scope:safe.scope,groupLabel:safe.group_label,status:safe.status,revision:Number(safe.revision)||0,expiresAt:safe.expires_at,updatedAt:safe.updated_at,snapshot:safe.current_snapshot}})});
   }
   return res.status(400).json({ok:false,code:'LIVE_ACTION_UNSUPPORTED'});
- }catch(error){return res.status(error.code==='DATABASE_NOT_CONFIGURED'?503:500).json({ok:false,code:error.code||'TOURNAMENT_DIRECTORY_UNAVAILABLE'})}
+ }catch(error){console.error('tournament-directory',error.code,error.message);return res.status(error.code==='DATABASE_NOT_CONFIGURED'?503:500).json({ok:false,code:error.code||'TOURNAMENT_DIRECTORY_UNAVAILABLE'})}
 }
 export default function handler(req,res){return handleTournamentScoreDirectory(req,res)}

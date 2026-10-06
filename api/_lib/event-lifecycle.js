@@ -1,9 +1,15 @@
 import {privateRoundCompletion} from './private-round-lifecycle.js';
 import {ensurePersonalAccess,eventScope} from './personal-event-access.js';
 export async function ensureEventPurge(sql){
- await sql`CREATE OR REPLACE FUNCTION gsc_purge_cards(client_rounds text[]) RETURNS void LANGUAGE plpgsql AS $fn$
+ const installed=await sql`SELECT count(*)::int AS n FROM pg_proc WHERE proname IN ('gsc_purge_cards','gsc_purge_stream','gsc_purge_event') AND prosrc LIKE '%GSC_PURGE_R181_1%'`;if(installed[0]?.n===3)return;
+ await sql`DO $install$
+ BEGIN
+  PERFORM pg_advisory_xact_lock(181061006);
+  IF (SELECT count(*) FROM pg_proc WHERE proname IN ('gsc_purge_cards','gsc_purge_stream','gsc_purge_event') AND prosrc LIKE '%GSC_PURGE_R181_1%')<>3 THEN
+   EXECUTE $ddl$CREATE OR REPLACE FUNCTION gsc_purge_cards(client_rounds text[]) RETURNS void LANGUAGE plpgsql AS $fn$
  DECLARE tab text; master_rounds uuid[]; master_tournaments uuid[];
  BEGIN
+  -- GSC_PURGE_R181_1
   IF to_regclass('rounds') IS NOT NULL THEN
    SELECT array_agg(id),array_agg(DISTINCT tournament_id) INTO master_rounds,master_tournaments FROM rounds WHERE client_round_id=ANY(coalesce(client_rounds,ARRAY[]::text[]));
    FOREACH tab IN ARRAY ARRAY['deliveries','card_artifacts','player_handicap_events','player_tee_events'] LOOP
@@ -14,10 +20,11 @@ export async function ensureEventPurge(sql){
    DELETE FROM tournaments WHERE id=ANY(master_tournaments) AND NOT EXISTS(SELECT 1 FROM rounds WHERE tournament_id=tournaments.id);
   END IF;
   IF to_regclass('sync_mutations') IS NOT NULL THEN DELETE FROM sync_mutations WHERE entity_id=ANY(client_rounds); END IF;
- END $fn$`;
- await sql`CREATE OR REPLACE FUNCTION gsc_purge_stream(stream uuid,kind text) RETURNS void LANGUAGE plpgsql AS $fn$
+ END $fn$$ddl$;
+   EXECUTE $ddl$CREATE OR REPLACE FUNCTION gsc_purge_stream(stream uuid,kind text) RETURNS void LANGUAGE plpgsql AS $fn$
  DECLARE streams text; history text; client_round text;
  BEGIN
+  -- GSC_PURGE_R181_1
   IF kind NOT IN ('tournament','private') THEN RAISE EXCEPTION 'PERSONAL_EVENT_KIND_INVALID'; END IF;
   streams:=CASE WHEN kind='private' THEN 'live_private_streams' ELSE 'live_streams' END;
   history:=CASE WHEN kind='private' THEN 'live_private_events' ELSE 'live_events' END;
@@ -31,10 +38,11 @@ export async function ensureEventPurge(sql){
   IF to_regclass(history) IS NOT NULL THEN EXECUTE format('DELETE FROM %I WHERE stream_id=$1',history) USING stream; END IF;
   DELETE FROM gsc_personal_members WHERE stream_id=stream AND event_kind=kind;
   EXECUTE format('DELETE FROM %I WHERE id=$1',streams) USING stream;
- END $fn$`;
- await sql`CREATE OR REPLACE FUNCTION gsc_purge_event(event uuid,kind text) RETURNS void LANGUAGE plpgsql AS $fn$
+ END $fn$$ddl$;
+   EXECUTE $ddl$CREATE OR REPLACE FUNCTION gsc_purge_event(event uuid,kind text) RETURNS void LANGUAGE plpgsql AS $fn$
  DECLARE tab text; rounds text; streams text; history text; client_rounds text[]; master_rounds uuid[]; master_tournaments uuid[];
  BEGIN
+  -- GSC_PURGE_R181_1
   IF kind NOT IN ('tournament','private') THEN RAISE EXCEPTION 'PERSONAL_EVENT_KIND_INVALID'; END IF;
   rounds:=CASE WHEN kind='private' THEN 'live_private_rounds' ELSE 'live_tournaments' END;
   streams:=CASE WHEN kind='private' THEN 'live_private_streams' ELSE 'live_streams' END;
@@ -53,12 +61,15 @@ export async function ensureEventPurge(sql){
   IF to_regclass(history) IS NOT NULL THEN EXECUTE format('DELETE FROM %I WHERE tournament_id=$1 OR stream_id IN(SELECT id FROM %I WHERE tournament_id=$1)',history,streams) USING event; END IF;
   EXECUTE format('DELETE FROM %I WHERE tournament_id=$1',streams) USING event;
   EXECUTE format('DELETE FROM %I WHERE id=$1',rounds) USING event;
- END $fn$`;
+ END $fn$$ddl$;
+  END IF;
+ END $install$`;
 }
+
 export async function ensureEventLifecycle(sql,kinds=['tournament','private']){
  await sql`CREATE TABLE IF NOT EXISTS live_private_rounds (LIKE live_tournaments INCLUDING DEFAULTS INCLUDING CONSTRAINTS INCLUDING INDEXES,viewer_access_token text)`;
  await sql`CREATE TABLE IF NOT EXISTS live_private_streams (LIKE live_streams INCLUDING DEFAULTS INCLUDING CONSTRAINTS INCLUDING INDEXES)`;
- await sql`CREATE OR REPLACE FUNCTION gsc_score_fingerprint(snapshot jsonb) RETURNS jsonb LANGUAGE sql IMMUTABLE AS $$ SELECT coalesce(jsonb_agg(jsonb_build_array(p->>'id',h->'hole',h->'gross',coalesce(h->'explicitX','false'::jsonb)) ORDER BY p->>'id',(h->>'hole')::integer),'[]'::jsonb) FROM jsonb_array_elements(coalesce(snapshot->'players','[]'::jsonb)) p CROSS JOIN LATERAL jsonb_array_elements(coalesce(p->'holes','[]'::jsonb)) h WHERE (h->>'hole')::integer BETWEEN 1 AND 18 AND (coalesce((h->>'gross')::numeric,0)>0 OR h->>'explicitX'='true') $$`;
+ if(!(await sql`SELECT to_regprocedure('gsc_score_fingerprint(jsonb)') AS fingerprint`)[0]?.fingerprint)await sql`CREATE OR REPLACE FUNCTION gsc_score_fingerprint(snapshot jsonb) RETURNS jsonb LANGUAGE sql IMMUTABLE AS $$ SELECT coalesce(jsonb_agg(jsonb_build_array(p->>'id',h->'hole',h->'gross',coalesce(h->'explicitX','false'::jsonb)) ORDER BY p->>'id',(h->>'hole')::integer),'[]'::jsonb) FROM jsonb_array_elements(coalesce(snapshot->'players','[]'::jsonb)) p CROSS JOIN LATERAL jsonb_array_elements(coalesce(p->'holes','[]'::jsonb)) h WHERE (h->>'hole')::integer BETWEEN 1 AND 18 AND (coalesce((h->>'gross')::numeric,0)>0 OR h->>'explicitX'='true') $$`;
  for(const kind of kinds){
  const scoped=eventScope(sql,kind);
  await scoped`ALTER TABLE live_tournaments ADD COLUMN IF NOT EXISTS completed_at timestamptz,ADD COLUMN IF NOT EXISTS completed_roster text,ADD COLUMN IF NOT EXISTS base_expires_at timestamptz,ADD COLUMN IF NOT EXISTS last_score_at timestamptz`;

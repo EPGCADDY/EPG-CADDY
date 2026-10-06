@@ -353,12 +353,14 @@ async function listActiveTournaments(sql,req,localOnly=false){
     ORDER BY updated_at DESC
   `;
   const groupRows=await sql`
-    SELECT id,tournament_id,scope,group_label,status,updated_at,expires_at
-    FROM live_streams
-    WHERE status='active' AND expires_at>now()
+    SELECT id,tournament_id,scope,group_label,status,updated_at,expires_at,'tournament' AS event_kind
+    FROM live_streams WHERE status='active' AND expires_at>now()
+    UNION ALL
+    SELECT id,tournament_id,scope,group_label,status,updated_at,expires_at,'private' AS event_kind
+    FROM live_private_streams WHERE status='active' AND expires_at>now()
     ORDER BY updated_at DESC
   `;
-  const groups=groupRows.map(row=>({id:row.id,tournamentId:row.tournament_id||null,scope:row.scope,groupLabel:cleanText(row.group_label,120)||"GRUPO",updatedAt:row.updated_at,expiresAt:row.expires_at}));
+  const groups=groupRows.map(row=>({id:row.id,tournamentId:row.tournament_id||null,eventKind:row.event_kind,scope:row.scope,groupLabel:cleanText(row.group_label,120)||"GRUPO",updatedAt:row.updated_at,expiresAt:row.expires_at}));
   const groupsByTournament=new Map();for(const group of groups)if(group.tournamentId){const list=groupsByTournament.get(group.tournamentId)||[];list.push(group);groupsByTournament.set(group.tournamentId,list)}
   const local={ok:true,kind:"active_tournaments",source:tournamentDirectoryEnvironment(process.env,req.headers?.["x-forwarded-host"]||req.headers?.host||""),tournaments:rows.map(row=>({id:row.id,name:row.name,mode:row.mode,expiresAt:row.expires_at,updatedAt:row.updated_at,groups:groupsByTournament.get(row.id)||[]})),groups,serverAt:new Date().toISOString()};
   if(localOnly)return local;
