@@ -56,7 +56,7 @@ for(const ok of [true,false]){
  const button={disabled:false};let content='',requests=[],closed=0,refreshed=0;
  const context={cachedLocal:{source:'lab'},open:html=>{content=html},escape:s=>String(s).replaceAll('<','&lt;'),$:id=>id==='confirmDelete'?button:{close:()=>closed++},event:e=>({eventId:e.id,eventKind:e.event_kind}),call:async(action,payload)=>{requests.push({action,payload});return {ok}},showStatus(){},refresh:async()=>{refreshed++}};
  vm.createContext(context);vm.runInContext(removeSource,context);context.remove({id:'selected-id',event_kind:'tournament',source:'lab',name:'Evento <ejemplo>'});
- assert.match(content,/CONFIRMAR ELIMINAR/);assert.match(content,/Evento &lt;ejemplo>/);assert.doesNotMatch(content,/<input|Escribe exactamente|Motivo|confirmName/);assert.equal(requests.length,0,'opening confirmation never deletes');
+ assert.match(content,/CONFIRMA ELIMINAR/);assert.match(content,/Evento &lt;ejemplo>/);assert.doesNotMatch(content,/<input|Escribe exactamente|Motivo|confirmName/);assert.equal(requests.length,0,'opening confirmation never deletes');
  await button.onclick();assert.equal(requests.length,1);assert.equal(requests[0].action,'delete');assert.equal(requests[0].payload.eventId,'selected-id');assert.equal(requests[0].payload.confirmName,'Evento <ejemplo>');assert.ok(requests[0].payload.reason);assert.equal(closed,ok?1:0);assert.equal(refreshed,ok?1:0);assert.equal(button.disabled,ok);
 }
 console.log('PASS R152 single deletion confirmation: selected event; no text fields; one request on click; error stays visible and enables retry.');
