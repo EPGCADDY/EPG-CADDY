@@ -1465,3 +1465,6 @@ RC-R173-B1-CI7 · 5 octubre 2026: el gate del paquete nativo intentaba incluir `
 
 ### R177 · Registro de corrección
 Gate detectó que el relay federado no había quedado persistido en el API final. El relay fue completado y se exige repetir roadmap, inventario, pruebas federadas y los tres previews; no promover con un gate fallido.
+
+
+R177 cierre de test: se corrige el contexto de ambiente faltante en la regresión existente, sin cambiar la lógica de eliminación.

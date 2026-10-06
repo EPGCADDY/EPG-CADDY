@@ -1561,3 +1561,6 @@ R177 CI follow-up 2: se conserva el contrato visible de ID de torneos vacío y s
 
 ### R177 · Corrección del relay
 El relay de acciones remotas conserva la sesión autenticada y revalida autorización en el ambiente propietario. Gate de roadmap e inventario y previews de LAB, Producción y recovery deben quedar en verde antes de promoción.
+
+
+R177 prueba: inicializar origen local en el test de eliminación y mantener cobertura independiente para relay remoto autenticado.

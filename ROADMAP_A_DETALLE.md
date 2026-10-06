@@ -4055,3 +4055,6 @@ R177 CI follow-up 2: el mensaje vacío de ID DE TORNEOS conserva la expectativa 
 
 ### R177 · Relay autenticado entre ambientes
 La administración federada envía las acciones remotas exclusivamente al ambiente opuesto y conserva la sesión del organizador. El origen valida nuevamente el permiso antes de emitir códigos o eliminar eventos; fallos del par se muestran como resultado parcial.
+
+
+R177 regresión: contexto de ambiente en prueba de eliminación y cobertura separada de borrar evento remoto autenticado.

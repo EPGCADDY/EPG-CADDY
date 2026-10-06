@@ -3955,3 +3955,6 @@ R177 CI follow-up 2: el mensaje vacío de ID DE TORNEOS conserva la expectativa 
 
 ### R177 · Ajuste federado de administración
 Se corrigió el relay de compartir/eliminar para reenviar la sesión autenticada al ambiente propietario (LAB/Producción), donde cada acción vuelve a validar permisos. Este ajuste queda reflejado en el gate y en los tres previews antes de promoción.
+
+
+R177 prueba de regresión: el harness de eliminación inicializa el ambiente local para validar el borrado del evento seleccionado; el test federado cubre por separado el relay remoto.

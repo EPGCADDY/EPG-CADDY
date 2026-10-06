@@ -2697,3 +2697,6 @@ R173-B1: `index-grupal.html` muestra R173 desde el HTML inicial; `release.json` 
 
 ### R177 · Administración federada
 `api/event-administration.js` fija el peer LAB/Producción y reenvía compartir/eliminar con la sesión; la validación se ejecuta en el origen del evento. `event-administration-ui.js` presenta ambiente y tipo del evento; `personal-events.js` incorpora ID de torneos y controles de código/eliminación.
+
+
+R177 pruebas: `test-event-administration.mjs` valida eliminación local y `test-r177-cross-device-admin.mjs` valida operaciones federadas.
