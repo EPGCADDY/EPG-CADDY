@@ -1474,3 +1474,7 @@ R177 requisito validado: compartir torneo activo sin roster debe ser posible y p
 
 
 R177: la verificación de destino usa la sesión real emitida tras el canje, no un campo inexistente de la respuesta.
+
+
+### R178 · Recuperación de propietario heredado
+La lista ocultaba controles de administración porque torneos anteriores a la identidad personal carecían de vínculo de propietario. El reclamo ahora requiere la clave de organizador almacenada en el dispositivo y validada contra el hash del evento; incluye eventos vencidos no revocados para permitir su limpieza. Verificar Administración, Score Card y etiqueta `ELIMINAR TORNEO` en LAB antes de cualquier promoción.

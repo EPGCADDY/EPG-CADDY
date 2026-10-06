@@ -18,12 +18,14 @@ function administrationCard(e){
  const authorized=e.canAdminister,origin=e.source==='lab'?'LABORATORIO':'PRODUCCIÓN',key=escape(e.source+':'+e.event_kind+':'+e.id),kind=e.event_kind==='private'?'GRUPO':'TORNEO';
  const scores='<nav aria-label="SCORES '+escape(e.name)+'"><a href="'+escape(scoresHref(e,'general'))+'">SCORES · GENERAL</a><a href="'+escape(scoresHref(e,'categories'))+'">SCORES · CATEGORÍAS</a></nav>';
  const sharing=authorized?'<button data-share-event="'+key+'">COMPARTIR CÓDIGO</button>':'<button disabled aria-label="Compartir requiere permiso de organizador">COMPARTIR · ORGANIZADOR</button>';
- const deleting=authorized?'<button class="danger" data-delete="'+key+'">ELIMINAR</button>':'<button class="danger" disabled aria-label="Eliminar requiere permiso de organizador">ELIMINAR · ORGANIZADOR</button>';
+ const deleteLabel='ELIMINAR '+kind;
+ const deleting=authorized?'<button class="danger" data-delete="'+key+'">'+deleteLabel+'</button>':'<button class="danger" disabled aria-label="Eliminar requiere permiso de organizador">'+deleteLabel+'</button>';
  return '<article data-event-id="'+escape(e.id)+'" data-event-source="'+escape(e.source)+'"><h3>'+escape(e.name)+'</h3><p>'+kind+' · '+origin+'</p>'+(!authorized?'<p>CONSULTA DE SCORES · COMPARTIR Y ELIMINAR REQUIEREN AUTORIZACIÓN DEL ORGANIZADOR</p>':'')+scores+sharing+'<p data-event-status="'+key+'" role="status" aria-live="polite"></p>'+deleting+'</article>';
 }
 let refreshSequence=0,cachedLocal={ok:false},cachedDirectory={ok:false},cachedCodes={},lastRowsSignature='';
 async function refresh({automatic=false,signal}={}){
  const sequence=++refreshSequence;if(!automatic)$('status').textContent='CARGANDO TORNEOS Y GRUPOS…';
+ await window.GSCPersonalEvents.claimLegacyOwnedTournament();
  const [result,directory]=await Promise.all([call('list',{},signal),fetch('/api/tournament-score-directory',{method:'POST',credentials:'same-origin',cache:'no-store',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'list'}),signal}).then(async response=>({...await response.json(),ok:response.ok})).catch(()=>({ok:false,code:'NETWORK_ERROR'}))]);
  if(sequence!==refreshSequence||signal?.aborted)return{ok:false};
  const localChanged=result.ok&&JSON.stringify(result.events)!==JSON.stringify(cachedLocal.events);
@@ -48,7 +50,7 @@ function event(e){return{eventId:e.id,eventKind:e.event_kind}}
 function preserveReturnTarget(){const link=document.querySelector('[data-gsc-close]'),target=new URLSearchParams(location.search).get('returnTo');if(!link||!target)return;try{const destination=new URL(target,location.origin);if(destination.origin===location.origin&&destination.pathname==='/index-grupal.html')link.href=destination.pathname+destination.search+destination.hash}catch{}}
 preserveReturnTarget();
 function open(content){$('action').innerHTML=content;$('actionStatus').textContent='';$('actionDialog').showModal()}
-function remove(e){open('<h2>CONFIRMAR ELIMINAR</h2><p>'+escape(e.name)+'</p><button class="danger" id="confirmDelete">ELIMINAR</button>');$('confirmDelete').onclick=async()=>{const b=$('confirmDelete');b.disabled=true;const local=e.source===cachedLocal.source,result=await call(local?'delete':'remote-delete',{...event(e),...(local?{}:{source:e.source}),confirmName:e.name,reason:'Eliminación confirmada por el usuario'});showStatus(result,'actionStatus');if(result.ok){$('actionDialog').close();await refresh()}else b.disabled=false}}
+function remove(e){const label='ELIMINAR '+(e.event_kind==='private'?'GRUPO':'TORNEO');open('<h2>CONFIRMAR '+label+'</h2><p>'+escape(e.name)+'</p><button class="danger" id="confirmDelete">'+label+'</button>');$('confirmDelete').onclick=async()=>{const b=$('confirmDelete');b.disabled=true;const local=e.source===cachedLocal.source,result=await call(local?'delete':'remote-delete',{...event(e),...(local?{}:{source:e.source}),confirmName:e.name,reason:'Eliminación confirmada por el usuario'});showStatus(result,'actionStatus');if(result.ok){$('actionDialog').close();await refresh()}else b.disabled=false}}
 window.addEventListener('gsc-account-ready',refresh);
 $('refresh').onclick=()=>refresh();
 // Prepare only a device identity, never create a tournament or round.

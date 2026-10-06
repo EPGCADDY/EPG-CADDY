@@ -1,5 +1,6 @@
 import {authorizeTestOrganizer} from './tests/helpers/authorize-organizer.mjs';
 import assert from 'node:assert/strict';
+import {createHash,randomBytes} from 'node:crypto';
 import vm from 'node:vm';
 import {readFile} from 'node:fs/promises';
 import {PGlite} from '@electric-sql/pglite';
@@ -24,6 +25,26 @@ account={id:'creator',name:'Creador'};const c=await call(handlePersonalEvents,{a
 const grant=await call(handleEventAdministration,{action:'issue',...event,recipientAccountId:'chosen',recipientName:'Delegado'});account={id:'chosen',name:'Delegado'};await call(handleEventAdministration,{action:'redeem',code:grant.code});await sql`UPDATE gsc_event_admin_grants SET expires_at=now()+interval '1 minute' WHERE id=${grant.grantId}::uuid`;await sql`UPDATE live_tournaments SET completed_at=now(),expires_at=now()+interval '1 day' WHERE id=${c.eventId}::uuid`;assert.equal((await call(handleEventAdministration,{action:'list'})).status,200);const deadline=await sql`SELECT expires_at FROM gsc_event_admin_grants WHERE id=${grant.grantId}::uuid`;assert.ok(new Date(deadline[0].expires_at)-Date.now()>86300000,'Completion must set delegate expiry to finish +24h, not original deadline');await sql`UPDATE live_tournaments SET completed_at=now()-interval '24 hours',expires_at=now()+interval '1 day' WHERE id=${c.eventId}::uuid`;
 assert.equal((await call(handleEventAdministration,{action:'delete',...event,confirmName:c.name,reason:'Vencido'})).status,403);
 account={id:'creator',name:'Creador'};const unfinished=await call(handlePersonalEvents,{action:'create',eventKind:'tournament',name:'INCOMPLETO',...config});globalOwner=true;account={id:'app-owner',name:'Propietario'};assert.equal((await call(handleEventAdministration,{action:'delete',eventId:unfinished.eventId,eventKind:'tournament',confirmName:unfinished.name,reason:'Control pleno del propietario'})).status,200);
+const legacySecret=randomBytes(32).toString('base64url'),legacyHash=createHash('sha256').update(legacySecret).digest('hex'),wrongSecret=randomBytes(32).toString('base64url');
+const [legacy]=await sql`INSERT INTO live_tournaments(name,mode,organizer_secret_hash,viewer_token_hash,join_code_hash,expires_at) VALUES('TORNEO LEGADO','general',${legacyHash},${createHash('sha256').update(randomBytes(32)).digest('hex')},${createHash('sha256').update(randomBytes(32)).digest('hex')},now()+interval '1 day') RETURNING id`;
+account={id:'legacy-owner',name:'Organizador anterior'};globalOwner=false;
+const legacyEvent={eventId:legacy.id,eventKind:'tournament'};
+assert.equal((await call(handleEventAdministration,{action:'claim-legacy',...legacyEvent,organizerSecret:wrongSecret})).code,'EVENT_OWNER_PROOF_INVALID','Wrong legacy secret cannot claim ownership');
+assert.equal((await call(handleEventAdministration,{action:'delete',...legacyEvent,confirmName:'TORNEO LEGADO',reason:'Sin reclamar'})).code,'EVENT_ADMIN_REQUIRED','Legacy tournament is not deletable before proof');
+assert.equal((await call(handleEventAdministration,{action:'claim-legacy',...legacyEvent,organizerSecret:legacySecret})).status,200,'Legacy organizer secret recovers ownership');
+assert.equal((await call(handleEventAdministration,{action:'claim-legacy',...legacyEvent,organizerSecret:legacySecret})).status,200,'Claim is idempotent for the same owner');
+assert.ok((await call(handleEventAdministration,{action:'list'})).events.some(e=>e.id===legacy.id),'Claimed legacy tournament appears in the organizer list');
+account={id:'other-device',name:'Otro dispositivo'};
+assert.equal((await call(handleEventAdministration,{action:'claim-legacy',...legacyEvent,organizerSecret:legacySecret})).code,'EVENT_ADMIN_REQUIRED','A second account cannot take an existing claim');
+assert.equal((await call(handleEventAdministration,{action:'delete',...legacyEvent,confirmName:'TORNEO LEGADO',reason:'No soy dueño'})).code,'EVENT_ADMIN_REQUIRED');
+account={id:'legacy-owner',name:'Organizador anterior'};
+assert.equal((await call(handleEventAdministration,{action:'delete',...legacyEvent,confirmName:'TORNEO LEGADO',reason:'Eliminación autorizada'})).status,200,'Claimed legacy owner can delete with the normal receipt');
+const adminUi=await readFile('event-administration-ui.js','utf8'),personalUi=await readFile('personal-events.js','utf8'),scoreCard=await readFile('live-hub.js','utf8');
+assert.ok(adminUi.includes("const deleteLabel='ELIMINAR '+kind"),'Administration uses the event-specific delete label');
+assert.ok(!adminUi.includes('ELIMINAR · ORGANIZADOR')&&!personalUi.includes('ELIMINAR · ORGANIZADOR'),'Legacy organizer label is removed');
+assert.ok(personalUi.includes('async function administrationEvents(){await claimLegacyOwnedTournament();'),'Admin list first recovers the legacy owner');
+assert.ok(scoreCard.includes('administrationEvents=await root.GSCPersonalEvents?.administrationEvents?.()||[]'),'Score Card loads recovered administration authority');
+assert.ok(scoreCard.includes("button.textContent=authority?.event_kind==='private'?'ELIMINAR GRUPO':'ELIMINAR TORNEO'"),'Score Card exposes the proper delete label');
 await db.close();console.log('PASS event administration: owner full access; creator own event; recipient-bound single redemption; other player denied; delegates cannot delegate; name required; deletion receipt; exact 24h expiry; owner retained.');
 
 // R152: one confirmation, no typed name/reason, no deletion before its click.

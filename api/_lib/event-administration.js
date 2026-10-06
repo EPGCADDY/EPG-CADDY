@@ -4,6 +4,7 @@ const hash=s=>createHash('sha256').update(String(s)).digest('hex');
 export async function ensureEventAdministration(sql){
  await sql`CREATE TABLE IF NOT EXISTS gsc_event_admin_grants(id uuid PRIMARY KEY DEFAULT gen_random_uuid(),event_id uuid NOT NULL,event_kind text NOT NULL,issuer_account_id text NOT NULL,recipient_account_id text NOT NULL,recipient_name text NOT NULL,code_hash char(64) UNIQUE NOT NULL,redeemed_at timestamptz,revoked_at timestamptz,created_at timestamptz NOT NULL DEFAULT now(),expires_at timestamptz NOT NULL)`;
  await sql`CREATE TABLE IF NOT EXISTS gsc_event_deletions(id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,event_id uuid NOT NULL,event_kind text NOT NULL,event_name text NOT NULL,actor_account_id text NOT NULL,grant_id uuid,recipient_name text NOT NULL,reason text NOT NULL,deleted_at timestamptz NOT NULL DEFAULT now(),UNIQUE(event_id,event_kind))`;
+ await sql`CREATE TABLE IF NOT EXISTS gsc_event_admin_legacy_owners(event_id uuid NOT NULL,event_kind text NOT NULL,owner_account_id text NOT NULL,created_at timestamptz NOT NULL DEFAULT now(),PRIMARY KEY(event_id,event_kind))`;
 }
 export async function eventAdminAuthority(sql,event,account,owner=false){
  const scoped=eventScope(sql,event.eventKind),rows=await scoped`SELECT id,name,status,expires_at,completed_at FROM live_tournaments WHERE id=${event.eventId}::uuid`;
@@ -11,9 +12,21 @@ export async function eventAdminAuthority(sql,event,account,owner=false){
  if(owner)return {...rows[0],authority:'owner',grantId:null,recipientName:account.name||'Propietario'};
  const creators=await sql`SELECT owner_account_id FROM gsc_personal_events WHERE event_id=${event.eventId}::uuid AND event_kind=${event.eventKind} AND owner_account_id=${account.id}`;
  if(creators.length)return {...rows[0],authority:'creator',grantId:null,recipientName:account.name||'Creador'};
+ const legacy=await sql`SELECT owner_account_id FROM gsc_event_admin_legacy_owners WHERE event_id=${event.eventId}::uuid AND event_kind=${event.eventKind} AND owner_account_id=${account.id}`;
+ if(legacy.length)return {...rows[0],authority:'legacy_creator',grantId:null,recipientName:account.name||'Organizador'};
  const grants=await sql`SELECT id,recipient_name FROM gsc_event_admin_grants WHERE event_id=${event.eventId}::uuid AND event_kind=${event.eventKind} AND recipient_account_id=${account.id} AND redeemed_at IS NOT NULL AND revoked_at IS NULL AND expires_at>now() AND (${rows[0].completed_at}::timestamptz IS NULL OR ${rows[0].completed_at}::timestamptz+interval '24 hours'>now()) LIMIT 1`;
  if(!grants.length)throw accessError('EVENT_ADMIN_REQUIRED');
  return {...rows[0],authority:'delegate',grantId:grants[0].id,recipientName:grants[0].recipient_name};
+}
+export async function claimLegacyEvent(sql,event,account,organizerSecret){
+ const secret=String(organizerSecret||'');
+ if(!/^[A-Za-z0-9_-]{32,128}$/.test(secret))throw accessError('EVENT_OWNER_PROOF_INVALID',403);
+ const scoped=eventScope(sql,event.eventKind),events=await scoped`SELECT id,name FROM live_tournaments WHERE id=${event.eventId}::uuid AND organizer_secret_hash=${hash(secret)} AND status<>'revoked'`;
+ if(!events.length)throw accessError('EVENT_OWNER_PROOF_INVALID',403);
+ await sql`INSERT INTO gsc_event_admin_legacy_owners(event_id,event_kind,owner_account_id) VALUES(${event.eventId}::uuid,${event.eventKind},${account.id}) ON CONFLICT(event_id,event_kind) DO NOTHING`;
+ const claims=await sql`SELECT owner_account_id FROM gsc_event_admin_legacy_owners WHERE event_id=${event.eventId}::uuid AND event_kind=${event.eventKind}`;
+ if(claims[0]?.owner_account_id!==account.id)throw accessError('EVENT_ADMIN_REQUIRED',403);
+ return{ok:true,eventId:event.eventId,eventKind:event.eventKind,name:events[0].name};
 }
 export async function issueEventAdmin(sql,event,account,owner,body){
  const authority=await eventAdminAuthority(sql,event,account,owner);
