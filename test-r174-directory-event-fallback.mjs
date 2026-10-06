@@ -1,0 +1,18 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import {createRequire} from "node:module";
+const require=createRequire(import.meta.url);
+const hub=require("./live-hub.js");
+const source=fs.readFileSync(new URL("./live-hub.js",import.meta.url),"utf8");
+let calls=0;
+const failed=await hub.safePersonalSync({async sync(){calls++;throw new Error("LAB participation service unavailable")}});
+assert.deepEqual(failed,{ok:false,items:[]});
+assert.equal(calls,1);
+const successful=await hub.safePersonalSync({async sync(){return{ok:true,items:[{token:"personal_tournament"}]}}});
+assert.equal(successful.ok,true);
+assert.equal(successful.items.length,1);
+const start=source.slice(source.indexOf("async function start(){"));
+assert.ok(start.indexOf("const personal=await safePersonalSync")>0,"startup must treat membership lookup as recoverable");
+assert.ok(start.indexOf("const administrationSelection=registeredDirectory.find")>start.indexOf("const personal=await safePersonalSync"),"directory-event selection must still run after a failed membership lookup");
+assert.match(source,/directoryView\|\|joined\|\|/,"federated Scores must not show a misleading participant-membership warning");
+console.log("PASS R174: a rejected local membership sync returns a recoverable empty identity and leaves directory-event selection reachable.");
