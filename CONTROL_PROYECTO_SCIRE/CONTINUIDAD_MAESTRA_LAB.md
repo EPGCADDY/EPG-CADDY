@@ -1541,3 +1541,8 @@ PASS dirigido: 20 organizadores por entorno (40 torneos activos) aparecen en amb
 ## R175 · Login eliminado del recorrido normal · 6 octubre 2026
 
 Base: cf79332641e4353413cc72fad64385339446ccb1. Se reprodujo en LAB el salto desde Organizador al formulario Bienvenido/correo/contraseña. Se quitó esa salida y el autolanzamiento por sesión ausente; el acceso opcional queda sólo detrás de `?account=1`. La autorización de Organizador conserva el código único. La entrada normal a Registro, Score Card y Scores es libre. Se mantiene cada API de torneo con su control de acceso. Revisión local dirigida PASS; Preview en curso; producción no modificada.
+
+
+## Continuidad R176 · 6 octubre 2026
+
+Base: Preview R175 `f2e9cbbcaaf9cc4aee157adc71b73c0827c58df9`. La reapertura de la PWA desde segundo plano debe mostrar Registro de jugadores y preservar la ronda activa. Cambio en `index-grupal.html`; regresión en `test-lab-registration-return-state.mjs`; release/caché R176 alineados. Recorrer Preview y confirmar persistencia de roster y scores antes de cualquier promoción; Producción permanece en R174.

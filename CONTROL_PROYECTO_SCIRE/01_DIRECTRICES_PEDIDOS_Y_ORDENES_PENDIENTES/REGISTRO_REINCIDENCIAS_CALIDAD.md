@@ -1443,3 +1443,11 @@ RC-R173-B1-CI7 · 5 octubre 2026: el gate del paquete nativo intentaba incluir `
 - Corrección permanente: remover ese botón y exigir acceso explícito para el formulario opcional; mantener código de Organizador y APIs protegidas por recurso.
 - Evidencia automática: `test-lab-account-gate.mjs` inspecciona el arranque sin sesión, el acceso explícito y el código único.
 - Estado: cambio local PASS; Preview/browser pendientes; Producción intacta hasta cerrar puertas.
+
+
+## R176 · La app instalada reaparecía en Score Card · 6 octubre 2026
+
+- **Causa raíz:** iOS puede conservar la página viva y reactivarla sin ejecutar de nuevo `pwa-launch.html`; los handlers de `pageshow`, `focus` y `visibilitychange` preservaban una ronda recuperada y omitían Registro.
+- **Punto de escape:** la cobertura existente probaba la URL inicial PWA y la preservación al volver desde Torneos, no la reactivación de una página viva con ronda activa.
+- **Control permanente:** `reopenRegistrationAfterBackground()` cubre los tres eventos de ciclo de vida sólo para la PWA tras ocultarse; persiste la Score Card y abre Registro. La prueba exige jugadores/scores intactos y niega el desvío en web, estado no reanudado o ronda vacía.
+- **Evidencia/estado:** gates de Proyecto, ROADMAP, Inventario, banco LAB, Preview y dispositivo se validan en R176 antes de promover. Producción sin cambios.

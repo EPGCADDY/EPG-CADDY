@@ -18,6 +18,23 @@ await vm.runInContext(`(async()=>{${handler}})()`,eventCtx);assert.equal(eventCt
 eventCtx.rosterEditMode=false;await vm.runInContext(`(async()=>{${handler}})()`,eventCtx);assert.equal(eventCtx.savedDraft.roundId,undefined);assert.equal(eventCtx.savedDraft.returnTo,undefined);
 order.length=0;nav=null;eventCtx.syncDraftPlayersFromManualRows=()=>false;await vm.runInContext(`(async()=>{${handler}})()`,eventCtx);assert.equal(nav,null);assert.deepEqual(order,['capture']);
 console.log('PASS: regreso conserva 2 jugadores y scores; creación captura y persiste antes de navegar; registro incompleto no navega. Prueba VM, no navegador/iPhone.');
+
+const resumeFn=source.slice(source.indexOf('function reopenRegistrationAfterBackground('),source.indexOf('function ensurePrincipalEntry('));
+assert.ok(resumeFn.includes('!directHome||!appWasBackgrounded||!isRecoverableStoredRound(round)'));
+let resumeOpened=0;const resumeRound={configured:true,players:structuredClone(draft)};
+const resumeCtx=vm.createContext({directHome:true,appWasBackgrounded:true,round:resumeRound,isRecoverableStoredRound:value=>!!value?.configured,openRegistrationPreservingActiveRound(){resumeOpened++}});
+assert.equal(vm.runInContext(resumeFn+'reopenRegistrationAfterBackground()',resumeCtx),true);
+assert.equal(resumeOpened,1);assert.equal(resumeCtx.appWasBackgrounded,false);
+assert.deepEqual(JSON.parse(JSON.stringify(resumeCtx.round.players)),draft,'Reabrir Registro debe conservar jugadores y scores');
+for(const state of [{directHome:false,hidden:true,configured:true},{directHome:true,hidden:false,configured:true},{directHome:true,hidden:true,configured:false}]){
+ let opened=0;const ctx=vm.createContext({directHome:state.directHome,appWasBackgrounded:state.hidden,round:{configured:state.configured},isRecoverableStoredRound:value=>!!value?.configured,openRegistrationPreservingActiveRound(){opened++}});
+ assert.equal(vm.runInContext(resumeFn+'reopenRegistrationAfterBackground()',ctx),false);
+ assert.equal(opened,0,'La reanudación sólo aplica a PWA instalada con ronda activa');
+}
+const lifecycle=source.slice(source.indexOf('document.addEventListener("visibilitychange"'),source.indexOf('window.addEventListener("beforeunload"'));
+assert.equal(lifecycle.split('if(!reopenRegistrationAfterBackground())ensurePrincipalEntry();').length-1,3,'Visibilidad, pageshow y focus deben cubrir la reactivación');
+console.log('PASS: al reabrir la PWA con ronda activa muestra Registro, conserva jugadores y scores; rutas web y rondas vacías no cambian.');
+
 const hub=fs.readFileSync('live-hub.js','utf8');
 const draftFunction=hub.slice(hub.indexOf('  function registrationEventDraft(){'),hub.indexOf('  function setRoundCreateDialogOpen('));
 const stored={accountCode:'account-a',players:draft,course:'El Pulté'};
