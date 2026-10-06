@@ -1419,3 +1419,18 @@ RC-R173-B1-CI5 · 5 octubre 2026: el diagnóstico R80 matrix reveló que la tarj
 RC-R173-B1-CI6 · 5 octubre 2026: ROADMAP CI ejecutaba el banco R163 sin instalar la dependencia fijada `@electric-sql/pglite@0.5.8`. Se incorpora instalación en el workflow y timeout de diez minutos; los checks deben volver a pasar.
 
 RC-R173-B1-CI7 · 5 octubre 2026: el gate del paquete nativo intentaba incluir `voice-assistant.js`, recurso retirado sin referencias en HTML ni Service Worker. Se elimina del empaquetador móvil. CI móvil debe confirmar que no quedan recursos faltantes.
+
+## RC-107 · COMPARTIR ID DE GRUPO DEJABA SAFARI EN BLANCO AL VOLVER · 5 OCTUBRE 2026
+
+- Defecto expuesto: al compartir W2RE4FG8GH con WhatsApp, al regresar se mostraba una pestaña blanca en lugar de Score Card.
+- Causa raíz: el handler del código de grupo abría `wa.me` mediante `window.open(..., '_blank')`, creando un contexto nuevo.
+- Control permanente: `test-r159-whatsapp-two-messages.mjs` ejecuta el handler de `index-grupal.html`, exige `location.assign` en la misma pestaña, verifica que se copie el ID y que no se llame `window.open`.
+- Estado: corrección aplicada a rama aislada; prueba remota/Preview y verificación física de iPhone pendientes; Producción intacta.
+
+
+## RC-R174 · TORNEO FEDERADO NO ABRÍA DESDE LAB · 6 OCTUBRE 2026
+
+- Defecto expuesto: al abrir Scores de Santa delfina (Producción) desde su ficha en LAB, el monitor mostraba que no podía comprobar la participación y que no había torneos en curso.
+- Causa raíz: el rechazo de `GSCPersonalEvents.sync()` abortaba `live-hub.start()` antes de resolver `directoryEvent`.
+- Control permanente: `test-r174-directory-event-fallback.mjs` cubre el rechazo del servicio de membresía y verifica que la selección federada siga alcanzable; `npm run scores:r174-directory-gate` lo ejecuta.
+- Estado: prueba local PASS. Candidato pendiente de Preview y recorrido físico posterior; Producción intacta.
