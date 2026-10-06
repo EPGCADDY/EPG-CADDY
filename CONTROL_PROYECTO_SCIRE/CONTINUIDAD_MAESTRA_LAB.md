@@ -1553,3 +1553,5 @@ Objetivo: administración e ID de torneos reúnen los eventos activos administra
 Fuente: EPGCADDY/EPG-CADDY main R176 4775d0ae6fa75ad4dbb9fe2ee66157d62c179188.
 La cuenta se valida en ambos servidores. El ID de torneo conserva su ambiente, el tipo y su UUID. Una identidad local anónima o de un único dispositivo no puede descubrir eventos privados de otro dispositivo; se muestra estado parcial cuando la cuenta remota no valida. Los torneos públicos sin autoridad conservan sólo Scores de lectura. Los datos LAB y Producción no se migran.
 Estado: candidato; pendiente banco de pruebas completo, despliegue Preview y verificación real de navegador en ambos alias. Producción sin cambio hasta PASS integral.
+
+R177 test alignment: test-r167-admin-share-feedback.mjs ahora valida shareEvent, códigos y controles bloqueados para filas públicas sin autoridad; la prueba de IDs homónimos conserva la identidad ambiente+tipo+ID.

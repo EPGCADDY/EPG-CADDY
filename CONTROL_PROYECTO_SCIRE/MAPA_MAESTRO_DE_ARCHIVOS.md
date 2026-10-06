@@ -2689,3 +2689,5 @@ R173-B1: `index-grupal.html` muestra R173 desde el HTML inicial; `release.json` 
 | test-r177-cross-device-admin.mjs | Verifica federación, rechazo de origen incorrecto, controles y rutas de Scores. | Parte del banco de LAB. |
 | scripts/build-manual-lab.mjs | Ejecuta la nueva regresión. | Evita que la puerta la omita. |
 | index-grupal.html, release.json, service-worker.js | Marcan y entregan R177. | Invalidación de caché instalada. |
+
+| test-r167-admin-share-feedback.mjs | Actualiza la regresión histórica al contrato R177 de compartir y permisos entre ambientes. | Se conservan checks de directorio público y homónimos. |
