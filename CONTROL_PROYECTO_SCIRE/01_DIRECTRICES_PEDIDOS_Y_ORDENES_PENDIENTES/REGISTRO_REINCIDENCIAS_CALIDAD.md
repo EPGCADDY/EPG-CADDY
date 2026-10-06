@@ -1407,3 +1407,4 @@ RC-R173-B1 · Release servido no igualaba a versión visible: capturas reales en
 - `test-stableford-ui.mjs` reintroducía el micrófono de anotación retirado por R11 y exigía etiqueta SÚPER sin acento. Test alineado a anotador silencioso y etiqueta correcta.
 - Checkout de macOS descargaba todas las ramas y chocaba entre nombres LAB/lab. Checkout restringido al SHA del evento con profundidad 1 y fetch explícito de la base para la compuerta ROADMAP.
 - Pruebas dirigidas locales PASS; re-ejecución remota obligatoria antes de publicar. No se ignoran checks.
+- Seguimiento PR #71: los contratos heredados `test-v304-homogeneous-registration-actions.mjs` y `test-v305-registration-guides-parser-truth.mjs` también exigían SUPER sin tilde. Alineados al texto de interfaz SÚPER; los cuatro dirigidos V304/V305/Stableford PASS.
