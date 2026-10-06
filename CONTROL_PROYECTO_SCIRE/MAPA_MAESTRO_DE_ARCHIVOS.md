@@ -2700,3 +2700,6 @@ R173-B1: `index-grupal.html` muestra R173 desde el HTML inicial; `release.json` 
 
 
 R177 pruebas: `test-event-administration.mjs` valida eliminación local y `test-r177-cross-device-admin.mjs` valida operaciones federadas.
+
+
+R177 flujo de código: `api/personal-events.js` emite código viewer a organizadores de torneos activos incluso antes del roster; `test-lab-code-entry.mjs` verifica ese límite de solo lectura.

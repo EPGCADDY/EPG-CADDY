@@ -3958,3 +3958,6 @@ Se corrigió el relay de compartir/eliminar para reenviar la sesión autenticada
 
 
 R177 prueba de regresión: el harness de eliminación inicializa el ambiente local para validar el borrado del evento seleccionado; el test federado cubre por separado el relay remoto.
+
+
+R177 compatibilidad: código de solo lectura disponible para torneo activo antes de asignar jugadores; el test confirma que no crea cupos ni acceso de escritura.

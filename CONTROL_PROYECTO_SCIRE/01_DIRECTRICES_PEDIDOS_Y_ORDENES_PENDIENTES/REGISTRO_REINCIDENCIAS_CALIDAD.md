@@ -1468,3 +1468,6 @@ Gate detectó que el relay federado no había quedado persistido en el API final
 
 
 R177 cierre de test: se corrige el contexto de ambiente faltante en la regresión existente, sin cambiar la lógica de eliminación.
+
+
+R177 requisito validado: compartir torneo activo sin roster debe ser posible y permanecer read-only hasta que organizador asigne jugadores.

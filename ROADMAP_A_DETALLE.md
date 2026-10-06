@@ -4058,3 +4058,6 @@ La administración federada envía las acciones remotas exclusivamente al ambien
 
 
 R177 regresión: contexto de ambiente en prueba de eliminación y cobertura separada de borrar evento remoto autenticado.
+
+
+R177: validar código de torneo activo sin roster y mantener el acceso compartido en solo lectura hasta la asignación de jugadores.

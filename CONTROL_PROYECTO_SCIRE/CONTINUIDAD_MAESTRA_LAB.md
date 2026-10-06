@@ -1564,3 +1564,6 @@ El relay de acciones remotas conserva la sesión autenticada y revalida autoriza
 
 
 R177 prueba: inicializar origen local en el test de eliminación y mantener cobertura independiente para relay remoto autenticado.
+
+
+R177 regresión de invitación: compartir antes de asignar roster solo emite acceso viewer, sin jugadores ni permisos de escritura.
