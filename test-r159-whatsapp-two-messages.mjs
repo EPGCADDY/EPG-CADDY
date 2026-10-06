@@ -46,3 +46,5 @@ assert.equal(new URL(groupNavigated[0]).origin,'https://wa.me');
 assert.equal(new URL(groupNavigated[0]).searchParams.get('text'),'Grupo FRIENDS\nCódigo: W2RE4FG8GH');
 assert.deepEqual(groupOpened,[]);
 assert.equal(groupNodes.get('creatorTournamentCodeStatus').textContent,'CÓDIGO COPIADO · COMPARTIR EN WHATSAPP');
+
+const crossEnvironment=setup();for(const [source,origin] of [['lab','https://golf-sc-gt-lab.vercel.app'],['production','https://epg-caddy.vercel.app']]){const text=crossEnvironment.context.GSCWhatsAppInvitations.messages('tournament','GLOBAL','ABCDEF0123',source)[0];assert.ok(text.includes(origin+'/index-grupal.html?inicio=1'));crossEnvironment.open({kind:'tournament',eventName:'GLOBAL',code:'ABCDEF0123',source});assert.ok(crossEnvironment.node('[data-invitation-preview]').textContent.includes(origin));}console.log('PASS global tournament invitation links point to their source environment.');
