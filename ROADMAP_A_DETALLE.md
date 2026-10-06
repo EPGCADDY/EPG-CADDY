@@ -4042,4 +4042,4 @@ Los tres inventarios V311 se regeneraron desde las 908 fuentes del árbol R176. 
 - Regresión: test-event-administration.mjs cubre activo, expiración, aislamiento, selector normal, recibo y revocación manual.
 - Archivos: api/personal-events.js, api/_lib/event-administration.js, personal-events.js, test-event-administration.mjs, release.json, index-grupal.html, service-worker.js, mapa maestro, continuidad y reincidencias.
 - Gates dirigidos pasan; revisión Preview y puerta visual/física LAB pendientes. Producción sigue R174; inventarios V311 regenerados y sellados junto con esta actualización R176.
-- Diagnóstico permanente: el gate informa el digest actual para regenerar el sello con evidencia reproducible.
+- Control permanente: scripts/inventory-gate.mjs muestra el digest actual si el sello no coincide.
