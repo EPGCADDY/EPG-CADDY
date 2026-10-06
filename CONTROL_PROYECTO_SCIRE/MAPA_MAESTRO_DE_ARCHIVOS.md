@@ -597,8 +597,7 @@ Archivos antiguos retirados del uso diario: **89**. Siguen recuperables en el hi
 
 Se retiraron porque eran procesos antiguos que cambiaban el código automáticamente y ya fueron sustituidos. Siguen dentro del historial de V289.
 
-| Ruta retirada | Código antiguo | Tamaño anterior | Qué era |
-|---|---|---:|---|
+| Ruta retirada | Código antiguo | Tamaño anterior | Qué era ||---|---|---:|---|
 | `.github/scripts/v112_patch.py` | `2eded4ba549efed7334ddfe26cbca28aebb0fdba` | 9874 bytes | Ayuda usada por un parche antiguo V112. |
 | `.github/workflows/grupal-card-mic-touch-fix.yml` | `ed99e786c74f434ad3e9c40f045b5922a91288da` | 3505 bytes | Proceso antiguo de una versión ya incorporada. |
 | `.github/workflows/grupal-persistence-hardening.yml` | `a20c0e437f7e0fd8eb5ee0d7e18d6833e2802543` | 7307 bytes | Proceso antiguo de una versión ya incorporada. |
@@ -1197,8 +1196,7 @@ Evidencia y soporte móvil adicionales: `.gitignore`, `scripts/v363-silent-speec
 | `account-backup.js` | Selección canónica de rondas oficiales respaldables, deduplicada por ID. | Una tarjeta oficial equivale a una mutación central. |
 | `index-grupal.html` | Recorre todo el historial oficial al respaldar y muestra la cantidad; recuerda correo sin guardar contraseña. | Cinco tarjetas no pueden reducirse silenciosamente a una; sesión sólo se cierra explícitamente. |
 | `test-v282-optional-account-backup.mjs` | Ejecuta cinco rondas, duplicado, borrador y contrato seguro de autocomplete/localStorage. | RC-044 permanente. |
-| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Resella las fuentes V397 después del rechazo preventivo del primer build. | `inventory-gate` debe pasar antes del nuevo Preview LAB. |
-| `card-library.js` | Conserva orden descendente por fecha y acepta fecha ISO, numérica y visible en español. | Buscar una fecha devuelve las rondas correspondientes. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Resella las fuentes V397 después del rechazo preventivo del primer build. | `inventory-gate` debe pasar antes del nuevo Preview LAB. || `card-library.js` | Conserva orden descendente por fecha y acepta fecha ISO, numérica y visible en español. | Buscar una fecha devuelve las rondas correspondientes. |
 | `index-grupal.html` | Pagina ocho rondas; doble toque abre Global original; el Historial no muestra acciones y el visor abierto contiene `ATRÁS` + `ENVIAR TARJETA DIGITAL`. | RC-045: sin ocho botones antiguos ni quinta ronda oculta. |
 | `test-v279-local-card-library.mjs`, `test-v282-optional-account-backup.mjs` | Fijan el contrato visible del Historial y la cuenta recordada. | Contraseña visible sólo bajo control local y nunca almacenada; micrófono intacto. |
 | `AUDITORIA_TARJETAS_IN_OUT_ATRAS_V397.md` | Inventario revocatorio de 16 vistas y matriz de evidencia posterior. | Ninguna vista pasa sin captura individual, retorno y persistencia. |
@@ -1798,7 +1796,6 @@ Entrega LAB y Producción ya autorizada en `PROMPT_CONTINUIDAD_R147_2.md`; requi
 ### R147.2.4.18 · entrega completada · 2026-10-01 09:38 Guatemala
 
 Publicado main fast-forward `a370fc666c69beff9c8703467ba6b3c636042066`, árbol exacto verificado; LAB `dpl_44JYfbcGYf296T8FinTfL8dHLMj1` y Producción `dpl_FSbJA8AwFMZWeQHk7HGhk53ZRwVU` READY. Ambos `/release.json` HTTP200 ofrecen R147.2.4.18. Navegadores propios abiertos antes de publicación mantienen meta de release R14 después de recargar y muestran ACTUALIZAR visible/habilitado; no se pulsó en estos perfiles de entrega. No se manipularon instalaciones o jugadores reales del propietario.
-
 Recorrido solicitado comprobado: 18 detalles de 18 casillas, 4 y 1 jugadores, General/Categoría/Favoritos/Ronda Particular, escritor oficial, corrección privada aislada, X, CONTINUAR y persistencia, actualizaciones propias15→16→17→18 y detalle390px. Prueba iPhone físico no certificada; no confundirla con navegador. Evidencia de entrega añadida a `CONTROL_PROYECTO_SCIRE/EVIDENCIA_SCORES_R147_2_4_18.json`; los cuatro controles de continuidad/aceptación/mapa/tareas y ambos ROADMAPS quedan actualizados, junto con sello inventario. Esta actualización documental conserva fuente funcional de R18 íntegra. Los pendientes de publicación anotados en los registros previos quedan cerrados por esta comprobación.
 
 
@@ -2397,7 +2394,6 @@ Dominio solicitado: golf-score-card.vercel.app responde HTTP200, título Create 
 
 Evidencia local: banco completo y ambas puertas project-quality PASS. Chromium local ausente; intento de instalación devuelve archivo no ZIP y termina fallo. No se simula navegador ni iPhone. Preview remoto pendiente.
 
-
 Archivos de esta versión:
 - `event-administration-ui.js` · implementación, prueba o control R156.
 - `event-administration.html` · implementación, prueba o control R156.
@@ -2667,3 +2663,12 @@ R173-B1: `index-grupal.html` muestra R173 desde el HTML inicial; `release.json` 
 | personal-events.js | El diálogo de Organizador conserva su canje de código y elimina la salida a login. | Un único control para crear torneos. |
 | test-lab-account-gate.mjs | Verifica ausencia del bloqueo normal y presencia del código de Organizador. | Se ejecuta dentro del banco LAB existente. |
 | index-grupal.html, release.json, service-worker.js | Sello de publicación, etiqueta y caché R175 alineados. | Un mismo build en los entornos. |
+
+## R176 · Family/Friends vencidos visibles y eliminables
+
+| Archivos | Función y control |
+|---|---|
+| api/personal-events.js | Devuelve al organizador su listado de torneos activos y vencidos automáticamente; excluye revocados manualmente y eliminados. |
+| api/_lib/event-administration.js | Permite borrar vencidos con auditoría automática y conserva autorización, confirmación y recibo. |
+| personal-events.js | Presenta VENCIDO y la acción confirmada ELIMINAR dentro de ID DE TORNEO. |
+| test-event-administration.mjs | Regresión de visibilidad, aislamiento, selector normal, borrado, recibo y revocación manual. |

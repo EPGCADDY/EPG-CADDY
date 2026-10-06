@@ -597,7 +597,6 @@ Control visual final: `manual.html` identifica la página 73 como **AI UNIVERSAL
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | `SOURCE-LOCK-V321` | Digest y cantidad de fuentes activas V321. |
 
 ## Golf Score Card GT
-
 Inventario consolidado al corte **V314 · 25 de agosto de 2026**, con **295 archivos activos rastreados en Git**. Las nueve páginas visuales conservan la fotografía original de los 160 archivos activos al cierre de V292; las secciones posteriores incorporan, sin borrar ese antecedente, todos los cambios posteriores. Cada línea incluye:
 
 > **CORTE DE REVISIÓN SOLICITADO:** desde la **línea 160 hacia abajo** se considera contenido nuevo para revisión.
@@ -1197,8 +1196,7 @@ Archivos exactos:
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`
 - `Intocables/APROBACION_FISICA_REGISTRO_SCORES_V378.json`
-- `ROADMAP_A_DETALLE.md`
-- `ROADMAP_OVERALL.md`
+- `ROADMAP_A_DETALLE.md`- `ROADMAP_OVERALL.md`
 - `api/universal-ai.js`
 - `api/weather.js`
 - `audit-project.mjs`
@@ -1797,8 +1795,7 @@ Prueba interactiva R48: hoyo1 jugador UNO corregido4→8→4 sin reselección; s
 
 
 ### R49 READY en dominio LAB — revisión interactiva bloqueada por acceso
-Publicado b2c528435528e2a2f65e5951d4aec7b2914b77a0 (árbol idéntico localddcd726). Preview dpl_7WuNs96S7WgB2zWjfKM5eVad9PZC READY; rebuild dominio LAB dpl_C2aB1p8tkpkRQLKJoWT1r1LZpmGb READY con alias golf-sc-gt-lab.vercel.app confirmado. Se mantuvo sesión Vercel abierta; proyecto principal intacto.
-Antes de verificar R49, pestaña LAB redirigió a access.html y solicita ENTRAR COMO PROPIETARIO. No se atribuye causa exacta sin prueba. Requiere autenticación segura del propietario para continuar pruebas reales; no se elude el acceso. Pendientes: recuperación ACTUALIZAR desde versión anterior, cambio de modalidad/tarjeta digital, Skins, audio residual, La Reunión y resto de matriz completa. R49 NO CERTIFICADA integralmente. Pruebas técnicas PASS; revisión visible posterior publicación pendiente. Rollback LAB: dpl_8MxdkZ8GDztr6fyWd7SX2RRGaaKs R48.
+Publicado b2c528435528e2a2f65e5951d4aec7b2914b77a0 (árbol idéntico localddcd726). Preview dpl_7WuNs96S7WgB2zWjfKM5eVad9PZC READY; rebuild dominio LAB dpl_C2aB1p8tkpkRQLKJoWT1r1LZpmGb READY con alias golf-sc-gt-lab.vercel.app confirmado. Se mantuvo sesión Vercel abierta; proyecto principal intacto.Antes de verificar R49, pestaña LAB redirigió a access.html y solicita ENTRAR COMO PROPIETARIO. No se atribuye causa exacta sin prueba. Requiere autenticación segura del propietario para continuar pruebas reales; no se elude el acceso. Pendientes: recuperación ACTUALIZAR desde versión anterior, cambio de modalidad/tarjeta digital, Skins, audio residual, La Reunión y resto de matriz completa. R49 NO CERTIFICADA integralmente. Pruebas técnicas PASS; revisión visible posterior publicación pendiente. Rollback LAB: dpl_8MxdkZ8GDztr6fyWd7SX2RRGaaKs R48.
 
 Autenticación segura solicitada y enviada; respuesta visible de LAB: NO SE PUDO VERIFICAR LA CUENTA PROPIETARIA. No prueba contraseña incorrecta ni causa concreta. Se detuvo repetición de inicio de sesión tras primer fallo genérico conforme a control-browser. Sesión Vercel abierta.
 
@@ -2398,7 +2395,6 @@ Archivo de escenario conservado: `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_LIVE_R146/ES
 - El generador de inventarios toma el rótulo y la versión del `release.json`, evitando dejar los PDF y el sello con identidad R18.
 - Archivos: `release.json`, `index-grupal.html`, `service-worker.js`, `test-lab-account-gate.mjs`, `scripts/rebuild-inventory-pdfs.py`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
 - Estado: build manual LAB PASS; project-quality, roadmap, inventario (761 fuentes/3 PDF) y regresiones dirigidas PASS. Los dos ROADMAP y el sello quedaron agrupados tras validar el gate de trazabilidad. Preview R147 pendiente de despliegue y verificación externa.
-
 ## R147.1 · compartir ronda privada tras crearla desde Registro · 30 septiembre 2026
 - Al crear una ronda privada desde Registro se conserva el diálogo con código y se ofrecen COMPARTIR POR WHATSAPP y CONTINUAR AL SCORE CARD.
 - En iOS/soporte nativo usa navigator.share; si el usuario cancela, conserva el diálogo para reintentar o continuar. En el resto abre WhatsApp y espera el regreso antes de abrir la tarjeta.
@@ -2997,8 +2993,7 @@ Orden 11:29: lista de rondas/torneos registrados y después INGRESE EL CÓDIGO d
 - `event-administration-ui.js` - fuente o regresión vigente.
 - `event-administration.html` - fuente o regresión vigente.
 - `index-grupal.html` - fuente o regresión vigente.
-- `live-control.js` - fuente o regresión vigente.
-- `middleware.js` - fuente o regresión vigente.
+- `live-control.js` - fuente o regresión vigente.- `middleware.js` - fuente o regresión vigente.
 - `personal-events.js` - fuente o regresión vigente.
 - `release.json` - fuente o regresión vigente.
 - `scripts/build-manual-lab.mjs` - fuente o regresión vigente.
@@ -3597,8 +3592,7 @@ Paneles centrados cuando caben, scroll seguro cuando son largos; MENÚ arriba de
 - `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R157_BROWSER/430x932-tarjeta-general.png` · modificación, evidencia o control R157.
 - `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R157_BROWSER/430x932-tarjeta-match_play.png` · modificación, evidencia o control R157.
 - `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R157_BROWSER/430x932-tarjeta-stableford.png` · modificación, evidencia o control R157.
-- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R157_BROWSER/430x932-tarjeta-universales.png` · modificación, evidencia o control R157.
-- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R157_BROWSER/evidence.json` · modificación, evidencia o control R157.
+- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R157_BROWSER/430x932-tarjeta-universales.png` · modificación, evidencia o control R157.- `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R157_BROWSER/evidence.json` · modificación, evidencia o control R157.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · modificación, evidencia o control R157.
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · modificación, evidencia o control R157.
 - `ROADMAP_A_DETALLE.md` · modificación, evidencia o control R157.
@@ -4039,3 +4033,12 @@ El nuevo Preview encontró sintaxis inválida en las expresiones regulares de `t
 ## R176 · regeneración del inventario y compilación LAB · 6 octubre 2026
 
 Los tres inventarios V311 se regeneraron desde las 908 fuentes del árbol R176. La ejecución local de `PROJECT_QUALITY_GATE`, `ROADMAP GATE`, `INVENTORY GATE` y `build-manual-lab.mjs` pasó completa; el resultado del primer Preview confirmó que ambos ROADMAPS y el sello deben quedar incluidos en el mismo commit. Se registran juntos para repetir el Preview. Revisión visual y dispositivo pendientes; Producción intacta.
+
+### R176 · Family/Friends vencidos visibles y eliminables desde Organizador
+
+- ID de Torneo conserva controles activos y presenta Family/Friends vencidos automáticamente con VENCIDO y ELIMINAR.
+- La lista extendida se limita al organizador autenticado; vencidos fuera del selector público.
+- El servidor sólo borra vencidos con auditoría system/expired, sin marca manual ni recibo previo; conserva confirmación y recibo.
+- Regresión: test-event-administration.mjs cubre activo, expiración, aislamiento, selector normal, recibo y revocación manual.
+- Archivos: api/personal-events.js, api/_lib/event-administration.js, personal-events.js, test-event-administration.mjs, release.json, index-grupal.html, service-worker.js, mapa maestro, continuidad y reincidencias.
+- Gates dirigidos pasan; revisión Preview y puerta visual/física LAB pendientes. Producción sigue R174.

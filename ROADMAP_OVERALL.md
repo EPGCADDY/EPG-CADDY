@@ -598,7 +598,6 @@ Los nombres `EPG-CADDY`, `epg-caddy`, `EPGCaddy` y `com.epgcaddy.app` sólo perm
 ## Actualización operativa V297 · Icono cromado 3D neón y micrófono compacto
 
 Autorización recibida el **24 de agosto de 2026** para instalar como icono oficial la versión cuadrada cromada, con relieve profundo, apariencia de metal troquelado y verde neón muy saturado. También se reduce 50 % el diámetro visible del micrófono de registro y se coloca una figura clara de micrófono en el centro. No cambia su funcionamiento ni su área cómoda de toque.
-
 | Archivo o modificación | Qué queda registrado |
 |---|---|
 | `7B1C43A7-EB8A-43CB-B03E-0CAE9273F2A2.jpeg` | Fuente cuadrada histórica actualizada con el logo autorizado, conservando su nombre técnico. |
@@ -1198,7 +1197,6 @@ R36: test-v365-active-round-empty-recovery.mjs conserva la prueba de recuperaci�
 ## PTT — corrección local de duración (2026-09-13T22:19:28.097630+00:00)
 Estado: pendiente de validación física y publicación. Se detectó y corrigió que la espera de onstop inflaba la duración de pulsaciones breves. voice-turns.js registra stoppedAt al soltar. Evidencia: node test-ptt-independent-turns.mjs termina con exit 0; incluye 100 turnos simulados y casos de onstop demorado, pulsación de 50 ms con 1000 ms de espera y recuperación tras permiso denegado. No equivale a prueba iPhone ni proveedor real. Actualizar no fue modificado. Próximo paso: validación navegador/proveedor y controles pendientes antes de candidato.
 
-
 ### Candidato local PTT — archivos incluidos
 - `index-grupal.html`
 - `voice-turns.js`
@@ -1797,7 +1795,6 @@ R55 READY dpl_6p3gDD9AAHCXsRs7tPTaKLW9Roos, alias LAB, remoto d6a28277f0e080fbbb
 - Producción permanece sin promoción de este cambio hasta validación LAB.
 
 - Ajuste de regresión V307: la prueba ahora reconoce el contrato vigente de modalidad con side game activo, sin cambiar lógica de aplicación.
-
 - Corrección de build LAB: restaurado identificador contractual R68 en app y service worker; no cambia Producción ni la lógica funcional R70.
 
 - Ajuste de regresión matriz física R60: se actualiza el token de navegación al vocabulario vigente VER RONDAS GUARDADAS; sin cambio funcional.
@@ -2397,8 +2394,7 @@ Estas directrices amplían las tareas pendientes y no equivalen a pruebas aproba
 No tocar selector CAMPO R147.2.4. No borrar, reemplazar ni exigir reanotar scores. No pulsar ACTUALIZAR en instalaciones del propietario. LAB y producción se entregan tras comprobación funcional y visual.
 
 
-## Scores · controles y conservación · 2026-09-30 22:40 Guatemala
-SCORES TORNEO usa asociación guardada, prepara publicación antes de navegar y conserva ruta de retorno a la Score Card y su cuenta. Favoritos limpia búsqueda y categoría previas. Títulos/subtítulos y nombres de Scores sin selección; entradas siguen editables. Fixture de recuperación conserva ronda y scores y retiene publicación fallida. Perfil técnico LAB PASS; servidor/navegador pendientes. Invitado difuminado y detalle común aún pendientes. Prueba histórica R143 fija versiones y flujo anteriores, no pertenece al perfil vigente.
+## Scores · controles y conservación · 2026-09-30 22:40 GuatemalaSCORES TORNEO usa asociación guardada, prepara publicación antes de navegar y conserva ruta de retorno a la Score Card y su cuenta. Favoritos limpia búsqueda y categoría previas. Títulos/subtítulos y nombres de Scores sin selección; entradas siguen editables. Fixture de recuperación conserva ronda y scores y retiene publicación fallida. Perfil técnico LAB PASS; servidor/navegador pendientes. Invitado difuminado y detalle común aún pendientes. Prueba histórica R143 fija versiones y flujo anteriores, no pertenece al perfil vigente.
 Archivos modificados: `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md`, `CONTROL_PROYECTO_SCIRE/MANUAL_TAREAS_R147_2.md`, `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `gsc-design-system.css`, `index-grupal.html`, `live-control.js`, `live-hub.js`, `scores-ui.css`, `scripts/build-manual-lab.mjs`, `test-lab-tournament-navigation.mjs`, `test-lab-update-recovery.mjs`, `test-scores-tournament-recovery.mjs`, `CONTROL_PROYECTO_SCIRE/MATRIZ_ACEPTACION_SCORES_R147_2_4_1.md`.
 
 
@@ -2996,7 +2992,6 @@ Archivos:
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · corrección, prueba o evidencia R24.
 
 - `test-r24-private-member-publish.mjs` · vinculación particular explícita, publicación Gross5/Net4, reutilización y rechazo de selección vieja.
-
 
 ### R24 · bloqueo de servicios comprobado 12:33 Guatemala
 Producción: respaldo br-tiny-math-avpu8yfk READY y conteo SQL 11 torneos +1 particular antes del corte. Preparación de tabla de comprobantes respondió sin error; sentencia de revocación integral respondió HTTP401 supplied credentials do not pass authentication. Lectura posterior confirma mismos 12 eventos pendientes y cero comprobantes nuevos. Limpieza NO ejecutada. Vercel settings redirige a Login; CRON_SECRET real NO verificado; consulta logs filtrados en último deployment no encuentra ejecución cleanup. No promover main ni ambos dominios hasta cerrar revisión y estos bloqueos. No se ha solicitado nueva autorización del alcance.
@@ -3597,8 +3592,7 @@ Aceptación: ambos payloads exactos; cero share automático; código recuperable
 - `CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R160_WHATSAPP/evidence.json` · implementación, control o evidencia R160.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · implementación, control o evidencia R160.
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · implementación, control o evidencia R160.
-- `ROADMAP_A_DETALLE.md` · implementación, control o evidencia R160.
-- `ROADMAP_OVERALL.md` · implementación, control o evidencia R160.
+- `ROADMAP_A_DETALLE.md` · implementación, control o evidencia R160.- `ROADMAP_OVERALL.md` · implementación, control o evidencia R160.
 - `event-administration.html` · implementación, control o evidencia R160.
 - `index-grupal.html` · implementación, control o evidencia R160.
 - `release.json` · implementación, control o evidencia R160.
@@ -3935,3 +3929,12 @@ El nuevo Preview encontró sintaxis inválida en las expresiones regulares de `t
 ## R176 · regeneración del inventario y compilación LAB · 6 octubre 2026
 
 Los tres inventarios V311 se regeneraron desde las 908 fuentes del árbol R176. La ejecución local de `PROJECT_QUALITY_GATE`, `ROADMAP GATE`, `INVENTORY GATE` y `build-manual-lab.mjs` pasó completa; el resultado del primer Preview confirmó que ambos ROADMAPS y el sello deben quedar incluidos en el mismo commit. Se registran juntos para repetir el Preview. Revisión visual y dispositivo pendientes; Producción intacta.
+
+### R176 · Family/Friends vencidos visibles y eliminables desde Organizador
+
+- ID de Torneo conserva controles activos y presenta Family/Friends vencidos automáticamente con VENCIDO y ELIMINAR.
+- La lista extendida se limita al organizador autenticado; vencidos fuera del selector público.
+- El servidor sólo borra vencidos con auditoría system/expired, sin marca manual ni recibo previo; conserva confirmación y recibo.
+- Regresión: test-event-administration.mjs cubre activo, expiración, aislamiento, selector normal, recibo y revocación manual.
+- Archivos: api/personal-events.js, api/_lib/event-administration.js, personal-events.js, test-event-administration.mjs, release.json, index-grupal.html, service-worker.js, mapa maestro, continuidad y reincidencias.
+- Gates dirigidos pasan; revisión Preview y puerta visual/física LAB pendientes. Producción sigue R174.

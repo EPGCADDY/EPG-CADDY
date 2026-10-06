@@ -598,7 +598,6 @@ Escape: revisión previa no ejercitó el handler real de regreso con borrador; c
 - `api/app-access.js`, `auth-gate.js`: status limpia cookies temporales únicamente después de verificar propietario; cliente recarga ruta/query original sólo tras limpieza efectiva, sin bucle ni reemplazo por invitación.
 - `test-lab-owner-session-priority.mjs`, `test-lab-guest-account-entry.mjs`, `scripts/build-manual-lab.mjs`: PASS handler real e init con fixtures de proveedor: propietario confirmado, otra cuenta, caída, limpieza y recarga sin bucle; invitado mantiene permisos anteriores. No prueban contraseña real.
 - Estado integral: PENDIENTE sesión real y revisión física completa; usuario histórico no vinculado de manera verificable, no se inventó alias. Producción intacta.
-
 ### R146 · 30/09/2026 10:27 Guatemala · alta antes de captura y referencia R128.18
 - `index-grupal.html`, `live-hub.js`, `test-lab-registration-return-state.mjs`: nombre ya capturado en Registro precarga el formulario; entrada Torneos valida identidad antes de pedir datos. PASS handler con cuenta autorizada y no autorizada.
 - Vercel consultado sólo lectura: epg-caddy.vercel.app corresponde a R128.18, commit 89c64f348b6ce2a311218215c41488e04a588053, dpl_2nzrTn5ft7MX1h4fw4Bd3t3FLw2L READY/Production. No modificación. La sesión guardada de ese origen no se transfiere automáticamente a los dominios de Preview.
@@ -1197,8 +1196,7 @@ Pedido IMG_5675: SCORES TORNEO muestra exclusivamente todos los torneos en curso
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · modificación o control R154.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · modificación o control R154.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · modificación o control R154.
-- `test-lab-registration-private-rounds-entry.mjs` · prueba de separación de grupos y directorio de torneos R154.
-- `scripts/manual-screen-parity-gate.mjs` · nombre RONDAS GUARDADAS alineado con opción del menú; paridad operativa conservada R154.
+- `test-lab-registration-private-rounds-entry.mjs` · prueba de separación de grupos y directorio de torneos R154.- `scripts/manual-screen-parity-gate.mjs` · nombre RONDAS GUARDADAS alineado con opción del menú; paridad operativa conservada R154.
 
 Ampliación expresa 20:01: BUSCAR JUGADOR se retira del menú principal y se muestra junto a General/Categorías/Favoritos en el torneo seleccionado. Su título BUSCAR JUGADOR persiste. CREAR TORNEO es exclusivamente la acción y el diálogo de creación; ningún título de Scores usa esa etiqueta. Pruebas y contratos de menú actualizados: `test-lab-shortcuts-navigation.mjs`, `test-lab-global-operational-audit.mjs`.
 
@@ -1443,3 +1441,11 @@ RC-R173-B1-CI7 · 5 octubre 2026: el gate del paquete nativo intentaba incluir `
 - Corrección permanente: remover ese botón y exigir acceso explícito para el formulario opcional; mantener código de Organizador y APIs protegidas por recurso.
 - Evidencia automática: `test-lab-account-gate.mjs` inspecciona el arranque sin sesión, el acceso explícito y el código único.
 - Estado: cambio local PASS; Preview/browser pendientes; Producción intacta hasta cerrar puertas.
+
+## RC-R176 · Family/Friends vencidos no administrables desde Organizador · 6 octubre 2026
+
+- Síntoma: un Family/Friends expirado desaparecía del ID DE TORNEO y el endpoint rechazaba todo status=revoked.
+- Causa: el listado personal devolvía sólo eventos activos y el borrado no reconocía expiraciones automáticas auditadas.
+- Corrección: lista extendida acotada al organizador; borra sólo con system/expired, sin marca manual ni recibo previo.
+- Regresión: test-event-administration.mjs cubre activos, expirados, aislamiento, selector, recibo y revocación manual.
+- Estado: gates dirigidos pasan; Preview y puerta física LAB pendientes. Producción intacta.

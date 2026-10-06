@@ -599,7 +599,6 @@ R147.2.4.7 Preview READY dpl_FQwYSkWkpbEzPkijjN9r1HBQKsLj/5e4887398d4543fd64ad97
 
 La entrega independiente en app-update.js absorbe el rescate SW y oculta el aviso heredado cuando crea el control operativo, para evitar botones superpuestos. Sin JavaScript independiente el rescate SW permanece disponible.
 
-
 ## R147.2.4.9 · revisión consecutiva en LAB Preview
 
 Versión anterior R147.2.4.8 publicada READY en alias estable lab/r147244-update-delivery-20261001, commit 1fd89602d8d16e9b3abb2adbbbf6c43b5d014b27. Perfil propio Chromium/Playwright. R147.2.4.8 completó shell-ready con todos los recursos cached y controlador activated; conserva ronda PRUEBA ACTUALIZACION/SENIOR/14/BLANCAS/WhatsApp sintético 00000000, Gross90/Net76 y 1 ronda oficial. Nueva transición pendiente de click y preservación; puerta navegador no declarada PASS antes de tres transiciones reales. Production intacta. Cambian: index-grupal.html, service-worker.js, release.json, ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md, CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md, CONTROL_PROYECTO_SCIRE/MANUAL_TAREAS_R147_2.md, CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md, CONTROL_PROYECTO_SCIRE/MATRIZ_ACEPTACION_SCORES_R147_2_4_1.md, CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md, CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json.
@@ -1197,8 +1196,7 @@ Orden IMG_5666: SCORES MI GRUPO y SCORES TORNEO en la primera fila, uno a la par
 - `scripts/build-manual-lab.mjs` · disposición, código obligatorio, regresión o registro R150.
 - `ROADMAP_OVERALL.md` · disposición, código obligatorio, regresión o registro R150.
 - `ROADMAP_A_DETALLE.md` · disposición, código obligatorio, regresión o registro R150.
-- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · disposición, código obligatorio, regresión o registro R150.
-- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · disposición, código obligatorio, regresión o registro R150.
+- `CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md` · disposición, código obligatorio, regresión o registro R150.- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · disposición, código obligatorio, regresión o registro R150.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · disposición, código obligatorio, regresión o registro R150.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · disposición, código obligatorio, regresión o registro R150.
 
@@ -1541,3 +1539,7 @@ PASS dirigido: 20 organizadores por entorno (40 torneos activos) aparecen en amb
 ## R175 · Login eliminado del recorrido normal · 6 octubre 2026
 
 Base: cf79332641e4353413cc72fad64385339446ccb1. Se reprodujo en LAB el salto desde Organizador al formulario Bienvenido/correo/contraseña. Se quitó esa salida y el autolanzamiento por sesión ausente; el acceso opcional queda sólo detrás de `?account=1`. La autorización de Organizador conserva el código único. La entrada normal a Registro, Score Card y Scores es libre. Se mantiene cada API de torneo con su control de acceso. Revisión local dirigida PASS; Preview en curso; producción no modificada.
+
+## R176 · Family/Friends vencidos · 6 octubre 2026
+
+Los Family/Friends vencidos automáticamente siguen accesibles al organizador para borrarlos y obtener recibo; siguen fuera del selector público. El servidor distingue system/expired de revocación manual. Regresión y quality gate pasan. LAB/Preview pendiente de revisión visual/física. Producción R174 hasta completar gates.

@@ -597,8 +597,7 @@ html,body{background:radial-gradient(circle at 50% -10%,#141818 0,#050606 34%,#0
 .final-card-head button:disabled{border-color:#343a3a;color:#777;background:#050606;opacity:1}
 .final-card-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 12px}
 .final-card-meta span{display:flex;min-height:42px;align-items:center;justify-content:center;padding:7px 10px;border:1px solid var(--premium-line);border-radius:10px;background:#080a0a;color:#d8dddd;text-align:center;font-size:11px;line-height:1.25}
-#finalTournament:empty::before{content:"RONDA CASUAL"}
-.final-card-scroll-hint{padding:11px 14px;border:1px solid var(--premium-line);border-bottom:0;border-radius:12px 12px 0 0;background:#080a0a;color:#aeb5b5;text-align:right;font:800 9px/1 Arial,sans-serif;letter-spacing:.55px}
+#finalTournament:empty::before{content:"RONDA CASUAL"}.final-card-scroll-hint{padding:11px 14px;border:1px solid var(--premium-line);border-bottom:0;border-radius:12px 12px 0 0;background:#080a0a;color:#aeb5b5;text-align:right;font:800 9px/1 Arial,sans-serif;letter-spacing:.55px}
 .final-card-shell{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;border:1px solid var(--premium-line);border-radius:0 0 12px 12px;background:#020303;scrollbar-color:var(--lime) #090b0b;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
 .final-card-shell::-webkit-scrollbar{height:10px}.final-card-shell::-webkit-scrollbar-track{background:#090b0b}.final-card-shell::-webkit-scrollbar-thumb{border:2px solid #090b0b;border-radius:10px;background:var(--lime)}
 .final-card-panel .scorecard{width:1360px;min-width:1360px}.final-card-panel .summary{width:1360px;min-width:1360px;margin-top:12px;border-radius:12px}
@@ -1197,8 +1196,7 @@ input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{
   <section class="new-round-card" id="setupStep1"><section id="setupEventIdentification" class="active-tournament-heading" hidden><strong id="setupEventIdentificationName"></strong><span id="setupEventIdentificationMeta"></span></section>
     <div class="screen-back-row"><button class="screen-back-button" type="button" id="cancelSetup">ATRÁS</button></div>
     <div class="registration-upper">
-    <div class="nr-head"><img class="official-logo-target" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Golf Score Card Guatemala"></div>
-    <div class="field-title course-selection-title">SELECCIONA CAMPO</div><div class="course-options" id="courseOptions" role="radiogroup" aria-label="Campo de golf"></div>
+    <div class="nr-head"><img class="official-logo-target" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Golf Score Card Guatemala"></div>    <div class="field-title course-selection-title">SELECCIONA CAMPO</div><div class="course-options" id="courseOptions" role="radiogroup" aria-label="Campo de golf"></div>
     
     <div class="field-title">MODALIDADES</div>
     <div class="game-mode-columns" aria-label="Modalidades">
@@ -1797,8 +1795,7 @@ function syncDraftPlayersFromManualRows({strict=false,renderAfter=false}={}){
     if(!hasData)continue;
     if(!name||handicapText===""||!Number.isSafeInteger(handicap)||!tee||(draftTournament&&!category)||!validWhatsApp(whatsapp,countryCode)){incomplete={slot:i+1,name,category,handicapText,tee,countryCode,whatsapp};continue}
     const key=canonicalPlayerNameKey(name);if(seen.has(key))return setManualRegistrationStatus(`JUGADOR REPETIDO: ${name.toUpperCase()}`);seen.add(key);
-    const old=draftPlayers.find(p=>p.id===row.id)||draftPlayers[i]||{};
-    next.push(normalizePlayer({...old,id:old.id||`p${next.length+1}`,name,tournamentCategory:category,handicap,tee,countryCode,whatsapp,holes:old.holes||{},activeFrom:old.activeFrom||rosterEditJoinHole},next.length));
+    const old=draftPlayers.find(p=>p.id===row.id)||draftPlayers[i]||{};    next.push(normalizePlayer({...old,id:old.id||`p${next.length+1}`,name,tournamentCategory:category,handicap,tee,countryCode,whatsapp,holes:old.holes||{},activeFrom:old.activeFrom||rosterEditJoinHole},next.length));
   }
   if(incomplete){
     if(!strict)return false;
@@ -2397,8 +2394,7 @@ function bindPlayerNameResultAudio(){
       synth.cancel();
       window.GSCDeviceClosures?.cancel?.();
       speakingPlayerId="";last=0;lastPlayerId="";
-      button.className="player-audio-button";
-      const status=$("deviceClosureStatus");
+      button.className="player-audio-button";      const status=$("deviceClosureStatus");
       if(status)status.textContent="VOZ DETENIDA";
       return;
     }
@@ -2997,8 +2993,7 @@ function openOriginalGlobalCard(){const snapshot=originalOfficialSnapshot();if(!
 function correctionSelectedPlayer(){return round.players.find(player=>player.id===$("officialCorrectionPlayer").value)||round.players[0]||null}
 function renderOfficialCorrectionCurrent(){const player=correctionSelectedPlayer(),hole=Number($("officialCorrectionHole").value),score=player?.holes?.[hole];$("officialCorrectionCurrent").value=score?(score.status==="x"?"X":String(score.gross??"")):"";return score||null}
 function openOfficialCorrection(){if(!round.officialSnapshot||!round.officiallyClosedAt)return false;$("officialCorrectionPlayer").innerHTML=round.players.map(player=>`<option value="${yds10NameSafe(player.id)}">${yds10NameSafe(player.name)}</option>`).join("");$("officialCorrectionHole").value="1";$("officialCorrectionGross").value="";$("officialCorrectionReason").value="";$("officialCorrectionStatus").textContent="";renderOfficialCorrectionCurrent();$("officialCorrectionOverlay").classList.add("visible");$("officialCorrectionOverlay").setAttribute("aria-hidden","false");return true}
-function closeOfficialCorrection(){$("officialCorrectionOverlay").classList.remove("visible");$("officialCorrectionOverlay").setAttribute("aria-hidden","true")}
-async function saveOfficialCorrection(){const player=correctionSelectedPlayer(),hole=Number($("officialCorrectionHole").value),gross=Number($("officialCorrectionGross").value),reason=$("officialCorrectionReason").value.trim(),authorizedBy=$("officialCorrectionAuthorizedBy").value.trim(),status=$("officialCorrectionStatus");if(!player||!Number.isInteger(hole)||hole<1||hole>18||!Number.isInteger(gross)||gross<1||gross>30){status.textContent="JUGADOR, HOYO O GROSS INVÁLIDO";return false}if(!reason){status.textContent="MOTIVO OBLIGATORIO";return false}if(!authorizedBy){status.textContent="RESPONSABLE OBLIGATORIO";return false}const changes=[{playerId:player.id,hole,gross}],result=await window.GSCRoundClosure.correct(round,{changes,reason,authorizedBy,appVersion:"V307"});if(!result.ok){status.textContent="NO SE PUDO GUARDAR LA CORRECCIÓN";return false}const current=player.holes?.[hole]||{},correctedScore=scoreObject(player,hole,gross,current);player.holes[hole]=isStablefordRound()?{...correctedScore,points:GSCStableford.pointsFor(gross,PAR[hole-1])}:correctedScore;round={...result.round,players:round.players,officialSnapshot:result.snapshot};if(isStablefordRound())storeStablefordRoundResults();persist();archiveRoundSnapshot(round);render();renderFinalDigitalCard();closeOfficialCorrection();$("artifactShareStatus").textContent=`CORRECCIÓN V${round.officialVersion} GUARDADA · ORIGINAL PRESERVADO`;return true}
+function closeOfficialCorrection(){$("officialCorrectionOverlay").classList.remove("visible");$("officialCorrectionOverlay").setAttribute("aria-hidden","true")}async function saveOfficialCorrection(){const player=correctionSelectedPlayer(),hole=Number($("officialCorrectionHole").value),gross=Number($("officialCorrectionGross").value),reason=$("officialCorrectionReason").value.trim(),authorizedBy=$("officialCorrectionAuthorizedBy").value.trim(),status=$("officialCorrectionStatus");if(!player||!Number.isInteger(hole)||hole<1||hole>18||!Number.isInteger(gross)||gross<1||gross>30){status.textContent="JUGADOR, HOYO O GROSS INVÁLIDO";return false}if(!reason){status.textContent="MOTIVO OBLIGATORIO";return false}if(!authorizedBy){status.textContent="RESPONSABLE OBLIGATORIO";return false}const changes=[{playerId:player.id,hole,gross}],result=await window.GSCRoundClosure.correct(round,{changes,reason,authorizedBy,appVersion:"V307"});if(!result.ok){status.textContent="NO SE PUDO GUARDAR LA CORRECCIÓN";return false}const current=player.holes?.[hole]||{},correctedScore=scoreObject(player,hole,gross,current);player.holes[hole]=isStablefordRound()?{...correctedScore,points:GSCStableford.pointsFor(gross,PAR[hole-1])}:correctedScore;round={...result.round,players:round.players,officialSnapshot:result.snapshot};if(isStablefordRound())storeStablefordRoundResults();persist();archiveRoundSnapshot(round);render();renderFinalDigitalCard();closeOfficialCorrection();$("artifactShareStatus").textContent=`CORRECCIÓN V${round.officialVersion} GUARDADA · ORIGINAL PRESERVADO`;return true}
 async function artifactFileAction(working,success,operation){const status=$("artifactShareStatus");status.textContent=working;try{const result=await operation();status.textContent=success;return result}catch(error){console.error("Archivo oficial:",error);status.textContent="NO SE PUDO GENERAR EL ARCHIVO";return null}}
 function imageOfficialCard(item){return artifactFileAction("GENERANDO IMAGEN…","IMAGEN LISTA · EN IPHONE ELIGE GUARDAR IMAGEN",()=>window.GSCCardFileExport.shareImage(item,"Tarjeta oficial Golf Score Card GT"))}
 function pdfOfficialCard(item){return artifactFileAction("GENERANDO PDF…","PDF OFICIAL DESCARGADO",()=>window.GSCCardFileExport.downloadPdf(item))}
@@ -3597,8 +3592,7 @@ function stablefordDuplicateMessage(duplicates){
   return`${name} ESTÁ REPETIDO EN JUGADOR ${positions.join(" Y JUGADOR ")} · AGREGA APELLIDO O ALIAS`;
 }
 function setStablefordSetupError(message){const status=$("stablefordSetupStatus");status.classList.add("error");status.textContent=message;$("setupStatus").textContent=message;return false}
-function updateStablefordSetupValidity({preserveStatus=false}={}){
-  const state=stablefordSetupNameState();
+function updateStablefordSetupValidity({preserveStatus=false}={}){  const state=stablefordSetupNameState();
   state.inputs.forEach(input=>{input.classList.remove("stableford-name-duplicate");input.removeAttribute("aria-invalid")});
   for(const group of state.duplicates)for(const item of group){item.input.classList.add("stableford-name-duplicate");item.input.setAttribute("aria-invalid","true")}
   const cfg=GSCStableford.categoryConfig(stablefordSetupCategory),course=COURSE_CATALOG[stablefordSetupCourseKey];
@@ -4197,8 +4191,7 @@ $("detectedBody").addEventListener("change",e=>{
   if(name){row.name=canonicalPlayerName(name.value);name.value=row.name}
   if(categoryInput){row.category=normalizeTournamentCategory(categoryInput.value);row.tee=row.category?defaultTeeForTournamentCategory(row.category):"";const teeField=target.closest(".draft-edit-row")?.querySelector("[data-draft-tee]");if(teeField){teeField.value=row.tee;teeField.style.color=TEES[row.tee]?.color||"#fff"}const nameField=target.closest(".draft-edit-row")?.querySelector("[data-draft-name]");if(nameField)nameField.style.color=TEES[row.tee]?.color||"#fff"}
   if(hcp)row.handicap=String(hcp.value??"");
-  if(country){row.countryCode=normalizeWhatsAppCountryCode(country.value);country.value=row.countryCode;const flag=target.closest(".draft-edit-row")?.querySelector("[data-draft-whatsapp-flag]");if(flag)flag.textContent=row.countryCode==="502"?"🇬🇹":"🌐"}
-  if(whatsapp){row.whatsapp=normalizeWhatsApp(whatsapp.value,row.countryCode);whatsapp.value=row.whatsapp}
+  if(country){row.countryCode=normalizeWhatsAppCountryCode(country.value);country.value=row.countryCode;const flag=target.closest(".draft-edit-row")?.querySelector("[data-draft-whatsapp-flag]");if(flag)flag.textContent=row.countryCode==="502"?"🇬🇹":"🌐"}  if(whatsapp){row.whatsapp=normalizeWhatsApp(whatsapp.value,row.countryCode);whatsapp.value=row.whatsapp}
   if(teeInput){row.tee=normalizeTee(teeInput.value)||"";const color=TEES[row.tee]?.color||"#fff";teeInput.style.color=color;const nameField=target.closest(".draft-edit-row")?.querySelector("[data-draft-name]");if(nameField)nameField.style.color=color}
   if(name||categoryInput||hcp||teeInput)revealNextRegistrationSlot(idx);
   const saved=syncDraftPlayersFromManualRows({strict:false,renderAfter:false});
