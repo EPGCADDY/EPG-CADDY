@@ -21,4 +21,19 @@ assert.match(source,/\$\("hubRoundClose"\)\.onclick=\(\)=>setRoundCreateDialogOp
 assert.match(source,/event\.key==="Escape"[^\n]*setRoundCreateDialogOpen\(false\)/);
 const start=source.indexOf("  async function submitRoundCreate()");
 const end=source.indexOf("  async function start()",start);
-∂ªßq´^
+assert.ok(start>=0&&end>start,"Falta el flujo de confirmaci√≥n de ronda");
+const submit=source.slice(start,end);
+assert.match(submit,/if\(!name\)[\s\S]*?return false/,"Nombre vac√≠o debe detener el env√≠o");
+assert.doesNotMatch(submit,/state\.tournaments\.length>=MAX_SAVED_TOURNAMENTS|YA TIENES 5 TORNEOS GUARDADOS/,"Los torneos guardados no deben bloquear nuevas creaciones");
+assert.match(html,/id="hubSavedTournamentList"/,"El di√°logo debe mostrar los torneos guardados en este dispositivo");
+assert.match(source,/QUITAR DE ESTE DISPOSITIVO/,"Debe poder quitar una referencia local sin borrar el torneo global");
+assert.match(source,/function openRoundCreate\(\)\{return setRoundCreateDialogOpen\(true\)\}/,"Crear torneo debe abrir directamente el formulario");
+assert.match(submit,/eventKind:"tournament",name,mode/);
+assert.match(submit,/state=saved\.state;saveState\(\)/,"La nueva ronda debe guardarse en la lista local de torneos");
+assert.match(submit,/liveState\.tournamentOwned=\{tournamentId:result\.tournamentId,name,mode,configuration:result\.configuration/,"El propietario conserva los datos de organizaci√≥n del torneo");
+assert.match(submit,/gsc-tournament-connect-selection-v1[\s\S]*?joinCode:result\.joinCode/,"El torneo conserva el c√≥digo de enlace para iniciar grupos");
+assert.match(source,/const ROUND_TOURNAMENTS_KEY="gsc-round-tournament-tokens-v1"/,"La ronda creada debe identificarse como un torneo de grupos simple");
+assert.match(submit,/setRoundCreateDialogOpen\(false\)[\s\S]*?selectSavedTournament\(item\.token\)[\s\S]*?presentCreatedTournament\(result/,"Al crear, cierra el formulario, abre el torneo y presenta el acceso de grupos");
+assert.match(submit,/setRoundCreateDialogOpen\(false\);if\(item\)[\s\S]*?selectSavedTournament\(item\.token\)/,"Al crear, cierra el formulario y abre el torneo creado");
+const letters="ABCDE";let saved=hub.normalizeHubState(null);for(const letter of letters){const result=hub.upsertTournamentState(saved,letter.repeat(43),`TORNEO ${letter}`);assert.equal(result.full,false);saved=result.state}assert.equal(saved.tournaments.length,5,"La lista local muestra los cinco torneos guardados");const blocked=hub.upsertTournamentState(saved,"F".repeat(43),"TORNEO F");assert.equal(blocked.full,true,"El tope se conserva hasta quitar una referencia");saved=hub.removeTournamentFromState(saved,"C".repeat(43));assert.equal(saved.tournaments.length,4,"Quitar solo borra la referencia de este dispositivo");const replacement=hub.upsertTournamentState(saved,"F".repeat(43),"TORNEO F");assert.equal(replacement.full,false);assert.equal(replacement.state.tournaments.length,5);
+console.log("PASS crear torneo directamente, mostrar y quitar torneos guardados en este dispositivo");

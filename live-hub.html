@@ -18,4 +18,276 @@
   <style>
     :root{--tour-green:#31ff00;--tour-line:#2f3436;--tour-card:#070909;--tour-muted:#8d9294}
     body{background:#000}
-    body:not(.public-display) .hub{width:min(780px,100%);margin:0 auto;padding:calc(env(safe-area-inset-top) + 58px) 14px calc(env(safe-area-i���q�^
+    body:not(.public-display) .hub{width:min(780px,100%);margin:0 auto;padding:calc(env(safe-area-inset-top) + 58px) 14px calc(env(safe-area-inset-bottom) + 24px)}
+    body:not(.public-display) .head{display:grid;grid-template-columns:58px minmax(0,1fr);gap:12px;align-items:center;padding:10px 12px;margin:0 0 14px;border:1px solid var(--tour-line);border-radius:16px;background:#050606}
+    body:not(.public-display) .head img{width:58px;height:58px;object-fit:contain}
+    body:not(.public-display) .head h1{margin:0;color:var(--tour-green);font-size:clamp(24px,7vw,34px);line-height:1;letter-spacing:.2px}
+    body:not(.public-display) .head p,
+    body:not(.public-display) .tournament-shelf>h2,
+    body:not(.public-display) .tournament-shelf>p,
+    body:not(.public-display) .viewer-entry>p,
+    body:not(.public-display) .panel-note,
+    body:not(.public-display) .category-filter small,
+    body:not(.public-display) .footer{display:none!important}
+    body.friends-round-view:not(.public-display) .monitor-switch,
+    body.friends-round-view:not(.public-display) #hubGeneralPanel>h2,
+    body.friends-round-view:not(.public-display) #hubSummary,
+    body.friends-round-view:not(.public-display) #hubGeneralPanel>.search,
+    body.friends-round-view:not(.public-display) #hubSearchResults,
+    body.friends-round-view:not(.public-display) .category-filter,
+    body.friends-round-view:not(.public-display) .category-card-toggle,
+    body.friends-round-view:not(.public-display) .category-card,
+    body.friends-round-view:not(.public-display) .viewer-tools{display:none!important}
+    body.friends-round-view:not(.public-display) #hubGeneralPanel{padding:10px;border-color:transparent;background:transparent}
+    body.friends-round-view:not(.public-display) .friends-leader{width:100%;border-collapse:collapse;font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;text-transform:uppercase}
+    body.friends-round-view:not(.public-display) .friends-leader th,
+    body.friends-round-view:not(.public-display) .friends-leader td{padding:12px 8px;text-align:left;border-bottom:1px solid #303536}
+    body.friends-round-view:not(.public-display) .friends-leader th{color:var(--tour-muted);font-size:12px}
+    body.friends-round-view:not(.public-display) .friends-leader td:first-child{color:var(--tour-green);font-weight:900}
+    body:not(.public-display) .tournament-shelf,
+    body:not(.public-display) .viewer-entry,
+    body:not(.public-display) .panel{margin:0 0 14px;padding:14px;border:1px solid var(--tour-line);border-radius:16px;background:var(--tour-card)}
+    body:not(.public-display) .tournament-cards{display:grid;gap:10px}
+    body:not(.public-display) .tournament-card{min-height:92px;padding:18px;border:1px solid var(--tour-green);border-radius:14px;background:#030503;color:#fff;font-size:clamp(18px,5vw,24px);font-weight:900}
+    body:not(.public-display) .portal-choice{display:block;width:100%;margin-top:10px;font-family:inherit}
+    body:not(.public-display) .tournament-card small{display:block;margin-top:8px;color:var(--tour-muted);font-size:12px;font-weight:800}
+    body:not(.public-display) #hubAddTournament{min-height:48px;margin-top:10px;border:1px solid #454a4d;border-radius:12px;background:#090a0a;color:#fff;font-size:14px}
+    body:not(.public-display) .viewer-entry{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:9px;align-items:center}
+    body:not(.public-display) .viewer-entry h2{margin:0;color:var(--tour-muted);font-size:11px;letter-spacing:.8px}
+    body:not(.public-display) .viewer-entry>div{display:contents}
+    body:not(.public-display) #hubTournamentLink{min-width:0;height:46px;border-radius:11px;font-size:14px}
+    body:not(.public-display) #hubOpenTournament{height:46px;min-width:92px;border-radius:11px;font-size:14px}
+    body:not(.public-display) .monitor-switch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 14px}
+    body:not(.public-display) .monitor-switch button{min-height:42px;padding:8px 6px;border:1px solid #42474a;border-radius:999px;background:#070808;color:#b7bbbd;font-size:12px;font-weight:900}
+    body:not(.public-display) .monitor-switch button.active{border-color:var(--tour-green);background:#071007;color:var(--tour-green)}
+    body:not(.public-display) .panel>h2{margin:0 0 12px;color:#fff;font-size:18px}
+    body:not(.public-display):not(.hub-search-mode) #hubGeneralPanel>.search,
+    body:not(.public-display):not(.hub-search-mode) #hubSearchResults{display:none!important}
+    body:not(.public-display).hub-search-mode #hubGeneralPanel>.summary,
+    body:not(.public-display).hub-search-mode #hubGeneralPanel>.category-filter,
+    body:not(.public-display).hub-search-mode #hubCategoryCardToggle,
+    body:not(.public-display).hub-search-mode #hubCategoryCard,
+    body:not(.public-display).hub-search-mode #hubGeneralPanel>.viewer-tools,
+    body:not(.public-display).hub-search-mode #hubLeaderWrap{display:none!important}
+    body:not(.public-display).hub-favorites-mode #hubTournamentShelf,
+    body:not(.public-display).hub-favorites-mode #hubTournamentEntry{display:none!important}
+    body:not(.public-display) .search{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+    body:not(.public-display) .search input{min-width:0;height:46px;border-radius:11px}
+    body:not(.public-display) .search button{min-width:96px;height:46px;border-radius:11px}
+    body:not(.public-display) .summary{margin:10px 0}
+    body:not(.public-display) .category-filter{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+    body:not(.public-display) .category-filter select{min-width:0;height:44px;border-radius:11px;font-size:12px}
+    body:not(.public-display) #hubCategoryCardToggle{min-height:44px;margin-top:9px;border-radius:11px;font-size:12px}
+    body:not(.public-display) .viewer-tools{margin-top:10px}
+    body:not(.public-display) .viewer-tools summary{min-height:42px;padding:12px;border:1px solid #34383a;border-radius:11px;color:#a6aaac;text-align:center;font-size:11px;font-weight:900}
+    body:not(.public-display) #hubIndividualPanel .actions{margin-top:8px!important}
+    body:not(.public-display) #hubClearFavorites{min-height:44px;font-size:12px}
+    body:not(.public-display) #hubPicker h3{font-size:14px}
+    body:not(.public-display) #gscShortcutsButton{top:max(10px,calc(env(safe-area-inset-top,0px) + 8px))!important;right:max(10px,env(safe-area-inset-right,0px))!important}
+    @media(max-width:600px){
+      body:not(.public-display) .hub{padding-left:10px;padding-right:10px}
+      body:not(.public-display) .viewer-entry{grid-template-columns:1fr auto}
+      body:not(.public-display) .viewer-entry h2{grid-column:1/-1}
+      body:not(.public-display) .category-filter{grid-template-columns:1fr}
+    }
+    /* Essential tournament data must remain available at every width. */
+    .hub .leader th,.hub .leader td{display:table-cell}
+    .hub .leader{min-width:820px}
+    .hub .leader th:nth-child(2),.hub .leader td:nth-child(2){position:sticky;left:0;background:#080a09;min-width:130px;max-width:160px;z-index:3}
+    .hub .leader th:nth-child(2){z-index:4}
+    .hub .leader .star{font-size:12px;min-height:44px;padding:6px 10px;white-space:nowrap;display:block;width:100%;border:1px solid #343a36;border-radius:8px;margin:3px 0}
+    body:not(.public-display) .monitor-switch{top:64px}
+    /* Visibility must outrank the layout rules above. */
+    body:not(.public-display) .hub .hidden{display:none!important}
+    body:not(.public-display) #hubState{font-size:14px;line-height:1.4;padding:10px 12px;margin:0 0 12px}
+    body:not(.public-display) #hubState:empty{display:none}
+    body:not(.public-display) #hubState.warning,body:not(.public-display) #hubState.error{position:sticky;top:60px;z-index:20;background:#171009;border:1px solid #ffb340;color:#fff}
+    body:not(.public-display) .favorites{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+    body:not(.public-display) .favorite-head small{font-size:13px;line-height:1.4}
+    body:not(.public-display) .favorite .remove{min-width:44px;min-height:44px}
+    body:not(.public-display) .favorite details>summary{min-height:44px;padding:12px;color:#31ff00;cursor:pointer;font-weight:bold}
+    body.public-display{overflow:hidden;background:#000}
+    body.public-display .hub{max-width:none;width:100vw;min-height:100vh;padding:18px 24px 24px}
+    body.public-display #hubBack,
+    body.public-display #hubTournamentShelf,
+    body.public-display #hubTournamentEntry,
+    body.public-display .monitor-switch,
+    body.public-display #hubTournamentHome,
+    body.public-display .search,
+    body.public-display #hubSearchResults,
+    body.public-display .category-filter,
+    body.public-display #hubCategoryCardToggle,
+    body.public-display .viewer-tools,
+    body.public-display #hubIndividualPanel,
+    body.public-display .footer{display:none!important}
+    body.public-display .head{grid-template-columns:auto 1fr auto}
+    body.public-display .head::after{content:"PANTALLA PÚBLICA · SÓLO LECTURA";color:#31ff00;font:900 18px Arial}
+    body.public-display #hubGeneralPanel{display:block!important;border:0;padding:0;background:#000}
+    body.public-display #hubGeneralPanel>h2,
+    body.public-display #hubGeneralPanel>.panel-note{display:none}
+    body.public-display #hubSummary{margin:8px 0 16px}
+    body.public-display #hubLeaderWrap,
+    body.public-display #hubCategoryCard{font-size:1.12em}
+    body.public-display #hubCategoryCard{display:block!important}
+    body.public-display.display-general #hubCategoryCard{display:none!important}
+    body.public-display.display-category #hubLeaderWrap{display:none!important}
+    .head{grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center}
+    .head #gscShortcutsButton{max-width:140px!important;min-width:104px!important;margin:0!important}
+    body.public-display #gscShortcutsButton{display:none!important}
+    @media(max-width:600px){.head{grid-template-columns:auto minmax(0,1fr) auto}.head #gscShortcutsButton{grid-column:2/4;max-width:none!important;width:100%!important;min-height:52px!important;margin-top:4px!important}}
+    .public-display-status{display:none}
+    body.public-display .public-display-status{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:8px 0 14px;padding:12px 16px;border:1px solid #31ff00;border-radius:10px;background:#061006;color:#fff}
+    .public-display-status strong{font-size:28px;color:#31ff00}
+    .public-display-status span{font-weight:900}
+    .public-display-status b{font-size:22px}
+    @media(max-width:900px){body.public-display .head::after{font-size:12px}.public-display-status strong{font-size:20px}.public-display-status b{font-size:16px}}
+    body:not(.public-display) .round-create{margin:0 0 14px;padding:14px;border:1px solid var(--tour-line);border-radius:16px;background:var(--tour-card)}
+    body:not(.public-display) .round-create button{width:100%;min-height:52px;border-radius:12px;font-size:18px;font-weight:900}
+    body:not(.public-display) .round-create button+button{margin-top:10px}
+    body:not(.public-display) .round-create-dialog[hidden]{display:none!important}
+    body:not(.public-display) .tournament-shelf .round-create{padding:0;border:0;background:none;margin:0 0 10px}
+    body:not(.public-display) .tournament-shelf #hubCreateRound,body:not(.public-display) .tournament-shelf #hubRegisteredTournaments{box-sizing:border-box;width:100%;min-height:72px;font-size:22px;font-weight:900;border-radius:14px;margin:10px 0}
+    body:not(.public-display) .tournament-shelf>.round-create{padding:0;margin:0 0 12px;border:0;background:transparent}
+    body:not(.public-display) .tournament-shelf>.round-create>button,body:not(.public-display) #hubRegisteredTournaments{box-sizing:border-box;width:100%;min-height:72px;padding:18px;border-radius:14px;font-size:22px;font-weight:900}
+    body:not(.public-display) .round-create-dialog{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:18px;background:rgba(0,0,0,.84);backdrop-filter:blur(3px)}
+    body:not(.public-display) .round-create-dialog-card{position:relative;box-sizing:border-box;width:min(520px,100%);max-height:calc(100dvh - 36px);overflow:auto;padding:24px 20px 20px;border:1px solid var(--tour-green);border-radius:18px;background:#050505;box-shadow:0 0 30px rgba(49,255,0,.2)}
+    body:not(.public-display) .round-create-dialog-card h2{margin:0 36px 8px 0;color:var(--tour-green);font-size:22px;font-weight:900;text-align:center}
+    body:not(.public-display) .round-create-dialog-card p{margin:0 0 16px;color:var(--tour-muted);font-size:13px;line-height:1.45;text-align:center}
+    body:not(.public-display) .round-create-dialog-card label{display:block;margin:12px 4px 7px;color:var(--tour-muted);font-size:11px;font-weight:900;letter-spacing:.8px}
+    body:not(.public-display) .round-create-dialog-card input,body:not(.public-display) .round-create-dialog-card select{box-sizing:border-box;width:100%;height:50px;border:1px solid var(--tour-green);border-radius:11px;background:#030303;color:#fff;padding:0 12px;font:inherit;font-size:16px}
+    body:not(.public-display) #hubRoundOk{margin-top:14px;width:100%;min-height:50px}
+    body:not(.public-display) #hubRoundClose{position:absolute;top:10px;right:10px;width:38px;min-height:38px;border:1px solid #444;border-radius:50%;background:#080808;color:#fff;font-size:22px}
+    body:not(.public-display) #hubRoundDialogStatus{min-height:18px;margin-top:10px;color:var(--tour-muted);font-size:12px;font-weight:800;text-align:center}
+    body.round-create-open{overflow:hidden}
+    body.public-display .round-create{display:none!important}
+    @media(max-width:600px){body:not(.public-display) .round-create-dialog{padding:12px}body:not(.public-display) .round-create-dialog-card{max-height:calc(100dvh - 24px);padding:22px 15px 16px}}
+    #hubRoundCategories{display:grid;grid-template-columns:1fr 1fr;gap:6px}#hubRoundCategories label{display:flex;align-items:center;gap:8px}body:not(.public-display) #hubRoundCategories input{width:20px;height:20px}
+    #hubRoundMode,.scores-detail input,.scores-detail select{box-sizing:border-box;width:100%;min-height:48px;padding:10px;border:1px solid #31ff00;border-radius:10px;background:#050505;color:white;font:inherit;margin:6px 0}.scores-detail fieldset{border:1px solid #444;border-radius:10px;margin:10px 0;padding:10px}.scores-detail output{display:block;overflow-wrap:anywhere;margin:12px 0;color:#31ff00;font-weight:900}
+  body.hub-scores-view #hubBack{display:none}
+
+.round-create-dialog-card input,.round-create-dialog-card select{min-width:0;max-width:100%;box-sizing:border-box}
+body.hub-scores-view #hubPersonalOrganization,body.hub-scores-view #hubPersonalScoreCard,body.hub-scores-view #hubDeleteEvent{display:none!important}
+body.scores-tournament-directory #hubState,body.scores-tournament-directory #hubTournamentShelf>h2,body.scores-tournament-directory #hubRoundCreate,body.scores-tournament-directory #hubEnterExisting,body.scores-tournament-directory #hubRegisteredTournaments,body.scores-tournament-directory #hubSavedEventActions,body.scores-tournament-directory .event-delete{display:none!important}
+
+</style>
+  <link rel="stylesheet" href="/scores-ui.css">
+  <script src="/app-update.js" defer></script>
+</head>
+<body class="scores-tournament-directory">
+  <main class="hub">
+    <button class="scores-return" id="hubScoresReturn" data-gsc-close aria-label="Cerrar Scores" type="button">← VER SCORES</button>
+    <header class="head">
+      <img src="/assets/official-logos/golf-score-card-gt-horizontal-original.webp" alt="Golf Score Card GT">
+      <div><h1 id="hubPageTitle">SCORES TORNEO</h1></div><div id="hubEventName" class="scores-event"></div><div id="hubEventMeta" class="scores-meta"></div>
+      <button class="back" id="hubBack" type="button">← Score Card</button>
+    </header>
+
+    <p id="hubDirectorySync" role="status" aria-live="polite">ACTUALIZACIÓN AUTOMÁTICA ACTIVA</p><p id="hubMembershipNotice" role="status" hidden></p>
+    <div class="state" id="hubState" role="status" aria-live="polite">LISTO PARA ABRIR EL MONITOR DEL TORNEO</div>
+    <div class="public-display-status" id="publicDisplayStatus" aria-live="polite"><strong id="publicDisplayScene">GENERAL</strong><span>PRÓXIMO CAMBIO EN <b id="publicDisplayCountdown">10</b>s</span></div>
+    <section class="panel global-live-directory" id="hubGlobalLiveDirectory" aria-label="Grupos y rondas activos en todos los campos y dispositivos"><h2>GRUPOS Y RONDAS GLOBALES ACTIVOS</h2><p id="hubGlobalLiveStatus" role="status">ACTUALIZANDO DESDE LABORATORIO Y PRODUCCIÓN</p><div id="hubGlobalLiveRows"></div></section>
+    <section class="tournament-shelf" id="hubTournamentShelf" aria-label="Torneos registrados">
+      <h2>TORNEOS</h2>
+    <section class="round-create" id="hubRoundCreate" aria-label="Crear ronda">
+      <button class="primary" id="hubCreateRound" type="button" aria-haspopup="dialog" aria-controls="hubRoundCreateDialog">CREAR TORNEO</button>
+    </section>
+
+      <button class="tournament-card portal-choice" id="hubEnterExisting" type="button">ENTRAR A TORNEO EXISTENTE</button>
+      <button class="tournament-card portal-choice" id="hubRegisteredTournaments" type="button" aria-expanded="false">VER SCORES</button>
+      <div class="tournament-cards hidden" id="hubTournamentCards"></div>
+      <div id="hubSavedEventActions" class="hidden">
+      <button class="tournament-card portal-choice" id="hubPrivateRounds" type="button">GRUPOS PARTICULARES</button>
+      <button class="secondary" id="hubAddTournament" type="button">+ AGREGAR TORNEO</button>
+      <button class="secondary" id="hubPersonalIdentity" type="button">MI CÓDIGO PERSONAL</button>
+      <button class="secondary" id="hubPersonalInvite" type="button">ENTRAR CON INVITACIÓN</button>
+      </div>
+    </section>
+    <nav class="monitor-switch hidden" aria-label="Elegir función de torneos">
+      <button class="active" id="hubShowGeneral" type="button">SCORES GENERAL</button>
+      <button id="hubShowCategories" type="button">SCORES POR CATEGORÍA</button>
+      <button id="hubShowIndividual" type="button">BUSCAR JUGADOR</button>
+      <button id="hubAddToBoard" type="button">MIS FAVORITOS</button>
+    </nav>
+
+    <section class="viewer-entry hidden" id="hubTournamentEntry">
+      <h2>AGREGAR TORNEO POR ENLACE</h2>
+      <div><input id="hubTournamentLink" type="url" placeholder="Pega enlace del torneo" aria-label="Enlace del torneo"><button class="primary" id="hubOpenTournament" type="button">AGREGAR</button></div>
+    </section>
+    <button class="secondary tournament-home hidden" id="hubTournamentHome" type="button">← TORNEOS</button>
+    <div class="round-create-dialog" id="hubRoundCreateDialog" role="presentation" aria-hidden="true" hidden>
+      <section class="round-create-dialog-card" role="dialog" aria-modal="true" aria-labelledby="hubRoundDialogTitle">
+        <button id="hubRoundClose" type="button" aria-label="Cerrar ventana">×</button>
+        <h2 id="hubRoundDialogTitle">CREAR TORNEO</h2>
+        <p>Define el evento y autoriza a quienes podrán participar o consultar.</p>
+        <label for="hubRoundName">TORNEO</label>
+        <input id="hubRoundName" type="text" maxlength="120" placeholder="Nombre del torneo" autocomplete="off">
+        <label for="hubRoundCourse">CLUB</label><select id="hubRoundCourse" aria-label="Campo del torneo"><option value="">SELECCIONA EL CAMPO</option><option value="El Pulté">EL PULTÉ GOLF</option><option value="Country Club">GUATEMALA COUNTRY CLUB</option><option value="San Isidro">SAN ISIDRO</option><option value="Mayan Golf">MAYAN GOLF</option><option value="Hacienda Nueva">HACIENDA NUEVA COUNTRY CLUB</option><option value="Alta Vista">ALTA VISTA GOLF & TENNIS CLUB</option><option value="La Reunión" disabled>LA REUNIÓN GOLF RESORT · PENDIENTE</option></select>
+        <label for="hubRoundMode">MODALIDAD</label><select id="hubRoundMode"><option value="general">MEDAL PLAY</option><option value="match_play">MATCH PLAY</option><option value="four_ball">FOUR BALL</option><option value="stableford">STABLEFORD</option><option value="universales">UNIVERSALES</option></select>
+        <details><summary>CATEGORÍAS</summary><div id="hubRoundCategories">
+          <label><input type="checkbox" value="championship" checked>CAMPEONATO</label><label><input type="checkbox" value="a" checked>A</label><label><input type="checkbox" value="b" checked>B</label><label><input type="checkbox" value="c" checked>C</label><label><input type="checkbox" value="d" checked>D</label><label><input type="checkbox" value="female" checked>FEMENINA</label><label><input type="checkbox" value="senior" checked>SENIOR</label><label><input type="checkbox" value="super_senior" checked>SUPER SENIOR</label>
+        </div></details>
+        <label for="hubRoundDate">FECHA</label><input id="hubRoundDate" type="text" readonly aria-label="Fecha automática del torneo">
+        <label for="hubRoundCreator">CREADOR</label><input id="hubRoundCreator" type="text" maxlength="120" autocomplete="name">
+        <div id="hubRoundDialogStatus" role="status" aria-live="polite"></div>
+        <div id="hubSavedTournamentList" class="saved-tournament-list" aria-label="Torneos guardados en este dispositivo"></div>
+        <button class="primary" id="hubRoundOk" type="button">OK</button>
+      </section>
+    </div>
+
+
+    <button class="secondary" id="hubPersonalOrganization" type="button" hidden>ORGANIZACIÓN</button>
+    <button class="secondary" id="hubPersonalScoreCard" type="button" hidden>ENTRAR AL SCORE CARD DEL TORNEO</button>
+    <button class="secondary event-delete" id="hubDeleteEvent" type="button" hidden>ELIMINAR EVENTO</button>
+    <section class="panel" id="hubMyPosition" hidden><h2>MI POSICIÓN</h2><div></div></section>
+    <section class="panel monitor-panel hidden" id="hubGeneralPanel">
+      <h2 id="hubPanelTitle">RESULTADOS</h2>
+      <div class="search">
+        <input id="hubSearch" type="search" maxlength="80" placeholder="BUSCAR JUGADOR" aria-label="Buscar jugador">
+        <button class="primary" id="hubSearchButton" type="button">BUSCAR</button>
+        <button class="primary one-use-send" id="hubShareGeneral" type="button" hidden>COMPARTIR<br>LIVE</button>
+      </div>
+      <div class="search-results" id="hubSearchResults"></div>
+      <div class="summary" id="hubSummary"></div>
+      <div class="category-filter">
+        <select id="hubCategory" aria-label="Categoría del torneo"><option value="all">GENERAL</option><option value="championship">CAMPEONATO</option><option value="a">A</option><option value="b">B</option><option value="c">C</option><option value="d">D</option><option value="senior">SENIOR</option><option value="super_senior">SUPER SENIOR</option><option value="female">FEMENINA</option></select>
+        <select id="hubCourse" aria-label="Club o campo"><option value="all">TODOS LOS CLUBES / CAMPOS</option></select>
+        <small>FILTRA POR CATEGORÍA Y, SI EL TORNEO USA MÁS DE UN CAMPO, POR CLUB/CAMPO.</small>
+      </div>
+      <button class="secondary category-card-toggle" id="hubCategoryCardToggle" type="button" aria-expanded="false">DETALLE DE CATEGORÍA</button>
+      <div class="category-card hidden" id="hubCategoryCard" aria-live="polite"></div>
+      <details class="viewer-tools"><summary>OPCIONES</summary><div class="actions">
+        <button class="secondary" id="hubRefresh" type="button">ACTUALIZAR</button>
+        <button class="secondary" id="hubPublicDisplay" type="button">PANTALLA PÚBLICA</button>
+        <button class="danger" id="hubRemoveGeneral" type="button">QUITAR ESTE TORNEO</button>
+      </div></details>
+      <div class="leader-wrap" id="hubLeaderWrap"><div class="empty">ABRE EL TORNEO PARA VER SUS RESULTADOS EN VIVO.</div></div>
+    </section>
+
+    <section class="panel monitor-panel hidden" id="hubIndividualPanel">
+      <h2>FAVORITOS</h2>
+      <div class="favorites" id="hubFavorites"><div class="empty">TODAVÍA NO SIGUES A NADIE.</div></div>
+      <div class="actions" style="margin-top:9px"><button class="danger" id="hubClearFavorites" type="button">VACIAR FAVORITOS</button></div>
+      <details class="viewer-tools"><summary>ADJUNTAR RONDA EN VIVO</summary><div class="import">
+        <input id="hubImportLink" type="url" placeholder="Pega el enlace de la ronda" aria-label="Enlace de la ronda en vivo">
+        <button class="primary" id="hubImportButton" type="button">ADJUNTAR</button>
+      </div></details>
+
+    </section>
+
+      <div class="picker" id="hubPicker"><button type="button" data-gsc-close id="hubPickerClose" aria-label="Cerrar selección de favoritos">×</button>
+        <h3>¿A QUIÉN QUIERES SEGUIR?</h3>
+        <div class="picker-grid" id="hubPickerGrid"></div>
+      </div>
+    <footer class="footer">SOLO LECTURA</footer><div id="hubScoresHelp" class="scores-help" hidden>DOBLE TOQUE EN EL JUGADOR: VER 18 SCORES<br>☆ AGREGA · ★ QUITA FAVORITO</div>
+  </main>
+  <a id="gscShortcutsButton" href="/index-grupal.html" aria-label="Abrir Menú"><span>MENÚ</span></a>
+  <script src="/live-control.js"></script>
+  <script src="/scores-ui.js"></script>
+  <script src="/whatsapp-invitations.js"></script><script src="/live-share.js"></script>
+  <script src="/private-rounds.js"></script>
+  <script src="/auth-gate.js"></script>
+  <script src="/personal-events.js"></script>
+  <script src="/directory-auto-refresh.js"></script><script src="/live-hub.js"></script>
+  <script src="/shortcuts-ui.js"></script>
+</body>
+</html>

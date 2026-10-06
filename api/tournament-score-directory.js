@@ -1,6 +1,7 @@
 import {getDatabase} from './_lib/database.js';
 import {ensurePersonalAccess,availableTournamentEntryCode} from './_lib/personal-event-access.js';
 import {noStore,readJson} from './_lib/http.js';
+import {refreshEventLifecycles} from './_lib/event-lifecycle.js';
 
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const ALLOWED_SNAPSHOT=new Set(['schemaVersion','roundId','tournament','playedAt','course','courseHoles','players','mode','groupLabel','status','officiallyClosedAt','updatedAt','appVersion']);
@@ -19,22 +20,25 @@ export async function handleTournamentScoreDirectory(req,res,databaseGetter=getD
  if(req.method!=='POST')return res.status(405).json({ok:false,code:'METHOD_NOT_ALLOWED'});
  try{
   const body=await readJson(req,8000),action=String(body.action||'list'),sql=databaseGetter(),requestHost=req.headers?.['x-forwarded-host']||req.headers?.host||'',source=tournamentDirectoryEnvironment(env,requestHost);
-  const withCodes=body.withCodes===true;
+  const withCodes=body.withCodes===true,includeGroups=body.includeGroups===true;
+  await refreshEventLifecycles(sql);
+  const localGroups=async()=>{if(!includeGroups)return [];return (await sql`SELECT id,tournament_id,group_label,'tournament' AS event_kind FROM live_streams WHERE status='active' AND expires_at>now() UNION ALL SELECT id,tournament_id,group_label,'private' AS event_kind FROM live_private_streams WHERE status='active' AND expires_at>now()`).map(row=>({...row,source}))};
+  const privateRounds=async()=>includeGroups?(await sql`SELECT id,name,status,'private' AS event_kind FROM live_private_rounds WHERE status IN ('active','finished') AND expires_at>now() ORDER BY updated_at DESC`):[];
   const attachCodes=async rows=>{if(!withCodes)return rows;await ensurePersonalAccess(sql);return Promise.all(rows.map(async row=>{try{return {...row,...await availableTournamentEntryCode(sql,row.id)}}catch(error){return {...row,codeError:error.code||'TOURNAMENT_CODE_NOT_AVAILABLE'}}}))};
   if(action==='list'){
    const rows=await attachCodes(await sql`SELECT id,name,status FROM live_tournaments WHERE status='active' AND expires_at>now() ORDER BY updated_at DESC`);
-   let peer=[],partial=false;try{const response=await fetcher(tournamentDirectoryPeerUrl(env,requestHost),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'list-local',...(withCodes?{withCodes:true}:{})}),cache:'no-store'});if(response.ok){const result=await response.json();if(result.ok){peer=result.events||[];partial=!!result.partial}else partial=true}else partial=true}catch{partial=true}
+   const privateEvents=await privateRounds(),groups=await localGroups();let peer=[],peerGroups=[],partial=false;try{const response=await fetcher(tournamentDirectoryPeerUrl(env,requestHost),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'list-local',...(withCodes?{withCodes:true}:{}),...(includeGroups?{includeGroups:true}:{})}),cache:'no-store',signal:AbortSignal.timeout(8000)});if(response.ok){const result=await response.json();if(result.ok){peer=result.events||[];peerGroups=result.groups||[];partial=!!result.partial}else partial=true}else partial=true}catch{partial=true}
    const peerSource=source==='lab'?'production':'lab';
-   const merged=new Map();for(const row of rows)merged.set(`${source}:${row.id}`,{...row,source});for(const row of peer)merged.set(`${peerSource}:${row.id}`,{...row,source:peerSource});
-   return res.status(200).json({ok:true,partial:partial||withCodes&&[...merged.values()].some(row=>!row.joinCode),events:[...merged.values()]});
+   const merged=new Map();for(const row of [...rows,...privateEvents])merged.set(`${source}:${row.id}`,{...row,source});for(const row of peer)merged.set(`${peerSource}:${row.id}`,{...row,source:peerSource});
+   return res.status(200).json({ok:true,partial:partial||withCodes&&[...merged.values()].some(row=>row.event_kind!=='private'&&!row.joinCode),events:[...merged.values()],...(includeGroups?{groups:[...groups,...peerGroups.map(group=>({...group,source:peerSource}))]}:{})});
   }
   if(action==='list-local'){
    const rows=await attachCodes(await sql`SELECT id,name,status FROM live_tournaments WHERE status='active' AND expires_at>now() ORDER BY updated_at DESC`);
-   return res.status(200).json({ok:true,...(withCodes?{partial:rows.some(row=>!row.joinCode)}:{}),events:rows.map(row=>({...row,source}))});
+   return res.status(200).json({ok:true,...(withCodes?{partial:rows.some(row=>!row.joinCode)}:{}),events:[...rows,...await privateRounds()].map(row=>({...row,source})),...(includeGroups?{groups:await localGroups()}:{})});
   }
   if(action==='read-local'||action==='read'){
    const eventId=String(body.eventId||'');if(!UUID.test(eventId))return res.status(400).json({ok:false,code:'LIVE_INVALID_TOURNAMENT'});
-   if(action==='read'&&body.source!==source){const response=await fetcher(tournamentDirectoryPeerUrl(env,requestHost),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'read-local',eventId}),cache:'no-store'});const data=await response.json().catch(()=>null);return res.status(response.status).json(data||{ok:false,code:'TOURNAMENT_DIRECTORY_UNAVAILABLE'})}
+   if(action==='read'&&body.source!==source){const response=await fetcher(tournamentDirectoryPeerUrl(env,requestHost),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'read-local',eventId}),cache:'no-store',signal:AbortSignal.timeout(8000)});const data=await response.json().catch(()=>null);return res.status(response.status).json(data||{ok:false,code:'TOURNAMENT_DIRECTORY_UNAVAILABLE'})}
    const tournaments=await sql`SELECT id,name,mode,status,revision,expires_at,updated_at FROM live_tournaments WHERE id=${eventId}::uuid AND status='active' AND expires_at>now()`;
    if(!tournaments.length)return res.status(410).json({ok:false,code:'LIVE_EXPIRED'});
    const rows=await sql`SELECT id,scope,group_label,status,revision,expires_at,updated_at,current_snapshot FROM live_streams WHERE tournament_id=${eventId}::uuid AND status='active' ORDER BY id LIMIT 100`;

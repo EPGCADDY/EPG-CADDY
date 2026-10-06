@@ -1,5 +1,6 @@
 import {createHash,randomBytes} from 'node:crypto';
 import {accessError,eventKind,eventScope} from './personal-event-access.js';
+import {ensureEventPurge} from './event-lifecycle.js';
 const hash=s=>createHash('sha256').update(String(s)).digest('hex');
 export async function ensureEventAdministration(sql){
  await sql`CREATE TABLE IF NOT EXISTS gsc_event_admin_grants(id uuid PRIMARY KEY DEFAULT gen_random_uuid(),event_id uuid NOT NULL,event_kind text NOT NULL,issuer_account_id text NOT NULL,recipient_account_id text NOT NULL,recipient_name text NOT NULL,code_hash char(64) UNIQUE NOT NULL,redeemed_at timestamptz,revoked_at timestamptz,created_at timestamptz NOT NULL DEFAULT now(),expires_at timestamptz NOT NULL)`;
@@ -52,11 +53,11 @@ export async function deleteAdminEvent(sql,event,account,owner,body){
  if(String(body.confirmName||'').trim()!==authority.name)throw accessError('EVENT_NAME_CONFIRMATION_REQUIRED',400);
  const scoped=eventScope(sql,event.eventKind),reason=String(body.reason||'').trim().slice(0,500);
  if(!reason)throw accessError('EVENT_DELETE_REASON_REQUIRED',400);
- // Lock and recheck delegation inside the same statement as revocation and receipt.
+ await ensureEventPurge(sql);
+ // Authority is rechecked under a row lock; the purge and response are one transaction.
  const rows=await scoped`WITH authorized AS MATERIALIZED (
  SELECT id,name FROM live_tournaments WHERE id=${event.eventId}::uuid AND status<>'revoked' AND (${authority.authority!=='delegate'}::boolean OR EXISTS(SELECT 1 FROM gsc_event_admin_grants WHERE id=${authority.grantId}::uuid AND recipient_account_id=${account.id} AND redeemed_at IS NOT NULL AND revoked_at IS NULL AND expires_at>now() AND (live_tournaments.completed_at IS NULL OR live_tournaments.completed_at+interval '24 hours'>now()) FOR SHARE)) FOR UPDATE
- ), removed AS (UPDATE live_tournaments SET status='revoked',revoked_at=now(),revision=revision+1,updated_at=now() WHERE id IN(SELECT id FROM authorized) RETURNING id,name), streams AS (UPDATE live_streams SET status='revoked',revoked_at=coalesce(revoked_at,now()),updated_at=now() WHERE tournament_id IN(SELECT id FROM removed) RETURNING id), grants AS (UPDATE gsc_event_admin_grants SET revoked_at=coalesce(revoked_at,now()) WHERE event_id IN(SELECT id FROM removed) AND event_kind=${event.eventKind} RETURNING id), personal_closed AS (UPDATE gsc_personal_events SET status='closed' WHERE event_id IN(SELECT id FROM removed) AND event_kind=${event.eventKind} RETURNING event_id)
- INSERT INTO gsc_event_deletions(event_id,event_kind,event_name,actor_account_id,grant_id,recipient_name,reason) SELECT id,${event.eventKind},name,${account.id},${authority.grantId}::uuid,${authority.recipientName},${reason} FROM removed RETURNING event_id,event_name,actor_account_id,grant_id,recipient_name,reason,deleted_at`;
+ ) SELECT id AS event_id,name AS event_name,${account.id} AS actor_account_id,${authority.grantId}::uuid AS grant_id,${authority.recipientName} AS recipient_name,${reason} AS reason,now() AS deleted_at,gsc_purge_event(id,${event.eventKind}) FROM authorized`;
  if(!rows.length)throw accessError('EVENT_DELETE_NOT_AVAILABLE',409);
  return{ok:true,receipt:rows[0]};
 }

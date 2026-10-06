@@ -24,22 +24,11 @@ async function addExpiredEvent({name,manualRevoke=false,deleted=false}){
 
 const recoverable=await addExpiredEvent({name:'FAMILY'}),manual=await addExpiredEvent({name:'MANUAL REVOCATION',manualRevoke:true}),deleted=await addExpiredEvent({name:'MANUAL DELETION',deleted:true});
 await refreshEventLifecycles(sql);
-const [restored]=await sql`SELECT status,base_expires_at,expires_at FROM live_tournaments WHERE id=${recoverable.eventId}::uuid`;
-assert.equal(restored.status,'active','System expiry is reversed only while the original configured deadline is still in the future');
-assert.ok(new Date(restored.expires_at)>new Date(),'Recovered tournament remains listable');
-const [restoredStream]=await sql`SELECT status,expires_at,current_snapshot FROM live_streams WHERE id=${recoverable.streamId}::uuid`;
-assert.equal(restoredStream.status,'active','Scores for an auto-expired tournament are restored');
-assert.ok(new Date(restoredStream.expires_at)<=new Date(),'Restoration never extends stream write permission');
-assert.equal(restoredStream.current_snapshot.players[0].holes.length,2,'Persisted holes are retained');
-const visible=await sql`SELECT id,name FROM live_tournaments WHERE status='active' AND expires_at>now() AND id=${recoverable.eventId}::uuid`;
-assert.equal(visible.length,1,'Organizer/global tournament-directory query sees the recovered Family');
-const visibleScores=await sql`SELECT id,current_snapshot FROM live_streams WHERE tournament_id=${recoverable.eventId}::uuid AND status='active'`;
-assert.equal(visibleScores.length,1,'The active tournament Scores view retains the last published card even after its writer token expires');
-async function directoryCall(body){let status=200,payload;await handleTournamentScoreDirectory({method:'POST',headers:{host:'epg-caddy.vercel.app'},body},{setHeader(){},status(code){status=code;return this},json(value){payload=value}},()=>sql,fetch,{});return{status,...payload}}
-const directory=await directoryCall({action:'list-local'});assert.ok(directory.events.some(event=>event.id===recoverable.eventId&&event.name==='FAMILY'),'The real directory endpoint lists recovered Family');
-const scores=await directoryCall({action:'read-local',eventId:recoverable.eventId});assert.equal(scores.status,200);assert.equal(scores.streams.length,1,'The real Scores endpoint includes the last published card despite writer-token expiry');
-for(const id of [manual.eventId,deleted.eventId])assert.equal((await sql`SELECT status FROM live_tournaments WHERE id=${id}::uuid`)[0].status,'revoked','Manual revocation and deletion must never be reversed');
+for(const event of [recoverable,manual,deleted]){
+ for(const table of ['live_tournaments','live_streams','live_events','gsc_personal_events','gsc_personal_audit','gsc_event_deletions']){const column=table==='live_tournaments'?'id':table==='live_streams'||table==='live_events'?'tournament_id':'event_id';assert.equal((await db.query('SELECT count(*)::int AS n FROM '+table+' WHERE '+column+'=$1',[event.eventId])).rows[0].n,0,'No revoked event survives in '+table)}
+ let status=200,payload;await handleTournamentScoreDirectory({method:'POST',headers:{host:'epg-caddy.vercel.app'},body:{action:'read-local',eventId:event.eventId}},{setHeader(){},status(n){status=n;return this},json(v){payload=v}},()=>sql,fetch,{});assert.equal(status,410);assert.equal(payload.code,'LIVE_EXPIRED');
+}
 await refreshEventLifecycles(sql);
-assert.equal((await sql`SELECT count(*)::int AS n FROM gsc_personal_audit WHERE event_id=${recoverable.eventId}::uuid AND action='expired'`)[0].n,1,'Recovery does not add duplicate expiry receipts');
+assert.equal((await sql`SELECT count(*)::int AS n FROM live_tournaments`)[0].n,0,'Refresh never restores removed events');
 await db.close();
-console.log('PASS R175 expiry recovery: configured lifetime, Family directory visibility and scores restored; manual revoke/delete preserved.');
+console.log('PASS deletion permanence: manual and automatic removal leave no directory, scores, stream or archive record; refresh cannot restore them.');

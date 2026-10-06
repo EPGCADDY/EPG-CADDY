@@ -18,7 +18,7 @@ const invitation=await call(handlePersonalEvents,{action:'invite',eventKind:'tou
 account={id:'other-account',name:'OTRO'};
 assert.equal((await call(handlePersonalEvents,{action:'redeem',code:invitation.code})).code,'PERSONAL_INVITE_INVALID_OR_USED','Forwarded code cannot grant a different account membership');
 assert.equal((await call(handleLive,{action:'read',kind:'tournament',viewerToken:event.viewerToken})).code,'PERSONAL_EVENT_FORBIDDEN','Known viewer token does not replace membership');
-assert.equal((await call(handleLive,{action:'list_active_tournaments'})).tournaments.length,0,'Private event names are not enumerated to outsiders');
+assert.equal((await call(handleLive,{action:'list_active_tournaments',localOnly:true})).tournaments.some(item=>item.id===event.eventId),true,'Global metadata includes events from other accounts; Scores still require membership');
 account={id:'player-account',name:player.name};
 assert.equal((await call(handlePersonalEvents,{action:'redeem',code:invitation.code})).status,200);
 assert.equal((await call(handlePersonalEvents,{action:'redeem',code:invitation.code})).code,'PERSONAL_INVITE_INVALID_OR_USED');

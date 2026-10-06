@@ -49,6 +49,6 @@ const events=await db.query("SELECT details FROM live_events WHERE stream_id=$1 
 assert.deepEqual(events.rows.map(row=>row.details.mutationId),['write-1','write-2']);
 const revoked=await call({action:'revoke_tournament'},tournament.organizerSecret);
 assert.equal(revoked.status,200);
-assert.equal((await call({action:'read',kind:'tournament',viewerToken:tournament.viewerToken})).code,'LIVE_REVOKED');
+assert.equal((await call({action:'read',kind:'tournament',viewerToken:tournament.viewerToken})).code,'LIVE_LINK_INVALID');
 await db.close();
 console.log('PASS official LIVE API: creation, valid/invalid enrollment, reader denied, origin denied, publish, retry, conflict, correction, persisted scores, event history, revocation. Isolated PGlite only.');

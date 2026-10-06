@@ -1,8 +1,8 @@
 (function(root,factory){
-  const api=factory();
+  const api=factory(root);
   if(typeof module==="object"&&module.exports)module.exports=api;
   if(root)root.GSCMasterDataSync=api;
-})(typeof globalThis!=="undefined"?globalThis:this,function(){
+})(typeof globalThis!=="undefined"?globalThis:this,function(root){
   "use strict";
 
   const SCHEMA_VERSION=1;
@@ -84,6 +84,7 @@
       const cards=round.officiallyClosedAt?[{type:"global",clientPlayerId:null,version:Math.max(1,integer(round.officialVersion,1)),contentHash:text(round.snapshotHash)||"pending",storageState:"reconstructible"},...roundPlayers.map(player=>({type:"personal",clientPlayerId:player.clientPlayerId,version:Math.max(1,integer(round.officialVersion,1)),contentHash:text(round.snapshotHash)||"pending",storageState:"reconstructible"}))]:[];
       payload.round={
         clientRoundId:text(round.id),
+        ...(round.personalEventId?{personalEventId:text(round.personalEventId),personalEventKind:root.GSCPersonalEvents?.descriptor?.('personal_'+round.personalEventId)?.eventKind||round.personalEventKind||'tournament'}:{}),
         version:Math.max(1,integer(round.officialVersion,integer(round.version,1))),
         status,
         mode:round.mode==="stableford"?"stableford":round.mode==="match_play"?"match_play":round.mode==="four_ball"?"four_ball":"general",
