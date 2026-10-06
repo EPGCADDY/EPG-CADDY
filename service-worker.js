@@ -1,10 +1,10 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry-v369-cross-env-tournament-scores-r178-admin-ownership-recovery-even-result-audio-r179-global-tournament-ids";
+const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry-v369-cross-env-tournament-scores-r178-admin-ownership-recovery-even-result-audio-r180-installed-card-resume";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
 const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-4-20-registration-return`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-4-20-registration-return`;
-const RELEASE_FALLBACK="20261006-R179";
+const RELEASE_FALLBACK="20261006-R180";
 let RELEASE=RELEASE_FALLBACK;
 const UPDATE_DIAGNOSTICS={stage:"boot",resources:{}};
 async function fetchPublishedRelease(){

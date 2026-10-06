@@ -1485,3 +1485,8 @@ R178 · 6 octubre 2026 · Eliminar sin respuesta: causa disabled en filas del di
 
 ### R179 · Códigos globales ausentes
 Causa: ID usaba lista asociada a identidad mientras Administración incluía directorio global sin códigos. Escape: prueba validaba nombres y exclusión de códigos ajenos, incompatible con pedido global posterior. Control: test-r178-global-tournament-ids.mjs valida campos, dispositivos, ambos orígenes, códigos consumidos e inspección por otra identidad. Estado: PASS local y navegador móvil de 120 torneos; publicación a comprobar.
+
+
+## R180 · Recuperación instalada enviada a Registro
+
+Causa raíz: pwa-launch.html añadía inicio=1 y el guard directHome trataba source=pwa como Registro. Escape: test-v368 comprobaba la URL pero su texto afirmaba recuperación; faltaba cerrar/reabrir en navegador con scores. Control permanente: tests/r180-installed-card-resume.mjs ejecuta seis rutas, incluida apertura heredada y cierre/reapertura, conserva ID Friends y gross 5/4, exige Score Card visible. Corrección incremental en pwa-launch.html e index-grupal.html. PASS navegador local; comprobación física iPhone no realizada.

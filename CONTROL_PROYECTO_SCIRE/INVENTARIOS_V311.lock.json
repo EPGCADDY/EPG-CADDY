@@ -1,23 +1,23 @@
 {
-  "version": "R179-LAB-RELEASE",
-  "generatedAt": "2026-10-06T22:45:12Z",
-  "sourceFileCount": 911,
-  "sourceDigest": "3b138ea207055c6504eb8ae16004cade628ab3fda28000f70fbf3c9f7b12134a",
+  "version": "R180-LAB-RELEASE",
+  "generatedAt": "2026-10-06T23:17:01Z",
+  "sourceFileCount": 912,
+  "sourceDigest": "a49680a7f5de0df85aeb657a2fe66443ad30b4193ffeffa2897b0788be842ff2",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 514923,
-      "sha256": "4c6c54bb38d4390d618a5dfa136aed1698d47b99cfe283c94aec9d6c10f29a7b"
+      "size": 516553,
+      "sha256": "5f7596df29895e163eb5442158917587f46cdee5ced26510e51e4e48a29d4952"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 531186,
-      "sha256": "903aecbd304d63f675cf93ecbf14b0356b759adf4a0a592ac175de7dfc7917e1"
+      "size": 532008,
+      "sha256": "225f30afbf4462bed33bbe72176237dabc9e3e637b52a5aff9692010068b50b3"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19259168,
-      "sha256": "33d682eadef68d8f60cd81d82d90576f052daaf277c99e22be7ed8fe106a5c62"
+      "size": 19259165,
+      "sha256": "4aa3e82e1a1e309a4698445e72d7bdbb40760a5fbea87f182baa496f0e3a79a9"
     }
   ]
 }

@@ -4,7 +4,7 @@
 // a new app release, clear storage, or send an existing round to registration.
 (function(){
   let opened=false;
-  function openCard(){if(opened)return;opened=true;clearTimeout(deadline);location.replace('/index-grupal.html?inicio=1&source=pwa&launch='+Date.now())}
+  function openCard(){if(opened)return;opened=true;clearTimeout(deadline);location.replace('/index-grupal.html?source=pwa&launch='+Date.now())}
   const deadline=setTimeout(openCard,8000);
   if(!('serviceWorker' in navigator)){openCard();return}
   (async()=>{
