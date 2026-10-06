@@ -9,10 +9,4 @@
 - El código de ingreso de torneos no se emitía en Producción porque faltaba `GSC_PERSONAL_ACCESS_PRODUCTION_READY=1`; se activa solo en el entorno de Producción. La autorización del organizador y las validaciones existentes siguen aplicándose.
 - Las acciones de eliminación en Administración e ID de torneos, incluida la reconfirmación, fuerzan texto y borde rojos para prevalecer sobre los estilos del diálogo. El primer clic abre “CONFIRMAR ELIMINAR”; solo el botón de esa confirmación llama al endpoint.
 - Se conserva la locución `EVEN` del cambio pendiente R178. Versión de aplicación: R179.
-- Regresión: `test-r177-cross-device-admin.mjs`; pruebas específicas de personal events y calidad antes de publicar.
-
-# ROADMAP OVERALL
-
-## R174 · 6 octubre 2026 · Recuperación de Scores de torneo federado en LAB
-
-- Reproducción física desde Organizador en LAB: la ficha Santa delfina enl���q�^
+- Archivos R179: `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `event-administration-ui.js`, `personal-events.js`, `index-grupal.html`, `service-worker.js`, `test-lab-player-points-audio.mjs`, `test-r177-cross-device-admin.mjs` y `release.jso���q�^
