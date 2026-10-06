@@ -87,7 +87,7 @@ async function init(){
   style();render();
   const session=await request("session");
   if(session.ok&&session.user?.id){window.GSC_CODE_ACCESS=!!session.user.codeAccess;window.GSC_ACCOUNT_SIGNED_IN=true;window.dispatchEvent(new CustomEvent("gsc-account-ready",{detail:{user:session.user}}));hide();return}
-  if(!["/live-hub.html","/event-administration.html"].some(path=>location.pathname.endsWith(path))||new URLSearchParams(location.search).get('account')==='1')show();
+  if(new URLSearchParams(location.search).get('account')==='1')show();
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
 })();

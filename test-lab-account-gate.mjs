@@ -4,6 +4,8 @@ import assert from "node:assert/strict";
 const html=fs.readFileSync("index-grupal.html","utf8");
 const access=fs.readFileSync("access.html","utf8");
 const accountApi=fs.readFileSync("api/account.js","utf8");
+const authGate=fs.readFileSync("auth-gate.js","utf8");
+const organizerUi=fs.readFileSync("personal-events.js","utf8");
 const routes=JSON.parse(fs.readFileSync("vercel.json","utf8"));
 
 assert(!html.includes('src="./auth-gate.js"'),"La app principal no debe cargar el candado de cuenta");
@@ -19,4 +21,9 @@ for(const path of ["/","/index.html","/inicio"]){
 assert(accountApi.includes('session:{method:"GET",path:"/get-session"}'),"API account perdió sesión");
 assert(accountApi.includes('signin:{method:"POST",path:"/sign-in/email"}'),"API account perdió signin");
 assert(accountApi.includes('signup:{method:"POST",path:"/sign-up/email"}'),"API account perdió signup");
+const authInit=authGate.match(/async function init\\(\\)\\{[\\s\\S]*?\\n\\}/)?.[0]||"";
+assert(authInit.includes("if(new URLSearchParams(location.search).get('account')==='1')show()"),"La cuenta sólo se abre mediante solicitud explícita");
+assert(!/\\|\\|\\)show\\(\\)/.test(authInit),"No-session no debe bloquear Registro ni Scores");
+assert(!organizerUi.includes("data-owner-login")&&!organizerUi.includes("GSCOpenAccountLogin"),"Organizador no debe saltar al formulario de correo y contraseña");
+assert(organizerUi.includes("data-redeem-organizer")&&organizerUi.includes("organizerAuthorizationCode"),"Organizador conserva un único control por código");
 console.log("PASS LAB: Registro no carga login global; credenciales permanecen sólo en la herramienta opcional de invitaciones de 24 horas");
