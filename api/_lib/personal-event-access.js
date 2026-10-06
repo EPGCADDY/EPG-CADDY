@@ -12,9 +12,14 @@ export async function ensurePersonalAccess(sql){
   await sql`CREATE TABLE IF NOT EXISTS gsc_tournament_entry_codes(code_hash char(64) PRIMARY KEY,event_id uuid NOT NULL,event_kind text NOT NULL DEFAULT 'tournament',code text NOT NULL,consumed_account_id text,consumed_at timestamptz,created_at timestamptz NOT NULL DEFAULT now(),FOREIGN KEY(event_id,event_kind) REFERENCES gsc_personal_events(event_id,event_kind))`;
   await sql`CREATE TABLE IF NOT EXISTS gsc_personal_audit(id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,event_id uuid NOT NULL,event_kind text NOT NULL,actor_account_id text NOT NULL,action text NOT NULL,details jsonb NOT NULL DEFAULT '{}'::jsonb,created_at timestamptz NOT NULL DEFAULT now())`;
   await sql`ALTER TABLE gsc_personal_events ADD COLUMN IF NOT EXISTS reserved_slots jsonb NOT NULL DEFAULT '[]'::jsonb`;
-  await sql`CREATE OR REPLACE FUNCTION gsc_personal_capacity(event uuid,kind text,roster jsonb,grp text,replace_account text DEFAULT NULL) RETURNS boolean LANGUAGE plpgsql VOLATILE AS $fn$
+  const functions=await sql`SELECT count(*)::int AS n FROM pg_proc WHERE proname IN ('gsc_personal_capacity','gsc_personal_can_publish') AND prosrc LIKE '%GSC_PERSONAL_FUNCTIONS_R181_1%'`;
+  if(functions[0]?.n!==2)await sql`DO $install$ BEGIN
+    PERFORM pg_advisory_xact_lock(181061007);
+    IF (SELECT count(*) FROM pg_proc WHERE proname IN ('gsc_personal_capacity','gsc_personal_can_publish') AND prosrc LIKE '%GSC_PERSONAL_FUNCTIONS_R181_1%')<>2 THEN
+    EXECUTE $ddl$CREATE OR REPLACE FUNCTION gsc_personal_capacity(event uuid,kind text,roster jsonb,grp text,replace_account text DEFAULT NULL) RETURNS boolean LANGUAGE plpgsql VOLATILE AS $fn$
     DECLARE total integer;
     BEGIN
+      -- GSC_PERSONAL_FUNCTIONS_R181_1
       PERFORM 1 FROM gsc_personal_events WHERE event_id=event AND event_kind=kind AND status='active' FOR UPDATE;
       IF NOT FOUND THEN RETURN false; END IF;
       SELECT count(DISTINCT (group_label,player->>'id')) INTO total FROM (
@@ -23,17 +28,20 @@ export async function ensurePersonalAccess(sql){
         UNION ALL SELECT grp,roster
       ) rosters CROSS JOIN LATERAL jsonb_array_elements(players) player;
       RETURN total<=100;
-    END $fn$`;
-  await sql`CREATE OR REPLACE FUNCTION gsc_personal_can_publish(event uuid,kind text,actor text,stream uuid,snapshot jsonb,selected jsonb,grp text) RETURNS boolean LANGUAGE plpgsql VOLATILE AS $fn$
+    END $fn$$ddl$;
+    EXECUTE $ddl$CREATE OR REPLACE FUNCTION gsc_personal_can_publish(event uuid,kind text,actor text,stream uuid,snapshot jsonb,selected jsonb,grp text) RETURNS boolean LANGUAGE plpgsql VOLATILE AS $fn$
     DECLARE member gsc_personal_members%ROWTYPE; config jsonb;
     BEGIN
+      -- GSC_PERSONAL_FUNCTIONS_R181_1
       SELECT configuration INTO config FROM gsc_personal_events WHERE event_id=event AND event_kind=kind AND status='active' FOR SHARE;
       IF NOT FOUND THEN RETURN false; END IF;
       SELECT * INTO member FROM gsc_personal_members WHERE event_id=event AND event_kind=kind AND account_id=actor AND revoked_at IS NULL FOR SHARE;
       IF NOT FOUND OR member.role NOT IN ('organizer','player','scorer') OR member.stream_id IS DISTINCT FROM stream OR member.group_label<>grp OR snapshot->>'mode' IS DISTINCT FROM config->>'mode' THEN RETURN false; END IF;
       IF jsonb_array_length(member.players)=0 OR jsonb_array_length(member.players)<>jsonb_array_length(selected) OR jsonb_array_length(member.players)<>jsonb_array_length(snapshot->'players') THEN RETURN false; END IF;
       RETURN NOT EXISTS(SELECT 1 FROM jsonb_array_elements(member.players) expected WHERE NOT EXISTS(SELECT 1 FROM jsonb_array_elements(snapshot->'players') actual WHERE expected->>'id'=actual->>'id' AND upper(regexp_replace(expected->>'name','[[:space:]]+',' ','g'))=upper(regexp_replace(actual->>'name','[[:space:]]+',' ','g')) AND (expected->>'handicap')::numeric=(actual->>'handicap')::numeric AND expected->>'tournamentCategory'=actual->>'tournamentCategory' AND selected ? (expected->>'id')));
-    END $fn$`;
+    END $fn$$ddl$;
+    END IF;
+  END $install$`;
   await sql`CREATE TABLE IF NOT EXISTS gsc_personal_limits(account_id text NOT NULL,action text NOT NULL,minute timestamptz NOT NULL,count integer NOT NULL,PRIMARY KEY(account_id,action,minute))`;
 }
 export async function limitPersonalAccess(sql,account,action){const maximum=['read','list','identity'].includes(action)?240:120,rows=await sql`INSERT INTO gsc_personal_limits(account_id,action,minute,count) VALUES(${account.id},${action},date_trunc('minute',now()),1) ON CONFLICT(account_id,action,minute) DO UPDATE SET count=gsc_personal_limits.count+1 RETURNING count`;if(rows[0].count>maximum)throw accessError('PERSONAL_RATE_LIMITED',429)}
