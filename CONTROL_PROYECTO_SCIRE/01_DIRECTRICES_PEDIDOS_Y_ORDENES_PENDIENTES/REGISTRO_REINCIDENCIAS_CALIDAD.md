@@ -1410,4 +1410,6 @@ RC-R173-B1 · Release servido no igualaba a versión visible: capturas reales en
 - Seguimiento PR #71: los contratos heredados `test-v304-homogeneous-registration-actions.mjs` y `test-v305-registration-guides-parser-truth.mjs` también exigían SUPER sin tilde. Alineados al texto de interfaz SÚPER; los cuatro dirigidos V304/V305/Stableford PASS.
 
 
-RC-R173-B1-CI3 · 6 octubre 2026: `test-v307-match-arrows-format.mjs` esperaba un sufijo `· MEDAL PLAY` eliminado del contrato vigente. Se alinea el test con `generalMatchDetail` actual, sin cambiar el producto. Estado: esperando nueva ejecución CI remota.
+RC-R173-B1-CI3 · 5 octubre 2026: `test-v307-match-arrows-format.mjs` esperaba un sufijo `· MEDAL PLAY` eliminado del contrato vigente. Se alinea el test con `generalMatchDetail` actual, sin cambiar el producto. Estado: esperando nueva ejecución CI remota.
+
+RC-R173-B1-CI4 · 5 octubre 2026: test V307 también omitía el estado de empate que la tarjeta sí presenta con `=` accesible. Se actualiza sólo la expectativa de prueba; falta CI remoto.

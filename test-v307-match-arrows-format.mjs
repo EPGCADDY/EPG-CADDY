@@ -30,7 +30,7 @@ assert.match(html,/matchPlayFinalSpeech/);
 assert.match(html,/hole>limit/);
 assert.doesNotMatch(html,/RESULTADO NETO HOYO POR HOYO/);
 
-assert.match(artifacts,/const matchSymbol=status=>\{if\(status!=="won"&&status!=="lost"\)return""/);
+assert.match(artifacts,/const matchSymbol=status=>\{if\(status!=="won"&&status!=="lost"\)return status==="tied"\?/);
 assert.match(artifacts,/stroke-width:4\.5/);
 assert.match(artifacts,/Flecha verde hacia arriba = ganó · flecha roja hacia abajo = perdió/);
 assert.doesNotMatch(artifacts,/status==="won"\?"↑":status==="lost"\?"↓":""/);
