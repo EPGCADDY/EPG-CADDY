@@ -23,7 +23,7 @@ const expectedCategories=[
   ["c","C · BLANCAS"],
   ["d","D · BLANCAS"],
   ["senior","SENIOR · BLANCAS"],
-  ["super_senior","SUPER SENIOR · AMARILLAS"],
+  ["super_senior","SÚPER SENIOR · AMARILLAS"],
   ["female","FEMENINA · ROJAS"]
 ];
 for(const [key,label] of expectedCategories){

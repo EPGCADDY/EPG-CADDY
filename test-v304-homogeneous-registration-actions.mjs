@@ -17,7 +17,7 @@ const primaryVocabulary=[
 ];
 const sharedInstructions=["REGISTRO DE JUGADORES"];
 const generalInstructions=["REGISTRO DE JUGADORES","COMPLETA LOS DATOS DE CADA JUGADOR","DATOS DE LOS JUGADORES","NOMBRE + CATEGORÍA + HDCP + MARCAS + WHATSAPP OPCIONAL"];
-const stablefordInstructions=["SELECCIONA CATEGORÍA","CAMPEONATO · NEGRAS","A · AZULES","B · BLANCAS","C · BLANCAS","D · BLANCAS","SENIOR · BLANCAS","SUPER SENIOR · AMARILLAS","FEMENINA · ROJAS"];
+const stablefordInstructions=["SELECCIONA CATEGORÍA","CAMPEONATO · NEGRAS","A · AZULES","B · BLANCAS","C · BLANCAS","D · BLANCAS","SENIOR · BLANCAS","SÚPER SENIOR · AMARILLAS","FEMENINA · ROJAS"];
 
 assert.ok(style,"Falta el sistema visual V304");
 assert.match(style,/#setupStep1>\.nr-button,[\s\S]*?#stablefordSetupOverlay \.stableford-setup-card>\.nr-button/);

@@ -9,10 +9,10 @@ const worker=fs.readFileSync(path.join(root,"service-worker.js"),"utf8");
 const buttonText=id=>html.match(new RegExp(`id="${id}"[^>]*>([^<]+)<\\/button>`))?.[1]?.trim()||"";
 
 assert.match(html,/gscg-build" content="V\d{3}[^"]*"/);
-for(const id of ["openCardLibraryButton","openCardLibrarySetup","openCardLibraryStableford"]){
+for(const id of ["openCardLibrarySetup","openCardLibraryStableford"]){
   assert.equal(buttonText(id),"VER RONDAS GUARDADAS",`${id} debe usar el vocabulario común vigente`);
 }
-assert.match(html,/<h1>MIS RONDAS GUARDADAS<\/h1>/);
+assert.match(html,/<h1>RONDAS GUARDADAS<\/h1>/);
 
 const returnControls=[
   "backToRegistrationButton","closeFinalCard","cancelOfficialCorrection","closeCardLibrary",

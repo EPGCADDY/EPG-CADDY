@@ -18,7 +18,7 @@ assert.match(html,/\.scorecard \.match-arrow\{[^}]*width:30px;height:36px/);
 assert.match(html,/\.scorecard \.match-arrow path\{[^}]*stroke-width:4\.5;stroke-linecap:round;stroke-linejoin:round/);
 assert.doesNotMatch(html,/state==="won"\?"↑":state==="lost"\?"↓":""/);
 
-assert.match(html,/label:"MODALIDAD",value:round\.provisional\?"SCORE CARD - PRÁCTICA":isMatchPlayRound\(\)\?"MATCH PLAY":isUniversalesRound\(\)\?"UNIVERSALES":activeSideGameKey\(\)\?`\$\{activeSideGameKey\(\)\.toUpperCase\(\)\} · MEDAL PLAY`:"MEDAL PLAY NORMAL"/);
+assert.match(html,/const generalMatchDetail=\{label:"MODALIDAD",value:isMatchPlayRound\(\)\?"MATCH PLAY":isUniversalesRound\(\)\?"UNIVERSALES":activeSideGameKey\(\)\?activeSideGameKey\(\)\.toUpperCase\(\):"MEDAL PLAY NORMAL"\}/);
 assert.doesNotMatch(html,/label:"MODALIDAD",value:[^\n]*isMatchPlayRound\(\)\?"MATCH PLAY · CON HDCP"/);
 assert.match(html,/id="matchPlayRoundButton"[\s\S]*?<span>MATCH PLAY<\/span>/);
 assert.doesNotMatch(html,/MATCH PLAY · CON HDCP/);
@@ -30,7 +30,7 @@ assert.match(html,/matchPlayFinalSpeech/);
 assert.match(html,/hole>limit/);
 assert.doesNotMatch(html,/RESULTADO NETO HOYO POR HOYO/);
 
-assert.match(artifacts,/const matchSymbol=status=>\{if\(status!=="won"&&status!=="lost"\)return""/);
+assert.match(artifacts,/const matchSymbol=status=>\{if\(status!=="won"&&status!=="lost"\)return status==="tied"\?/);
 assert.match(artifacts,/stroke-width:4\.5/);
 assert.match(artifacts,/Flecha verde hacia arriba = ganó · flecha roja hacia abajo = perdió/);
 assert.doesNotMatch(artifacts,/status==="won"\?"↑":status==="lost"\?"↓":""/);

@@ -3944,3 +3944,29 @@ Causa comprobada en `whatsapp-invitations.js`: la primera invitación omitía el
 El Preview LAB falló concretamente en R162: host de producción esperado `production`, obtenido `lab`, porque su proceso tenía `VERCEL_PROJECT_ID` del proyecto LAB. El handler prioriza la identidad del proyecto sobre el host; el test enviaba host de producción sin simular el proyecto productivo. El helper ahora configura ID de proyecto LAB/PROD por host y siempre restaura el valor anterior. `node test-r162-single-use-tournament-code.mjs` PASS en el entorno local; la prueba conserva el chequeo de localhost contra identidad real. No cambia el handler ni los datos. Requisito de salida: build completo y recorrido real Preview; HTTP 200 actual sigue en R172.
 R173 Preview follow-up: second Vercel failure was the helper's localhost assertion omitting `GSC_ENVIRONMENT=lab`; it now derives expected source from `tournamentDirectoryEnvironment` and simulates/restores both environment variables per hostname. Directed test passes under LAB, Production simulation, and default local environment.
 R173 follow-up 2: Preview confirmó que R162 duplicaba el mapeo de entorno ya cubierto por `test-r163-cross-environment-tournament-scores.mjs`; se retiró esa aserción redundante de R162. R162 queda en autorización/ciclo de vida del código; R163 verifica LAB/PROD con variables y hosts. Ambos dirigidos PASS local y con GSC_ENVIRONMENT=lab.
+
+## R173-B1 · etiqueta visible sincronizada · 5 octubre 2026
+Capturas reales LAB/Producción mostraron R155. Evidencia directa del HTML desplegado: `meta[name=gscg-release]` ya era `20261004-R173`, mientras que el contenido literal de `#appReleaseBadge` seguía `VERSIÓN R155`; release.json por sí solo no demostraba la versión visible. Se alinea el texto inicial a R173 y se cambia el ID técnico a `20261005-R173-B1` en `release.json`, `index-grupal.html` y `service-worker.js` para que una instalación R173 detecte la compilación corregida. El test de entrega exige coherencia del badge inicial. Pruebas dirigidas PASS; pendiente el Preview de B1 y confirmar la pantalla tras entrega.
+
+R173-B1 CI follow-up · Causas del PR #71 corregidas antes de publicar: test V305 exigía openCardLibraryButton y el encabezado MIS RONDAS GUARDADAS aunque la UI vigente usa sólo controles Setup/Stableford y título RONDAS GUARDADAS; Stableford test exigía micrófonos retirados por R11 y una etiqueta sin tilde; el job macOS descargaba todas las refs y chocaba con ramas LAB/lab. Se alinearon pruebas al contrato vigente, se acentuó SÚPER SENIOR y el checkout nativo ahora toma SHA del PR con historial mínimo y fetch explícito de base. PASS local dirigido; nueva ejecución remota pendiente.
+R173-B1 CI follow-up 2 · `test-v304-homogeneous-registration-actions.mjs` y `test-v305-registration-guides-parser-truth.mjs` aún exigían la etiqueta sin tilde `SUPER`; se alinearon con la etiqueta visible `SÚPER SENIOR · AMARILLAS`. Dirigidas V304, V305 parser e historial y Stableford UI PASS.
+
+
+## R173-B1 CI follow-up 3 · 5 octubre 2026
+El gate `test-v307-match-arrows-format.mjs` quedó desfasado: buscaba `· MEDAL PLAY` dentro de `generalMatchDetail`, aunque la implementación vigente devuelve sólo el nombre del juego lateral en mayúsculas. Se ajusta la expectativa al contrato actual; no cambia interfaz ni lógica. Falta confirmar el nuevo resultado remoto de CI.
+
+
+## R173-B1 CI follow-up · 5 octubre 2026
+El control V307 tenía una segunda expectativa obsoleta: `matchSymbol` ahora representa el empate con `=` accesible además de las flechas de victoria/derrota. El test se alinea al comportamiento vigente; no cambia la aplicación. CI remoto pendiente.
+
+
+## R173-B1 CI follow-up · 5 octubre 2026 · matriz de categorías
+El diagnóstico R80 detectó que la tarjeta global de juego general imprimía sólo el nombre del jugador. Se corrigió `strokeHalf` para incluir categoría y nombre con el mismo formato accesible que las demás modalidades. CI remoto pendiente.
+
+
+## R173-B1 CI follow-up · 5 octubre 2026 · dependencias
+El gate completo ejecutaba `build-manual-lab.mjs`, que invoca `test-r163-cross-environment-tournament-scores.mjs` y necesita `@electric-sql/pglite`; el workflow no instalaba dependencias. Se añade instalación reproducible de la versión fijada en `package.json` antes de los gates y se amplía el límite a 10 minutos. CI remoto pendiente.
+
+
+## R173-B1 CI follow-up · 5 octubre 2026 · paquete móvil
+El paquete nativo falló porque `scripts/build-mobile-web.mjs` todavía copiaba `voice-assistant.js`, retirado y sin referencias desde la aplicación o el Service Worker. Se elimina esa entrada obsoleta del conjunto de recursos; CI móvil pendiente.
