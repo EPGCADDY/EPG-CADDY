@@ -1,5 +1,5 @@
 import {getDatabase} from './_lib/database.js';
-import {tournamentDirectoryEnvironment} from './tournament-score-directory.js';
+import {tournamentDirectoryEnvironment,tournamentDirectoryPeerUrl} from './tournament-score-directory.js';
 import {ensureTournamentOrganizers,issueTournamentOrganizer} from './_lib/tournament-organizers.js';
 import {requireOwner} from './_lib/app-access.js';
 import {requireAccountSession} from './_lib/account-auth.js';
@@ -9,7 +9,7 @@ import {ensureEventAdministration,eventAdminAuthority,issueEventAdmin,redeemEven
 import {refreshEventLifecycles} from './_lib/event-lifecycle.js';
 import {isAllowedAppOrigin,handleAppPreflight} from './_lib/cors.js';
 import {noStore,readJson} from './_lib/http.js';
-export async function handleEventAdministration(req,res,database=getDatabase,ownerResolver=requireOwner,identityResolver=requireAccountSession){
+export async function handleEventAdministration(req,res,database=getDatabase,ownerResolver=requireOwner,identityResolver=requireAccountSession,fetcher=globalThis.fetch,env=process.env){
  noStore(res);if(handleAppPreflight(req,res))return;
  try{
  if(req.method!=='POST')throw accessError('METHOD_NOT_ALLOWED',405);
@@ -17,6 +17,15 @@ export async function handleEventAdministration(req,res,database=getDatabase,own
  const sql=database(),body=await readJson(req,4000);let account,owner=false;
  try{account=await ownerResolver(req);owner=true}catch(error){if(!['OWNER_REQUIRED','ACCOUNT_UNAUTHORIZED'].includes(error.code))throw error;account=await resolveEventIdentity(req,res,sql,'list',identityResolver)}
  await ensurePersonalAccess(sql);await ensureEventAdministration(sql);await refreshEventLifecycles(sql);await limitPersonalAccess(sql,account,'event-admin');
+ const requestHost=req.headers?.['x-forwarded-host']||req.headers?.host||'',source=tournamentDirectoryEnvironment(env,requestHost),peerUrl=tournamentDirectoryPeerUrl(env,requestHost);
+ const relay=async(path,payload)=>{const base=peerUrl.replace(/\/api\/tournament-score-directory\/?$/,'');const response=await fetcher(base+path,{method:'POST',headers:{'content-type':'application/json',...(req.headers?.cookie?{Cookie:req.headers.cookie}:{})},body:JSON.stringify(payload)});let data;try{data=await response.json()}catch{data={ok:false,code:'PEER_RESPONSE_INVALID'}}return{status:response.status,data}};
+ if(body.action==='remote-delete'||body.action==='remote-share'){
+  const target=String(body.source||'');if(!['lab','production'].includes(target)||target===source)throw accessError('EVENT_SOURCE_INVALID',400);
+  if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(body.eventId||'')))throw accessError('EVENT_ID_INVALID',400);
+  const path=body.action==='remote-delete'?'/api/event-administration':'/api/personal-events';
+  const action=body.action==='remote-delete'?{action:'delete',eventId:body.eventId,eventKind:body.eventKind,confirmName:body.confirmName,reason:body.reason}:{action:'share-code',eventId:body.eventId,eventKind:body.eventKind};
+  const result=await relay(path,action);return res.status(result.status).json(result.data);
+ }
  if(String(body.action).startsWith('organizer-')){if(!owner)throw accessError('OWNER_REQUIRED');await ensureTournamentOrganizers(sql);if(body.action==='organizer-issue')return res.status(200).json(await issueTournamentOrganizer(sql,account,body));if(body.action==='organizer-list')return res.status(200).json({ok:true,grants:await sql`SELECT id,recipient_account_id,recipient_name,expires_at,redeemed_at,revoked_at FROM gsc_tournament_organizers ORDER BY created_at DESC`});if(body.action==='organizer-revoke'){await sql`UPDATE gsc_tournament_organizers SET revoked_at=now() WHERE id=${body.grantId}::uuid`;return res.status(200).json({ok:true})}throw accessError('ADMIN_ACTION_INVALID',400)}
  if(body.action==='redeem')return res.status(200).json(await redeemEventAdmin(sql,account,body.code));
  if(body.action==='list'||body.action==='list-local'){
