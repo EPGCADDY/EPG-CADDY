@@ -3914,3 +3914,7 @@ Archivos: api/_lib/event-lifecycle.js, api/live.js, api/tournament-score-directo
 
 R175 · corrección del empaquetado del candidato · 6 octubre 2026
 El primer Preview de R175 se detuvo porque la última modificación no incluía los dos ROADMAPS; el gate lo comprobó en el log de Vercel. Este commit actualiza juntos ambos ROADMAPS y regenera el sello de inventario. El código del candidato no cambia en este follow-up; los previews y la prueba visual siguen pendientes.
+
+
+R175 · etiqueta inicial de release en Score Card · 6 octubre 2026
+La suite del Preview detectó que `index-grupal.html` conservaba el texto inicial `VERSIÓN R174` aunque su meta y `release.json` ya eran R175. Se corrigió sólo la etiqueta estática a R175; la prueba de entrega exige concordancia antes de JavaScript. Previews pendientes de reconstrucción.
