@@ -3,6 +3,15 @@ import vm from 'node:vm';
 import assert from 'node:assert/strict';
 
 const html=fs.readFileSync('index-grupal.html','utf8');
+const speechStart=html.indexOf('function versusParSpeech(diff){');
+const speechEnd=html.indexOf('function segmentSpeech(',speechStart);
+assert(speechStart>=0&&speechEnd>speechStart,'No se encontró el formateador de resultado hablado');
+const speechContext={};
+vm.createContext(speechContext);
+vm.runInContext(`${html.slice(speechStart,speechEnd)};globalThis.readResult=versusParSpeech;`,speechContext);
+assert.equal(speechContext.readResult(0),'EVEN','par exacto debe anunciarse como EVEN');
+assert.equal(speechContext.readResult(1),'1 sobre par','conserva la dicción sobre par');
+assert.equal(speechContext.readResult(-1),'1 bajo par','conserva la dicción bajo par');
 const start=html.indexOf('function playerRecordedTimeline(player){');
 const end=html.indexOf('window.GSCPlayerNameAudio=',start);
 assert(start>=0&&end>start,'No se encontró motor de audio por jugador');

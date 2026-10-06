@@ -1434,3 +1434,12 @@ RC-R173-B1-CI7 · 5 octubre 2026: el gate del paquete nativo intentaba incluir `
 - Causa raíz: el rechazo de `GSCPersonalEvents.sync()` abortaba `live-hub.start()` antes de resolver `directoryEvent`.
 - Control permanente: `test-r174-directory-event-fallback.mjs` cubre el rechazo del servicio de membresía y verifica que la selección federada siga alcanzable; `npm run scores:r174-directory-gate` lo ejecuta.
 - Estado: prueba local PASS. Candidato pendiente de Preview y recorrido físico posterior; Producción intacta.
+
+
+## RC-R175 · Login de cuenta desvió Organizador · 6 octubre 2026
+
+- Causa: el diálogo de autorización exponía “SOY EL PROPIETARIO · INICIAR SESIÓN”, que invocaba `GSCOpenAccountLogin`; el inicializador además abría login sin sesión en rutas normales.
+- Escape: la prueba anterior cubría registro libre en la página principal, no el botón de Organizador en Scores LAB.
+- Corrección permanente: remover ese botón y exigir acceso explícito para el formulario opcional; mantener código de Organizador y APIs protegidas por recurso.
+- Evidencia automática: `test-lab-account-gate.mjs` inspecciona el arranque sin sesión, el acceso explícito y el código único.
+- Estado: cambio local PASS; Preview/browser pendientes; Producción intacta hasta cerrar puertas.

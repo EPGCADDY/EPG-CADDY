@@ -34,7 +34,7 @@ export async function handleTournamentScoreDirectory(req,res,databaseGetter=getD
    if(action==='read'&&body.source!==source){const response=await fetcher(tournamentDirectoryPeerUrl(env,requestHost),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'read-local',eventId}),cache:'no-store'});const data=await response.json().catch(()=>null);return res.status(response.status).json(data||{ok:false,code:'TOURNAMENT_DIRECTORY_UNAVAILABLE'})}
    const tournaments=await sql`SELECT id,name,mode,status,revision,expires_at,updated_at FROM live_tournaments WHERE id=${eventId}::uuid AND status='active' AND expires_at>now()`;
    if(!tournaments.length)return res.status(410).json({ok:false,code:'LIVE_EXPIRED'});
-   const rows=await sql`SELECT id,scope,group_label,status,revision,expires_at,updated_at,current_snapshot FROM live_streams WHERE tournament_id=${eventId}::uuid AND status='active' AND expires_at>now() ORDER BY id LIMIT 100`;
+   const rows=await sql`SELECT id,scope,group_label,status,revision,expires_at,updated_at,current_snapshot FROM live_streams WHERE tournament_id=${eventId}::uuid AND status='active' ORDER BY id LIMIT 100`;
    const tournament=tournaments[0];return res.status(200).json({ok:true,kind:'tournament',tournament:{...tournament,revision:Number(tournament.revision)},streams:rows.map(row=>{const safe=safeStream(row);return{id:safe.id,scope:safe.scope,groupLabel:safe.group_label,status:safe.status,revision:Number(safe.revision)||0,expiresAt:safe.expires_at,updatedAt:safe.updated_at,snapshot:safe.current_snapshot}})});
   }
   return res.status(400).json({ok:false,code:'LIVE_ACTION_UNSUPPORTED'});

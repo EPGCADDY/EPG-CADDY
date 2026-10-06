@@ -516,7 +516,7 @@ async function readTournament(sql,req,body,viewerToken){
   const limit=boundedInteger(body.limit,1,50,25),rows=await sql`
     SELECT id,scope,group_label,status,revision,expires_at,updated_at,current_snapshot
     FROM live_streams
-    WHERE tournament_id=${tournament.id} AND status='active' AND expires_at>now()
+    WHERE tournament_id=${tournament.id} AND status='active'
       AND (${cursor||null}::uuid IS NULL OR id>${cursor||null}::uuid)
     ORDER BY id ASC
     LIMIT ${limit+1}
