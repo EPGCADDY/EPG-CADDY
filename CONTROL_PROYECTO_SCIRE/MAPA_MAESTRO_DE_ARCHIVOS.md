@@ -2703,3 +2703,6 @@ R177 pruebas: `test-event-administration.mjs` valida eliminación local y `test-
 
 
 R177 flujo de código: `api/personal-events.js` emite código viewer a organizadores de torneos activos incluso antes del roster; `test-lab-code-entry.mjs` verifica ese límite de solo lectura.
+
+
+R177 cobertura: `test-lab-code-entry.mjs` comprueba el alcance del viewer leyendo la sesión del token canjeado.

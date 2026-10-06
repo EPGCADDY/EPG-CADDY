@@ -47,7 +47,7 @@ process.env.GSC_PERSONAL_ACCESS_LAB_READY='1';process.env.VERCEL_ENV='preview';
 async function personalShare(account){let result;await handlePersonalEvents({method:'POST',headers:{host:'localhost',origin:'http://localhost'},body:{action:'share-code',eventId:event,eventKind:'tournament'}},{setHeader(){},status(n){this.statusCode=n;return this},json(v){result=v}},()=>sql,async()=>account);return result}
 const emptyRosterShare=await personalShare({id:'owner-fixture',name:'DEMO'});
 assert.equal(emptyRosterShare.ok,true,'Active tournament organizer can share before assigning player roster');assert.match(emptyRosterShare.code,/^[A-F0-9]{20}$/);assert.equal(emptyRosterShare.url,'/code-entry.html?visitor=1');
-const emptyRosterSession=await redeemEntryCode(sql,emptyRosterShare.code);assert.equal(emptyRosterSession.role,'viewer');assert.equal(emptyRosterSession.eventId,event);
+const emptyRosterSession=await redeemEntryCode(sql,emptyRosterShare.code);assert.equal(emptyRosterSession.role,'viewer');const emptyRosterIdentity=await readCodeSession({headers:{cookie:CODE_COOKIE+'='+emptyRosterSession.token}},sql);assert.equal(emptyRosterIdentity.eventId,event);
 const emptyRoster=await sql`SELECT players FROM gsc_personal_members WHERE event_id=${event}::uuid AND account_id=${emptyRosterSession.accountId}`;assert.equal(emptyRoster[0].players.length,0,'Pre-roster share remains read-only and grants no player slots');
 await sql`UPDATE gsc_personal_members SET players=${JSON.stringify([{id:'p1',name:'DEMO',handicap:8,tournamentCategory:'a',tee:'Azul'}])}::jsonb WHERE account_id='owner-fixture'`;
 const shared=await personalShare({id:'owner-fixture',name:'DEMO'});

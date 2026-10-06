@@ -1567,3 +1567,6 @@ R177 prueba: inicializar origen local en el test de eliminación y mantener cobe
 
 
 R177 regresión de invitación: compartir antes de asignar roster solo emite acceso viewer, sin jugadores ni permisos de escritura.
+
+
+R177 prueba: validar el evento compartido leyendo la sesión derivada del token viewer.

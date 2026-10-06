@@ -1471,3 +1471,6 @@ R177 cierre de test: se corrige el contexto de ambiente faltante en la regresió
 
 
 R177 requisito validado: compartir torneo activo sin roster debe ser posible y permanecer read-only hasta que organizador asigne jugadores.
+
+
+R177: la verificación de destino usa la sesión real emitida tras el canje, no un campo inexistente de la respuesta.

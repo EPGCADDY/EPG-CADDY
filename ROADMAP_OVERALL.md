@@ -3961,3 +3961,6 @@ R177 prueba de regresión: el harness de eliminación inicializa el ambiente loc
 
 
 R177 compatibilidad: código de solo lectura disponible para torneo activo antes de asignar jugadores; el test confirma que no crea cupos ni acceso de escritura.
+
+
+R177 verificación del código viewer: el test valida el evento desde la sesión autenticada creada al canjear el código, sin confiar en datos del cliente.

@@ -4061,3 +4061,6 @@ R177 regresión: contexto de ambiente en prueba de eliminación y cobertura sepa
 
 
 R177: validar código de torneo activo sin roster y mantener el acceso compartido en solo lectura hasta la asignación de jugadores.
+
+
+R177: comprobar el alcance del viewer mediante la sesión creada al canjear el código, no mediante el objeto de canje.
