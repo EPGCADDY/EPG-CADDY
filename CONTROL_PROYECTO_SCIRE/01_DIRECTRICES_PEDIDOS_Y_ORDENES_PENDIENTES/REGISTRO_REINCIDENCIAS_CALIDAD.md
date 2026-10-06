@@ -1401,3 +1401,9 @@ RC-R173-Vercel-test · Preview LAB mostró `test-r162-single-use-tournament-code
 Reproducción adicional del Preview: la misma expectativa de LAB/Producción se había agregado a R162 duplicando el contrato ambiental que R163 ya prueba; en el runtime Vercel el test debe respetar `VERCEL_PROJECT_ID`, `GSC_ENVIRONMENT` y host reales. Corrección final: quitar esa aserción redundante de R162 y conservar la cobertura dedicada en R163; pruebas R162/R163 PASS bajo `GSC_ENVIRONMENT=lab`.
 
 RC-R173-B1 · Release servido no igualaba a versión visible: capturas reales en LAB y Producción mostraron R155 aunque `/release.json` y el meta HTML ya eran R173. Evidencia: el HTML de `index-grupal.html` contenía literalmente `VERSIÓN R155` en `#appReleaseBadge`. Causa mínima: placeholder estático olvidado, no fallo de Vercel. Corrección: badge estático R173 y build ID `20261005-R173-B1` en release/meta/Service Worker; test bloquea futuros desajustes antes de ejecutar JS. Regresión de entrega dirigida PASS. Pendiente publicar B1 y verificar la pantalla de teléfono; no confundir READY o release.json con actualización visible.
+
+### R173-B1 · Fallos de CI identificados después de abrir PR #71
+- V305 congelaba un botón y título históricos incompatibles con la UI vigente; `test-lab-update-recovery.mjs` ya exige ausencia de ese botón. Se alineó la prueba a los dos accesos actuales y al título RONDAS GUARDADAS.
+- `test-stableford-ui.mjs` reintroducía el micrófono de anotación retirado por R11 y exigía etiqueta SÚPER sin acento. Test alineado a anotador silencioso y etiqueta correcta.
+- Checkout de macOS descargaba todas las ramas y chocaba entre nombres LAB/lab. Checkout restringido al SHA del evento con profundidad 1 y fetch explícito de la base para la compuerta ROADMAP.
+- Pruebas dirigidas locales PASS; re-ejecución remota obligatoria antes de publicar. No se ignoran checks.

@@ -33,11 +33,11 @@ for(const phrase of ['["sin","score"]','["no","informo"]','["ponle","cero"]','["
 assert.match(html,/CLASIFICACIÓN ACUMULADA · MEJORES 3 DE 4/);
 assert.match(html,/RESULTADO OFICIAL STABLEFORD/);
 assert.match(html,/stablefordRoundNumber:roundNumber/);
-assert.match(html,/bindMicActivation\("headerMic","round"\)/,"El micrófono de scores debe seguir enlazado al motor oficial");
+// The current official scorekeeper is deliberately manual and silent (R11).
+assert.doesNotMatch(html,/id="headerMic"|bindMicActivation\("headerMic","round"\)/,"R11 retires the scorekeeper microphone");
 assert.match(stable,/stablefordTournamentName/,"Falta nombre de torneo en el inicio Stableford");
-assert.match(stable,/stablefordSetupMic/,"Falta micrófono de registro Stableford");
-assert.match(stable,/fireMicActivation\("setup",e\)/,"El micrófono Stableford debe reutilizar el motor oficial de registro");
+assert.doesNotMatch(stable,/stablefordSetupMic|fireMicActivation\("setup",e\)/,"R11 retires the Stableford microphone");
 assert.match(stable,/round\.tournament=value\?\{name:value\}:null/,"El nombre del torneo debe persistir en la ronda Stableford");
 assert.match(stable,/HCP 0 · MÁXIMO 6 JUGADORES/);
 
-console.log("Stableford UI: tarjeta limpia, torneo, micrófonos, categorías, seis jugadores, Gross/Puntos y clasificación verificados.");
+console.log("Stableford UI: tarjeta limpia, torneo, categorías, seis jugadores, Gross/Puntos y clasificación verificados; micrófono retirado por R11.");
