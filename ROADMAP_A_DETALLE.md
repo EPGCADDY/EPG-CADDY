@@ -4022,3 +4022,7 @@ El primer Preview de R175 se detuvo porque la última modificación no incluía 
 
 R175 · etiqueta inicial de release en Score Card · 6 octubre 2026
 La suite del Preview detectó que `index-grupal.html` conservaba el texto inicial `VERSIÓN R174` aunque su meta y `release.json` ya eran R175. Se corrigió sólo la etiqueta estática a R175; la prueba de entrega exige concordancia antes de JavaScript. Previews pendientes de reconstrucción.
+
+
+R175 · regresión de acceso libre corregida · 6 octubre 2026
+El nuevo Preview encontró sintaxis inválida en las expresiones regulares de `test-lab-account-gate.mjs`. Se corrigió la extracción de `init()` y se hizo explícita la aserción que rechaza abrir el formulario por ausencia de sesión; la prueba no modifica el comportamiento de la app.
