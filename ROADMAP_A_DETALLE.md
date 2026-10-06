@@ -3962,3 +3962,7 @@ El control V307 tenía una segunda expectativa obsoleta: `matchSymbol` ahora rep
 
 ## R173-B1 CI follow-up · 5 octubre 2026 · matriz de categorías
 El diagnóstico R80 detectó que la tarjeta global de juego general imprimía sólo el nombre del jugador. Se corrigió `strokeHalf` para incluir categoría y nombre con el mismo formato accesible que las demás modalidades. CI remoto pendiente.
+
+
+## R173-B1 CI follow-up · 5 octubre 2026 · dependencias
+El gate completo ejecutaba `build-manual-lab.mjs`, que invoca `test-r163-cross-environment-tournament-scores.mjs` y necesita `@electric-sql/pglite`; el workflow no instalaba dependencias. Se añade instalación reproducible de la versión fijada en `package.json` antes de los gates y se amplía el límite a 10 minutos. CI remoto pendiente.

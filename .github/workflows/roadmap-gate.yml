@@ -8,7 +8,7 @@ on:
 jobs:
   roadmap-gate:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - name: Checkout complete history
         uses: actions/checkout@v4
@@ -19,6 +19,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+
+      - name: Install repository dependencies for CI gates
+        run: npm install --no-save --package-lock=false @electric-sql/pglite@0.5.8
 
       - name: Block any change missing from both ROADMAPS
         env:
