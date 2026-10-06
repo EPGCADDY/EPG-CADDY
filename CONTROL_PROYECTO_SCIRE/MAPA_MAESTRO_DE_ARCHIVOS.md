@@ -2657,3 +2657,22 @@ R173-B1: `index-grupal.html` muestra R173 desde el HTML inicial; `release.json` 
 | `index-grupal.html` | Detecta modo nativo, PWA o Safari instalado sin abortar el arranque del Registro en un navegador normal. | La ruta pública abre Registro sin autenticación global. |
 | `release.json`, `service-worker.js` | Etiqueta R174 e invalida la caché instalada anterior. | Evita que R173 permanezca servido como shell. |
 | `test-r174-standalone-registration-detection.mjs`, `scripts/build-manual-lab.mjs` | Prueba cinco modos de ejecución y la integra al banco LAB. | Bloquea la regresión de arranque. |
+
+
+## R175 · Entrada Score Card sin login
+
+| Archivo | Función | Alcance |
+|---|---|---|
+| auth-gate.js | No abre inicio de sesión por ausencia de sesión en el recorrido normal. | Correo/contraseña sólo por acceso opcional explícito. |
+| personal-events.js | El diálogo de Organizador conserva su canje de código y elimina la salida a login. | Un único control para crear torneos. |
+| test-lab-account-gate.mjs | Verifica ausencia del bloqueo normal y presencia del código de Organizador. | Se ejecuta dentro del banco LAB existente. |
+| index-grupal.html, release.json, service-worker.js | Sello de publicación, etiqueta y caché R175 alineados. | Un mismo build en los entornos. |
+
+
+## R176 · Retorno a Registro al reabrir la app instalada
+
+| Archivos | Función | Protección |
+|---|---|---|
+| `index-grupal.html`, `test-lab-registration-return-state.mjs` | En una PWA que vuelve del segundo plano con ronda activa, muestra Registro y conserva tarjeta, jugadores y scores. | Regresión de ciclo de vida; la web normal y ronda vacía conservan su ruta. |
+| `release.json`, `service-worker.js` | Identifican y distribuyen R176 con caché renovada. | ACTUALIZAR reconoce el release nuevo; Producción se mantiene hasta gates y verificación. |
+| Ambos ROADMAPS, este mapa, registro de reincidencias e inventario V311 | Documentan causa, cambio, control y sello. | Gates documental y de inventario. |
