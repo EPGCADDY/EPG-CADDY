@@ -37,7 +37,7 @@ if(!existsSync(lockPath))fail([`Falta el sello obligatorio ${lockPath}.`]);
 const lock=JSON.parse(readFileSync(lockPath,'utf8'));
 const current=sourceState();
 const errors=[];
-if(lock.sourceDigest!==current.digest)errors.push('Los archivos activos cambiaron después del último guardado de inventarios.');
+if(lock.sourceDigest!==current.digest)errors.push(`Los archivos activos cambiaron después del último guardado de inventarios (digest actual: ${current.digest}).`);
 if(lock.sourceFileCount!==current.files.length)errors.push(`El sello registra ${lock.sourceFileCount} fuentes y existen ${current.files.length}.`);
 
 if(!process.env.VERCEL){
