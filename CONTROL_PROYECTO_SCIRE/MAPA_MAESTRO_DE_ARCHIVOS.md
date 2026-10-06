@@ -2693,3 +2693,7 @@ R173-B1: `index-grupal.html` muestra R173 desde el HTML inicial; `release.json` 
 | test-r167-admin-share-feedback.mjs | Actualiza la regresión histórica al contrato R177 de compartir y permisos entre ambientes. | Se conservan checks de directorio público y homónimos. |
 
 | personal-events.js | Conserva texto accesible del estado sin torneos para compatibilidad del menú ID DE TORNEOS. | Vacío comprobado en ambos ambientes. |
+
+
+### R177 · Administración federada
+`api/event-administration.js` fija el peer LAB/Producción y reenvía compartir/eliminar con la sesión; la validación se ejecuta en el origen del evento. `event-administration-ui.js` presenta ambiente y tipo del evento; `personal-events.js` incorpora ID de torneos y controles de código/eliminación.

@@ -1461,3 +1461,7 @@ RC-R173-B1-CI7 · 5 octubre 2026: el gate del paquete nativo intentaba incluir `
 - R177 CI follow-up: el test R167 esperaba el nombre y payload de la función previa. Se alinea a shareEvent y comprueba compartir remoto/local y permisos deshabilitados sin alterar la protección de eventos ajenos.
 
 - R177 CI follow-up 2: test-r156-tournament-invitation.mjs encontró que el estado vacío ya no conservaba «NO TIENES TORNEOS». Se restaura el texto esperado y se añade que la búsqueda cubre ambos ambientes.
+
+
+### R177 · Registro de corrección
+Gate detectó que el relay federado no había quedado persistido en el API final. El relay fue completado y se exige repetir roadmap, inventario, pruebas federadas y los tres previews; no promover con un gate fallido.
