@@ -1,4 +1,5 @@
 import {getDatabase} from './_lib/database.js';
+import {ensurePersonalAccess,availableTournamentEntryCode} from './_lib/personal-event-access.js';
 import {noStore,readJson} from './_lib/http.js';
 
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -18,16 +19,18 @@ export async function handleTournamentScoreDirectory(req,res,databaseGetter=getD
  if(req.method!=='POST')return res.status(405).json({ok:false,code:'METHOD_NOT_ALLOWED'});
  try{
   const body=await readJson(req,8000),action=String(body.action||'list'),sql=databaseGetter(),requestHost=req.headers?.['x-forwarded-host']||req.headers?.host||'',source=tournamentDirectoryEnvironment(env,requestHost);
+  const withCodes=body.withCodes===true;
+  const attachCodes=async rows=>{if(!withCodes)return rows;await ensurePersonalAccess(sql);return Promise.all(rows.map(async row=>{try{return {...row,...await availableTournamentEntryCode(sql,row.id)}}catch(error){return {...row,codeError:error.code||'TOURNAMENT_CODE_NOT_AVAILABLE'}}}))};
   if(action==='list'){
-   const rows=await sql`SELECT id,name,status FROM live_tournaments WHERE status='active' AND expires_at>now() ORDER BY updated_at DESC`;
-   let peer=[],partial=false;try{const response=await fetcher(tournamentDirectoryPeerUrl(env,requestHost),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'list-local'}),cache:'no-store'});if(response.ok){const result=await response.json();if(result.ok)peer=result.events||[];else partial=true}else partial=true}catch{partial=true}
+   const rows=await attachCodes(await sql`SELECT id,name,status FROM live_tournaments WHERE status='active' AND expires_at>now() ORDER BY updated_at DESC`);
+   let peer=[],partial=false;try{const response=await fetcher(tournamentDirectoryPeerUrl(env,requestHost),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'list-local',...(withCodes?{withCodes:true}:{})}),cache:'no-store'});if(response.ok){const result=await response.json();if(result.ok){peer=result.events||[];partial=!!result.partial}else partial=true}else partial=true}catch{partial=true}
    const peerSource=source==='lab'?'production':'lab';
    const merged=new Map();for(const row of rows)merged.set(`${source}:${row.id}`,{...row,source});for(const row of peer)merged.set(`${peerSource}:${row.id}`,{...row,source:peerSource});
-   return res.status(200).json({ok:true,partial,events:[...merged.values()]});
+   return res.status(200).json({ok:true,partial:partial||withCodes&&[...merged.values()].some(row=>!row.joinCode),events:[...merged.values()]});
   }
   if(action==='list-local'){
-   const rows=await sql`SELECT id,name,status FROM live_tournaments WHERE status='active' AND expires_at>now() ORDER BY updated_at DESC`;
-   return res.status(200).json({ok:true,events:rows.map(row=>({...row,source}))});
+   const rows=await attachCodes(await sql`SELECT id,name,status FROM live_tournaments WHERE status='active' AND expires_at>now() ORDER BY updated_at DESC`);
+   return res.status(200).json({ok:true,...(withCodes?{partial:rows.some(row=>!row.joinCode)}:{}),events:rows.map(row=>({...row,source}))});
   }
   if(action==='read-local'||action==='read'){
    const eventId=String(body.eventId||'');if(!UUID.test(eventId))return res.status(400).json({ok:false,code:'LIVE_INVALID_TOURNAMENT'});

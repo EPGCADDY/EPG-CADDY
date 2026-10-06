@@ -159,10 +159,17 @@ export async function organizerEntryCode(sql,id,kind,account){
  if(kind!=='tournament')throw accessError('PERSONAL_EVENT_KIND_INVALID',400);
  const member=await organizer(sql,id,kind,account);if(member.event_status!=='active')throw accessError('PERSONAL_EVENT_CLOSED',409);
  const live=await sql`SELECT id FROM live_tournaments WHERE id=${id}::uuid AND status='active' AND expires_at>now()`;if(!live.length)throw accessError('LIVE_EXPIRED',410);
+ const result=await availableTournamentEntryCode(sql,id,kind);
+ await auditPersonal(sql,id,kind,account,'entry_code_created');return result;
+}
+
+export async function availableTournamentEntryCode(sql,id,kind='tournament'){
+ const active=await sql`SELECT t.id FROM live_tournaments t JOIN gsc_personal_events e ON e.event_id=t.id AND e.event_kind='tournament' WHERE t.id=${id}::uuid AND t.status='active' AND t.expires_at>now() AND e.status='active'`;
+ if(!active.length)throw accessError('TOURNAMENT_CODE_NOT_AVAILABLE',409);
  const pending=await sql`SELECT code FROM gsc_tournament_entry_codes WHERE event_id=${id}::uuid AND event_kind=${kind} AND consumed_at IS NULL ORDER BY created_at DESC LIMIT 1`;
  if(pending.length)return {ok:true,joinCode:pending[0].code,singleUse:true};
  const code=randomBytes(8).toString('hex').slice(0,10).toUpperCase();await sql`INSERT INTO gsc_tournament_entry_codes(code_hash,event_id,event_kind,code) VALUES(${hash(code)},${id}::uuid,${kind},${code})`;
- await auditPersonal(sql,id,kind,account,'entry_code_created');return {ok:true,joinCode:code,singleUse:true};
+ return {ok:true,joinCode:code,singleUse:true};
 }
 
 export async function inspectTournamentEntryCode(sql,body,account){

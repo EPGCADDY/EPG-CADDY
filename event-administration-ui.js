@@ -4,29 +4,29 @@ async function call(action,payload={},signal){try{const response=await fetch('/a
 function showStatus(result,id='status'){ $(id).textContent=result.ok?'LISTO':messages[result.code]||'NO SE PUDO COMPLETAR · '+result.code }
 function eventStatus(button,text){button.closest('article').querySelector('[data-event-status]').textContent=text}
 async function copyTournamentId(button,code){if(button.disabled)return;button.disabled=true;button.textContent='COPIANDO…';eventStatus(button,'');try{await navigator.clipboard.writeText(code);button.textContent='ID COPIADO ✓';eventStatus(button,'ID COPIADO')}catch{button.textContent='COPIAR ID';eventStatus(button,'NO SE PUDO COPIAR · REINTENTA')}finally{button.disabled=false}}
-async function shareEvent(button,e){if(button.disabled)return;button.disabled=true;eventStatus(button,'PREPARANDO CÓDIGO…');try{const local=e.source===cachedLocal.source,result=local?await window.GSCPersonalEvents.request(e.event_kind==='private'?'share-code':'organizer-entry-code',{eventId:e.id,eventKind:e.event_kind}):await call('remote-share',{source:e.source,eventId:e.id,eventKind:e.event_kind});if(!result.ok){eventStatus(button,messages[result.code]||window.GSCPersonalEvents.message(result.code));return}const code=result.joinCode||result.code||'';if(!code){eventStatus(button,'EL SERVIDOR NO ENTREGÓ UN CÓDIGO');return}const opened=window.GSCWhatsAppInvitations.open({kind:e.event_kind,code,eventName:e.name},()=>{});eventStatus(button,opened===false?'CÓDIGO '+code+' · NO SE PUDO ABRIR WHATSAPP':'CÓDIGO '+code+' · LISTO PARA COMPARTIR')}catch{eventStatus(button,'NO SE PUDO PREPARAR EL CÓDIGO · REINTENTA')}finally{button.disabled=false}}
+async function shareEvent(button,e){if(button.disabled)return;button.disabled=true;eventStatus(button,'PREPARANDO CÓDIGO…');try{const local=e.source===cachedLocal.source,result=e.joinCode?{ok:true,joinCode:e.joinCode}:local?await window.GSCPersonalEvents.request(e.event_kind==='private'?'share-code':'organizer-entry-code',{eventId:e.id,eventKind:e.event_kind}):await call('remote-share',{source:e.source,eventId:e.id,eventKind:e.event_kind});if(!result.ok){eventStatus(button,messages[result.code]||window.GSCPersonalEvents.message(result.code));return}const code=result.joinCode||result.code||'';if(!code){eventStatus(button,'EL SERVIDOR NO ENTREGÓ UN CÓDIGO');return}const opened=window.GSCWhatsAppInvitations.open({kind:e.event_kind,code,eventName:e.name},()=>{});eventStatus(button,opened===false?'CÓDIGO '+code+' · NO SE PUDO ABRIR WHATSAPP':'CÓDIGO '+code+' · LISTO PARA COMPARTIR')}catch{eventStatus(button,'NO SE PUDO PREPARAR EL CÓDIGO · REINTENTA')}finally{button.disabled=false}}
 let requestedEventOpened=false;
 const format=at=>new Date(at).toLocaleString('es-GT',{timeZone:'America/Guatemala'});
 function administrationRows(local,directory){
  const rows=new Map(),source=local.source;
  for(const e of local.ok?local.events||[]:[]){const eventSource=e.source||source;rows.set(eventSource+':'+e.event_kind+':'+e.id,{...e,source:eventSource,canAdminister:true})};
- for(const e of directory.ok?directory.events||[]:[]){if(!['lab','production'].includes(e.source)||e.status!=='active')continue;const key=e.source+':tournament:'+e.id;if(!rows.has(key))rows.set(key,{...e,event_kind:'tournament',canAdminister:false})}
+ for(const e of directory.ok?directory.events||[]:[]){if(!['lab','production'].includes(e.source)||e.status!=='active')continue;const key=e.source+':tournament:'+e.id;if(!rows.has(key))rows.set(key,{...e,event_kind:'tournament',canAdminister:false});else rows.set(key,{...rows.get(key),joinCode:e.joinCode})}
  return [...rows.values()].sort((a,b)=>a.name.localeCompare(b.name,'es')||a.source.localeCompare(b.source)||a.id.localeCompare(b.id));
 }
 function scoresHref(e,monitor){const same=e.source===cachedLocal.source,base=same?'':e.source==='lab'?'https://golf-sc-gt-lab.vercel.app':'https://epg-caddy.vercel.app';if(e.event_kind==='private')return base+'/live-hub.html?shortcut=scores&personalEvent='+encodeURIComponent(e.id)+'&personalKind=private&monitor='+monitor;return '/live-hub.html?directoryEvent='+encodeURIComponent('directory_'+e.source+'_'+e.id)+'&monitor='+monitor}
 function administrationCard(e){
  const authorized=e.canAdminister,origin=e.source==='lab'?'LABORATORIO':'PRODUCCIÓN',key=escape(e.source+':'+e.event_kind+':'+e.id),kind=e.event_kind==='private'?'GRUPO':'TORNEO';
  const scores='<nav aria-label="SCORES '+escape(e.name)+'"><a href="'+escape(scoresHref(e,'general'))+'">SCORES · GENERAL</a><a href="'+escape(scoresHref(e,'categories'))+'">SCORES · CATEGORÍAS</a></nav>';
- const sharing=authorized?'<button data-share-event="'+key+'">COMPARTIR CÓDIGO</button>':'<button disabled aria-label="Compartir requiere permiso de organizador">COMPARTIR · ORGANIZADOR</button>';
+ const sharing=authorized||e.joinCode?'<button data-share-event="'+key+'">COMPARTIR CÓDIGO</button>':'<button disabled aria-label="Compartir requiere permiso de organizador">COMPARTIR · ORGANIZADOR</button>';
  const deleteLabel='ELIMINAR '+kind;
  const deleting='<button class="danger" data-delete="'+key+'">'+deleteLabel+'</button>';
- return '<article data-event-id="'+escape(e.id)+'" data-event-source="'+escape(e.source)+'"><h3>'+escape(e.name)+'</h3><p>'+kind+' · '+origin+'</p>'+(!authorized?'<p>CONSULTA DE SCORES · COMPARTIR Y ELIMINAR REQUIEREN AUTORIZACIÓN DEL ORGANIZADOR</p>':'')+scores+sharing+'<p data-event-status="'+key+'" role="status" aria-live="polite"></p>'+deleting+'</article>';
+ return '<article data-event-id="'+escape(e.id)+'" data-event-source="'+escape(e.source)+'"><h3>'+escape(e.name)+'</h3><p>'+kind+' · '+origin+'</p>'+(!authorized?'<p>CONSULTA DE SCORES · ELIMINAR REQUIERE AUTORIZACIÓN DEL ORGANIZADOR</p>':'')+scores+(e.joinCode?'<p>ID DE TORNEO</p><output data-tournament-code>'+escape(e.joinCode)+'</output>':'')+sharing+'<p data-event-status="'+key+'" role="status" aria-live="polite"></p>'+deleting+'</article>';
 }
 let refreshSequence=0,cachedLocal={ok:false},cachedDirectory={ok:false},cachedCodes={},lastRowsSignature='';
 async function refresh({automatic=false,signal}={}){
  const sequence=++refreshSequence;if(!automatic)$('status').textContent='CARGANDO TORNEOS Y GRUPOS…';
  await window.GSCPersonalEvents.claimLegacyOwnedTournament();
- const [result,directory]=await Promise.all([call('list',{},signal),fetch('/api/tournament-score-directory',{method:'POST',credentials:'same-origin',cache:'no-store',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'list'}),signal}).then(async response=>({...await response.json(),ok:response.ok})).catch(()=>({ok:false,code:'NETWORK_ERROR'}))]);
+ const [result,directory]=await Promise.all([call('list',{},signal),fetch('/api/tournament-score-directory',{method:'POST',credentials:'same-origin',cache:'no-store',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'list',withCodes:true}),signal}).then(async response=>({...await response.json(),ok:response.ok})).catch(()=>({ok:false,code:'NETWORK_ERROR'}))]);
  if(sequence!==refreshSequence||signal?.aborted)return{ok:false};
  const localChanged=result.ok&&JSON.stringify(result.events)!==JSON.stringify(cachedLocal.events);
  if(result.ok)cachedLocal=result;if(directory.ok&&!directory.partial)cachedDirectory=directory;
@@ -42,7 +42,7 @@ async function refresh({automatic=false,signal}={}){
  if(!rows.length)$('events').insertAdjacentHTML('beforeend','<p>'+(!directory.ok||directory.partial||!result.ok?'NO SE PUDO COMPROBAR LA LISTA COMPLETA · REINTENTA':'NO HAY TORNEOS ACTIVOS NI GRUPOS DISPONIBLES PARA TU CUENTA.')+'</p>');
  document.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>remove(rows.find(e=>e.source+':'+e.event_kind+':'+e.id===b.dataset.delete)));
  document.querySelectorAll('[data-copy-tournament]').forEach(b=>b.onclick=()=>copyTournamentId(b,codes[b.dataset.copyTournament]));
- document.querySelectorAll('[data-share-event]').forEach(b=>b.onclick=()=>shareEvent(b,rows.find(e=>e.canAdminister&&e.source+':'+e.event_kind+':'+e.id===b.dataset.shareEvent)));
+ document.querySelectorAll('[data-share-event]').forEach(b=>b.onclick=()=>shareEvent(b,rows.find(e=>(e.canAdminister||e.joinCode)&&e.source+':'+e.event_kind+':'+e.id===b.dataset.shareEvent)));
  const params=new URLSearchParams(location.search),requested=rows.find(e=>e.canAdminister&&e.id===params.get('eventId')&&e.event_kind===params.get('eventKind'));if(requested&&!requestedEventOpened&&!automatic){requestedEventOpened=true;remove(requested)}
  return{ok:result.ok&&directory.ok,partial:directory.partial||result.partial};
 }

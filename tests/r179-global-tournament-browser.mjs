@@ -1,0 +1,31 @@
+import assert from 'node:assert/strict';
+import {createServer} from 'node:http';
+import {readFile} from 'node:fs/promises';
+import {chromium} from 'playwright';
+const root=process.cwd(), events=['lab','production'].flatMap(source=>Array.from({length:60},(_,i)=>({id:source+'-'+i,name:'GLOBAL '+source+' '+i,status:'active',source,joinCode:(source==='lab'?'A':'B')+String(i).padStart(9,'0')})));
+const server=createServer(async(req,res)=>{try{const file=await readFile(root+new URL(req.url,'http://localhost').pathname);res.setHeader('Content-Type',req.url.endsWith('.js')?'application/javascript':req.url.endsWith('.css')?'text/css':'text/html');res.end(file)}catch{res.statusCode=404;res.end()}});
+await new Promise(r=>server.listen(8877,r));
+const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+try{
+ const page=await browser.newPage({viewport:{width:393,height:852}}),errors=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ await page.route('**/api/**',async route=>{const path=new URL(route.request().url()).pathname;let result={ok:true,events:[],aliases:[],accountCode:'test'};
+ if(path.endsWith('tournament-score-directory'))result={ok:true,partial:false,events};
+ if(path.endsWith('event-administration'))result={ok:true,source:'production',partial:false,events:[]};
+ await route.fulfill({json:result})});
+ await page.goto('http://localhost:8877/event-administration.html',{waitUntil:'domcontentloaded'});
+ await page.locator('#events [data-tournament-code]').nth(119).waitFor();
+ const adminCodes=await page.locator('#events [data-tournament-code]').allTextContents();
+ assert.equal(adminCodes.length,120);assert.deepEqual(new Set(adminCodes),new Set(events.map(e=>e.joinCode)));
+ await page.locator('#events [data-delete]').first().click();
+ await page.getByRole('heading',{name:'CONFIRMA ELIMINAR',exact:true}).waitFor();
+ await page.evaluate(()=>document.getElementById('actionDialog').close());
+ await page.evaluate(()=>window.GSCPersonalEvents.organizerInvitations());
+ await page.locator('#gscPersonalDialog [data-tournament-code]').nth(119).waitFor();
+ const ids=await page.locator('#gscPersonalDialog [data-tournament-code]').allTextContents();
+ assert.deepEqual(new Set(ids),new Set(adminCodes));assert.equal(ids.length,120);
+ const red=await page.locator('#gscPersonalDialog [data-delete-owned-event]').first().evaluate(el=>getComputedStyle(el).color);assert.equal(red,'rgb(255, 85, 85)');
+ await page.locator('#gscPersonalDialog [data-delete-owned-event]').first().click();await page.getByRole('heading',{name:'CONFIRMA ELIMINAR',exact:true}).waitFor();
+ assert.deepEqual(errors,[]);
+ console.log('PASS browser mobile: same 120 global tournaments and codes in Administration and ID; both origins, unrelated device, red delete and confirmation; zero JS errors.');
+}finally{await browser.close();await new Promise(r=>server.close(r))}

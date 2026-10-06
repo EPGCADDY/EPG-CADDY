@@ -1481,3 +1481,7 @@ La lista ocultaba controles de administración porque torneos anteriores a la id
 
 
 R178 · 6 octubre 2026 · Eliminar sin respuesta: causa disabled en filas del directorio sin autoridad reconocida; escape: se probó sólo la fila autorizada. Control permanente: botón público accionable, confirmación sin petición y cancelación sin borrado; permiso revalidado en API. Pruebas R167/R171 y R152 PASS. Publicación pendiente.
+
+
+### R179 · Códigos globales ausentes
+Causa: ID usaba lista asociada a identidad mientras Administración incluía directorio global sin códigos. Escape: prueba validaba nombres y exclusión de códigos ajenos, incompatible con pedido global posterior. Control: test-r178-global-tournament-ids.mjs valida campos, dispositivos, ambos orígenes, códigos consumidos e inspección por otra identidad. Estado: PASS local y navegador móvil de 120 torneos; publicación a comprobar.
