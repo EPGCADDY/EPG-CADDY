@@ -1546,3 +1546,10 @@ Base: cf79332641e4353413cc72fad64385339446ccb1. Se reprodujo en LAB el salto des
 ## Continuidad R176 · 6 octubre 2026
 
 Base: Preview R175 `f2e9cbbcaaf9cc4aee157adc71b73c0827c58df9`. La reapertura de la PWA desde segundo plano debe mostrar Registro de jugadores y preservar la ronda activa. Cambio en `index-grupal.html`; regresión en `test-lab-registration-return-state.mjs`; release/caché R176 alineados. Recorrer Preview y confirmar persistencia de roster y scores antes de cualquier promoción; Producción permanece en R174.
+
+## Continuidad R177 · 2026-10-06
+
+Objetivo: administración e ID de torneos reúnen los eventos activos administrables desde los dos dispositivos/ambientes, entregan códigos de compartir y acción Eliminar; Administración incorpora Scores General y Categorías.
+Fuente: EPGCADDY/EPG-CADDY main R176 4775d0ae6fa75ad4dbb9fe2ee66157d62c179188.
+La cuenta se valida en ambos servidores. El ID de torneo conserva su ambiente, el tipo y su UUID. Una identidad local anónima o de un único dispositivo no puede descubrir eventos privados de otro dispositivo; se muestra estado parcial cuando la cuenta remota no valida. Los torneos públicos sin autoridad conservan sólo Scores de lectura. Los datos LAB y Producción no se migran.
+Estado: candidato; pendiente banco de pruebas completo, despliegue Preview y verificación real de navegador en ambos alias. Producción sin cambio hasta PASS integral.

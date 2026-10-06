@@ -19,11 +19,14 @@ export async function handleEventAdministration(req,res,database=getDatabase,own
  await ensurePersonalAccess(sql);await ensureEventAdministration(sql);await refreshEventLifecycles(sql);await limitPersonalAccess(sql,account,'event-admin');
  if(String(body.action).startsWith('organizer-')){if(!owner)throw accessError('OWNER_REQUIRED');await ensureTournamentOrganizers(sql);if(body.action==='organizer-issue')return res.status(200).json(await issueTournamentOrganizer(sql,account,body));if(body.action==='organizer-list')return res.status(200).json({ok:true,grants:await sql`SELECT id,recipient_account_id,recipient_name,expires_at,redeemed_at,revoked_at FROM gsc_tournament_organizers ORDER BY created_at DESC`});if(body.action==='organizer-revoke'){await sql`UPDATE gsc_tournament_organizers SET revoked_at=now() WHERE id=${body.grantId}::uuid`;return res.status(200).json({ok:true})}throw accessError('ADMIN_ACTION_INVALID',400)}
  if(body.action==='redeem')return res.status(200).json(await redeemEventAdmin(sql,account,body.code));
- if(body.action==='list'){
+ if(body.action==='list'||body.action==='list-local'){
  const items=await sql`SELECT id,name,status,expires_at,'tournament' AS event_kind FROM live_tournaments UNION ALL SELECT id,name,status,expires_at,'private' AS event_kind FROM live_private_rounds`;
- const events=[];for(const item of items){try{const authority=await eventAdminAuthority(sql,{eventId:item.id,eventKind:item.event_kind},account,owner);if(item.status!=='revoked'&&new Date(item.expires_at)>new Date())events.push({...item,authority:authority.authority})}catch(error){if(error.code!=='EVENT_ADMIN_REQUIRED')throw error}}
+ const events=[];for(const item of items){try{const authority=await eventAdminAuthority(sql,{eventId:item.id,eventKind:item.event_kind},account,owner);if(item.status!=='revoked'&&new Date(item.expires_at)>new Date())events.push({...item,authority:authority.authority,source})}catch(error){if(error.code!=='EVENT_ADMIN_REQUIRED')throw error}}
  const receipts=owner?await sql`SELECT * FROM gsc_event_deletions ORDER BY deleted_at DESC LIMIT 200`:await sql`SELECT * FROM gsc_event_deletions WHERE actor_account_id=${account.id} ORDER BY deleted_at DESC LIMIT 200`;
- return res.status(200).json({ok:true,owner,accountCode:account.id,source:tournamentDirectoryEnvironment(process.env,req.headers?.host),events,receipts});
+ if(body.action==='list-local')return res.status(200).json({ok:true,owner,accountCode:account.id,source,events,receipts});
+ let partial=false,peerEvents=[];try{const remote=await relay('/api/event-administration',{action:'list-local'});if(remote.status===200&&remote.data?.ok)peerEvents=(remote.data.events||[]).map(event=>({...event,source:source==='lab'?'production':'lab'}));else partial=true}catch{partial=true}
+ const merged=new Map();for(const item of events)merged.set(`${source}:${item.event_kind}:${item.id}`,item);for(const item of peerEvents)merged.set(`${item.source}:${item.event_kind}:${item.id}`,item);
+ return res.status(200).json({ok:true,owner,accountCode:account.id,source,events:[...merged.values()],receipts,partial});
  }
  const event={eventId:body.eventId,eventKind:eventKind(body.eventKind)};
  if(body.action==='issue')return res.status(200).json(await issueEventAdmin(sql,event,account,owner,body));

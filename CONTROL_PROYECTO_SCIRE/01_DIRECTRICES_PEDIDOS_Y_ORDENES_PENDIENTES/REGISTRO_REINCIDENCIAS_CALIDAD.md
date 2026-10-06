@@ -1451,3 +1451,10 @@ RC-R173-B1-CI7 · 5 octubre 2026: el gate del paquete nativo intentaba incluir `
 - **Punto de escape:** la cobertura existente probaba la URL inicial PWA y la preservación al volver desde Torneos, no la reactivación de una página viva con ronda activa.
 - **Control permanente:** `reopenRegistrationAfterBackground()` cubre los tres eventos de ciclo de vida sólo para la PWA tras ocultarse; persiste la Score Card y abre Registro. La prueba exige jugadores/scores intactos y niega el desvío en web, estado no reanudado o ronda vacía.
 - **Evidencia/estado:** gates de Proyecto, ROADMAP, Inventario, banco LAB, Preview y dispositivo se validan en R176 antes de promover. Producción sin cambios.
+
+## R177 · Eventos fuera de Administración y códigos faltantes
+
+- Causa raíz: la Administración combinaba los eventos de la cuenta del ambiente local con el directorio público de torneos, pero no consultaba los eventos privados/torneos de la cuenta en el ambiente par. ID DE TORNEO leía sólo la membresía del ambiente local; grupos y torneos remotos quedaban fuera. El selector de Scores abría General y no aplicaba la categoría solicitada desde el vínculo.
+- Punto de escape: las regresiones de directorio comprobaban lectura pública, pero no la lista de cuenta entre ambos ambientes, códigos, eliminación por origen ni ambos botones de Scores desde cada fila.
+- Control permanente: test-r177-cross-device-admin.mjs y su inclusión en scripts/build-manual-lab.mjs; autoridad remota revalidada y acciones enlazadas a ambiente + tipo + ID.
+- Estado: candidato R177. Aún no PASS de CI/Preview/browser; no declarar actualizado hasta esos resultados.

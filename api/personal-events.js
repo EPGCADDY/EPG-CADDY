@@ -85,7 +85,7 @@ export async function handlePersonalEvents(req,res,database=getDatabase,accountR
     }
     if(body.action==='organizer-entry-code')return res.status(200).json(await organizerEntryCode(sql,id,kind,account));
     if(body.action==='share-code'){
-      codeAccessEnabled();if(member.event_status!=='active'||!['organizer','player','scorer'].includes(member.role)||!member.players.length)throw accessError('PERSONAL_WRITER_FORBIDDEN');
+      codeAccessEnabled();if(member.event_status!=='active'||!['organizer','player','scorer'].includes(member.role))throw accessError('PERSONAL_WRITER_FORBIDDEN');
       const grant=await issueEntryCode(sql,{issuerId:account.id,role:'viewer',eventId:id,eventKind:kind});
       return res.status(200).json({ok:true,...grant,url:'/code-entry.html?visitor=1'});
     }
