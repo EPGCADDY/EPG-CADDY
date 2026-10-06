@@ -30,5 +30,5 @@ for(const source of ['lab','production']){
  const foreign=rows.find(row=>row.id==='event-0'&&row.source!==source);const card=directoryContext.administrationCard(foreign,{'event-0':'CODE123456'});assert.doesNotMatch(card,/data-delete|data-copy-tournament|data-share-tournament|CODE123456/);assert.match(card,/directoryEvent=directory_/);assert.ok(card.includes('TORNEO · '+(foreign.source==='lab'?'LABORATORIO':'PRODUCCIÓN')));assert.match(card,/CONSULTA DE SCORES/);
  const failed=directoryContext.administrationRows({ok:false},{ok:true,events:publicEvents});assert.equal(failed.length,40);assert.equal(failed.filter(row=>row.canAdminister).length,0);
 }
-assert.match(source,/LISTA GLOBAL INCOMPLETA/);assert.match(fs.readFileSync('live-hub.js','utf8'),/registeredDirectory\.find\(item=>item\.token===params\.get\('directoryEvent'\)\)/);
+assert.match(source,/LISTA GLOBAL INCOMPLETA/);assert.ok(fs.readFileSync('live-hub.js','utf8').includes("resolveDirectoryEventToken(params.get('directoryEvent'),registeredDirectory)"));
 console.log('PASS R171: same 40 global tournament identities in both Administration lists, local private group retained, homonyms and same IDs across origins distinct, foreign actions/codes excluded, failed identity preserves public list, exact Scores target.');
