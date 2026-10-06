@@ -1490,3 +1490,8 @@ Causa: ID usaba lista asociada a identidad mientras Administración incluía dir
 ## R180 · Recuperación instalada enviada a Registro
 
 Causa raíz: pwa-launch.html añadía inicio=1 y el guard directHome trataba source=pwa como Registro. Escape: test-v368 comprobaba la URL pero su texto afirmaba recuperación; faltaba cerrar/reabrir en navegador con scores. Control permanente: tests/r180-installed-card-resume.mjs ejecuta seis rutas, incluida apertura heredada y cierre/reapertura, conserva ID Friends y gross 5/4, exige Score Card visible. Corrección incremental en pwa-launch.html e index-grupal.html. PASS navegador local; comprobación física iPhone no realizada.
+
+
+## R181 · Grupos globales ausentes del Organizador libre
+
+Causa raíz: el directorio público solo consultaba live_tournaments; los grupos provenían de event-administration y quedaban filtrados por autoridad. Escape: pruebas de listados globales solo incluían torneos. Control permanente: test-r181-global-groups-directory.mjs en scripts/build-manual-lab.mjs; consulta anónima de ambos tipos y orígenes, colisión de ID, código útil de grupo, Scores público, 101 streams íntegros y exclusión de datos privados. Evidencia navegador: 120 eventos/60 grupos con API administrativa 403, compartir y Scores cross-env PASS. No se alteran permisos de eliminación ni escritura; no se afirma carga de tarjetas que aún residen únicamente en teléfonos.
