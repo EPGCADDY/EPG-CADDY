@@ -1,5 +1,13 @@
 # ROADMAP OVERALL
 
+## R176 · 6 octubre 2026 · Audio de resultado par como EVEN
+
+- El formateador de resultados hablados anuncia `EVEN` cuando el resultado relativo al par es cero; conserva “sobre par” y “bajo par” para valores distintos de cero.
+- Actualiza identidad de caché PWA y release a `20261006-R176` para que ACTUALIZAR entregue la pantalla nueva.
+- Regresión en `test-lab-player-points-audio.mjs`: ejecuta el formateador real y comprueba EVEN, +1 y −1.
+- Alcance: `index-grupal.html`, `service-worker.js`, `release.json`, prueba dirigida y ambos ROADMAPS. Producción queda intacta.
+
+
 
 ## R174 · 6 octubre 2026 · Recuperación de Scores de torneo federado en LAB
 
