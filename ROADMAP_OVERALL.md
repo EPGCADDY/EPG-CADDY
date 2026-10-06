@@ -3877,3 +3877,7 @@ El paquete nativo falló porque `scripts/build-mobile-web.mjs` todavía copiaba 
 
 R173 WhatsApp same-tab test follow-up · 6 octubre 2026
 CI de f1dcc40 confirmó todos los gates hasta la regresión nueva, que esperaba los dos caracteres `\\n` aunque el handler produce el salto de línea real. La expectativa se corrigió para verificar `Grupo FRIENDS`, salto de línea y `Código: W2RE4FG8GH`. No cambia el comportamiento de la aplicación.
+
+
+R173 WhatsApp same-tab test follow-up · 6 octubre 2026
+CI de f1dcc40 confirmó los gates de código; la regresión añadida esperaba los dos caracteres `\\n` aunque el handler produce un salto de línea real. Se corrigió la expectativa para comprobar el texto de invitación con su salto de línea real. Se vuelve a sellar el inventario de fuentes.
