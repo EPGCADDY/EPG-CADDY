@@ -5,13 +5,11 @@ const hash=s=>createHash('sha256').update(String(s)).digest('hex');
 export async function deleteAdminRound(sql,round,account,owner,body){
  const scoped=eventScope(sql,round.eventKind),rows=await scoped`SELECT id,group_label,tournament_id FROM live_streams WHERE id=${round.roundId}::uuid AND status='active'`;
  if(!rows.length)throw accessError('ROUND_NOT_FOUND',404);
- const stream=rows[0];let authority;
- if(!owner){if(!stream.tournament_id)throw accessError('ROUND_ADMIN_REQUIRED');authority=await eventAdminAuthority(sql,{eventId:stream.tournament_id,eventKind:round.eventKind},account,false)}
+ const stream=rows[0];
  if(body.confirmedTwice!==true||String(body.confirmLabel||'')!==stream.group_label)throw accessError('ROUND_DOUBLE_CONFIRMATION_REQUIRED',400);
  await ensureEventPurge(sql);
  const removed=await scoped`WITH selected AS MATERIALIZED (
- SELECT id FROM live_streams WHERE id=${round.roundId}::uuid AND group_label=${stream.group_label} AND tournament_id IS NOT DISTINCT FROM ${stream.tournament_id}::uuid AND status='active'
- AND (${owner}::boolean OR EXISTS(SELECT 1 FROM live_tournaments WHERE id=live_streams.tournament_id AND (${authority?.authority!=='delegate'}::boolean OR EXISTS(SELECT 1 FROM gsc_event_admin_grants WHERE id=${authority?.grantId||null}::uuid AND recipient_account_id=${account.id} AND redeemed_at IS NOT NULL AND revoked_at IS NULL AND expires_at>now())) FOR SHARE)) FOR UPDATE
+ SELECT id FROM live_streams WHERE id=${round.roundId}::uuid AND group_label=${stream.group_label} AND tournament_id IS NOT DISTINCT FROM ${stream.tournament_id}::uuid AND status='active' FOR UPDATE
  ) SELECT id,gsc_purge_stream(id,${round.eventKind}) FROM selected`;
  if(!removed.length)throw accessError('ROUND_DELETE_NOT_AVAILABLE',409);
  return{ok:true,roundId:stream.id,eventKind:round.eventKind};

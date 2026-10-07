@@ -12,6 +12,7 @@ const sql=async(s,...v)=>(await db.query(s.reduce((q,x,i)=>q+(i?'$'+i:'')+x,''),
 let account={id:'creator',name:'Creador'},globalOwner=false;
 const identity=async()=>account,owner=async()=>{if(!globalOwner)throw Object.assign(new Error('OWNER_REQUIRED'),{code:'OWNER_REQUIRED',status:403});return account};
 async function call(handler,body){let status=200,result;await handler({method:'POST',headers:{host:'localhost:8877',origin:'http://localhost:8877'},body},{setHeader(){},status(n){status=n;return this},json(v){result=v}},()=>sql,...(handler===handlePersonalEvents?[identity]:[owner,identity]));return{status,...result}}
+async function callWithoutSession(body){let status=200,result;const noSession=async()=>{throw Object.assign(new Error('ACCOUNT_UNAUTHORIZED'),{code:'ACCOUNT_UNAUTHORIZED',status:401})};await handleEventAdministration({method:'POST',headers:{host:'localhost:8877',origin:'http://localhost:8877'},body},{setHeader(){},status(n){status=n;return this},json(v){result=v}},()=>sql,noSession,noSession,async()=>{throw Error('remote fetch should not run')},{});return{status,...result}}
 await authorizeTestOrganizer(sql,'creator');
 const config={course:'EL PULTÉ GOLF',playedAt:'2026-10-02',mode:'general',categories:['a']};
 for(const kind of ['private','tournament']){
@@ -46,7 +47,7 @@ assert.ok(!adminUi.includes('ELIMINAR · ORGANIZADOR')&&!personalUi.includes('EL
 assert.ok(personalUi.includes('async function administrationEvents(){await claimLegacyOwnedTournament();'),'Admin list first recovers the legacy owner');
 assert.ok(scoreCard.includes('administrationEvents=await root.GSCPersonalEvents?.administrationEvents?.()||[]'),'Score Card loads recovered administration authority');
 assert.ok(scoreCard.includes("button.textContent=authority?.event_kind==='private'?'ELIMINAR GRUPO':'ELIMINAR TORNEO'"),'Score Card exposes the proper delete label');
-// R185: delete only the selected published round, after explicit double confirmation.
+// R186: two UI confirmations suffice; no owner or account session blocks central deletion.
 for(const kind of ['tournament','private']){
  const scoped=eventScope(sql,kind);
  const [parent]=await scoped`INSERT INTO live_tournaments(name,organizer_secret_hash,viewer_token_hash,join_code_hash,expires_at) VALUES('ROUND PARENT',${'round-org-'+kind},${'round-view-'+kind},${'round-join-'+kind},now()+interval '1 day') RETURNING id`;
@@ -55,24 +56,20 @@ for(const kind of ['tournament','private']){
  const independent=await createStream('Independent',null),selected=await createStream('Selected',parent.id),sibling=await createStream('Sibling',parent.id);
  const payload=(stream,label)=>({action:'delete-round',roundId:stream.id,eventKind:kind,confirmLabel:label,confirmedTwice:true});
  globalOwner=false;account={id:'outsider',name:'Other'};
- assert.equal((await call(handleEventAdministration,payload(independent,'Independent'))).code,'ROUND_ADMIN_REQUIRED');
- assert.equal((await call(handleEventAdministration,payload(selected,'Selected'))).code,'EVENT_ADMIN_REQUIRED');
- globalOwner=true;account={id:'app-owner',name:'Propietario'};
- assert.equal((await call(handleEventAdministration,{...payload(independent,'Independent'),confirmedTwice:false})).code,'ROUND_DOUBLE_CONFIRMATION_REQUIRED');
- assert.equal((await call(handleEventAdministration,payload(independent,'wrong'))).code,'ROUND_DOUBLE_CONFIRMATION_REQUIRED');
- assert.equal((await call(handleEventAdministration,payload(independent,'Independent'))).status,200);
- assert.equal((await call(handleEventAdministration,payload(independent,'Independent'))).status,404);
- globalOwner=false;account={id:'round-organizer',name:'Organizer'};
- assert.equal((await call(handleEventAdministration,payload(selected,'Selected'))).status,200);
+ assert.equal((await callWithoutSession({...payload(independent,'Independent'),confirmedTwice:false})).code,'ROUND_DOUBLE_CONFIRMATION_REQUIRED','Final API confirmation is still required without a session');
+ assert.equal((await callWithoutSession(payload(independent,'wrong'))).code,'ROUND_DOUBLE_CONFIRMATION_REQUIRED','Round label must match');
+ assert.equal((await callWithoutSession(payload(independent,'Independent'))).status,200,'No owner or account session blocks the confirmed deletion');
+ assert.equal((await callWithoutSession(payload(independent,'Independent'))).status,404,'Deleted round leaves no active trace');
+ assert.equal((await callWithoutSession(payload(selected,'Selected'))).status,200,'Bound production round can be purged from the global directory without owner login');
  assert.equal((await scoped`SELECT count(*)::int AS n FROM live_streams WHERE id=${sibling.id}::uuid`)[0].n,1,'Sibling round remains');
  assert.equal((await scoped`SELECT count(*)::int AS n FROM live_tournaments WHERE id=${parent.id}::uuid`)[0].n,1,'Parent event remains');
 }
-globalOwner=true;account={id:'app-owner',name:'Propietario'};
+globalOwner=false;account={id:'outsider',name:'Other'};
 let relayed;
 const relayId='11111111-1111-4111-8111-111111111111';let relayStatus,relayResult;
-await handleEventAdministration({method:'POST',headers:{host:'localhost:8877',origin:'http://localhost:8877',cookie:'owner-session'},body:{action:'remote-delete-round',source:'lab',roundId:relayId,eventKind:'private',confirmLabel:'GROUP',confirmedTwice:true}},{setHeader(){},status(n){relayStatus=n;return this},json(v){relayResult=v}},()=>sql,owner,identity,async(url,options)=>{relayed={url,options};return Response.json({ok:true,roundId:relayId})},{});
-assert.equal(relayStatus,200);assert.equal(relayResult.ok,true);assert.equal(relayed.url,'https://golf-sc-gt-lab.vercel.app/api/event-administration');assert.equal(relayed.options.headers.Cookie,'owner-session');assert.deepEqual(JSON.parse(relayed.options.body),{action:'delete-round',roundId:relayId,eventKind:'private',confirmLabel:'GROUP',confirmedTwice:true});
-console.log('PASS R185 round deletion: owner independent; organizer selected group; outsiders denied; double confirmation required; sibling/event retained; replay denied; exact authenticated peer target.');
+await handleEventAdministration({method:'POST',headers:{host:'localhost:8877',origin:'http://localhost:8877'},body:{action:'remote-delete-round',source:'lab',roundId:relayId,eventKind:'private',confirmLabel:'GROUP',confirmedTwice:true}},{setHeader(){},status(n){relayStatus=n;return this},json(v){relayResult=v}},()=>sql,owner,identity,async(url,options)=>{relayed={url,options};return Response.json({ok:true,roundId:relayId})},{});
+assert.equal(relayStatus,200);assert.equal(relayResult.ok,true);assert.equal(relayed.url,'https://golf-sc-gt-lab.vercel.app/api/event-administration');assert.equal(relayed.options.headers.Cookie,undefined,'Cross-environment deletion no longer needs an owner cookie');assert.deepEqual(JSON.parse(relayed.options.body),{action:'delete-round',roundId:relayId,eventKind:'private',confirmLabel:'GROUP',confirmedTwice:true});
+console.log('PASS R186 round deletion: no owner/account session; double confirmation gates purge; independent and bound streams removed; replay denied; parent/sibling retained; peer relay without cookie.');
 await db.close();console.log('PASS event administration: owner full access; creator own event; recipient-bound single redemption; other player denied; delegates cannot delegate; name required; physical deletion without archive; exact 24h expiry; owner retained.');
 
 // R152: one confirmation, no typed name/reason, no deletion before its click.

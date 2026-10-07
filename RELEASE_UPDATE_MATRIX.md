@@ -72,3 +72,8 @@ Esta regla es permanente. Ninguna versión se considera actualizada hasta comple
 El número de versión visible no demuestra sincronización. El cierre requiere ambos proyectos correctos en READY, mismo commit y árbol, release.json idéntico y SHA-256 idéntico de index-grupal.html, app-update.js, service-worker.js y event-administration-ui.js. Las diferencias explícitas de entorno (origen, datos y acciones exclusivas de LAB) permanecen previstas en el contrato. Cualquier otra diferencia impide declarar actualización completada. Nunca reutilizar el release anterior para un cambio funcional.
 
 La regresión obligatoria verifica controlador aprobado frente a cachés viejas/descargadas, retorno a Administración después de actualizar y ausencia de ACTUALIZAR al volver desde Score Card cuando el release instalado coincide. Ejecutar scripts/deployment-parity-gate.mjs después de que ambos despliegues alcancen READY y test-update-delivery-control.mjs en cada build.
+
+
+## R186 · Eliminación de ronda sin sesión de propietario
+
+Para eliminar una ronda desde Administración basta con los dos pasos visibles: CONTINUAR y ELIMINAR RONDA. La API de borrado de rondas no requiere iniciar sesión de propietario ni cuenta; valida ID, origen, tipo, nombre exacto y que el cliente haya pasado la confirmación final. Al borrar llama `gsc_purge_stream`, que purga la ronda elegida y sus datos dependientes de todos los índices/ramas centrales. La ronda padre y las rondas hermanas se conservan. Comprobar los dos orígenes sin cookie, rechazo de solicitud antes de la confirmación final, replay 404, padre/hermana intactos y mismo commit/hashes servido LAB-Producción antes del cierre.

@@ -15,7 +15,9 @@ export async function handleEventAdministration(req,res,database=getDatabase,own
  if(req.method!=='POST')throw accessError('METHOD_NOT_ALLOWED',405);
  if(!isAllowedAppOrigin(req))throw accessError('ORIGIN_NOT_ALLOWED');
  const sql=database(),body=await readJson(req,4000);let account,owner=false;
- try{account=await ownerResolver(req);owner=true}catch(error){if(!['OWNER_REQUIRED','ACCOUNT_UNAUTHORIZED'].includes(error.code))throw error;account=await resolveEventIdentity(req,res,sql,'list',identityResolver)}
+ const isRoundDeletion=['delete-round','remote-delete-round'].includes(body.action);
+ if(isRoundDeletion){account={id:'round-delete:'+String(body.roundId||'unknown'),name:'Confirmación final'};owner=true}
+ else try{account=await ownerResolver(req);owner=true}catch(error){if(!['OWNER_REQUIRED','ACCOUNT_UNAUTHORIZED'].includes(error.code))throw error;account=await resolveEventIdentity(req,res,sql,'list',identityResolver)}
  await ensurePersonalAccess(sql);await ensureEventAdministration(sql);await refreshEventLifecycles(sql);await limitPersonalAccess(sql,account,'event-admin');
  const requestHost=req.headers?.['x-forwarded-host']||req.headers?.host||'',source=tournamentDirectoryEnvironment(env,requestHost),peerUrl=tournamentDirectoryPeerUrl(env,requestHost);
  const relay=async(path,payload)=>{const base=peerUrl.replace(/\/api\/tournament-score-directory\/?$/,'');const response=await fetcher(base+path,{method:'POST',headers:{'content-type':'application/json',...(req.headers?.cookie?{Cookie:req.headers.cookie}:{})},body:JSON.stringify(payload),signal:AbortSignal.timeout(8000)});let data;try{data=await response.json()}catch{data={ok:false,code:'PEER_RESPONSE_INVALID'}}return{status:response.status,data}};

@@ -1,7 +1,7 @@
 {
-  "release": "20261006-R185",
-  "label": "R185",
-  "published": "2026-10-06",
-  "version": "R185-ROUND-DELETE-UPDATE-RETURN",
-  "generatedAt": "2026-10-07T02:01:41.619Z"
+  "release": "20261007-R186",
+  "label": "R186",
+  "published": "2026-10-07",
+  "version": "R186-DOUBLE-CONFIRM-ROUND-PURGE",
+  "generatedAt": "2026-10-07T02:14:51.717Z"
 }

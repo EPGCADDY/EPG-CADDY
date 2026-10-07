@@ -4111,3 +4111,5 @@ Base vigente 4a493a7; incorpora la corrección acreditada 27c8ae4. Las publicaci
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
 
 R185 paridad mandatoria: RELEASE_UPDATE_MATRIX.md; scripts/release-matrix-gate.mjs; scripts/deployment-parity-gate.mjs; index-grupal.html; release.json; service-worker.js. Identidad R185 única, mismo SHA y contenido servido verificado antes del cierre.
+
+R186: Administración elimina rondas tras dos confirmaciones sin pedir sesión de propietario ni cuenta; purga raíz de datos dependientes; release R186 y deploy paritario LAB/Producción.
