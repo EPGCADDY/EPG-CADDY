@@ -4132,3 +4132,5 @@ El botón público de Administración estaba disabled cuando no se reconocía au
 - `test-lab-edit-round-mode.mjs`: agrega regresión para ambas solicitudes. Release/caché sincronizados en `release.json`, `index-grupal.html` y `service-worker.js`.
 
 R183 gate update (2026-10-07): se regeneraron los tres inventarios V311 después de los cambios de R183; el lock registra sus tamaños y SHA-256.
+
+R183 verification update (2026-10-07): el test de actualización de versión ahora espera R183 y conserva la protección contra versiones remotas antiguas.
