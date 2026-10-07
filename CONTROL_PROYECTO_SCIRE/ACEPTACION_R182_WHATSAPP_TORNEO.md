@@ -17,4 +17,15 @@ Los enlaces de grupos conservan el acceso general actual. Los torneos compartido
 3. C贸digo inv谩lido o torneo inactivo no prepara el registro ni expone configuraci贸n privada.
 4. C贸digo v谩lido prepara autom谩ticamente el Registro con nombre del torneo, campo y modalidad del evento; no muestra una pantalla intermedia en blanco ni exige copiar el c贸digo.
 5. El grupo privado conserva su enlace y flujo vigentes.
-6. No hay autoinscripci贸n de roster, publicaci贸n 痘玘
+6. No hay autoinscripci贸n de roster, publicaci贸n ni escritura de scores. El usuario completa el Registro y confirma con el flujo oficial.
+
+## Riesgos y rollback
+
+- ID, c贸digo o nombre incorrectos: pruebas unitarias verifican la URL y el enlace con c贸digo inv谩lido queda denegado por la API.
+- Origen incorrecto entre ambientes: prueba cruzada LAB/Producci贸n.
+- Ronda o scores ajenos: se conserva GSCPrepareEventInvitation y el escritor oficial; no se modifica motor, roster ni API.
+- Rollback: revertir R182 a R181 (6cbfda4). No cambia registros de torneos existentes.
+
+## Evidencia
+
+test-r159-whatsapp-two-messages.mjs, test-r156-tournament-invitation.mjs y test-r24-event-creation-feedback.mjs pasan localmente en el candidato. node --check whatsapp-invitations.js y node --check personal-events.js pasan. WhatsApp recibido, iPhone f铆sico y Preview real a煤n no verificados.
