@@ -1,4 +1,6 @@
 ## R190 · Cambio de campo desde Registro y código de ingreso del torneo · 7 de octubre de 2026
+- Publicación offline R190: `index-grupal.html` y `service-worker.js` coinciden con `release.json` (`20261007-R190`).
+
 - Regresión R190: el test incluye la declaración `async` completa de la función que verifica, evitando compilar un fragmento inválido.
 
 - Control de versión R190: `index-grupal.html` y `release.json` publican `20261007-R190`.
