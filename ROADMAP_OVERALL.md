@@ -4133,3 +4133,4 @@ Inventario sellado contra el árbol Git R188; el registro se actualiza de forma 
 Se ajusta `test-r181-global-groups-directory.mjs`: conserva la prueba del directorio y lectura de grupos para las funciones de grupo, y verifica que Administración solo reciba torneos.
 Se actualiza `test-r167-admin-share-feedback.mjs`: conserva los 40 torneos globales, excluye el grupo privado de la tarjeta local y valida sus permisos restantes.
 Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cubierto; la tarjeta de Administración se valida con un torneo y los grupos se excluyen de la lista.
+R189 · El selector de campo permanece habilitado durante la edición de ronda. Al confirmar ACTUALIZAR RONDA se guarda el campo seleccionado y se conservan/recalculan los scores en el campo nuevo. Gate: `test-r189-change-course-anytime.mjs`.

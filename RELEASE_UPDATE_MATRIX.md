@@ -72,3 +72,8 @@ Esta regla es permanente. Ninguna versión se considera actualizada hasta comple
 El número de versión visible no demuestra sincronización. El cierre requiere ambos proyectos correctos en READY, mismo commit y árbol, release.json idéntico y SHA-256 idéntico de index-grupal.html, app-update.js, service-worker.js y event-administration-ui.js. Las diferencias explícitas de entorno (origen, datos y acciones exclusivas de LAB) permanecen previstas en el contrato. Cualquier otra diferencia impide declarar actualización completada. Nunca reutilizar el release anterior para un cambio funcional.
 
 La regresión obligatoria verifica controlador aprobado frente a cachés viejas/descargadas, retorno a Administración después de actualizar y ausencia de ACTUALIZAR al volver desde Score Card cuando el release instalado coincide. Ejecutar scripts/deployment-parity-gate.mjs después de que ambos despliegues alcancen READY y test-update-delivery-control.mjs en cada build.
+
+
+## R189 · Cambio de campo en una ronda existente
+
+Durante la edición de datos de la ronda los radios de campo permanecen habilitados. Al confirmar ACTUALIZAR RONDA, `startConfirmedRound()` activa el campo seleccionado, guarda su identificador y nombre en la ronda y recalcula los resultados preservando los scores ingresados. Gate obligatorio: `test-r189-change-course-anytime.mjs`.
