@@ -1,10 +1,10 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry-v369-cross-env-tournament-scores-r178-admin-ownership-recovery-even-result-audio-r181-global-groups-directory";
+const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry-v369-cross-env-tournament-scores-r178-admin-ownership-recovery-even-result-audio-r182-global-round-outbox";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
 const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-4-20-registration-return`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-4-20-registration-return`;
-const RELEASE_FALLBACK="20261006-R181";
+const RELEASE_FALLBACK="20261006-R182";
 let RELEASE=RELEASE_FALLBACK;
 const UPDATE_DIAGNOSTICS={stage:"boot",resources:{}};
 async function fetchPublishedRelease(){
@@ -20,6 +20,9 @@ async function fetchPublishedRelease(){
 }
 const OFFLINE_ENTRY="/index-grupal.html";
 const SHELL=[
+  "/round-server-sync.js",
+  "/global-rounds.html",
+  "/global-rounds.js",
   "/score-entry-contract.js",
   OFFLINE_ENTRY,
   "/manifest.webmanifest",
@@ -205,3 +208,4 @@ self.addEventListener("fetch",event=>{
   }
   if(SHELL.includes(url.pathname))event.respondWith((async()=>{await ensureApprovedShell();const response=await caches.match(url.pathname,{cacheName:APPROVED_CACHE_NAME})||await networkFirst(request);if(url.pathname!=="/shortcuts-ui.js"||!response.ok)return response;const headers=new Headers(response.headers);headers.delete('content-length');headers.set('content-type','application/javascript');return new Response((await response.text())+'\nimport("/app-update.js").catch(()=>{});',{status:response.status,headers})})());
 });
+

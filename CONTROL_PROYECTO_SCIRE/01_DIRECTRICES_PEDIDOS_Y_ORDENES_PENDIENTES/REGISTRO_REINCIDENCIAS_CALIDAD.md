@@ -1495,3 +1495,8 @@ Causa raíz: pwa-launch.html añadía inicio=1 y el guard directHome trataba sou
 ## R181 · Grupos globales ausentes del Organizador libre
 
 Causa raíz: el directorio público solo consultaba live_tournaments; los grupos provenían de event-administration y quedaban filtrados por autoridad. Escape: pruebas de listados globales solo incluían torneos. Control permanente: test-r181-global-groups-directory.mjs en scripts/build-manual-lab.mjs; consulta anónima de ambos tipos y orígenes, colisión de ID, código útil de grupo, Scores público, 101 streams íntegros y exclusión de datos privados. Evidencia navegador: 120 eventos/60 grupos con API administrativa 403, compartir y Scores cross-env PASS. No se alteran permisos de eliminación ni escritura; no se afirma carga de tarjetas que aún residen únicamente en teléfonos.
+
+
+
+## R182 · Directorio no implica subida; regresión por rama divergente
+Causa acreditada: listado global R181 solamente incluye datos ya enviados; guardado canónico privado exige cuenta. Dos alias volvieron a R178 por despliegue 7c067038 desde rama WhatsApp. Corrección: transporte de Scores por dispositivo con cola IndexedDB y ACK, federación paginada, consolidación incremental de invitaciones, meta de release administrativa y rechazo de actualización inferior. Pruebas R182 DB/navegador/versiones cubren escritores, cierres, correcciones, desconexión, reapertura y otro dispositivo. Se corrigió además solapamiento de × del detalle detectado por navegador, sin click forzado. No se declara prueba física de iPhone ni garantía para datos que nunca llegaron al servidor.
