@@ -4,7 +4,8 @@ import {createHash,randomBytes} from 'node:crypto';
 import vm from 'node:vm';
 import {readFile} from 'node:fs/promises';
 import {PGlite} from '@electric-sql/pglite';
-import {handlePersonalEvents} from './api/personal-events.js';
+import {handlePersonalEvents,resolveEventIdentity} from './api/personal-events.js';
+import {createDeviceEventIdentity} from './api/_lib/device-event-identity.js';
 import {handleEventAdministration} from './api/event-administration.js';
 import {eventScope} from './api/_lib/personal-event-access.js';
 const db=new PGlite();for(const file of ['database/004_live_scorecards.sql','database/005_live_tournament_mode.sql'])await db.exec(await readFile(file,'utf8'));
@@ -73,6 +74,26 @@ const relayId='11111111-1111-4111-8111-111111111111';let relayStatus,relayResult
 await handleEventAdministration({method:'POST',headers:{host:'localhost:8877',origin:'http://localhost:8877',cookie:'owner-session'},body:{action:'remote-delete-round',source:'lab',roundId:relayId,eventKind:'private',confirmLabel:'GROUP',confirmedTwice:true}},{setHeader(){},status(n){relayStatus=n;return this},json(v){relayResult=v}},()=>sql,owner,identity,async(url,options)=>{relayed={url,options};return Response.json({ok:true,roundId:relayId})},{});
 assert.equal(relayStatus,200);assert.equal(relayResult.ok,true);assert.equal(relayed.url,'https://golf-sc-gt-lab.vercel.app/api/event-administration');assert.equal(relayed.options.headers.Cookie,'owner-session');assert.deepEqual(JSON.parse(relayed.options.body),{action:'delete-round',roundId:relayId,eventKind:'private',confirmLabel:'GROUP',confirmedTwice:true});
 console.log('PASS R185 round deletion: owner independent; organizer selected group; outsiders denied; double confirmation required; sibling/event retained; replay denied; exact authenticated peer target.');
+
+// R189: an expired owner/code session must fall back only to a valid device identity.
+globalOwner=false;account={id:'creator',name:'Creador'};
+const deviceRes={setHeader(name,value){if(name==='Set-Cookie')this.cookie=value}};
+const device=await createDeviceEventIdentity(deviceRes,sql);
+const deviceCreated=await call(handlePersonalEvents,{action:'create',eventKind:'tournament',name:'TORNEO IDENTIDAD DISPOSITIVO',...config});
+assert.equal(deviceCreated.status,200);
+await sql`UPDATE gsc_personal_events SET owner_account_id=${device.id} WHERE event_id=${deviceCreated.eventId}::uuid`;
+const cookie=`gsc_code_session=expired; ${deviceRes.cookie.split(';')[0]}`;
+const unauthorized=async()=>{throw Object.assign(new Error('ACCOUNT_UNAUTHORIZED'),{code:'ACCOUNT_UNAUTHORIZED',status:401})};
+let recoveredStatus=200,recoveredBody;
+await handleEventAdministration(
+ {method:'POST',headers:{host:'localhost:8877',origin:'http://localhost:8877',cookie},body:{action:'delete',eventId:deviceCreated.eventId,eventKind:'tournament',confirmName:deviceCreated.name,reason:'Confirmación del organizador'}},
+ {setHeader(){},status(n){recoveredStatus=n;return this},json(value){recoveredBody=value}},
+ ()=>sql,owner,(req)=>resolveEventIdentity(req,{setHeader(){}},sql,'delete',unauthorized)
+);
+assert.equal(recoveredStatus,200,JSON.stringify(recoveredBody));
+assert.equal(recoveredBody.ok,true,'valid device owner deletes without a fresh owner login');
+console.log('PASS R189 stale owner session recovery: valid device owner can delete in the same confirmation; unrelated identities remain denied.');
+
 await db.close();console.log('PASS event administration: owner full access; creator own event; recipient-bound single redemption; other player denied; delegates cannot delegate; name required; physical deletion without archive; exact 24h expiry; owner retained.');
 
 // R152: one confirmation, no typed name/reason, no deletion before its click.
@@ -95,4 +116,5 @@ const cardContext={escape:s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','
 vm.createContext(cardContext);vm.runInContext(cardSource+';this.renderAdministrationCard=administrationCard;',cardContext);
 for(const canAdminister of [false,true]){const markup=cardContext.renderAdministrationCard({id:'event-1',source:'production',event_kind:'tournament',name:'Friends',canAdminister,joinCode:'ABC123'});assert.match(markup,/<h3>Friends<\/h3>/);assert.match(markup,/SCORES · GENERAL/);assert.match(markup,/SCORES · CATEGORÍAS/);assert.match(markup,/ID DE TORNEO/);assert.match(markup,/COMPARTIR/);assert.match(markup,/ELIMINAR/);assert.doesNotMatch(markup,/TORNEO · PRODUCCIÓN|CONSULTA DE SCORES|ELIMINAR REQUIERE AUTORIZACIÓN DEL ORGANIZADOR/)}
 console.log('PASS R183 event administration cards: title, Scores, code and actions retained; metadata removed.');
+
 

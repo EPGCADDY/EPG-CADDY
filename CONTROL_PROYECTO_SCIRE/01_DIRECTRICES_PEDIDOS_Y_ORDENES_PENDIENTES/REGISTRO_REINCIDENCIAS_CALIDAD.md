@@ -1513,3 +1513,13 @@ Causa: R182/R183 partieron de 6cbfda4 y no de la purga publicada 27c8ae4; retira
 ## R187 · SCORES TORNEO abría el directorio global desde el menú · 6 octubre 2026
 
 Causa: el despacho del atajo `tournaments` enviaba a `live-hub.html?directory=1`, confundiendo la tabla de jugadores del torneo ligado a la Score Card con el catálogo global. Escape: las pruebas de recuperación cubrían el botón de la tarjeta, pero no el dispatcher del menú ni el caso sin evento asignado. Control permanente: `test-lab-shortcuts-navigation.mjs` verifica que el menú invoque la Score Card activa, que el retorno desde Hub vuelva a ella y que `shortcut=scores` no renderice el directorio cuando no hay asociación. Administración conserva pruebas separadas de su directorio global. Estado: corrección R187 integrada con el commit canónico 46555 sobre la entrega R185; build completo y gates documentales, inventario y release PASS. Preview y revisión pública Playwright de cuatro transiciones pendientes; Producción sin cambios.
+
+
+## RC-112 · confirmación de eliminación rechazaba al organizador · 7 octubre 2026
+
+- Defecto: al confirmar eliminar un torneo, el diálogo mostraba `INICIA TU SESIÓN DE PROPIETARIO PARA TENER CONTROL PLENO` y no eliminaba.
+- Causa raíz: `resolveEventIdentity()` daba prioridad irrevocable a una cookie `gsc_code_session` caducada y no probaba la identidad de dispositivo válida que también llegaba en la petición.
+- Punto de escape: las pruebas cubrían permisos, confirmación única y error visible, pero no la combinación de cookie de propietario caducada con identidad válida del creador.
+- Control permanente: si la sesión de código responde `ACCOUNT_UNAUTHORIZED`, se valida en la base la cookie de dispositivo y se usa sólo si es válida; después `eventAdminAuthority()` vuelve a exigir creador/organizador. Terceros siguen denegados.
+- Evidencia: `test-event-administration.mjs` PASS en candidato aislado con el flujo API completo; validación integral y LAB pendientes.
+- Estado: CORREGIDO EN CANDIDATO R188-B1; no publicado.

@@ -586,3 +586,8 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 
 ## Regla global permanente — acceso libre desde la raíz
 Las rutas de entrada de la aplicación y PWA abren sin credenciales de propietario. La autenticación se conserva dentro de operaciones privadas. Se verifica mediante G0-12 y `test-global-public-entry-policy.mjs`.
+
+
+## R188-B1 · desbloquear eliminación del torneo propio
+- Al confirmar borrar, recuperar identidad de dispositivo validada cuando la cookie de sesión ya venció; mantener permiso por torneo y rechazo a terceros.
+- `test-event-administration.mjs`: PASS dirigido. Gates integrales, LAB y publicación pendientes.

@@ -2772,3 +2772,12 @@ Base vigente 4a493a7; incorpora la corrección acreditada 27c8ae4. Las publicaci
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
 - `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+
+
+## R188-B1 · identidad válida al eliminar torneo
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `api/personal-events.js` | Recupera identidad de dispositivo si la sesión de código venció. | Requiere cookie de dispositivo validada y permiso del evento. |
+| `test-event-administration.mjs` | Prueba confirmación API y borrado con identidad válida y sesión vencida. | Mantiene denegación a terceros y delegados. |
+| `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `INVENTARIOS_V311.lock.json` | Historial, control de recurrencia y sello del candidato. | Un solo FAIL bloquea publicación. |

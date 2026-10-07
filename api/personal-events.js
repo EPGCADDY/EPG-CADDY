@@ -16,7 +16,13 @@ const modes=['general','match_play','four_ball','stableford','universales'];
 const categories=['championship','a','b','c','d','female','senior','super_senior'];
 export async function resolveEventIdentity(req,res,sql,action,resolver=requireAccountSession){
   const cookie=String(req.headers?.cookie||'');
-  if(/(?:^|;\s*)gsc_code_session=/.test(cookie))return resolver(req);
+  if(/(?:^|;\\s*)gsc_code_session=/.test(cookie)){
+    try{return await resolver(req)}catch(error){
+      if(error.code!=='ACCOUNT_UNAUTHORIZED')throw error;
+      const device=await readDeviceEventIdentity(req,sql);if(device)return device;
+      throw error;
+    }
+  }
   const device=await readDeviceEventIdentity(req,sql);if(device)return device;
   if(resolver===requireAccountSession&&action==='identity'&&!/session[_-]token|neon.*session|auth.*session/i.test(cookie))return createDeviceEventIdentity(res,sql);
   try{return await resolver(req)}catch(error){
