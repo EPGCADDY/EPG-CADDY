@@ -2,6 +2,7 @@ import { next } from "@vercel/functions";
 
 const PUBLIC_PATHS=new Set([
   "/live-hub.html","/live-hub.js","/live-control.js","/live-share.js","/scores-ui.js","/scores-ui.css","/private-rounds.js","/gsc-design-system.css","/shortcuts-ui.js","/personal-events.js","/auth-gate.js",
+  "/global-rounds.html","/global-rounds.js","/round-server-sync.js",
   "/event-administration.html","/event-administration-ui.js","/access.html","/code-entry.html","/code-entry.js","/live.html","/live-view.js","/match-play.js","/favicon.ico",
   "/service-worker.js","/app-update.js","/release.json","/manifest.webmanifest","/manual.webmanifest","/audio-touch-test.html"
 ]);
@@ -23,6 +24,8 @@ export default async function accessGate(request){
     }catch{}
   }
   if(path==="/api/traffic"&&request.method==="GET"&&url.searchParams.get("action")==="status")return next();
+  // Scores-only device transport authorizes writes inside its handler; reads need no account.
+  if(path==="/api/round-directory"&&["POST","OPTIONS"].includes(request.method))return next();
   // R163 lists and reads active public tournament scores; the handler is read-only and rejects other methods/actions.
   if(path==="/api/tournament-score-directory"&&request.method==="POST")return next();
   if(PUBLIC_PATHS.has(path)||SCORECARD_ASSETS.has(path)||path.startsWith("/invite/")||path.startsWith("/assets/official-logos/"))return next();
@@ -68,3 +71,4 @@ export default async function accessGate(request){
 }
 
 export const config={runtime:"nodejs",matcher:["/((?!access\.html$|api/app-access$|favicon\.ico$).*)"]};
+

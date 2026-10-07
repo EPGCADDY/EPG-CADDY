@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import accessGate from './middleware.js';
 const prior=globalThis.fetch;let calls=0;globalThis.fetch=async()=>{calls++;return new Response(JSON.stringify({ok:false,code:'ACCESS_REQUIRED'}),{status:401})};
 try{
- for(const path of ['/index-grupal.html','/live-hub.html','/live-hub.js','/live-share.js','/scores-ui.js','/scores-ui.css','/gsc-design-system.css']){
+ for(const path of ['/global-rounds.html','/global-rounds.js','/round-server-sync.js','/index-grupal.html','/live-hub.html','/live-hub.js','/live-share.js','/scores-ui.js','/scores-ui.css','/gsc-design-system.css']){
   const result=await accessGate(new Request('https://lab.example'+path));assert.equal(result.headers.get('x-middleware-next'),'1',path+' opens without an app login');
  }
  assert.equal(calls,0,'public app entry must not call app-access status');
@@ -19,8 +19,11 @@ try{
  assert.match(restored.headers.get('location'),/live-hub\.html\?personalEvent=saved-event/,'Implicit personal return keeps its authorized event');
  globalThis.fetch=async()=>new Response(JSON.stringify({ok:false,code:'ACCESS_REQUIRED'}),{status:401});
  const api=await accessGate(new Request('https://lab.example/api/live-share',{method:'POST'}));assert.equal(api.headers.get('x-middleware-next'),'1');
+ for(const method of ['POST','OPTIONS']){const roundDirectory=await accessGate(new Request('https://lab.example/api/round-directory',{method}));assert.equal(roundDirectory.headers.get('x-middleware-next'),'1','R182 anonymous device transport passes middleware for '+method)}
+ const roundGet=await accessGate(new Request('https://lab.example/api/round-directory'));assert.equal(roundGet.status,401,'unsupported round-directory GET stays protected');
  const directory=await accessGate(new Request('https://lab.example/api/tournament-score-directory',{method:'POST'}));assert.equal(directory.headers.get('x-middleware-next'),'1','public Scores directory POST reaches its own read-only handler without app login');
  const directoryGet=await accessGate(new Request('https://lab.example/api/tournament-score-directory',{method:'GET'}));assert.equal(directoryGet.status,401,'only the directory POST passes the gate');
  const sync=await accessGate(new Request('https://lab.example/api/sync',{method:'POST'}));assert.equal(sync.status,401,'protected sync API remains behind its own account/event checks');
  console.log('PASS middleware: Registration and Scores open without owner sign-in; private APIs remain protected');
 }finally{globalThis.fetch=prior}
+
