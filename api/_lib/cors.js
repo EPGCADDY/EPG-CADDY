@@ -1,4 +1,5 @@
 const NATIVE_ORIGINS=new Set(["capacitor://localhost","ionic://localhost","http://localhost","https://localhost"]);
+const APP_ORIGINS=new Set(["https://epg-caddy.vercel.app","https://golf-sc-gt-lab.vercel.app"]);
 
 export function requestOrigin(req){return String(req?.headers?.origin||"").replace(/\/$/,"")}
 
@@ -10,10 +11,10 @@ export function isSameAppOrigin(req){
   catch{return false}
 }
 
-export function isAllowedAppOrigin(req){return isSameAppOrigin(req)||isNativeAppOrigin(req)}
+export function isAllowedAppOrigin(req){return isSameAppOrigin(req)||isNativeAppOrigin(req)||APP_ORIGINS.has(requestOrigin(req))}
 
 export function applyAppCors(req,res){
-  const origin=requestOrigin(req);if(!NATIVE_ORIGINS.has(origin))return false;
+  const origin=requestOrigin(req);if(!NATIVE_ORIGINS.has(origin)&&!APP_ORIGINS.has(origin))return false;
   res.setHeader("Access-Control-Allow-Origin",origin);
   res.setHeader("Access-Control-Allow-Credentials","true");
   res.setHeader("Access-Control-Allow-Methods","GET, POST, OPTIONS");

@@ -1,23 +1,23 @@
 {
-  "version": "R190-REGISTRATION-FIELD-TOURNAMENT-CODE-ENTRY",
-  "generatedAt": "2026-10-07T15:48:00Z",
-  "sourceFileCount": 920,
-  "sourceDigest": "65bfe598991de610fd5caa2e49f01db305502564563a49de4aeb7a6b7aaba175",
+  "version": "R191-LAB-RELEASE",
+  "generatedAt": "2026-10-07T16:52:34Z",
+  "sourceFileCount": 921,
+  "sourceDigest": "a95114963e1e82b2e8c6691ab84af4b35843557f7e497e0570968320657f15d0",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
-      "size": 528519,
-      "sha256": "7b11278a70487227b8aa77f35e3a2b12fa642b080f6151a375c7b1316b46a570"
+      "size": 532559,
+      "sha256": "5aad3689f3f68fa4d8ea1a11735bb315ff041aa0932e0d04fba81e4ffd262564"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_A_DETALLE_V311.pdf",
-      "size": 545478,
-      "sha256": "2dab4d826566f8704bbd44b077ee6e54f2908778e8591ce527ad32befc5b908e"
+      "size": 548971,
+      "sha256": "2f2ff804e46099696c50d0c7abc6217e530ebd213e1a75b2e42bf0d2d7246d9e"
     },
     {
       "name": "Inventario_Golf_Score_Card_GT_POR_IMAGENES_Y_RUBROS_V311.pdf",
-      "size": 19259159,
-      "sha256": "e5dbe5b6af06e2596e19e576935d6701d5976ba547a22c1d505d4704fafffe1a"
+      "size": 19259154,
+      "sha256": "b062cb41b340364005782afbdf4f61666c794fb5afcc69bf777bf50f3ebcae37"
     }
   ]
 }

@@ -1,3 +1,8 @@
+## R191 · Código de torneo entre ambientes · 7 de octubre de 2026
+
+- Estado: corrección implementada en el candidato R191; inspección/registro pueden validar códigos activos de LAB y Producción y conservar el ambiente origen durante la sesión.
+- Regresión automatizada: `test-r191-cross-environment-tournament-entry.mjs`. Publicación sujeta a matriz LAB → READY → revisión → Producción.
+
 ## R190 · Registro de campo y código de entrada de torneo · 7 de octubre de 2026
 
 - Estado: correcciones integradas en la entrega R190.
