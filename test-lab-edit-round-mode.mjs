@@ -17,3 +17,9 @@ for(const activeStableford of [false,true])for(const emergencyEntry of [false,tr
   assert.equal(route(()=>activeStableford,emergencyEntry,()=>"stableford",()=>"general"),activeStableford?"stableford":"general");
 }
 console.log("PASS new round follows active mode, independent of old Stableford entry URL");
+
+const personalEvents=fs.readFileSync("personal-events.js","utf8");
+assert(personalEvents.includes("successText:'CÓDIGO COPIADO'"),"Copiar código debe confirmar CÓDIGO COPIADO");
+assert(app.includes('id="backSetup" aria-label="Volver para cambiar modalidad o jugadores">CAMBIAR MODALIDAD</button>'),"El resumen debe ofrecer un acceso explícito para cambiar modalidad");
+assert(app.includes('id="confirmMode"')&&app.includes('$("confirmMode").textContent=confirmModeLabel'),"El resumen debe mostrar la modalidad actualmente seleccionada");
+assert(app.includes("PUEDES CAMBIAR LA MODALIDAD Y LOS JUGADORES · EL REGISTRO SE CONSERVA"),"Al regresar, el registro debe conservar jugadores y permitir cambio de modalidad");

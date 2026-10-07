@@ -4024,3 +4024,9 @@ El botón público de Administración estaba disabled cuando no se reconocía au
 - Archivos: `api/round-directory.js`, `round-server-sync.js`, `global-rounds.html`, `global-rounds.js`, `index-grupal.html`, `shortcuts-ui.js`, `event-administration.html`, `event-administration-ui.js`, `app-update.js`, `service-worker.js`, `release.json`, `personal-events.js`, `private-rounds.js`, `whatsapp-invitations.js`, `test-r182-global-round-directory.mjs`, `test-r182-update-version.mjs`, `tests/r182-round-sync-browser.mjs`, `test-r156-tournament-invitation.mjs`, `test-r167-admin-share-feedback.mjs`, `test-lab-private-round-share-flow.mjs`, `test-lab-private-rounds.mjs`, `scripts/build-manual-lab.mjs`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
 
 - R182 comprobación real: candidato inicial fue rechazado por middleware con 401 ACCESS_REQUIRED antes de llegar al transporte. Se agregó exclusivamente la ruta /api/round-directory POST/OPTIONS y sus tres recursos públicos; test-live-share-middleware.mjs prueba acceso anónimo y mantiene /api/sync protegido. LAB volvió al último R181 mientras se recompilaba. Archivos adicionales: `middleware.js`, `test-live-share-middleware.mjs`.
+
+
+## R183 · Confirmación de código y cambio visible de modalidad · 6 octubre 2026
+- `personal-events.js`: copiar anuncia CÓDIGO COPIADO; si falla, conserva el mensaje de error.
+- `index-grupal.html`: el resumen muestra la modalidad elegida y ofrece CAMBIAR MODALIDAD, preservando jugadores al volver.
+- `test-lab-edit-round-mode.mjs`: agrega regresión para ambas solicitudes. Release/caché sincronizados en `release.json`, `index-grupal.html` y `service-worker.js`.
