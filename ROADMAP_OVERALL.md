@@ -1,3 +1,9 @@
+## R183 · 6 de octubre de 2026 · Simplificación de tarjetas de administración
+
+- Archivos: `event-administration-ui.js` y `test-event-administration.mjs`.
+- Se retiran de las tarjetas de torneos y grupos las líneas de tipo/origen y la nota de autorización para Scores/eliminación. Se conservan el nombre, Scores general y categorías, el ID/código y las acciones existentes.
+- Verificación del candidato: sintaxis de ambos archivos y prueba dirigida del renderizado PASS. Despliegue LAB/Producción pendiente; no se declara publicado.
+
 <!-- 2026-10-06 R178: ELIMINAR TORNEO usa texto rojo en ID de Torneos; ambos recorridos muestran CONFIRMA ELIMINAR antes de enviar el borrado. Verificación: test-event-administration.mjs, confirmación única y ausencia de petición previa. -->
 ## R178 · Locución de resultado par como EVEN · 6 de octubre de 2026
 

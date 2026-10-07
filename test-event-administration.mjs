@@ -60,3 +60,10 @@ for(const ok of [true,false]){
  await button.onclick();assert.equal(requests.length,1);assert.equal(requests[0].action,'delete');assert.equal(requests[0].payload.eventId,'selected-id');assert.equal(requests[0].payload.confirmName,'Evento <ejemplo>');assert.ok(requests[0].payload.reason);assert.equal(closed,ok?1:0);assert.equal(refreshed,ok?1:0);assert.equal(button.disabled,ok);
 }
 console.log('PASS R152 single deletion confirmation: selected event; no text fields; one request on click; error stays visible and enables retry.');
+
+// R183: event cards keep their title, Scores, code and actions while hiding environment and permission copy.
+const cardStart=uiSource.indexOf('function administrationCard(e){');const cardEnd=uiSource.indexOf('\n}',cardStart)+2;const cardSource=uiSource.slice(cardStart,cardEnd);assert.ok(cardSource.startsWith('function administrationCard(e){'),'Event administration card renderer must remain available');
+const cardContext={escape:s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),scoresHref:(_e,monitor)=>'/live-hub.html?monitor='+monitor,cachedLocal:{source:'lab'}};
+vm.createContext(cardContext);vm.runInContext(cardSource+';this.renderAdministrationCard=administrationCard;',cardContext);
+for(const canAdminister of [false,true]){const markup=cardContext.renderAdministrationCard({id:'event-1',source:'production',event_kind:'tournament',name:'Friends',canAdminister,joinCode:'ABC123'});assert.match(markup,/<h3>Friends<\/h3>/);assert.match(markup,/SCORES · GENERAL/);assert.match(markup,/SCORES · CATEGORÍAS/);assert.match(markup,/ID DE TORNEO/);assert.match(markup,/COMPARTIR/);assert.match(markup,/ELIMINAR/);assert.doesNotMatch(markup,/TORNEO · PRODUCCIÓN|CONSULTA DE SCORES|ELIMINAR REQUIERE AUTORIZACIÓN DEL ORGANIZADOR/)}
+console.log('PASS R183 event administration cards: title, Scores, code and actions retained; metadata removed.');
