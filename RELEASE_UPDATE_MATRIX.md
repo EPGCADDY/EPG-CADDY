@@ -66,3 +66,9 @@ Esta regla es permanente. Ninguna versión se considera actualizada hasta comple
 11. Solo con esa evidencia promover exactamente el mismo SHA/árbol validado a `main`.
 12. Confirmar el projectId correcto de Producción y seguir su deployment hasta READY.
 13. Abrir físicamente Producción y confirmar Rxx nuevo. Solo entonces declarar ENTREGA VERIFICADA.
+
+## R185 · Paridad obligatoria LAB / Producción
+
+El número de versión visible no demuestra sincronización. El cierre requiere ambos proyectos correctos en READY, mismo commit y árbol, release.json idéntico y SHA-256 idéntico de index-grupal.html, app-update.js, service-worker.js y event-administration-ui.js. Las diferencias explícitas de entorno (origen, datos y acciones exclusivas de LAB) permanecen previstas en el contrato. Cualquier otra diferencia impide declarar actualización completada. Nunca reutilizar el release anterior para un cambio funcional.
+
+La regresión obligatoria verifica controlador aprobado frente a cachés viejas/descargadas, retorno a Administración después de actualizar y ausencia de ACTUALIZAR al volver desde Score Card cuando el release instalado coincide. Ejecutar scripts/deployment-parity-gate.mjs después de que ambos despliegues alcancen READY y test-update-delivery-control.mjs en cada build.

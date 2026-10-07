@@ -4,7 +4,7 @@ const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-ro
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
 const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r147-2-4-20-registration-return`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r147-2-4-20-registration-return`;
-const RELEASE_FALLBACK="20261006-R184";
+const RELEASE_FALLBACK="20261006-R185";
 let RELEASE=RELEASE_FALLBACK;
 const UPDATE_DIAGNOSTICS={stage:"boot",resources:{}};
 async function fetchPublishedRelease(){
@@ -170,6 +170,8 @@ async function manualAppNavigation(request){
   if(url.searchParams.has("update_check")&&url.searchParams.get("app_version")===RELEASE){
     if(!await refreshShell())return approvedNavigationWithManualUpdate(request);
     await promoteCandidate();
+    const returnTo=url.searchParams.get("update_return");
+    if(returnTo){try{const destination=new URL(returnTo,url.origin);if(destination.origin===url.origin&&destination.pathname==="/event-administration.html")return Response.redirect(destination.href,303)}catch{}}
     return await caches.match(OFFLINE_ENTRY,{cacheName:APPROVED_CACHE_NAME})||networkFirst(request);
   }
   await ensureApprovedShell();
@@ -205,3 +207,4 @@ self.addEventListener("fetch",event=>{
   }
   if(SHELL.includes(url.pathname))event.respondWith((async()=>{await ensureApprovedShell();const response=await caches.match(url.pathname,{cacheName:APPROVED_CACHE_NAME})||await networkFirst(request);if(url.pathname!=="/shortcuts-ui.js"||!response.ok)return response;const headers=new Headers(response.headers);headers.delete('content-length');headers.set('content-type','application/javascript');return new Response((await response.text())+'\nimport("/app-update.js").catch(()=>{});',{status:response.status,headers})})());
 });
+
