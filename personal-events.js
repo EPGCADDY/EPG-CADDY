@@ -43,7 +43,7 @@
   panel.querySelector('[data-private-round-code]').textContent=code||'CÓDIGO NO DISPONIBLE';panel.querySelector('section').insertAdjacentHTML('beforeend','<button type="button" data-copy-event-code>COPIAR CÓDIGO</button>');panel.querySelector('[data-copy-event-code]').onclick=async()=>{try{await root.navigator.clipboard.writeText(code);status(panel,{ok:true})}catch{status(panel,{ok:false,code:'SHARE_UNAVAILABLE'})}};
   const navigate=()=>{if(returnTo){try{const url=new URL(returnTo,root.location.origin);if(url.origin===root.location.origin&&url.pathname==='/index-grupal.html'){close();root.location.assign(url.toString());return}}catch{}}return continueToCreatedPrivateCard(panel,event)};
   panel.querySelector('[data-continue-private-round]').onclick=navigate;
-  panel.querySelector('[data-share-private-round]').onclick=()=>root.GSCWhatsAppInvitations.open({kind:eventKind,code,eventName:result.name||'',creatorName:result.configuration?.creatorName||result.creatorName||''},navigate);
+  panel.querySelector('[data-share-private-round]').onclick=()=>root.GSCWhatsAppInvitations.open({kind:eventKind,code,eventName:result.name||'',creatorName:result.configuration?.creatorName||result.creatorName||'',invitationUrl:eventInvitationUrl({eventId:result.eventId,eventKind,name:result.name,joinCode:code,directRegistration:true})},navigate);
 
  }
  function presentCreatedTournament(result,returnTo=''){const panel=dialog('TORNEO CREADO','');installCreatedPrivateRoundActions(panel,result,'tournament',returnTo)}
@@ -69,21 +69,23 @@
 
 
  function eventInvitationUrl(event){
-  const kind=event.eventKind||'tournament',name=String(event.name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z0-9]+/g,'-').replace(/^-|-$/g,'')||'TORNEO';
-  const url=new URL('/'+(kind==='private'?'grupo':'torneo')+'/'+name,root.location.origin);
-  url.hash='evento='+encodeURIComponent(event.eventId||event.id||event.tournamentId)+'&codigo='+encodeURIComponent(event.joinCode);return url.toString();
+  const kind=event.eventKind||'tournament',eventId=event.eventId||event.id||event.tournamentId,name=String(event.name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z0-9]+/g,'-').replace(/^-|-$/g,'')||'TORNEO',origin=event.baseOrigin||root.location.origin;
+  const url=event.directRegistration?new URL('/index-grupal.html',origin):new URL('/'+(kind==='private'?'grupo':'torneo')+'/'+name,origin);
+  if(event.directRegistration){url.searchParams.set('inicio','1');url.searchParams.set('invitation','1');url.searchParams.set('kind',kind);url.searchParams.set('direct','1')}
+  url.hash='evento='+encodeURIComponent(eventId)+'&codigo='+encodeURIComponent(event.joinCode);return url.toString();
  }
  let linkInvitation=null;
  async function openLinkInvitation(){
   const url=new URL(root.location.href);if(url.searchParams.get('invitation')!=='1')return false;
   const params=new URLSearchParams(url.hash.slice(1)),id=params.get('evento'),code=params.get('codigo'),kind=url.searchParams.get('kind')==='private'?'private':'tournament';
-  url.hash='';url.searchParams.delete('invitation');url.searchParams.delete('kind');root.history.replaceState(null,'',url.toString());
+  const direct=url.searchParams.get('direct')==='1';url.hash='';url.searchParams.delete('invitation');url.searchParams.delete('kind');url.searchParams.delete('direct');root.history.replaceState(null,'',url.toString());
   const panel=dialog('INVITACIÓN AL '+(kind==='private'?'GRUPO':'TORNEO'),'');
   if(!/^[a-f0-9-]{36}$/i.test(id||'')||! /^[A-Z0-9]{10}$/i.test(code||'')){status(panel,{ok:false,code:'LIVE_JOIN_CODE_INVALID'});return false}
   const viewed=await request('view-code',{eventId:id,eventKind:kind,joinCode:code});status(panel,viewed);if(!viewed.ok)return false;
   const access=await request('read',{eventId:id,eventKind:kind});status(panel,access);if(!access.ok)return false;
   if(access.tournament.status!=='active'){status(panel,{ok:false,code:'PERSONAL_EVENT_CLOSED'});return false}
   linkInvitation={eventId:id,eventKind:kind,joinCode:code,name:access.tournament.name,configuration:access.tournament.configuration};
+  if(direct){close();return root.GSCPrepareEventInvitation?.(linkInvitation)===true}
   panel.querySelector('h3').textContent=access.tournament.name;
   panel.querySelector('section').insertAdjacentHTML('beforeend','<p>INVITACIÓN AL '+(kind==='private'?'GRUPO':'TORNEO')+'</p><p>'+escape(access.tournament.configuration.course)+'</p><button class="primary" data-register-invitation>REGISTRAR MIS JUGADORES</button>');
   panel.querySelector('[data-register-invitation]').onclick=()=>{close();root.GSCPrepareEventInvitation?.(linkInvitation)};return true;
@@ -116,7 +118,7 @@
   panel.querySelector('[data-refresh-tournament-ids]').onclick=organizerInvitations;
   const findEvent=button=>ownedEvents.find(event=>event.source+':'+event.id===button.dataset.copyOwnedCode||event.source+':'+event.id===button.dataset.shareOwnedCode||event.source+':'+event.id===button.dataset.deleteOwnedEvent);
   panel.querySelectorAll('[data-copy-owned-code]').forEach(button=>button.onclick=async()=>{const code=byKey.get(button.dataset.copyOwnedCode)?.joinCode||'';try{await root.navigator.clipboard.writeText(code);panel.querySelector('[data-status]').textContent='CÓDIGO COPIADO'}catch{status(panel,{ok:false,code:'SHARE_UNAVAILABLE'})}});
-  panel.querySelectorAll('[data-share-owned-code]').forEach(button=>button.onclick=()=>{const event=findEvent(button),code=byKey.get(button.dataset.shareOwnedCode)?.joinCode||'';if(event&&code)root.GSCWhatsAppInvitations.open({kind:'tournament',code,eventName:event.name},()=>{})});
+  panel.querySelectorAll('[data-share-owned-code]').forEach(button=>button.onclick=()=>{const event=findEvent(button),code=byKey.get(button.dataset.shareOwnedCode)?.joinCode||'';if(event&&code)root.GSCWhatsAppInvitations.open({kind:'tournament',code,eventName:event.name,invitationUrl:eventInvitationUrl({eventId:event.id,eventKind:'tournament',name:event.name,joinCode:code,directRegistration:true,baseOrigin:event.source==='lab'?'https://golf-sc-gt-lab.vercel.app':'https://epg-caddy.vercel.app'})},()=>{})});
   panel.querySelectorAll('[data-delete-owned-event]').forEach(button=>button.onclick=()=>{const event=findEvent(button);if(!event)return;const confirmPanel=dialog('CONFIRMA ELIMINAR','<p>'+escape(event.name)+'</p><button type="button" class="danger" style="color:#ff5555;border-color:#ff5555" data-confirm-delete>ELIMINAR TORNEO</button>');confirmPanel.querySelector('[data-confirm-delete]').onclick=async()=>{const control=confirmPanel.querySelector('[data-confirm-delete]');control.disabled=true;const result=await deleteEvent(event);status(confirmPanel,result);if(result.ok)await organizerInvitations();else control.disabled=false}});
  }
  function personalStorageKey(account,key){return root.GSC_PERSONAL_ACCOUNT===account?key:'gscg-personal:'+account+':'+key}

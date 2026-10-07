@@ -3981,3 +3981,25 @@ R177 verificación del código viewer: el test valida el evento desde la sesión
 
 R178 · 6 octubre 2026 · Clic de eliminar siempre abre confirmación
 El botón público de Administración estaba disabled cuando no se reconocía autoridad. Ahora abre CONFIRMA ELIMINAR con nombre, pregunta y CANCELAR; sólo confirmar envía delete/remote-delete y el servidor conserva la validación de permisos. No se elimina al abrir o cancelar. Pruebas: test-event-administration.mjs, test-r167-admin-share-feedback.mjs, test-r177-cross-device-admin.mjs.
+
+## R179 · Invitación de torneo en un solo WhatsApp · 7 de octubre de 2026
+
+- La invitación se envía en un único mensaje de WhatsApp que reúne el enlace verde pulsable y el código de ingreso. El enlace lleva el ID y código del evento, se valida en el servidor y abre directamente el registro de jugadores con modalidad y campo precargados.
+- Se conservaron los enlaces de invitación previos con su paso de confirmación. Casos cubiertos: `personal-events.js`, `event-administration-ui.js`, `private-rounds.js`, `whatsapp-invitations.js`, `test-r156-tournament-invitation.mjs`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` y `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`.
+- Verificación: sintaxis de los cuatro archivos JS; prueba de link directo a Friends con `El Pulté` y modalidad `general`; prueba de invitación WhatsApp de un solo mensaje.
+### R179 · Prueba de URL en compartir desde Administración
+
+- La prueba R167 ahora comprueba que el botón de compartir incluye el enlace directo para el torneo y mantiene el código dentro del mismo mensaje. Archivos: `test-r167-admin-share-feedback.mjs`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y el registro de calidad.
+### R179 · Regresión de invitación a grupos
+
+- `test-lab-private-round-share-flow.mjs` verifica que las invitaciones a grupos y torneos usan el enlace directo con ID y código, junto a modalidad y código dentro de un mismo mensaje. Archivos: `test-lab-private-round-share-flow.mjs`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y registro de calidad.
+### R179 · Regresión del enlace directo desde el Score Card de grupos
+
+- `test-lab-private-rounds.mjs` ahora verifica que `#privateShare` entrega a WhatsApp la URL directa de inscripción con código. Se mantiene el flujo para compartir sólo el código por separado.
+### R179 · Publicación y actualización de la app instalada
+
+- Se incrementó `release.json` y el nombre/fallback del caché del service worker a R179 para que clientes instalados detecten y descarguen la invitación de WhatsApp con enlace directo.
+- Archivos: `release.json`, `service-worker.js`, ambos roadmaps, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` y el registro de calidad. Verificaciones R179 incluyen el build completo en LAB y Producción.
+### R179 · Versión R179 visible en registro
+
+- Se alinearon el meta `gscg-release` y la insignia de `index-grupal.html` con `release.json` (`20261007-R179`). Archivos: `index-grupal.html`, `release.json`, `service-worker.js`, roadmaps, lock de inventario y registro de calidad.

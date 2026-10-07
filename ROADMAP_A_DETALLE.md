@@ -4081,3 +4081,27 @@ R177: comprobar el alcance del viewer mediante la sesión creada al canjear el c
 
 R178 · 6 octubre 2026 · Clic de eliminar siempre abre confirmación
 El botón público de Administración estaba disabled cuando no se reconocía autoridad. Ahora abre CONFIRMA ELIMINAR con nombre, pregunta y CANCELAR; sólo confirmar envía delete/remote-delete y el servidor conserva la validación de permisos. No se elimina al abrir o cancelar. Pruebas: test-event-administration.mjs, test-r167-admin-share-feedback.mjs, test-r177-cross-device-admin.mjs.
+
+## R179 · 7 de octubre de 2026 · Enlace directo para registrar jugadores
+
+- La URL de invitación al torneo contiene el ID del evento y su código. Abre `index-grupal.html` y, después de validar el código de un solo uso y leer configuración activa, ejecuta el registro con campo y modalidad precargados.
+- Se agregó la URL al mensaje único de WhatsApp para invitaciones de organizador, torneos y grupos. El código aparece en el mismo mensaje; enlaces existentes sin modo directo conservan su confirmación previa.
+- Archivos: `personal-events.js`, `event-administration-ui.js`, `private-rounds.js`, `whatsapp-invitations.js`, `test-r156-tournament-invitation.mjs`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`.
+- Pruebas: `node --check` en los cuatro JS; `node test-r156-tournament-invitation.mjs`; `node test-r159-whatsapp-two-messages.mjs`. Resultado: PASS.
+### R179 · Regresión de compartir torneo desde Administración
+
+- `test-r167-admin-share-feedback.mjs` verifica que el share-event crea el link directo para `qa-event`, transporta el código en el fragmento y entrega un solo `invitationUrl` a WhatsApp. PASS.
+### R179 · Prueba de invitación directa de grupo y torneo
+
+- Se actualizó `test-lab-private-round-share-flow.mjs` para verificar el texto y el enlace clicable directos al registro, tanto para grupos privados como torneos, con el código incluido en el mismo envío. PASS.
+### R179 · Private Score Card con link de invitación directo
+
+- El fixture de `test-lab-private-rounds.mjs` expone el generador de invitación y verifica que el enlace directo incluye el código del evento. PASS.
+### R179 · Versión cliente y caché PWA
+
+- `release.json` publica `20261007-R179`; `service-worker.js` usa un caché nuevo y fallback R179. Esto permite que instalaciones existentes detecten la revisión que habilita el enlace directo de torneo y grupo.
+- Archivos: `release.json`, `service-worker.js`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` y registro de calidad.
+### R179 · Metadatos y versión visible
+
+- `index-grupal.html` publica `gscg-release=20261007-R179` y `VERSIÓN R179`, en coincidencia con `release.json` y el fallback del service worker. La regresión R179 comprueba esta igualdad.
+- Archivos: `index-grupal.html`, `release.json`, `service-worker.js`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, lock y registro de calidad.
