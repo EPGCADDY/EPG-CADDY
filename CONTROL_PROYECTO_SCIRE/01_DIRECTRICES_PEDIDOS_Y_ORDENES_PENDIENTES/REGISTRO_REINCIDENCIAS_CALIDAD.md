@@ -1,3 +1,10 @@
+## RC-115 · QuickType iPhone sigue sin aplicar la sugerencia al nombre · 7 OCTUBRE 2026
+
+- Reincidencia confirmada en prueba física del usuario sobre la vista previa R192.
+- Corrección R193: quitar `inputmode=text` y `autocomplete=name`; guardar el valor al siguiente ciclo tras `beforeinput` de `insertReplacementText`, ya aplicado por WebKit. El handler no reconstruye el input.
+- Regresión automatizada: `test-r193-ios-quicktype-replacement.mjs` verifica el orden beforeinput → sustitución → persistencia. Falta nueva aceptación física iPhone.
+- Estado: CÓDIGO LOCAL ACTUALIZADO; BUILD/VISTA PREVIA R193 PENDIENTES; PRODUCCIÓN INTACTA.
+
 ## RC-114 · TECLADO IPHONE NO APLICABA SUGERENCIAS Y DICTADO NATIVO · 7 OCTUBRE 2026
 
 - Defecto reportado: tocar una palabra sugerida no la aplicaba al nombre de jugador y era necesario completar cada palabra manualmente; también se pidió dictado por el teclado iPhone.

@@ -5,10 +5,10 @@ const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8"
 assert.match(html,/if\(!target\)return;/,"Un evento ajeno a los campos del registro debe ignorarse sin error");
 assert.match(html,/addEventListener\("compositionstart"[\s\S]*composingRegistrationNames\.add\(input\)/);
 assert.match(html,/addEventListener\("compositionend"[\s\S]*inputType:"insertFromComposition"/);
-assert.match(html,/e\.inputType!=="insertReplacementText"&&applyInlineManualRosterPhrase/,
+assert.match(html,/!String\(e\.inputType\|\|""\)\.toLowerCase\(\)\.includes\("replacement"\)&&applyInlineManualRosterPhrase/,
   "La selección de una sugerencia iOS se conserva como texto literal");
-assert.match(html,/data-draft-name="\$\{i\}" type="text" inputmode="text" value="\$\{safeName\}" autocomplete="name" autocapitalize="words" autocorrect="on" spellcheck="true" enterkeyhint="next"/);
-assert.equal((html.match(/data-stableford-name="\d" autocomplete="name" .{0,250}autocapitalize="words" autocorrect="on" spellcheck="true" inputmode="text"/g)||[]).length,6,
+assert.match(html,/data-draft-name="\$\{i\}" type="text" value="\$\{safeName\}" autocapitalize="words" autocorrect="on" spellcheck="true" enterkeyhint="next"/);
+assert.equal((html.match(/data-stableford-name="\d" autocapitalize="words" autocorrect="on" spellcheck="true"/g)||[]).length,6,
   "Las seis entradas de nombre Stableford habilitan sugerencias y dictado del teclado");
 
 const start=html.indexOf("function handleManualDraftInput("),end=html.indexOf('\n$("detectedBody").addEventListener("input"',start);
