@@ -4241,3 +4241,5 @@ Se ajusta `test-r181-global-groups-directory.mjs`: conserva la prueba del direct
 Se actualiza `test-r167-admin-share-feedback.mjs`: conserva los 40 torneos globales, excluye el grupo privado de la tarjeta local y valida sus permisos restantes.
 Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cubierto; la tarjeta de Administración se valida con un torneo y los grupos se excluyen de la lista.
 R189: `index-grupal.html` · se elimina el bloqueo `rosterEditMode` en el selector de campo; la rama de edición de `startConfirmedRound()` activa y persiste `courseKey/course` antes de recalcular jugadores. `test-r189-change-course-anytime.mjs` prueba selector enabled, actualización de la ronda y retención del gross existente; `scripts/build-manual-lab.mjs` incorpora el gate. Release R189.
+
+R189 ajuste final: se conserva la firma del flujo de modalidad existente en `startConfirmedRound()`; el campo seleccionado y su ID se actualizan en la rama de edición y los scores previos permanecen. La verificación Node del test `test-r189-change-course-anytime.mjs` pasó.

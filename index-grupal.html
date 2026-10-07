@@ -2177,6 +2177,7 @@ function startConfirmedRound(){
   if(!selectedCourse?.configured){showStep1();$("setupStatus").textContent=`${selectedCourse?.name?.toUpperCase()||"CAMPO"} · PENDIENTE CARGAR TARJETA OFICIAL`;return false}
   ;
   if(rosterEditMode&&round.configured){
+    // R189: actualizar campo al confirmar la edición, conservando el flujo y scores existentes.
     activateCourse(draftCourse);
     const previous=new Map(round.players.map(p=>[p.id,p]));
     round.players=assignStablePlayerSlots(draftPlayers.map((p,i)=>{
