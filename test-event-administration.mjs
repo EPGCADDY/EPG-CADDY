@@ -40,13 +40,14 @@ for(const ok of [true,false]){
 }
 console.log('PASS R152 single deletion confirmation: selected event; no text fields; one request on click; error stays visible and enables retry.');
 
-\n// R178: event cards keep their title and controls while hiding environment and permission copy.
-const cardSource=uiSource.match(/function administrationCard\\(e\\)\\{[^\\n]*\\}/)?.[0];assert.ok(cardSource,'Event administration card renderer must remain available');
+
+// R178: event cards keep their title and controls while hiding environment and permission copy.
+const cardSource=uiSource.match(/function administrationCard\(e\)\{[^\n]*\}/)?.[0];assert.ok(cardSource,'Event administration card renderer must remain available');
 const cardContext={escape:s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),scoresHref:(_e,monitor)=>'/live-hub.html?monitor='+monitor,cachedLocal:{source:'lab'}};
 vm.createContext(cardContext);vm.runInContext(cardSource+';this.renderAdministrationCard=administrationCard;',cardContext);
 for(const canAdminister of [false,true]){
  const markup=cardContext.renderAdministrationCard({id:'event-1',source:'production',event_kind:'tournament',name:'Friends',canAdminister});
- assert.match(markup,/<h3>Friends<\\/h3>/);assert.match(markup,/SCORES · GENERAL/);assert.match(markup,/SCORES · CATEGORÍAS/);
+ assert.match(markup,/<h3>Friends<\/h3>/);assert.match(markup,/SCORES · GENERAL/);assert.match(markup,/SCORES · CATEGORÍAS/);
  assert.doesNotMatch(markup,/TORNEO · PRODUCCIÓN|CONSULTA DE SCORES|COMPARTIR Y ELIMINAR REQUIEREN AUTORIZACIÓN DEL ORGANIZADOR/);
 }
 console.log('PASS R178 event administration cards: title and Scores controls retained; environment and authorization metadata removed.');
