@@ -9,7 +9,7 @@ const keySource=personal.slice(personal.indexOf(' function personalStorageKey(')
 assert.match(personal,/membership\?\.role==='organizer'.*index-grupal\.html\?inicio=1/,'Empty creator returns to registration without auto-enrollment');console.log('PASS empty organizer continues to Registration; assigning the group still requires explicit event selection.');
 
 
-const createdActions=personal.slice(personal.indexOf(' function continueToCreatedPrivateCard('),personal.indexOf(' function presentCreatedTournament('));
+const createdActions=personal.slice(personal.indexOf('async function continueToCreatedPrivateCard('),personal.indexOf(' function presentCreatedTournament('));
 function createdActionHarness(eventKind){
  const calls={copied:'',opened:null,closed:0,shareCallback:'unset',markup:''},heading={textContent:''},output={textContent:''},copy={onclick:null,textContent:''},share={onclick:null},continueAction=eventKind==='tournament'?null:{onclick:null},section={insertAdjacentHTML(_where,html){calls.markup+=html}},panel={querySelector(selector){return selector==='h3'?heading:selector==='section'?section:selector==='[data-private-round-code]'?output:selector==='[data-copy-event-code]'?copy:selector==='[data-share-private-round]'?share:selector==='[data-continue-private-round]'?continueAction:null}};
  const context={root:{navigator:{clipboard:{writeText:async value=>calls.copied=value}},GSCWhatsAppInvitations:{open:(_options,onComplete)=>calls.shareCallback=onComplete},location:{origin:'https://example.test',assign(){calls.assigned=true}}},status(){},close(){calls.closed++},openAssignedCard:async event=>calls.opened=event,URL};
