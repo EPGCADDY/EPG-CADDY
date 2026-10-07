@@ -9,6 +9,15 @@ for(const origin of ['https://golf-sc-gt-lab.vercel.app','https://epg-caddy.verc
  const button=elements.get('gscDeliveryUpdateButton');assert.ok(button);assert.equal(button.textContent,'ACTUALIZAR');assert.equal(button.disabled,false);assert.equal(destination,'','Checking never navigates or updates an installation');assert.equal(persisted,0);
  assert.match(button.style.cssText,/animation:gscUpdatePulse/);button.onclick();assert.equal(persisted,1);const url=new URL(destination);assert.equal(url.pathname,'/index-grupal.html');assert.equal(url.searchParams.get('inicio'),'1');assert.equal(url.searchParams.get('app_version'),'LABORATORIO-20261001-R147.2.4.4');assert.ok(url.searchParams.has('update_check'));
  approved='LABORATORIO-20261001-R147.2.4.4';await events.pageshow();assert.equal(elements.has('gscDeliveryUpdateButton'),false,'Current approved build hides the independent control');
+ // Returning to Administration has no release meta and can leave several approved caches.
+ ctx.document.querySelector=()=>null;
+ ctx.caches={keys:async()=>['gscg-mobile-current-approved-shell','gscg-mobile-old-approved-shell'],open:async name=>({match:async()=>new Response('<meta name="gscg-release" content="'+(name.includes('-old-')?'LABORATORIO-20260930-R147.2.4':'LABORATORIO-20261001-R147.2.4.4')+'">')})};
+ await events.pageshow();assert.equal(elements.has('gscDeliveryUpdateButton'),false,'Administration return must use the current controller, not a later-listed old cache');
+ approved='LABORATORIO-20260930-R147.2.4';await events.pageshow();assert.equal(elements.get('gscDeliveryUpdateButton').textContent,'ACTUALIZAR','An unapproved downloaded cache cannot hide an actual update');
+ approved='LABORATORIO-20261001-R147.2.4.4';await events.pageshow();assert.equal(elements.has('gscDeliveryUpdateButton'),false,'After successful update, Administration return must stay current');
+ assert.equal(destination,url.toString(),'Return checks never navigate or update by themselves');
+ ctx.document.querySelector=()=>({content:approved});
+ console.log('PASS R185 Administration → Score Card → Administration: controller approval wins over stale or unapproved caches in '+origin);
  networkFailure=true;await events.online();assert.equal(elements.get('gscDeliveryUpdateButton').textContent,'REINTENTAR','A failed check remains actionable');
  assert.equal(destination,url.toString(),'A failed check never performs another navigation');
  networkFailure=false;approved='LABORATORIO-20260930-R147.2.4';ctx.navigator.serviceWorker.ready=new Promise(()=>{});ctx.navigator.serviceWorker.controller={postMessage(){throw Error('Legacy worker does not support discovery')}};
@@ -58,3 +67,17 @@ for(const configured of [true,false])for(const origin of ['https://golf-sc-gt-la
  assert.equal(url.searchParams.get('inicio'),configured?null:'1');assert.equal(url.searchParams.get('round_return'),configured?'1':null);assert.equal(writes,1);assert.equal(JSON.stringify(round),before);
 }
 console.log('PASS real ACTUALIZAR: scoped Familia card/account, current scores and registration context survive in LAB and Production');
+
+// The approved worker returns to Administration only after a complete successful update.
+const workerSource=fs.readFileSync('service-worker.js','utf8');
+const updateNavigation=workerSource.slice(workerSource.indexOf('async function manualAppNavigation('),workerSource.indexOf('async function authorizedPersonalNavigation('));
+for(const complete of [false,true])for(const target of ['/event-administration.html?returnTo=%2Findex-grupal.html','https://evil.example/event-administration.html','/live-hub.html']){
+ let promoted=0;
+ const context=vm.createContext({URL,Response,RELEASE:'CURRENT',OFFLINE_ENTRY:'/index-grupal.html',APPROVED_CACHE_NAME:'approved',fetchPublishedRelease:async()=>{},refreshShell:async()=>complete,promoteCandidate:async()=>promoted++,caches:{match:async()=>new Response('approved-card')},approvedNavigationWithManualUpdate:async()=>new Response('previous-card'),networkFirst:async()=>new Response('network-card')});
+ vm.runInContext(updateNavigation,context);
+ const request={url:'https://epg-caddy.vercel.app/index-grupal.html?app_version=CURRENT&update_check=1&update_return='+encodeURIComponent(target)};
+ const response=await context.manualAppNavigation(request);
+ assert.equal(promoted,complete?1:0);
+ if(complete&&target.startsWith('/event-administration.html')){assert.equal(response.status,303);assert.equal(response.headers.get('location'),'https://epg-caddy.vercel.app'+target)}else{assert.equal(response.status,200);assert.equal(await response.text(),complete?'approved-card':'previous-card')}
+}
+console.log('PASS R185 update returns to Administration after success; incomplete install retains prior card; foreign and unrelated return destinations rejected.');

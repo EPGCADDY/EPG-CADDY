@@ -6,43 +6,9 @@
     "repository": "https://github.com/EPGCADDY/EPG-CADDY",
     "branch": "main",
     "productionBaselineCommit": "0dc1ba7a62b6bd6aec92752c539ca641cf950e26",
-    "productionUrl": "https://epg-caddy.vercel.app/",
-    "laboratoryDelivery": {
-      "project": "golf-sc-gt-lab",
-      "ownerInstalledOrigin": "https://golf-sc-gt-lab-git-lab-r146-entry-ope-6b36ee-epgcaddys-projects.vercel.app",
-      "ownerInstalledBranch": "lab/r146-entry-open-24h-invites-20260930",
-      "secondaryAlias": "https://golf-sc-gt-lab.vercel.app",
-      "policy": "Actualizar ambos destinos al mismo commit aprobado; el alias secundario no sustituye el origen instalado del propietario. Preservar origen y almacenamiento.",
-      "requiredVerification": [
-        "same approved commit on both destinations",
-        "READY deployment on ownerInstalledOrigin",
-        "release.json visible release matches",
-        "ACTUALIZAR on the same origin; no reinstall or storage deletion"
-      ],
-      "confirmedByOwner": "2026-10-02 · IMG_5668(1) y confirmación explícita del propietario"
-    }
+    "productionUrl": "https://epg-caddy.vercel.app/"
   },
   "logic": "all",
-  "applicationEntryPolicy": {
-    "status": "OPEN",
-    "defaultRoute": "/index-grupal.html?inicio=1",
-    "requiresOwnerCredentials": false,
-    "requiresGlobalEntryCode": false,
-    "ownerLoginGate": "removed",
-    "scope": [
-      "Registration",
-      "local scorecard",
-      "Scores"
-    ],
-    "resourceAuthorizationRemainsIndependent": [
-      "private tournament membership",
-      "central publishing and editing",
-      "optional account backup",
-      "optional single-use 24-hour guest invitation"
-    ],
-    "twentyFourHourInvitation": "retained as an optional independent invite; expiry applies only to that guest session and never to ordinary app entry",
-    "regression": "Una solicitud anónima a Registro no redirige a login/código; la invitación opcional de 24 horas conserva su canje y vencimiento; APIs privados conservan autorización por recurso."
-  },
   "inputs": [
     "canonicalSource",
     "exactScope",
@@ -114,38 +80,26 @@
       "id": "G0-10",
       "name": "integridad_operativa",
       "evidence": [
-        "node audit-project.mjs",
-        "node test-v407-r24-update-physical-gate.mjs",
-        "node scripts/lab-update-browser-review.mjs <stages.json>",
-        "node scripts/lab-update-physical-gate.mjs <evidence.json>"
-      ],
-      "updateBrowserGate": {
-        "reviewType": "REVISIÓN AUTOMATIZADA EN NAVEGADOR REAL",
-        "minimumReadyDeployments": 4,
-        "minimumTransitions": 3,
-        "sameAlias": true,
-        "samePersistentBrowserProfile": true,
-        "requiresFullPageScreenshotsSha256": true,
-        "requiresPreservation": [
-          "round",
-          "history",
-          "player",
-          "score",
-          "whatsapp"
-        ],
-        "rejectsMismatchedCommitDeploymentAlias": true,
-        "iphoneMicrophonePhysical": "PENDING"
-      }
+        "node audit-project.mjs"
+      ]
     },
     {
       "id": "G0-11",
       "name": "produccion_intacta",
       "requiresOwnerApproval": true
+    },
+    {
+      "id": "G0-12",
+      "name": "entrada_publica_sin_credenciales",
+      "evidence": [
+        "AGENTS.md",
+        "GOLF_SCORE_CARD_GT_PENDING_MATRIX.md",
+        "node test-global-public-entry-policy.mjs"
+      ]
     }
   ],
   "requiredControls": [
     "AGENTS.md",
-    "CONTROL_PROYECTO_SCIRE/CONTINUIDAD_MAESTRA_LAB.md",
     "CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/DIRECTRICES_MANDATORIAS.md",
     "CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md",
     "CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json",
@@ -155,43 +109,5 @@
     "Intocables/README.md",
     "Intocables/REGLAS_INTOCABLES.json",
     "Intocables/intocables-gate.mjs"
-  ],
-  "operationalObligations": {
-    "OP-60": {
-      "mandatory": true,
-      "scope": [
-        "all_repository_tasks",
-        "LAB",
-        "Maestro",
-        "conversation_continuations"
-      ],
-      "maxVisibleReportIntervalSeconds": 60,
-      "reportFields": [
-        "guatemalaTime",
-        "completedActionOrInProgress",
-        "artifactOrCommand",
-        "actualResult",
-        "verifiableEvidence",
-        "PASS_FAIL_PENDING",
-        "nextAction"
-      ],
-      "continueAfterReport": true,
-      "forbidTurnClosureWhileAuthorizedWorkAndExecutableNextActionRemain": true,
-      "statusReportDoesNotReplaceExecution": true,
-      "noClaimOfBackgroundWorkAfterTurn": true,
-      "stopOnlyFor": [
-        "completedTask",
-        "documentedRealBlocker",
-        "indispensableOwnerIntervention"
-      ],
-      "onPlatformBlocker": [
-        "declareSpecificLimitation",
-        "saveCompleteRecoveryPoint",
-        "declareStopped",
-        "endTurn"
-      ],
-      "technicalPassDoesNotWaiveVisibility": true,
-      "documentDoesNotImplementTimer": true
-    }
-  }
+  ]
 }

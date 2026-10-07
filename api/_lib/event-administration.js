@@ -2,6 +2,20 @@ import {createHash,randomBytes} from 'node:crypto';
 import {accessError,eventKind,eventScope} from './personal-event-access.js';
 import {ensureEventPurge} from './event-lifecycle.js';
 const hash=s=>createHash('sha256').update(String(s)).digest('hex');
+export async function deleteAdminRound(sql,round,account,owner,body){
+ const scoped=eventScope(sql,round.eventKind),rows=await scoped`SELECT id,group_label,tournament_id FROM live_streams WHERE id=${round.roundId}::uuid AND status='active'`;
+ if(!rows.length)throw accessError('ROUND_NOT_FOUND',404);
+ const stream=rows[0];let authority;
+ if(!owner){if(!stream.tournament_id)throw accessError('ROUND_ADMIN_REQUIRED');authority=await eventAdminAuthority(sql,{eventId:stream.tournament_id,eventKind:round.eventKind},account,false)}
+ if(body.confirmedTwice!==true||String(body.confirmLabel||'')!==stream.group_label)throw accessError('ROUND_DOUBLE_CONFIRMATION_REQUIRED',400);
+ await ensureEventPurge(sql);
+ const removed=await scoped`WITH selected AS MATERIALIZED (
+ SELECT id FROM live_streams WHERE id=${round.roundId}::uuid AND group_label=${stream.group_label} AND tournament_id IS NOT DISTINCT FROM ${stream.tournament_id}::uuid AND status='active'
+ AND (${owner}::boolean OR EXISTS(SELECT 1 FROM live_tournaments WHERE id=live_streams.tournament_id AND (${authority?.authority!=='delegate'}::boolean OR EXISTS(SELECT 1 FROM gsc_event_admin_grants WHERE id=${authority?.grantId||null}::uuid AND recipient_account_id=${account.id} AND redeemed_at IS NOT NULL AND revoked_at IS NULL AND expires_at>now())) FOR SHARE)) FOR UPDATE
+ ) SELECT id,gsc_purge_stream(id,${round.eventKind}) FROM selected`;
+ if(!removed.length)throw accessError('ROUND_DELETE_NOT_AVAILABLE',409);
+ return{ok:true,roundId:stream.id,eventKind:round.eventKind};
+}
 export async function ensureEventAdministration(sql){
  await sql`CREATE TABLE IF NOT EXISTS gsc_event_admin_grants(id uuid PRIMARY KEY DEFAULT gen_random_uuid(),event_id uuid NOT NULL,event_kind text NOT NULL,issuer_account_id text NOT NULL,recipient_account_id text NOT NULL,recipient_name text NOT NULL,code_hash char(64) UNIQUE NOT NULL,redeemed_at timestamptz,revoked_at timestamptz,created_at timestamptz NOT NULL DEFAULT now(),expires_at timestamptz NOT NULL)`;
  await sql`CREATE TABLE IF NOT EXISTS gsc_event_deletions(id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,event_id uuid NOT NULL,event_kind text NOT NULL,event_name text NOT NULL,actor_account_id text NOT NULL,grant_id uuid,recipient_name text NOT NULL,reason text NOT NULL,deleted_at timestamptz NOT NULL DEFAULT now(),UNIQUE(event_id,event_kind))`;

@@ -5,7 +5,7 @@ import {requireOwner} from './_lib/app-access.js';
 import {requireAccountSession} from './_lib/account-auth.js';
 import {resolveEventIdentity} from './personal-events.js';
 import {ensurePersonalAccess,accessError,eventKind,limitPersonalAccess} from './_lib/personal-event-access.js';
-import {ensureEventAdministration,eventAdminAuthority,issueEventAdmin,redeemEventAdmin,deleteAdminEvent,claimLegacyEvent} from './_lib/event-administration.js';
+import {ensureEventAdministration,eventAdminAuthority,issueEventAdmin,redeemEventAdmin,deleteAdminEvent,deleteAdminRound,claimLegacyEvent} from './_lib/event-administration.js';
 import {refreshEventLifecycles} from './_lib/event-lifecycle.js';
 import {isAllowedAppOrigin,handleAppPreflight} from './_lib/cors.js';
 import {noStore,readJson} from './_lib/http.js';
@@ -19,6 +19,15 @@ export async function handleEventAdministration(req,res,database=getDatabase,own
  await ensurePersonalAccess(sql);await ensureEventAdministration(sql);await refreshEventLifecycles(sql);await limitPersonalAccess(sql,account,'event-admin');
  const requestHost=req.headers?.['x-forwarded-host']||req.headers?.host||'',source=tournamentDirectoryEnvironment(env,requestHost),peerUrl=tournamentDirectoryPeerUrl(env,requestHost);
  const relay=async(path,payload)=>{const base=peerUrl.replace(/\/api\/tournament-score-directory\/?$/,'');const response=await fetcher(base+path,{method:'POST',headers:{'content-type':'application/json',...(req.headers?.cookie?{Cookie:req.headers.cookie}:{})},body:JSON.stringify(payload),signal:AbortSignal.timeout(8000)});let data;try{data=await response.json()}catch{data={ok:false,code:'PEER_RESPONSE_INVALID'}}return{status:response.status,data}};
+ if(body.action==='delete-round'||body.action==='remote-delete-round'){
+  if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(body.roundId||'')))throw accessError('ROUND_ID_INVALID',400);
+  const kind=eventKind(body.eventKind);
+  if(body.action==='remote-delete-round'){
+   if(!['lab','production'].includes(body.source)||body.source===source)throw accessError('EVENT_SOURCE_INVALID',400);
+   const result=await relay('/api/event-administration',{action:'delete-round',roundId:body.roundId,eventKind:kind,confirmLabel:body.confirmLabel,confirmedTwice:body.confirmedTwice});return res.status(result.status).json(result.data);
+  }
+  return res.status(200).json(await deleteAdminRound(sql,{roundId:body.roundId,eventKind:kind},account,owner,body));
+ }
  if(body.action==='remote-delete'||body.action==='remote-share'||body.action==='remote-claim-legacy'){
   const target=String(body.source||'');if(!['lab','production'].includes(target)||target===source)throw accessError('EVENT_SOURCE_INVALID',400);
   if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(body.eventId||'')))throw accessError('EVENT_ID_INVALID',400);

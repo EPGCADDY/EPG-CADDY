@@ -6,6 +6,7 @@ import {readFile} from 'node:fs/promises';
 import {PGlite} from '@electric-sql/pglite';
 import {handlePersonalEvents} from './api/personal-events.js';
 import {handleEventAdministration} from './api/event-administration.js';
+import {eventScope} from './api/_lib/personal-event-access.js';
 const db=new PGlite();for(const file of ['database/004_live_scorecards.sql','database/005_live_tournament_mode.sql'])await db.exec(await readFile(file,'utf8'));
 const sql=async(s,...v)=>(await db.query(s.reduce((q,x,i)=>q+(i?'$'+i:'')+x,''),v)).rows;
 let account={id:'creator',name:'Creador'},globalOwner=false;
@@ -45,6 +46,33 @@ assert.ok(!adminUi.includes('ELIMINAR · ORGANIZADOR')&&!personalUi.includes('EL
 assert.ok(personalUi.includes('async function administrationEvents(){await claimLegacyOwnedTournament();'),'Admin list first recovers the legacy owner');
 assert.ok(scoreCard.includes('administrationEvents=await root.GSCPersonalEvents?.administrationEvents?.()||[]'),'Score Card loads recovered administration authority');
 assert.ok(scoreCard.includes("button.textContent=authority?.event_kind==='private'?'ELIMINAR GRUPO':'ELIMINAR TORNEO'"),'Score Card exposes the proper delete label');
+// R185: delete only the selected published round, after explicit double confirmation.
+for(const kind of ['tournament','private']){
+ const scoped=eventScope(sql,kind);
+ const [parent]=await scoped`INSERT INTO live_tournaments(name,organizer_secret_hash,viewer_token_hash,join_code_hash,expires_at) VALUES('ROUND PARENT',${'round-org-'+kind},${'round-view-'+kind},${'round-join-'+kind},now()+interval '1 day') RETURNING id`;
+ await sql`INSERT INTO gsc_personal_events(event_id,event_kind,owner_account_id) VALUES(${parent.id}::uuid,${kind},'round-organizer')`;
+ const createStream=async(label,eventId)=>(await scoped`INSERT INTO live_streams(round_client_id,scope,group_label,consent,publisher_secret_hash,viewer_token_hash,tournament_id,current_snapshot,expires_at) VALUES(${'round-'+label+'-'+kind},'group',${label},'{}',${'pub-'+label+'-'+kind},${'viewer-'+label+'-'+kind},${eventId}::uuid,'{}',now()+interval '1 day') RETURNING id`)[0];
+ const independent=await createStream('Independent',null),selected=await createStream('Selected',parent.id),sibling=await createStream('Sibling',parent.id);
+ const payload=(stream,label)=>({action:'delete-round',roundId:stream.id,eventKind:kind,confirmLabel:label,confirmedTwice:true});
+ globalOwner=false;account={id:'outsider',name:'Other'};
+ assert.equal((await call(handleEventAdministration,payload(independent,'Independent'))).code,'ROUND_ADMIN_REQUIRED');
+ assert.equal((await call(handleEventAdministration,payload(selected,'Selected'))).code,'EVENT_ADMIN_REQUIRED');
+ globalOwner=true;account={id:'app-owner',name:'Propietario'};
+ assert.equal((await call(handleEventAdministration,{...payload(independent,'Independent'),confirmedTwice:false})).code,'ROUND_DOUBLE_CONFIRMATION_REQUIRED');
+ assert.equal((await call(handleEventAdministration,payload(independent,'wrong'))).code,'ROUND_DOUBLE_CONFIRMATION_REQUIRED');
+ assert.equal((await call(handleEventAdministration,payload(independent,'Independent'))).status,200);
+ assert.equal((await call(handleEventAdministration,payload(independent,'Independent'))).status,404);
+ globalOwner=false;account={id:'round-organizer',name:'Organizer'};
+ assert.equal((await call(handleEventAdministration,payload(selected,'Selected'))).status,200);
+ assert.equal((await scoped`SELECT count(*)::int AS n FROM live_streams WHERE id=${sibling.id}::uuid`)[0].n,1,'Sibling round remains');
+ assert.equal((await scoped`SELECT count(*)::int AS n FROM live_tournaments WHERE id=${parent.id}::uuid`)[0].n,1,'Parent event remains');
+}
+globalOwner=true;account={id:'app-owner',name:'Propietario'};
+let relayed;
+const relayId='11111111-1111-4111-8111-111111111111';let relayStatus,relayResult;
+await handleEventAdministration({method:'POST',headers:{host:'localhost:8877',origin:'http://localhost:8877',cookie:'owner-session'},body:{action:'remote-delete-round',source:'lab',roundId:relayId,eventKind:'private',confirmLabel:'GROUP',confirmedTwice:true}},{setHeader(){},status(n){relayStatus=n;return this},json(v){relayResult=v}},()=>sql,owner,identity,async(url,options)=>{relayed={url,options};return Response.json({ok:true,roundId:relayId})},{});
+assert.equal(relayStatus,200);assert.equal(relayResult.ok,true);assert.equal(relayed.url,'https://golf-sc-gt-lab.vercel.app/api/event-administration');assert.equal(relayed.options.headers.Cookie,'owner-session');assert.deepEqual(JSON.parse(relayed.options.body),{action:'delete-round',roundId:relayId,eventKind:'private',confirmLabel:'GROUP',confirmedTwice:true});
+console.log('PASS R185 round deletion: owner independent; organizer selected group; outsiders denied; double confirmation required; sibling/event retained; replay denied; exact authenticated peer target.');
 await db.close();console.log('PASS event administration: owner full access; creator own event; recipient-bound single redemption; other player denied; delegates cannot delegate; name required; physical deletion without archive; exact 24h expiry; owner retained.');
 
 // R152: one confirmation, no typed name/reason, no deletion before its click.
@@ -67,3 +95,4 @@ const cardContext={escape:s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','
 vm.createContext(cardContext);vm.runInContext(cardSource+';this.renderAdministrationCard=administrationCard;',cardContext);
 for(const canAdminister of [false,true]){const markup=cardContext.renderAdministrationCard({id:'event-1',source:'production',event_kind:'tournament',name:'Friends',canAdminister,joinCode:'ABC123'});assert.match(markup,/<h3>Friends<\/h3>/);assert.match(markup,/SCORES · GENERAL/);assert.match(markup,/SCORES · CATEGORÍAS/);assert.match(markup,/ID DE TORNEO/);assert.match(markup,/COMPARTIR/);assert.match(markup,/ELIMINAR/);assert.doesNotMatch(markup,/TORNEO · PRODUCCIÓN|CONSULTA DE SCORES|ELIMINAR REQUIERE AUTORIZACIÓN DEL ORGANIZADOR/)}
 console.log('PASS R183 event administration cards: title, Scores, code and actions retained; metadata removed.');
+

@@ -582,3 +582,7 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - Recuperar eventos del propietario original cuando falta la fila de membresía; conservar denegación a terceros y códigos de uso único.
 - Corregir sincronización de release en `release.json`, `service-worker.js` e `index-grupal.html`.
 - Automático: pruebas PostgreSQL R162, permisos personales, R158 Scores grupo, administración y Gate 0 PASS. Build Preview y recorrido visual completo siguen pendientes; Producción intacta.
+
+
+## Regla global permanente — acceso libre desde la raíz
+Las rutas de entrada de la aplicación y PWA abren sin credenciales de propietario. La autenticación se conserva dentro de operaciones privadas. Se verifica mediante G0-12 y `test-global-public-entry-policy.mjs`.

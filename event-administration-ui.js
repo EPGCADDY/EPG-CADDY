@@ -23,6 +23,23 @@ function administrationCard(e){
  return '<article data-event-id="'+escape(e.id)+'" data-event-source="'+escape(e.source)+'"><h3>'+escape(e.name)+'</h3>'+scores+(e.joinCode?'<p>ID DE '+kind+'</p><output data-tournament-code>'+escape(e.joinCode)+'</output>':'')+sharing+'<p data-event-status="'+key+'" role="status" aria-live="polite"></p>'+deleting+'</article>';
 }
 let refreshSequence=0,cachedLocal={ok:false},cachedDirectory={ok:false},cachedCodes={},lastRowsSignature='';
+function globalRoundCard(group,rows){const key=escape(group.source+':'+group.event_kind+':'+group.id);return '<article><h3>'+escape(group.group_label)+'</h3><p>'+escape(group.source==='lab'?'LABORATORIO':'PRODUCCIÓN')+'</p><p>ID DE RONDA: '+escape(group.id)+'</p>'+(group.tournament_id?'<p>EVENTO: '+escape(rows.find(e=>e.id===group.tournament_id&&e.source===group.source)?.name||group.tournament_id)+'</p>':'<p>RONDA INDEPENDIENTE</p>')+(cachedLocal.source==='lab'?'<button class="danger" data-delete-round="'+key+'">ELIMINAR RONDA</button>':'')+'</article>'}
+function removeRound(group){
+ if(!group)return;let busy=false;
+ const details='<p>'+escape(group.group_label)+'</p><p>ID DE RONDA: '+escape(group.id)+'</p><p>'+escape(group.source==='lab'?'LABORATORIO':'PRODUCCIÓN')+'</p>';
+ open('<h2>CONFIRMAR ELIMINAR RONDA</h2>'+details+'<p>¿DESEAS ELIMINAR ESTA RONDA?</p><button type="button" id="cancelRoundDelete">CANCELAR</button><button class="danger" id="confirmRoundStep">CONTINUAR</button>');
+ $('cancelRoundDelete').onclick=()=>$('actionDialog').close();
+ $('confirmRoundStep').onclick=()=>{
+  open('<h2>CONFIRMACIÓN FINAL</h2>'+details+'<p>LA RONDA Y SUS SCORES SE ELIMINARÁN DEFINITIVAMENTE.</p><button type="button" id="cancelRoundDelete">CANCELAR</button><button class="danger" id="confirmRoundDelete">ELIMINAR RONDA</button>');
+  $('cancelRoundDelete').onclick=()=>$('actionDialog').close();
+  $('confirmRoundDelete').onclick=async()=>{
+   if(busy)return;busy=true;const button=$('confirmRoundDelete');button.disabled=true;
+   const local=group.source===cachedLocal.source,result=await call(local?'delete-round':'remote-delete-round',{roundId:group.id,eventKind:group.event_kind,confirmLabel:group.group_label,confirmedTwice:true,...(local?{}:{source:group.source})});
+   showStatus(result,'actionStatus');
+   if(result.ok){cachedDirectory.groups=(cachedDirectory.groups||[]).filter(row=>row.id!==group.id||row.source!==group.source||row.event_kind!==group.event_kind);$('actionDialog').close();await refresh()}else{busy=false;button.disabled=false}
+  };
+ };
+}
 async function refresh({automatic=false,signal}={}){
  const sequence=++refreshSequence;if(!automatic)$('status').textContent='CARGANDO TORNEOS Y GRUPOS…';
  await window.GSCPersonalEvents.claimLegacyOwnedTournament();
@@ -38,9 +55,10 @@ async function refresh({automatic=false,signal}={}){
  if(automatic&&(signature===lastRowsSignature||document.querySelector('dialog[open],#gscWhatsAppInvitation,[data-gsc-dialog-backdrop]')))return{ok:directory.ok,partial:directory.partial};
  lastRowsSignature=signature;
  if(!directory.ok||directory.partial)$('status').textContent+=' · LISTA GLOBAL INCOMPLETA · REINTENTO AUTOMÁTICO';else $('status').textContent='LISTA GLOBAL COMPLETA · LABORATORIO + PRODUCCIÓN';
- $('events').innerHTML='<h2>TORNEOS Y GRUPOS</h2>'+rows.map(e=>administrationCard(e)).join('')+'<h2>RONDAS GLOBALES EN CURSO</h2>'+(cachedDirectory.groups||[]).map(group=>'<article><h3>'+escape(group.group_label)+'</h3><p>'+escape(group.source==='lab'?'LABORATORIO':'PRODUCCIÓN')+'</p><p>ID DE RONDA: '+escape(group.id)+'</p>'+(group.tournament_id?'<p>EVENTO: '+escape(rows.find(e=>e.id===group.tournament_id&&e.source===group.source)?.name||group.tournament_id)+'</p>':'<p>RONDA INDEPENDIENTE</p>')+'</article>').join('');
+ $('events').innerHTML='<h2>TORNEOS Y GRUPOS</h2>'+rows.map(e=>administrationCard(e)).join('')+'<h2>RONDAS GLOBALES EN CURSO</h2>'+(cachedDirectory.groups||[]).map(group=>globalRoundCard(group,rows)).join('');
  if(!rows.length)$('events').insertAdjacentHTML('beforeend','<p>'+(!directory.ok||directory.partial||!result.ok?'NO SE PUDO COMPROBAR LA LISTA COMPLETA · REINTENTA':'NO HAY TORNEOS ACTIVOS NI GRUPOS DISPONIBLES PARA TU CUENTA.')+'</p>');
  document.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>remove(rows.find(e=>e.source+':'+e.event_kind+':'+e.id===b.dataset.delete)));
+ document.querySelectorAll('[data-delete-round]').forEach(b=>b.onclick=()=>removeRound((cachedDirectory.groups||[]).find(g=>g.source+':'+g.event_kind+':'+g.id===b.dataset.deleteRound)));
  document.querySelectorAll('[data-copy-tournament]').forEach(b=>b.onclick=()=>copyTournamentId(b,codes[b.dataset.copyTournament]));
  document.querySelectorAll('[data-share-event]').forEach(b=>b.onclick=()=>shareEvent(b,rows.find(e=>(e.canAdminister||e.joinCode)&&e.source+':'+e.event_kind+':'+e.id===b.dataset.shareEvent)));
  const params=new URLSearchParams(location.search),requested=rows.find(e=>e.canAdminister&&e.id===params.get('eventId')&&e.event_kind===params.get('eventKind'));if(requested&&!requestedEventOpened&&!automatic){requestedEventOpened=true;remove(requested)}

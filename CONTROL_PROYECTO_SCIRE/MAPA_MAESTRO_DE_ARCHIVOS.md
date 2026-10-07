@@ -1,5 +1,18 @@
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
+## R187 · Scores Torneo de la tarjeta activa
+
+| Archivo | Función | Verificación |
+|---|---|---|
+| `shortcuts-ui.js` | SCORES TORNEO abre el evento de la tarjeta activa; desde otras pantallas retorna a dicha tarjeta. | `test-lab-shortcuts-navigation.mjs` |
+| `index-grupal.html` | Enruta el regreso hacia la apertura del torneo de la Score Card. | `test-lab-shortcuts-navigation.mjs`, `test-scores-tournament-recovery.mjs` |
+| `live-hub.js` | Impide que `shortcut=scores` abra el directorio global sin evento asignado; dirige rutas antiguas del catálogo a Administración. | `test-lab-shortcuts-navigation.mjs` |
+| `release.json`, `service-worker.js` | Sellos R187 de la entrega candidata. | Gate de release |
+| `AGENTS.md`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `MATRIZ_GATE_0_PROYECTO.md/.json` | Conservan la regla de entrada libre permanente y la puerta G0-12 canónica. | `project-quality-gate.mjs` |
+| `scripts/project-quality-gate.mjs`, `test-global-public-entry-policy.mjs` | Exigen doce puertas únicas y prueban que sólo una acción de cuenta explícita abre el login. | G0-12 |
+| `test-lab-deployment-gate.mjs`, `vercel.json` | Integran y verifican la puerta pública en el build sin omitir calidad, roadmap, inventario ni regresión. | Gate de despliegue LAB |
+| `ACEPTACION_R187_SCORES_TORNEO_SCOPE.md`, ambos ROADMAPS, registro de reincidencias e inventario V311 | Fijan alcance, pruebas, límites y estado de publicación. | Gates documental, roadmap e inventario |
+
 ## R147 · entrada global sin credenciales · 30 septiembre 2026
 
 | Archivos | Función | Protección |

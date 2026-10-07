@@ -29,8 +29,8 @@ for(const path of controls){if(!existsSync(path))errors.push(`Falta control obli
 if(matrix.logic!=='all')errors.push('La lógica del cierre debe ser AND/all.');
 if(!Array.isArray(matrix.inputs)||matrix.inputs.length!==7)errors.push('Gate 0 debe cerrar exactamente siete entradas.');
 const gateIds=(matrix.gates||[]).map(gate=>gate.id);
-if(gateIds.length!==11||new Set(gateIds).size!==11)errors.push('La matriz debe conservar once puertas únicas G0-01…G0-11.');
-for(const id of ['G0-02','G0-03','G0-04','G0-05','G0-06','G0-07','G0-08','G0-09','G0-10','G0-11']){
+if(gateIds.length!==12||new Set(gateIds).size!==12)errors.push('La matriz debe conservar doce puertas únicas G0-01…G0-12.');
+for(const id of ['G0-02','G0-03','G0-04','G0-05','G0-06','G0-07','G0-08','G0-09','G0-10','G0-11','G0-12']){
   if(!gateIds.includes(id))errors.push(`Falta la puerta ${id}.`);
 }
 
@@ -74,4 +74,4 @@ for(const path of ['ROADMAP_OVERALL.md','ROADMAP_A_DETALLE.md','GOLF_SCORE_CARD_
 }
 
 if(errors.length)fail(errors);
-writeSync(1,`PROJECT_QUALITY_GATE PASS controls=${controls.length} inputs=7 gates=11 baseline=${baseline.slice(0,12)} production=${verifiedMain.slice(0,12)}\n`);
+writeSync(1,`PROJECT_QUALITY_GATE PASS controls=${controls.length} inputs=7 gates=12 baseline=${baseline.slice(0,12)} production=${verifiedMain.slice(0,12)}\n`);

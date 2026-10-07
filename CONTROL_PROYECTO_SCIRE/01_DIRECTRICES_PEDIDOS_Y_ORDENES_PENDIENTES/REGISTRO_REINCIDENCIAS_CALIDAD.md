@@ -1509,3 +1509,7 @@ Causa raíz: el directorio público solo consultaba live_tournaments; los grupos
 
 ## R184 · Correcciones retiradas por publicación divergente
 Causa: R182/R183 partieron de 6cbfda4 y no de la purga publicada 27c8ae4; retiraron el borrado físico y la instalación única de funciones. Escape: se validó la rama individual sin comparar contra ambos commits públicos. Control: integración con ambos padres; test-event-total-purge.mjs y comprobación de SHA idéntico en ambos dominios antes de cierre. Estado: integración local, publicación y consultas concurrentes pendientes.
+
+## R187 · SCORES TORNEO abría el directorio global desde el menú · 6 octubre 2026
+
+Causa: el despacho del atajo `tournaments` enviaba a `live-hub.html?directory=1`, confundiendo la tabla de jugadores del torneo ligado a la Score Card con el catálogo global. Escape: las pruebas de recuperación cubrían el botón de la tarjeta, pero no el dispatcher del menú ni el caso sin evento asignado. Control permanente: `test-lab-shortcuts-navigation.mjs` verifica que el menú invoque la Score Card activa, que el retorno desde Hub vuelva a ella y que `shortcut=scores` no renderice el directorio cuando no hay asociación. Administración conserva pruebas separadas de su directorio global. Estado: corrección R187 integrada con el commit canónico 46555 sobre la entrega R185; build completo y gates documentales, inventario y release PASS. Preview y revisión pública Playwright de cuatro transiciones pendientes; Producción sin cambios.
