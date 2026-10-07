@@ -4118,9 +4118,9 @@ El botón público de Administración estaba disabled cuando no se reconocía au
 |---|---|---|
 | whatsapp-invitations.js | Mensaje de torneo incluye enlace directo con ID, código y origen de ambiente; grupos conservan el enlace general. | R159 valida URL, código final y origen LAB/Producción. |
 | personal-events.js | Pasa el ID del evento y, después de validar view-code/read, prepara Registro directamente. | R156 valida evento, nombre, campo, modalidad y rechazo de código inválido. |
-| index-grupal.html | Usa el escritor de preparación existente para precargar campo, modalidad y nombre, sin registrar jugadores automáticamente. | Conserva confirmación del usuario y escritor oficial. |
-| release.json, service-worker.js | Marcan R182 e invalidan caché instalada para ofrecer la versión nueva. | Sellos de versión deben coincidir antes de Preview. |
-| Pruebas R159, R156, R24 y revisiones R159/R161 | Protegen WhatsApp, grupos, torneo y mensajes visuales. | R159/R156/R24 PASS local; navegador y Preview pendientes. |
+| index-grupal.html | Usa el escritor de preparación existente para precargar campo, modalidad y nombre, sin registrar jugadores automáticamente; metadato y distintivo visibles ahora dicen R182. | Conserva confirmación del usuario y escritor oficial; sello visible coincide con release.json. |
+| release.json, service-worker.js | Marcan R182, incluido RELEASE_FALLBACK, e invalidan caché instalada para ofrecer la versión nueva. | Sellos de versión deben coincidir antes de Preview. |
+| Pruebas R159, R156, R24, test-lab-private-round-share-flow.mjs y revisiones R159/R161 | Protegen enlace directo precargado del torneo, flujo intacto de grupos, y mensajes visuales. | R159/R156/R24/R147 PASS; navegador y Preview en validación. |
 | Aceptación R182, RC-111, MAPA, ambos ROADMAPS, sello V311 | Dejan alcance, defecto, archivos y versión documentados. | roadmap-gate e inventory-gate obligatorios. |
 
 Producción R181 permanece intacta hasta que R182 supere los controles aplicables.

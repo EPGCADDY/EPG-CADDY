@@ -2719,3 +2719,7 @@ R177 cobertura: `test-lab-code-entry.mjs` comprueba el alcance del viewer leyend
 - CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md: RC-111 y control permanente.
 - ROADMAP_OVERALL.md, ROADMAP_A_DETALLE.md: registro de versión y rutas afectadas.
 - CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json: sello actualizado tras completar el candidato.
+
+- `index-grupal.html`: pantalla principal de Score Card; contiene sello de release y distintivo visible, que deben coincidir con `release.json` en cada Preview. R182 corrigió ambos a R182.
+
+- `test-lab-private-round-share-flow.mjs`: regresión de invitaciones WhatsApp para grupo y torneo; verifica enlace directo con evento/código y fallback de código separado.

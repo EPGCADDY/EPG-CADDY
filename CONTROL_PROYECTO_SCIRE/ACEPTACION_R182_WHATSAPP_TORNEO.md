@@ -29,3 +29,5 @@ Los enlaces de grupos conservan el acceso general actual. Los torneos compartido
 ## Evidencia
 
 test-r159-whatsapp-two-messages.mjs, test-r156-tournament-invitation.mjs y test-r24-event-creation-feedback.mjs pasan localmente en el candidato. node --check whatsapp-invitations.js y node --check personal-events.js pasan. WhatsApp recibido, iPhone físico y Preview real aún no verificados.
+
+- `test-lab-private-round-share-flow.mjs` cubre la invitación emitida al crear torneo y garantiza el enlace precargado, mientras el grupo sigue usando el registro general.
