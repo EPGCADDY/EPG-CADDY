@@ -1495,3 +1495,11 @@ Causa raíz: pwa-launch.html añadía inicio=1 y el guard directHome trataba sou
 ## R181 · Grupos globales ausentes del Organizador libre
 
 Causa raíz: el directorio público solo consultaba live_tournaments; los grupos provenían de event-administration y quedaban filtrados por autoridad. Escape: pruebas de listados globales solo incluían torneos. Control permanente: test-r181-global-groups-directory.mjs en scripts/build-manual-lab.mjs; consulta anónima de ambos tipos y orígenes, colisión de ID, código útil de grupo, Scores público, 101 streams íntegros y exclusión de datos privados. Evidencia navegador: 120 eventos/60 grupos con API administrativa 403, compartir y Scores cross-env PASS. No se alteran permisos de eliminación ni escritura; no se afirma carga de tarjetas que aún residen únicamente en teléfonos.
+
+## RC-R183 · REGISTRO TAPA SCORE CARD ACTIVA AL REABRIR
+
+- Defecto: cerrar y volver a abrir la aplicación llevaba a Registro con una Score Card vigente.
+- Causa: `inicio=1` llamaba a `openRegistrationPreservingActiveRound()` sin comprobar si había una ronda recuperable.
+- Control: Inicio sólo abre Registro sin ronda recuperable; la nueva ronda explícita conserva su flujo.
+- Evidencia automatizada: `test-r183-active-scorecard-reopen.mjs` y `test-v368-canonical-home-entry.mjs`.
+- Estado: implementación R183; publicación sujeta a verificación de despliegue.

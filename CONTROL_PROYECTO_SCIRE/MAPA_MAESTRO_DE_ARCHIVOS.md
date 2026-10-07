@@ -2706,3 +2706,10 @@ R177 flujo de código: `api/personal-events.js` emite código viewer a organizad
 
 
 R177 cobertura: `test-lab-code-entry.mjs` comprueba el alcance del viewer leyendo la sesión del token canjeado.
+
+## R183 · reapertura de Score Card
+
+- `index-grupal.html`: decide si la entrada Inicio conserva una ronda recuperable o abre Registro.
+- `service-worker.js`, `release.json`: invalidación de caché y versión R183.
+- `test-r183-active-scorecard-reopen.mjs`, `test-v368-canonical-home-entry.mjs`: contrato de reapertura y rutas.
+- `CONTROL_PROYECTO_SCIRE/ACEPTACION_R183_REAPERTURA_SCORECARD.md`: criterios funcionales.

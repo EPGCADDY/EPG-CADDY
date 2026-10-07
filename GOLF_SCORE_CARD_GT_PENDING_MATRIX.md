@@ -582,3 +582,9 @@ La ejecución activa es **28. GOLF SCORE CARD GT. LIVE V353 · CENTRO LIVE**. Pr
 - Recuperar eventos del propietario original cuando falta la fila de membresía; conservar denegación a terceros y códigos de uso único.
 - Corregir sincronización de release en `release.json`, `service-worker.js` e `index-grupal.html`.
 - Automático: pruebas PostgreSQL R162, permisos personales, R158 Scores grupo, administración y Gate 0 PASS. Build Preview y recorrido visual completo siguen pendientes; Producción intacta.
+
+## R183 · reapertura de tarjeta activa
+
+- ✅ Inicio no muestra Registro si se recupera una ronda activa.
+- ✅ Registro inicial permanece disponible sin ronda; nueva ronda explícita conserva su entrada.
+- ⏳ Verificar en entornos publicados que `release.json` devuelve R183 y que la pantalla abre con ronda persistida.

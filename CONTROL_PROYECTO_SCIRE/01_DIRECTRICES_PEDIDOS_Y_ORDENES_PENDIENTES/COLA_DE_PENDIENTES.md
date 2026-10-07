@@ -642,3 +642,9 @@ Enlazar Golf Score Card GT con **Apple Watch** y, en una fase compatible posteri
 - Probar retorno y persistencia por vista; cero superposiciones y cero certificaciones inferidas.
 - Registrar medio exacto de prueba. El navegador Chrome remoto no equivale a iPhone físico.
 - Mantener Producción intacta.
+
+## R183 · reapertura directa de Score Card activa
+
+- ✅ Implementación: Inicio conserva la tarjeta guardada y la muestra directamente.
+- ✅ Sin ronda activa, Registro inicial; `nueva_ronda=1`, alta explícita sin cambio.
+- ⏳ Despliegue y comprobación de la versión publicada.
