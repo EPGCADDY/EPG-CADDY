@@ -20,6 +20,8 @@ assert.match(hub,/if\(\["general","categories"\]\.includes\(requestedMonitor\)\)
 const rowsSource=ui.match(/function administrationRows\(local,directory\)\{[\s\S]*?\n\}/)?.[0],hrefSource=ui.match(/function scoresHref\(e,monitor\)\{[^\n]*\}/)?.[0],cardSource=ui.match(/function administrationCard\(e\)\{[\s\S]*?\n\}/)?.[0];
 assert.ok(rowsSource&&hrefSource&&cardSource);
 const context={cachedLocal:{source:'lab'},escape:s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;')};vm.createContext(context);vm.runInContext(rowsSource+';'+hrefSource+';'+cardSource,context);
-const remoteRows=context.administrationRows({ok:true,source:'lab',events:[remoteEvent]}, {ok:true,events:[]});assert.equal(remoteRows[0].source,'production');assert.equal(remoteRows[0].canAdminister,true);
-const card=context.administrationCard(remoteRows[0]);assert.match(card,/ELIMINAR/);assert.match(card,/COMPARTIR CÓDIGO/);assert.match(card,/SCORES · GENERAL/);assert.match(card,/SCORES · CATEGORÍAS/);assert.match(card,/directoryEvent=directory_private_production_11111111-1111-4111-8111-111111111111/);
-console.log('PASS R177 federación LAB/Producción: lista autorizada cross-device, entorno y tipo preservados, share/delete reenviados con sesión al origen correcto, rechazo del mismo origen, Scores General/Categorías, y enlaces de grupos al entorno propietario.');
+const remoteTournament={...remoteEvent,event_kind:'tournament',name:'Friends Cup'};
+const remoteRows=context.administrationRows({ok:true,source:'lab',events:[remoteTournament]}, {ok:true,events:[]});assert.equal(remoteRows[0].source,'production');assert.equal(remoteRows[0].canAdminister,true);
+const card=context.administrationCard(remoteRows[0]);assert.match(card,/ELIMINAR/);assert.match(card,/COMPARTIR CÓDIGO/);assert.match(card,/SCORES · GENERAL/);assert.match(card,/SCORES · CATEGORÍAS/);assert.match(card,/directoryEvent=directory_production_11111111-1111-4111-8111-111111111111/);
+assert.equal(context.administrationRows({ok:true,source:'lab',events:[remoteEvent]}, {ok:true,events:[]}).length,0,'private group remains relayable but is excluded from tournament Administration');
+console.log('PASS R177 federación LAB/Producción: lista autorizada cross-device, torneo conserva entorno, compartir/eliminar y Scores; grupos privados conservan relay pero no se renderizan en Administración.');
