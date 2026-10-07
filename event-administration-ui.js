@@ -15,12 +15,12 @@ function administrationRows(local,directory){
 }
 function scoresHref(e,monitor){const same=e.source===cachedLocal.source,base=same?'':e.source==='lab'?'https://golf-sc-gt-lab.vercel.app':'https://epg-caddy.vercel.app';return '/live-hub.html?directoryEvent='+encodeURIComponent('directory_'+(e.event_kind==='private'?'private_':'')+e.source+'_'+e.id)+'&monitor='+monitor}
 function administrationCard(e){
- const authorized=e.canAdminister,origin=e.source==='lab'?'LABORATORIO':'PRODUCCIÓN',key=escape(e.source+':'+e.event_kind+':'+e.id),kind=e.event_kind==='private'?'GRUPO':'TORNEO';
+ const authorized=e.canAdminister,key=escape(e.source+':'+e.event_kind+':'+e.id),kind=e.event_kind==='private'?'GRUPO':'TORNEO';
  const scores='<nav aria-label="SCORES '+escape(e.name)+'"><a href="'+escape(scoresHref(e,'general'))+'">SCORES · GENERAL</a><a href="'+escape(scoresHref(e,'categories'))+'">SCORES · CATEGORÍAS</a></nav>';
  const sharing=authorized||e.joinCode?'<button data-share-event="'+key+'">COMPARTIR CÓDIGO</button>':'<button disabled aria-label="Compartir requiere permiso de organizador">COMPARTIR · ORGANIZADOR</button>';
  const deleteLabel='ELIMINAR '+kind;
  const deleting='<button class="danger" data-delete="'+key+'">'+deleteLabel+'</button>';
- return '<article data-event-id="'+escape(e.id)+'" data-event-source="'+escape(e.source)+'"><h3>'+escape(e.name)+'</h3><p>'+kind+' · '+origin+'</p>'+(!authorized?'<p>CONSULTA DE SCORES · ELIMINAR REQUIERE AUTORIZACIÓN DEL ORGANIZADOR</p>':'')+scores+(e.joinCode?'<p>ID DE '+kind+'</p><output data-tournament-code>'+escape(e.joinCode)+'</output>':'')+sharing+'<p data-event-status="'+key+'" role="status" aria-live="polite"></p>'+deleting+'</article>';
+ return '<article data-event-id="'+escape(e.id)+'" data-event-source="'+escape(e.source)+'"><h3>'+escape(e.name)+'</h3>'+scores+(e.joinCode?'<p>ID DE '+kind+'</p><output data-tournament-code>'+escape(e.joinCode)+'</output>':'')+sharing+'<p data-event-status="'+key+'" role="status" aria-live="polite"></p>'+deleting+'</article>';
 }
 let refreshSequence=0,cachedLocal={ok:false},cachedDirectory={ok:false},cachedCodes={},lastRowsSignature='';
 async function refresh({automatic=false,signal}={}){
