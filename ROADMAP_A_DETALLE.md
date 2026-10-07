@@ -4130,3 +4130,5 @@ El botón público de Administración estaba disabled cuando no se reconocía au
 - `personal-events.js`: copiar anuncia CÓDIGO COPIADO; si falla, conserva el mensaje de error.
 - `index-grupal.html`: el resumen muestra la modalidad elegida y ofrece CAMBIAR MODALIDAD, preservando jugadores al volver.
 - `test-lab-edit-round-mode.mjs`: agrega regresión para ambas solicitudes. Release/caché sincronizados en `release.json`, `index-grupal.html` y `service-worker.js`.
+
+R183 gate update (2026-10-07): se regeneraron los tres inventarios V311 después de los cambios de R183; el lock registra sus tamaños y SHA-256.
