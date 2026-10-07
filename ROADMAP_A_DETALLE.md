@@ -1,4 +1,6 @@
 ## R190 · Cambio de campo desde Registro y código de ingreso del torneo · 7 de octubre de 2026
+- Control de versión R190: `index-grupal.html` y `release.json` publican `20261007-R190`.
+
 - Registro de esta actualización R190: `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
 
 - `index-grupal.html`: Registro mantiene los campos seleccionables al editar la ronda activa. Al confirmar, guarda el campo, recalcula el neto con el campo elegido, conserva gross y descarta el cierre oficial anterior para regenerarlo correctamente.
