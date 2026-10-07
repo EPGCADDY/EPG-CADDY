@@ -1,3 +1,10 @@
+## R190 · Registro de campo y código de entrada de torneo · 7 de octubre de 2026
+
+- Estado: correcciones integradas en la entrega R190.
+- En Registro, cambiar campo durante edición guarda el campo seleccionado, conserva los gross y renueva los netos y el resultado oficial.
+- Al crear torneo, no hay acceso directo a Score Card: `CÓDIGO INGRESO` copia el código, sin navegación ni asignación automática.
+- Controles: `test-lab-edit-round-mode.mjs` y `test-organizer-tournament-entry.mjs`.
+
 # Golf Score Card GT — Roadmap Maestro de Pendientes y Upgrades
 
 **Corte vigente:** V361 sincroniza el parser natural V360 con score visible y persistido inmediatamente durante el mismo dictado, continuidad de ronda, AI UNIVERSAL `voiceOnly`, voz masculina recuperable y circuito Cedar. Auditoría, Preview y prueba física son puertas separadas. LIVE V353 conserva su E2E aprobado

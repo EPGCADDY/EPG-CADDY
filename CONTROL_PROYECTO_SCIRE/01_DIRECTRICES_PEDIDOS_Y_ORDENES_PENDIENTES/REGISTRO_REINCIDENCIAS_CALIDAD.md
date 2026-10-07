@@ -1523,3 +1523,13 @@ Causa: el despacho del atajo `tournaments` enviaba a `live-hub.html?directory=1`
 - Control permanente: si la sesión de código responde `ACCOUNT_UNAUTHORIZED`, se valida en la base la cookie de dispositivo y se usa sólo si es válida; después `eventAdminAuthority()` vuelve a exigir creador/organizador. Terceros siguen denegados.
 - Evidencia: `test-event-administration.mjs` PASS con borrado API completo y terceros denegados; `test-lab-device-event-identity.mjs` PASS con espectador de solo lectura. Primer build señaló un escape de cookie mal formado; corregido y ambas pruebas vuelven a PASS. Rebuild LAB pendiente.
 - Estado: CORREGIDO EN CANDIDATO R188-B1; no publicado.
+
+
+## RC-113 · torneo creado abría Score Card sin código; campo bloqueado al editar Registro · 7 octubre 2026
+
+- Defecto: `CONTINUAR AL SCORE CARD` abría directamente la tarjeta y el código no era requerido; al editar el Registro de una ronda activa, las opciones de campo aparecían deshabilitadas.
+- Causa raíz: el resultado de creación enlazaba a `openAssignedCard()`; el render de campo deshabilitaba los radios en `rosterEditMode`, y el guardado de ronda editada no persistía `draftCourse`.
+- Escape: las pruebas anteriores cubrían creación, cambio de modalidad y flujo de código, pero no que el campo siguiera seleccionable durante edición ni que el torneo no saltara el ingreso de código.
+- Control permanente: `test-organizer-tournament-entry.mjs` verifica que el torneo no renderice continuación directa, que `CÓDIGO INGRESO` sólo copie y que el flujo de grupo privado continúe; `test-lab-edit-round-mode.mjs` verifica campo editable, persistencia, gross conservado y renovación del cierre oficial.
+- Corrección: se elimina la acción de continuación directa para torneos y la navegación automática al volver desde WhatsApp; se libera el selector del Registro y se guarda el campo antes de recalcular los scores netos.
+- Estado: INTEGRADO EN R190; ejecución automatizada y publicación registradas por los gates de despliegue.

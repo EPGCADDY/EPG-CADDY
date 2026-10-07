@@ -1,8 +1,8 @@
 {
-  "version": "R188-B1-DEVICE-IDENTITY-DELETE",
-  "generatedAt": "2026-10-07T14:40:00Z",
+  "version": "R190-REGISTRATION-FIELD-TOURNAMENT-CODE-ENTRY",
+  "generatedAt": "2026-10-07T15:25:00Z",
   "sourceFileCount": 920,
-  "sourceDigest": "a3cc6a26074fe056f72d1d1ced29f922ce92db37e414e2dd87811e30a844d6d1",
+  "sourceDigest": "63c053734df4f76a84d8cd4e42903f8052e4b274f10d769543e4d87ab84cfe83",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",

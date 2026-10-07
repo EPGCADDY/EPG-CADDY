@@ -1,3 +1,12 @@
+## R190 · Campo editable desde Registro y entrada controlada al torneo
+
+| Archivo | Función | Verificación |
+|---|---|---|
+| `index-grupal.html` | Campo seleccionable al editar ronda; aplica el campo confirmado, conserva gross y renueva netos/cierre oficial. | `test-lab-edit-round-mode.mjs` |
+| `personal-events.js` | Retira continuación directa de torneo; `CÓDIGO INGRESO` copia el código sin navegar; no autoingresa al volver de WhatsApp. | `test-organizer-tournament-entry.mjs` |
+| `release.json` | Identifica la release R190. | Gate de release |
+| `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `INVENTARIOS_V311.lock.json` | Documentan alcance, regresión, estado y sello de archivos de R190. | Gates documental y de inventario |
+
 # Mapa maestro de todos los archivos · Golf Score Card GT
 
 ## R187 · Scores Torneo de la tarjeta activa
