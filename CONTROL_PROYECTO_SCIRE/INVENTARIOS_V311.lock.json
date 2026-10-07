@@ -1,8 +1,8 @@
 {
   "version": "R188-B1-DEVICE-IDENTITY-DELETE",
-  "generatedAt": "2026-10-07T14:39:00Z",
+  "generatedAt": "2026-10-07T14:40:00Z",
   "sourceFileCount": 920,
-  "sourceDigest": "acd88b5dd5913495447d65e7652335ee5178a8cb71f91530461e665911e20748",
+  "sourceDigest": "a3cc6a26074fe056f72d1d1ced29f922ce92db37e414e2dd87811e30a844d6d1",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",

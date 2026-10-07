@@ -4136,4 +4136,4 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 
 ## R188-B1 · borrado de torneo sin sesión propietaria vigente · 7 octubre 2026
 
-Una cookie de código caducada ya no bloquea una identidad de dispositivo válida. La API sigue comprobando que esa identidad sea creadora u organizadora autorizada del torneo. `test-event-administration.mjs` valida el borrado desde la confirmación única y mantiene el rechazo de terceros. Candidato probado de forma dirigida; gates y publicación pendientes.
+Una cookie de código caducada ya no bloquea una identidad de dispositivo válida. La API sigue comprobando que esa identidad sea creadora u organizadora autorizada del torneo. `test-event-administration.mjs` valida el borrado desde la confirmación única y mantiene el rechazo de terceros; `test-lab-device-event-identity.mjs` mantiene espectador en solo lectura. El primer build detectó un escape incorrecto de cookie, corregido. Gates y publicación pendientes.

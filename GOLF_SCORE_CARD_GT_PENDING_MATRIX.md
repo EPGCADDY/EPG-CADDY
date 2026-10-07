@@ -590,4 +590,4 @@ Las rutas de entrada de la aplicación y PWA abren sin credenciales de propietar
 
 ## R188-B1 · desbloquear eliminación del torneo propio
 - Al confirmar borrar, recuperar identidad de dispositivo validada cuando la cookie de sesión ya venció; mantener permiso por torneo y rechazo a terceros.
-- `test-event-administration.mjs`: PASS dirigido. Gates integrales, LAB y publicación pendientes.
+- `test-event-administration.mjs` y `test-lab-device-event-identity.mjs`: PASS dirigidos. Primer build detectó y corrigió escape de cookie; rebuild integral, LAB y publicación pendientes.

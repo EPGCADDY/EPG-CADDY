@@ -2780,4 +2780,5 @@ Base vigente 4a493a7; incorpora la corrección acreditada 27c8ae4. Las publicaci
 |---|---|---|
 | `api/personal-events.js` | Recupera identidad de dispositivo si la sesión de código venció. | Requiere cookie de dispositivo validada y permiso del evento. |
 | `test-event-administration.mjs` | Prueba confirmación API y borrado con identidad válida y sesión vencida. | Mantiene denegación a terceros y delegados. |
+| `test-lab-device-event-identity.mjs` | Comprueba que sesión válida de espectador no ceda ante identidad del dispositivo. | Mantiene código de invitado en solo lectura. |
 | `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `INVENTARIOS_V311.lock.json` | Historial, control de recurrencia y sello del candidato. | Un solo FAIL bloquea publicación. |

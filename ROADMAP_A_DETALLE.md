@@ -4244,5 +4244,5 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 ## R188-B1 · recuperación de borrado con identidad de dispositivo · 7 octubre 2026
 
 - `api/personal-events.js`: si una cookie `gsc_code_session` vencida falla, usa únicamente una identidad de dispositivo cuya firma exista en la base y conserva la autorización del creador/organizador del torneo.
-- `test-event-administration.mjs`: reproduce cookie de sesión vencida más dispositivo válido; verifica el borrado al confirmar y conserva denegación a terceros. Prueba dirigida PASS en candidato aislado.
-- La publicación requiere build/gates y verificación LAB; Producción no cambia antes de PASS integral.
+- `test-event-administration.mjs`: reproduce cookie de sesión vencida más dispositivo válido; verifica el borrado al confirmar y conserva denegación a terceros. `test-event-administration.mjs` y `test-lab-device-event-identity.mjs` PASS; el primer build detectó un escape incorrecto de la expresión de cookie, corregido antes del siguiente candidato.
+- La compilación LAB y publicación siguen pendientes; Producción no cambia antes de PASS integral.

@@ -1521,5 +1521,5 @@ Causa: el despacho del atajo `tournaments` enviaba a `live-hub.html?directory=1`
 - Causa raíz: `resolveEventIdentity()` daba prioridad irrevocable a una cookie `gsc_code_session` caducada y no probaba la identidad de dispositivo válida que también llegaba en la petición.
 - Punto de escape: las pruebas cubrían permisos, confirmación única y error visible, pero no la combinación de cookie de propietario caducada con identidad válida del creador.
 - Control permanente: si la sesión de código responde `ACCOUNT_UNAUTHORIZED`, se valida en la base la cookie de dispositivo y se usa sólo si es válida; después `eventAdminAuthority()` vuelve a exigir creador/organizador. Terceros siguen denegados.
-- Evidencia: `test-event-administration.mjs` PASS en candidato aislado con el flujo API completo; validación integral y LAB pendientes.
+- Evidencia: `test-event-administration.mjs` PASS con borrado API completo y terceros denegados; `test-lab-device-event-identity.mjs` PASS con espectador de solo lectura. Primer build señaló un escape de cookie mal formado; corregido y ambas pruebas vuelven a PASS. Rebuild LAB pendiente.
 - Estado: CORREGIDO EN CANDIDATO R188-B1; no publicado.
