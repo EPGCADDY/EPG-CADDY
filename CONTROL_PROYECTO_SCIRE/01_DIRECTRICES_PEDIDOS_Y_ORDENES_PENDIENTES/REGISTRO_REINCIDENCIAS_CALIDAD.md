@@ -1481,3 +1481,13 @@ La lista ocultaba controles de administración porque torneos anteriores a la id
 
 
 R178 · 6 octubre 2026 · Eliminar sin respuesta: causa disabled en filas del directorio sin autoridad reconocida; escape: se probó sólo la fila autorizada. Control permanente: botón público accionable, confirmación sin petición y cancelación sin borrado; permiso revalidado en API. Pruebas R167/R171 y R152 PASS. Publicación pendiente.
+
+### R179 · Invitación WhatsApp con acceso directo al registro · 7 de octubre de 2026
+
+- Solicitud: enviar el código junto al enlace, en un único mensaje; al abrirlo, iniciar registro de jugadores con modalidad y campo precargados.
+- Corrección: enlace verde con ID del torneo y código de ingreso; validación de un solo uso antes de abrir la inscripción. El mensaje conserva el código al final del mismo texto. No se dispara un segundo envío automático.
+- Pruebas: sintaxis de `whatsapp-invitations.js`, `personal-events.js`, `event-administration-ui.js`, `private-rounds.js`; pruebas `test-r156-tournament-invitation.mjs` y `test-r159-whatsapp-two-messages.mjs`. PASS.
+- Ajuste de prueba R179: el fixture R167 agrega `eventInvitationUrl` y comprueba `options.invitationUrl`; así se conserva la verificación del CTA de Administración con el nuevo enlace directo.
+- Fixture R179 actualizado: `test-lab-private-round-share-flow.mjs` comprueba enlaces directos con código para el tipo grupo y torneo, sin alterar la acción separada para copiar/compartir solamente el código.
+- Fixture R179 de `test-lab-private-rounds.mjs`: el botón `#privateShare` envía `invitationUrl` directa con ID y código; prueba separada `Compartir código` se conserva.
+- Se incrementó `release.json` a `20261007-R179`, con etiqueta/version R179, y `service-worker.js` usa el cache name y fallback R179 para que clientes PWA existentes detecten la actualización de invitaciones.

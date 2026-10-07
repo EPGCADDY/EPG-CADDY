@@ -35,7 +35,7 @@
     const heading=(snapshot={})=>'<header class="group-scores-heading"><h2>SCORES MI GRUPO</h2><p>'+escape([snapshot.course||active()?.course||active()?.courseName,root.GSCScoresUI?.date(snapshot.playedAt||active()?.playedAt||active()?.startedAt)].filter(Boolean).join(' · '))+'</p></header>';
     dialog.querySelector('h2').outerHTML=heading();
     const help=root.document.createElement('p');help.className='group-scores-help';help.textContent='DOBLE TOQUE EN EL JUGADOR: VER 18 SCORES';dialog.querySelector('section').appendChild(help);
-    if(item.creator&&showCode)dialog.querySelector('#privateShare').onclick=()=>root.GSCWhatsAppInvitations.open({kind:'private',code:item.joinCode,creatorName:item.creatorName||item.configuration?.creatorName||''},close);
+    if(item.creator&&showCode)dialog.querySelector('#privateShare').onclick=()=>root.GSCWhatsAppInvitations.open({kind:'private',code:item.joinCode,creatorName:item.creatorName||item.configuration?.creatorName||'',invitationUrl:item.id?root.GSCPersonalEvents.eventInvitationUrl({eventId:item.id,eventKind:'private',name:item.name,joinCode:item.joinCode,directRegistration:true}):undefined},close);
     const current=dialog;
     async function refresh(){
       if(dialog!==current)return;let result=item.personal?await root.GSCPersonalEvents.request("read",{eventId:item.id,eventKind:"private"}):await request("read_private_round",{kind:"tournament",viewerToken:item.viewerToken,limit:50});
