@@ -45,7 +45,12 @@ assert.equal(prime(),false);
 
 assert.match(html,/sendAiUniversal"\)\.addEventListener\("click",\(\)=>\{primeAiUniversalSpeechFromGesture\(\);submitAiUniversalText\(\)\}/);
 assert.match(html,/lastMicGestureAt=now;\s*releaseAiUniversalPlaybackForListening\(\);\s*primeAiUniversalSpeechFromGesture\(\);\s*setMicConnecting\(context,true\);\s*toggleVoice\(context\);/);
-assert.match(html,/if\(name\)\{if\(applyInlineManualRosterPhrase\(name,idx\)\)return;/);
+assert.match(html,/if\(allowInlinePhrase&&e\.inputType!=="insertReplacementText"&&applyInlineManualRosterPhrase\(name,idx\)\)return;/,
+  "El texto predictivo del teclado no se interpreta como una frase de registro");
+assert.match(html,/addEventListener\("compositionend"[\s\S]*inputType:"insertFromComposition"/,
+  "El dictado nativo se procesa después de finalizar la composición del teclado");
+assert.match(html,/autocorrect="on" spellcheck="true" inputmode="text"/,
+  "Los nombres permiten sugerencias y dictado desde el teclado iPhone");
 assert.match(html,/RESPONDIENDO EN VOZ/);
 
 assert.deepEqual(sanitizeVoiceHealth({event:"browser_fallback_speech_primed",build:"V355",transcript:"PROHIBIDO"}),{

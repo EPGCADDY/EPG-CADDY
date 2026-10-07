@@ -1,3 +1,11 @@
+## RC-114 · TECLADO IPHONE NO APLICABA SUGERENCIAS Y DICTADO NATIVO · 7 OCTUBRE 2026
+
+- Defecto reportado: tocar una palabra sugerida no la aplicaba al nombre de jugador y era necesario completar cada palabra manualmente; también se pidió dictado por el teclado iPhone.
+- Causa encontrada: el handler delegado de Registro terminaba en `retu`, y los campos no declaraban explícitamente las capacidades textuales que usa el teclado iOS. El handler tampoco distinguía una sustitución QuickType ni composición activa.
+- Corrección R192: completar `return;`, habilitar autocorrección/sugerencias/dictado nativo; persistir el texto recibido y deferir el parseo de frases durante composición. QuickType se conserva literalmente y el parser sólo actúa en frases completas autorizadas.
+- Control permanente: `test-r192-ios-keyboard-entry.mjs`; el build de LAB compila todos los scripts inline. La aceptación real de QuickType/dictado requiere un iPhone físico, no se sustituye por Chromium.
+- Estado: CORRECCIÓN AUTOMÁTICA PASS; IPHONE FÍSICO/DEPLOYMENT PENDIENTES; PRODUCCIÓN INTACTA.
+
 ## RC-106 · CANDIDATO ABIERTO BORRÓ LA INVITACIÓN DE 24 H Y REACTIVÓ LA PUERTA AL RESTAURARLA · 30 SEPTIEMBRE 2026
 
 - Defecto expuesto: la corrección de entrada libre afirmó haber retirado la invitación de 24 horas; al restaurarla reapareció en `index-grupal.html` la carga de `auth-gate.js`, y el vencimiento temporal todavía enviaba al formulario propietario.

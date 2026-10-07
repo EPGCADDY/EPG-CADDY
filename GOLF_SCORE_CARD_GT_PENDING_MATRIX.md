@@ -1,3 +1,9 @@
+## R192 · Teclado y dictado nativo del iPhone en Registro · 7 de octubre de 2026
+
+- Estado: corrección y regresión automatizada preparadas para el teclado predictivo y dictado del sistema iOS. No reactiva permisos de micrófono web, captura de audio ni servicios remotos.
+- Control: `test-r192-ios-keyboard-entry.mjs` valida la aceptación de `insertReplacementText`, composición final, acentos, persistencia del borrador y campos Stableford.
+- Puerta física: probar QuickType y dictado azul del teclado en iPhone Safari instalado/web, incluido nombre simple y frase nombre+HDCP+marcas. Hasta esa prueba, Preview/producción no se declara certificado.
+
 ## R191 · Código de torneo entre ambientes · 7 de octubre de 2026
 
 - Estado: corrección implementada en el candidato R191; inspección/registro pueden validar códigos activos de LAB y Producción y conservar el ambiente origen durante la sesión.
