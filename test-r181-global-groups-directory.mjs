@@ -34,8 +34,8 @@ const ui=await readFile('event-administration-ui.js','utf8'),personalUi=await re
 const context={cachedLocal:{source:'production'},escape:String};vm.createContext(context);
 for(const name of ['administrationRows','scoresHref','administrationCard'])vm.runInContext(ui.match(new RegExp('function '+name+'\\([^]*?\\n\\}'))?.[0]||ui.match(new RegExp('function '+name+'\\([^\\n]*'))[0],context);
 const rows=context.administrationRows({ok:false,source:'production',events:[]},global);
-assert.equal(rows.length,global.events.length);
+assert.equal(rows.length,global.events.filter(e=>e.event_kind==='tournament').length);assert.ok(rows.every(row=>row.event_kind==='tournament'),'Administration lists tournaments only');
 for(const row of rows){const card=context.administrationCard(row);assert.ok(card.includes(row.joinCode));assert.ok(card.includes('data-share-event'));assert.ok(card.includes('SCORES · GENERAL'))}
 assert.ok(personalUi.includes("withCodes:true"));assert.ok(personalUi.includes("directory.events||[]"));assert.ok(personalUi.includes("if(event.joinCode)return {ok:true,joinCode:event.joinCode}"));
-assert.equal(rows.filter(e=>e.event_kind==='private').length,2);assert.match(context.administrationCard(rows.find(e=>e.event_kind==='private')),/ID DE GRUPO/);assert.match(context.scoresHref(publicGroup,'general'),/directory_private_production_/);
+assert.equal(rows.filter(e=>e.event_kind==='private').length,0,'private groups remain in the API directory but not Administration');
 await db.close();console.log('PASS R181: global tournaments and groups without admin session; both sources and same-ID collision; group code joins from unrelated device; public group Scores and peer kind; legacy tournament-only directory preserved.');
