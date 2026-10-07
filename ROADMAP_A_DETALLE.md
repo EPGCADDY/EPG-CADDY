@@ -1,3 +1,10 @@
+## R196 · Texto de WhatsApp de tarjetas digitales · 7 de octubre de 2026
+
+- Regresión: `test-lab-r60-card-share-mode-labels.mjs` verifica el texto de tres líneas en tarjetas compartidas y bloquea los rótulos anteriores.
+- Al compartir cualquier tarjeta digital, el texto queda en tres líneas: `Score Card`, el campo y la fecha.
+- Se aplica a tarjetas Globales, personales, del historial y envíos a jugadores; se omiten torneo, modalidad, nombres de destinatarios y SHA-256.
+- El título de compartir también queda como `Score Card`.
+
 ## R195 · Corrección de tarjeta digital Medal Play · 7 de octubre de 2026
 
 - En ambas vueltas, la fila verde muestra `PAR` una sola vez al inicio; se eliminan los totales y la `E` de esa fila.
