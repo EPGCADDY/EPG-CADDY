@@ -2723,3 +2723,39 @@ R177 cobertura: `test-lab-code-entry.mjs` comprueba el alcance del viewer leyend
 - `index-grupal.html`: pantalla principal de Score Card; contiene sello de release y distintivo visible, que deben coincidir con `release.json` en cada Preview. R182 corrigió ambos a R182.
 
 - `test-lab-private-round-share-flow.mjs`: regresión de invitaciones WhatsApp para grupo y torneo; verifica enlace directo con evento/código y fallback de código separado.
+
+
+## R184 · Integración de borrado permanente sin perder R182/R183 · 6 octubre 2026
+Base vigente 4a493a7; incorpora la corrección acreditada 27c8ae4. Las publicaciones divergentes habían retirado la purga y reinstalado redefiniciones concurrentes. Integración incremental conserva invitaciones WhatsApp preconfiguradas, reapertura de Score Card, Scores privados sin truncar y tarjetas de Administración sin metadatos; restaura purga física, limpieza local y bloqueo de restauración. Pruebas de permisos, expiración, borrado y directorio obligatorias. Rollback de código: 4a493a7 (LAB) y 5bf0e96 (PROD), sin restaurar datos borrados.
+- `ROADMAP_A_DETALLE.md` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `ROADMAP_OVERALL.md` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `api/_lib/event-administration.js` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `api/_lib/event-lifecycle.js` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `api/_lib/personal-event-access.js` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `api/event-administration.js` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `api/live.js` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `api/personal-events.js` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `api/sync.js` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `api/tournament-score-directory.js` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `event-administration-ui.js` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `index-grupal.html` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `live-hub.html` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `live-hub.js` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `master-data-sync.js` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `personal-events.js` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `release.json` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `scripts/build-manual-lab.mjs` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `service-worker.js` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `test-event-administration.mjs` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `test-event-lifecycle.mjs` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `test-event-total-purge.mjs` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `test-lab-registration-return-state.mjs` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `test-lab-round-create-modal.mjs` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `test-live-official-flow.mjs` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `test-personal-event-permissions.mjs` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `test-r175-event-expiry-directory-recovery.mjs` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `test-tournament-organizer-permissions.mjs` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `test-v353-live-hub.mjs` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` · integración/corrección/verificación R184 directamente vinculada a los pedidos.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` · integración/corrección/verificación R184 directamente vinculada a los pedidos.

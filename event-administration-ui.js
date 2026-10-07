@@ -9,7 +9,7 @@ let requestedEventOpened=false;
 const format=at=>new Date(at).toLocaleString('es-GT',{timeZone:'America/Guatemala'});
 function administrationRows(local,directory){
  const rows=new Map(),source=local.source;
- for(const e of local.ok?local.events||[]:[]){const eventSource=e.source||source;rows.set(eventSource+':'+e.event_kind+':'+e.id,{...e,source:eventSource,canAdminister:true})};
+ for(const e of local.ok?local.events||[]:[]){const eventSource=e.source||source;rows.set(eventSource+':'+e.event_kind+':'+e.id,{...e,source:eventSource,canAdminister:e.canAdminister!==false})};
  for(const e of directory.ok?directory.events||[]:[]){const kind=e.event_kind||'tournament';if(!['lab','production'].includes(e.source)||!['tournament','private'].includes(kind)||!(e.status==='active'||kind==='private'&&e.status==='finished'))continue;const key=e.source+':'+kind+':'+e.id;if(!rows.has(key))rows.set(key,{...e,event_kind:kind,canAdminister:false});else rows.set(key,{...rows.get(key),joinCode:e.joinCode})}
  return [...rows.values()].sort((a,b)=>a.name.localeCompare(b.name,'es')||a.source.localeCompare(b.source)||a.id.localeCompare(b.id));
 }
@@ -30,16 +30,16 @@ async function refresh({automatic=false,signal}={}){
  if(sequence!==refreshSequence||signal?.aborted)return{ok:false};
  const localChanged=result.ok&&JSON.stringify(result.events)!==JSON.stringify(cachedLocal.events);
  if(result.ok)cachedLocal=result;if(directory.ok&&!directory.partial)cachedDirectory=directory;
- else if(directory.ok){const merged=new Map((cachedDirectory.events||[]).map(e=>[e.source+':'+(e.event_kind||'tournament')+':'+e.id,e]));for(const e of directory.events||[])merged.set(e.source+':'+(e.event_kind||'tournament')+':'+e.id,e);cachedDirectory={ok:true,events:[...merged.values()]}}
+ else if(directory.ok)cachedDirectory=directory;
  if(result.ok&&(!automatic||localChanged)){await window.GSCPersonalEvents.sync();cachedCodes=await window.GSCPersonalEvents.organizerCodes()||{}}if(sequence!==refreshSequence||signal?.aborted)return{ok:false};
  const codes=cachedCodes,rows=administrationRows(cachedLocal,cachedDirectory);showStatus(result.ok?result:directory);
- if(!result.ok&&!directory.ok&&cachedLocal.ok)$('status').textContent='SIN CONEXIÓN · CONSERVANDO LA ÚLTIMA LISTA';
- const signature=JSON.stringify([rows,codes]);
+ if(!result.ok&&cachedLocal.ok)$('status').textContent='SIN CONEXIÓN · CONSERVANDO LA ÚLTIMA LISTA';
+ const signature=JSON.stringify([rows,codes,cachedDirectory.groups]);
  if(automatic&&(signature===lastRowsSignature||document.querySelector('dialog[open],#gscWhatsAppInvitation,[data-gsc-dialog-backdrop]')))return{ok:directory.ok,partial:directory.partial};
  lastRowsSignature=signature;
- if(!directory.ok||directory.partial)$('status').textContent+=' · LISTA GLOBAL INCOMPLETA · REINTENTO AUTOMÁTICO';
- $('events').innerHTML='<h2>TORNEOS Y GRUPOS</h2>'+rows.map(e=>administrationCard(e)).join('');
- if(!rows.length)$('events').insertAdjacentHTML('beforeend','<p>'+(!directory.ok||directory.partial?'NO SE PUDO COMPROBAR LA LISTA COMPLETA · REINTENTA':'NO HAY TORNEOS ACTIVOS NI GRUPOS VIGENTES EN LA PLATAFORMA.')+'</p>');
+ if(!directory.ok||directory.partial)$('status').textContent+=' · LISTA GLOBAL INCOMPLETA · REINTENTO AUTOMÁTICO';else $('status').textContent='LISTA GLOBAL COMPLETA · LABORATORIO + PRODUCCIÓN';
+ $('events').innerHTML='<h2>TORNEOS Y GRUPOS</h2>'+rows.map(e=>administrationCard(e)).join('')+'<h2>RONDAS GLOBALES EN CURSO</h2>'+(cachedDirectory.groups||[]).map(group=>'<article><h3>'+escape(group.group_label)+'</h3><p>'+escape(group.source==='lab'?'LABORATORIO':'PRODUCCIÓN')+'</p><p>ID DE RONDA: '+escape(group.id)+'</p>'+(group.tournament_id?'<p>EVENTO: '+escape(rows.find(e=>e.id===group.tournament_id&&e.source===group.source)?.name||group.tournament_id)+'</p>':'<p>RONDA INDEPENDIENTE</p>')+'</article>').join('');
+ if(!rows.length)$('events').insertAdjacentHTML('beforeend','<p>'+(!directory.ok||directory.partial||!result.ok?'NO SE PUDO COMPROBAR LA LISTA COMPLETA · REINTENTA':'NO HAY TORNEOS ACTIVOS NI GRUPOS DISPONIBLES PARA TU CUENTA.')+'</p>');
  document.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>remove(rows.find(e=>e.source+':'+e.event_kind+':'+e.id===b.dataset.delete)));
  document.querySelectorAll('[data-copy-tournament]').forEach(b=>b.onclick=()=>copyTournamentId(b,codes[b.dataset.copyTournament]));
  document.querySelectorAll('[data-share-event]').forEach(b=>b.onclick=()=>shareEvent(b,rows.find(e=>(e.canAdminister||e.joinCode)&&e.source+':'+e.event_kind+':'+e.id===b.dataset.shareEvent)));
@@ -50,7 +50,7 @@ function event(e){return{eventId:e.id,eventKind:e.event_kind}}
 function preserveReturnTarget(){const link=document.querySelector('[data-gsc-close]'),target=new URLSearchParams(location.search).get('returnTo');if(!link||!target)return;try{const destination=new URL(target,location.origin);if(destination.origin===location.origin&&destination.pathname==='/index-grupal.html')link.href=destination.pathname+destination.search+destination.hash}catch{}}
 preserveReturnTarget();
 function open(content){$('action').innerHTML=content;$('actionStatus').textContent='';$('actionDialog').showModal()}
-function remove(e){if(!e)return;const label='ELIMINAR '+(e.event_kind==='private'?'GRUPO':'TORNEO');open('<h2>'+(e.event_kind==='tournament'?'CONFIRMA ELIMINAR':'CONFIRMAR '+label)+'</h2><p>'+escape(e.name)+'</p><p>¿DESEAS ELIMINAR ESTE '+(e.event_kind==='private'?'GRUPO':'TORNEO')+'?</p><button type="button" id="cancelDelete">CANCELAR</button><button class="danger" id="confirmDelete">'+label+'</button>');$('cancelDelete').onclick=()=>$('actionDialog').close();$('confirmDelete').onclick=async()=>{const b=$('confirmDelete');b.disabled=true;const local=e.source===cachedLocal.source,result=await call(local?'delete':'remote-delete',{...event(e),...(local?{}:{source:e.source}),confirmName:e.name,reason:'Eliminación confirmada por el usuario'});showStatus(result,'actionStatus');if(result.ok){$('actionDialog').close();await refresh()}else b.disabled=false}}
+function remove(e){if(!e)return;const label='ELIMINAR '+(e.event_kind==='private'?'GRUPO':'TORNEO');open('<h2>'+(e.event_kind==='tournament'?'CONFIRMA ELIMINAR':'CONFIRMAR '+label)+'</h2><p>'+escape(e.name)+'</p><p>¿DESEAS ELIMINAR ESTE '+(e.event_kind==='private'?'GRUPO':'TORNEO')+'?</p><button type="button" id="cancelDelete">CANCELAR</button><button class="danger" id="confirmDelete">'+label+'</button>');$('cancelDelete').onclick=()=>$('actionDialog').close();$('confirmDelete').onclick=async()=>{const b=$('confirmDelete');b.disabled=true;const local=e.source===cachedLocal.source,result=await call(local?'delete':'remote-delete',{...event(e),...(local?{}:{source:e.source}),confirmName:e.name,reason:'Eliminación confirmada por el usuario'});showStatus(result,'actionStatus');if(result.ok){cachedLocal.events=(cachedLocal.events||[]).filter(row=>row.id!==e.id||row.source&&row.source!==e.source);cachedDirectory.events=(cachedDirectory.events||[]).filter(row=>row.id!==e.id||row.source!==e.source);cachedDirectory.groups=(cachedDirectory.groups||[]).filter(row=>row.tournament_id!==e.id||row.source!==e.source);if(local)window.GSCPersonalEvents?.purgeDeletedEvents?.([{eventId:e.id,eventKind:e.event_kind}]);$('actionDialog').close();await refresh()}else b.disabled=false}}
 window.addEventListener('gsc-account-ready',refresh);
 $('refresh').onclick=()=>refresh();
 // Prepare only a device identity, never create a tournament or round.

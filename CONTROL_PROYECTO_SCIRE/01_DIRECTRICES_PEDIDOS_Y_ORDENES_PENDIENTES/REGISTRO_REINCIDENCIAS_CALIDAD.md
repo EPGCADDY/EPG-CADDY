@@ -1505,3 +1505,7 @@ Causa raíz: el directorio público solo consultaba live_tournaments; los grupos
 - Control permanente: test-r159-whatsapp-two-messages.mjs valida URL exacta, código y origen LAB/Producción; test-r156-tournament-invitation.mjs valida rechazo de acceso inválido y llamada directa a preparación con nombre, campo y modalidad.
 - Evidencia: ambas pruebas y test-r24-event-creation-feedback.mjs PASS local en R182; Preview y recorrido físico pendientes.
 - Estado: CORREGIDO EN CANDIDATO R182; PRODUCCIÓN R181 INTACTA.
+
+
+## R184 · Correcciones retiradas por publicación divergente
+Causa: R182/R183 partieron de 6cbfda4 y no de la purga publicada 27c8ae4; retiraron el borrado físico y la instalación única de funciones. Escape: se validó la rama individual sin comparar contra ambos commits públicos. Control: integración con ambos padres; test-event-total-purge.mjs y comprobación de SHA idéntico en ambos dominios antes de cierre. Estado: integración local, publicación y consultas concurrentes pendientes.

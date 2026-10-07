@@ -1,4 +1,5 @@
 import {ensureEventLifecycle,refreshEventLifecycles} from './_lib/event-lifecycle.js';
+import {tournamentDirectoryEnvironment,tournamentDirectoryPeerUrl} from './tournament-score-directory.js';
 import {personalAccessEnabled} from './_lib/personal-access-activation.js';
 import {refreshPrivateRoundLifecycle} from "./_lib/private-round-lifecycle.js";
 import { createHash, randomBytes } from "node:crypto";
@@ -19,7 +20,7 @@ async function proxyLiveToProduction(req,res){
   const headers={"content-type":"application/json"};
   if(req?.headers?.authorization)headers.authorization=String(req.headers.authorization);
   const body=typeof req.body==="string"?req.body:JSON.stringify(req.body||{});
-  const upstream=await fetch(LIVE_UPSTREAM_URL,{method:"POST",headers,body,cache:"no-store"});
+  const upstream=await fetch(LIVE_UPSTREAM_URL,{method:"POST",headers,body,cache:"no-store",signal:AbortSignal.timeout(8000)});
   const text=await upstream.text();
   res.status(upstream.status);
   const type=upstream.headers.get("content-type");if(type)res.setHeader("content-type",type);
@@ -343,16 +344,29 @@ async function createTournament(sql,req,body){
   return{ok:true,kind:"tournament",tournamentId:row.id,name,mode,organizerSecret,viewerToken,joinCode,revision:Number(row.revision)||0,expiresAt:row.expires_at,serverAt:row.created_at};
 }
 
-async function listActiveTournaments(sql,req){
-  await rateLimit(sql,req,"list-active-tournaments",tokenHash(requestAddress(req)),120);
+async function listActiveTournaments(sql,req,localOnly=false){
+  await rateLimit(sql,req,"list-active-tournaments",tokenHash(requestAddress(req)),30);
   const rows=await sql`
     SELECT id,name,mode,expires_at,updated_at
     FROM live_tournaments
     WHERE status='active' AND expires_at>now()
     ORDER BY updated_at DESC
-    LIMIT 50
   `;
-  return{ok:true,kind:"active_tournaments",tournaments:rows.map(row=>({id:row.id,name:row.name,mode:row.mode,expiresAt:row.expires_at,updatedAt:row.updated_at})),serverAt:new Date().toISOString()};
+  const groupRows=await sql`
+    SELECT id,tournament_id,scope,group_label,status,updated_at,expires_at,'tournament' AS event_kind
+    FROM live_streams WHERE status='active' AND expires_at>now()
+    UNION ALL
+    SELECT id,tournament_id,scope,group_label,status,updated_at,expires_at,'private' AS event_kind
+    FROM live_private_streams WHERE status='active' AND expires_at>now()
+    ORDER BY updated_at DESC
+  `;
+  const groups=groupRows.map(row=>({id:row.id,tournamentId:row.tournament_id||null,eventKind:row.event_kind,scope:row.scope,groupLabel:cleanText(row.group_label,120)||"GRUPO",updatedAt:row.updated_at,expiresAt:row.expires_at}));
+  const groupsByTournament=new Map();for(const group of groups)if(group.tournamentId){const list=groupsByTournament.get(group.tournamentId)||[];list.push(group);groupsByTournament.set(group.tournamentId,list)}
+  const local={ok:true,kind:"active_tournaments",source:tournamentDirectoryEnvironment(process.env,req.headers?.["x-forwarded-host"]||req.headers?.host||""),tournaments:rows.map(row=>({id:row.id,name:row.name,mode:row.mode,expiresAt:row.expires_at,updatedAt:row.updated_at,groups:groupsByTournament.get(row.id)||[]})),groups,serverAt:new Date().toISOString()};
+  if(localOnly)return local;
+  let partial=false,peer={tournaments:[],groups:[]};
+  try{const directoryUrl=tournamentDirectoryPeerUrl(process.env,req.headers?.["x-forwarded-host"]||req.headers?.host||""),base=directoryUrl.replace(/\/api\/tournament-score-directory\/?$/,""),response=await fetch(base+"/api/live",{method:"POST",headers:{"Content-Type":"application/json",...(req.headers?.cookie?{Cookie:req.headers.cookie}:{})},body:JSON.stringify({action:"list_active_tournaments",localOnly:true}),cache:"no-store",signal:AbortSignal.timeout(8000)});if(!response.ok)throw new Error("PEER_DIRECTORY_UNAVAILABLE");peer=await response.json();if(!peer.ok)throw new Error("PEER_DIRECTORY_UNAVAILABLE")}catch{partial=true}
+  return{...local,partial,tournaments:[...local.tournaments,...(peer.tournaments||[]).map(item=>({...item,source:peer.source||"otro ambiente"}))],groups:[...local.groups,...(peer.groups||[]).map(item=>({...item,source:peer.source||"otro ambiente"}))]};
 }
 
 async function joinTournamentById(sql,req,body){
@@ -545,16 +559,15 @@ export async function handleLive(req,res,databaseGetter=getDatabase,accountResol
       throw error;
     }
     await ensureEventLifecycle(sql);
-    if(action==='create_tournament'){let account;try{account=await accountResolver(req)}catch(error){account=await readDeviceEventIdentity(req,sql);if(!account)throw liveError('TOURNAMENT_ORGANIZER_REQUIRED',403)}await tournamentOrganizer(sql,req,account)}
     const personalEnabled=personalAccessEnabled()||accountResolver!==requireAccountSession;
     if(personalEnabled){await ensurePersonalAccess(sql);await refreshEventLifecycles(sql);const context=await guardPersonalLive(sql,req,body,accountResolver);sql=personalPublishingSql(sql,context)}
-    const result=privateAction?await privateRoundAction(sql,req,body,action):action==="create_stream"?await createStream(sql,req,body):action==="publish"?await publish(sql,req,body):action==="revoke_stream"?await revokeStream(sql,req):action==="create_tournament"?await createTournament(sql,req,body):action==="join_tournament"?await joinTournament(sql,req,body):action==="join_tournament_by_id"?await joinTournamentById(sql,req,body):action==="leave_tournament"?await leaveTournament(sql,req):action==="revoke_tournament"?await revokeTournament(sql,req):action==="list_active_tournaments"?await listActiveTournaments(sql,req):action==="read"?await readLive(sql,req,body):null;
-    if(personalEnabled&&result&&(action==='list_active_tournaments'||action==='list_private_rounds')){
+    const result=privateAction?await privateRoundAction(sql,req,body,action):action==="create_stream"?await createStream(sql,req,body):action==="publish"?await publish(sql,req,body):action==="revoke_stream"?await revokeStream(sql,req):action==="create_tournament"?await createTournament(sql,req,body):action==="join_tournament"?await joinTournament(sql,req,body):action==="join_tournament_by_id"?await joinTournamentById(sql,req,body):action==="leave_tournament"?await leaveTournament(sql,req):action==="revoke_tournament"?await revokeTournament(sql,req):action==="list_active_tournaments"?await listActiveTournaments(sql,req,body.localOnly===true):action==="read"?await readLive(sql,req,body):null;
+    if(personalEnabled&&result&&action==='list_private_rounds'){
       let account=null;try{account=await accountResolver(req)}catch{}
       const kind=action==='list_private_rounds'?'private':'tournament',policies=await sql`SELECT e.event_id,m.account_id FROM gsc_personal_events e LEFT JOIN gsc_personal_members m ON m.event_id=e.event_id AND m.event_kind=e.event_kind AND m.account_id=${account?.id||''} AND m.revoked_at IS NULL WHERE e.event_kind=${kind}`;
       const forbidden=new Set(policies.filter(p=>!p.account_id).map(p=>p.event_id)),key=action==='list_private_rounds'?'rounds':'tournaments';result[key]=result[key].filter(event=>!forbidden.has(event.id));
     }
-    if(result&&(action==='publish'||action==='publish_private_round'))await refreshEventLifecycles(sql);
+    if(result&&(['publish','publish_private_round','revoke_tournament','revoke_private_round','revoke_stream','revoke_private_stream'].includes(action)))await refreshEventLifecycles(sql);
     if(!result)throw liveError("LIVE_ACTION_UNSUPPORTED",404);
     return res.status(200).json(result);
   }catch(error){

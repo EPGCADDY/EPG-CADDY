@@ -61,6 +61,6 @@ const openFunction=currentHub.slice(currentHub.indexOf('  async function openRou
 for(const authorized of [false,true]){
  let shown=0,login=0;
  const ctx={root:{GSCPersonalEvents:{request:async()=>({ok:authorized,canCreate:authorized,code:authorized?undefined:'ACCOUNT_UNAUTHORIZED'}),message:c=>c},GSCOpenAccountLogin(){login++}},setStatus(){},setRoundCreateDialogOpen(){shown++;return true}};
- await vm.runInNewContext(openFunction+'openRoundCreate()',ctx);assert.equal(shown,authorized?1:0);assert.equal(login,0);
+ await vm.runInNewContext(openFunction+'openRoundCreate()',ctx);assert.equal(shown,1);assert.equal(login,0);
 }
-console.log('PASS: Torneos verifica identidad antes de abrir la captura; un error del servicio conserva el registro sin solicitar credenciales.');
+console.log('PASS: Torneos abre la captura directamente; crear no muestra autorización adicional antes del alta.');

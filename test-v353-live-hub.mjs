@@ -104,4 +104,4 @@ assert.match(vercel,/"source"\s*:\s*"\/live-hub\.html"/);
 assert.match(vercel,/live-control\|live-view\|live-hub/);
 assert.doesNotMatch(`${html}\n${client}\n${control}\n${viewerHtml}\n${viewer}`,/\bEPG\b/i,"el nombre interno no aparece en V353 LIVE");
 
-console.log("PASS V353 CENTRO LIVE: 80 jugadores, hasta 5 torneos, multiteléfono sin doble cómputo, privacidad y carga sin máximo fijo");
+console.log("PASS V353 CENTRO LIVE: 80 jugadores, torneos guardados con límite local de cinco, multiteléfono sin doble cómputo, privacidad y carga global");
