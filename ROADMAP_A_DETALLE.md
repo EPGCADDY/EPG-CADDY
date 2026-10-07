@@ -1,3 +1,10 @@
+## R195 · Corrección de tarjeta digital Medal Play · 7 de octubre de 2026
+
+- En ambas vueltas, la fila verde muestra `PAR` una sola vez al inicio; se eliminan los totales y la `E` de esa fila.
+- Se conservan los dígitos de hoyo sin rótulos adicionales y el encabezado central `RESULTADOS`.
+- Los subtotales quedan como `VUELTA IN`, `VUELTA OUT` y `VUELTA COMPLETA`.
+- Prueba de regresión: `test-card-artifacts.mjs`; estado de publicación se registra tras completar los despliegues LAB y Producción.
+
 ## R194 · QuickType en nombres: retirar transformación a mayúsculas · 7 de octubre de 2026
 
 - La prueba física R193 seguía fallando aun después de actualizar el alias del Laboratorio.

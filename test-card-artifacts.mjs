@@ -5,8 +5,14 @@ const snapshot={status:'officially_closed',sha256:'a'.repeat(64),version:1,cours
 const out=artifacts.build(snapshot);assert.equal(out.personal.length,1);assert.equal(out.all.length,2);assert.doesNotMatch(out.global.html,/>Tarjeta Global</);assert.match(out.global.html,/golf-score-card-gt-horizontal-original\.webp/);
 assert.match(out.global.html,/PRIMERA VUELTA · HOYOS 1–9/);
 assert.match(out.global.html,/SEGUNDA VUELTA · HOYOS 10–18/);
-assert.match(out.global.html,/1<br><small>G\/N<\/small>/);
-assert.match(out.global.html,/10<br><small>G\/N<\/small>/);assert.match(out.global.html,/CAMPO · El Pulté Golf/);assert.match(out.global.html,/MODALIDAD · MEDAL PLAY NORMAL/);assert.match(out.global.html,/FECHA ·/);assert.doesNotMatch(out.global.html,/VERSIÓN ·|ID OFICIAL · SHA-256/);assert.match(out.personal[0].html,/Comportamiento Neto contra Par/);assert.match(out.personal[0].html,/Águilas/);assert.doesNotMatch(out.personal[0].html,/ID OFICIAL · SHA-256/);assert.throws(()=>artifacts.build({...snapshot,status:'active'}));console.log('PASS archivos Global/personal desde snapshot oficial');
+assert.match(out.global.html,/<th>1<\/th>/);
+assert.match(out.global.html,/<th>10<\/th>/);
+assert.match(out.global.html,/class="par-row"><th>PAR<\/th>[\s\S]*?<td>3<\/td>/,'La fila PAR conserva una sola etiqueta antes de los valores');
+assert.doesNotMatch(out.global.html,/<td><small>PAR<\/small>/,'PAR no se repite encima de cada dígito');
+const parRows=out.global.html.match(/<tr class="par-row">[\s\S]*?<\/tr>/g)||[];assert.equal(parRows.length,2,'La fila PAR debe aparecer en ambas vueltas');for(const row of parRows){assert.doesNotMatch(row,/<td>36<\/td><td>0<\/td><td>36<\/td>/,'La fila PAR no lleva totales gross/hdcp/neto');assert.doesNotMatch(row,/<td>E<\/td>/,'La fila PAR no lleva resultado +/-');}
+assert.match(out.global.html,/VUELTA IN[\s\S]*?VUELTA OUT[\s\S]*?VUELTA COMPLETA[\s\S]*?<th>HDCP<\/th>/);
+assert.match(out.global.html,/<td>36<\/td><td>9<\/td><td>27<\/td><td>36<\/td><td>1<\/td><td>35<\/td><td>72<\/td><td>10<\/td><td>62<\/td>/,'Subtotales y total 18 hoyos Gross/HDCP/Neto deben sumar scores y tiros asignados');
+assert.match(out.global.html,/CAMPO · El Pulté Golf/);assert.match(out.global.html,/MODALIDAD · MEDAL PLAY NORMAL/);assert.match(out.global.html,/FECHA ·/);assert.doesNotMatch(out.global.html,/VERSIÓN ·|ID OFICIAL · SHA-256/);assert.match(out.personal[0].html,/Comportamiento Neto contra Par/);assert.match(out.personal[0].html,/Águilas/);assert.match(out.personal[0].html,/RESULTADOS/);assert.match(out.personal[0].html,/class="par-row"><th>PAR<\/th>/);assert.doesNotMatch(out.personal[0].html,/ID OFICIAL · SHA-256/);assert.throws(()=>artifacts.build({...snapshot,status:'active'}));console.log('PASS tarjetas Global/Personal: PAR claro y subtotales Gross/HDCP/Neto de 18 hoyos');
 
 const stablefordPlayers=Array.from({length:6},(_,playerIndex)=>({
   id:`sf${playerIndex+1}`,
@@ -27,7 +33,9 @@ assert.doesNotMatch(stablefordOut.global.html,/>Tarjeta Global Stableford/);asse
 assert.doesNotMatch(stablefordOut.global.html,/TORNEO · Copa Oficial/);
 assert.doesNotMatch(stablefordOut.global.html,/CATEGORÍA · SENIOR/);
 assert.match(stablefordOut.global.html,/G\/P = Gross \/ Puntos Stableford/);
-assert.doesNotMatch(stablefordOut.global.html,/<th>NETO<\/th>/);
+assert.match(stablefordOut.global.html,/class="par-row"><th colspan="3">PAR<\/th>/);
+assert.match(stablefordOut.global.html,/VUELTA COMPLETA/);
+assert.doesNotMatch(stablefordOut.global.html.split('<section class="approved-round-totals">')[0],/<th>NETO<\/th>/,'La tabla Stableford mantiene su puntuación Gross/Puntos; Neto aparece sólo en el nuevo resumen común');
 assert.doesNotMatch(stablefordOut.global.html,/ID OFICIAL · SHA-256/,"La Global limpia no debe mostrar ID técnico visible");
 assert.match(stablefordOut.global.html,/IN · HOYOS 1–9[\s\S]*?OUT · HOYOS 10–18/,"Stableford Global debe separar las dos vueltas en orden IN/OUT");
 assert.equal((stablefordOut.global.html.match(/class="score-half"/g)||[]).length,2,"Stableford Global debe tener exactamente dos bloques de vuelta");
@@ -35,6 +43,8 @@ assert.match(stablefordOut.global.html,/global-clean-meta[\s\S]*?grid-template-c
 assert.doesNotMatch(stablefordOut.global.html,/ID OFICIAL · SHA-256/,"La Global limpia no muestra identificador técnico");
 assert.match(stablefordOut.personal[0].html,/Puntos Stableford por hoyo/);
 assert.match(stablefordOut.personal[0].html,/Fecha clasificatoria/);
+assert.match(stablefordOut.personal[0].html,/class="par-row"><th>PAR<\/th>/);
+assert.match(stablefordOut.personal[0].html,/VUELTA OUT[\s\S]*?VUELTA COMPLETA/);
 assert.equal(stablefordOut.personal[0].stats.points,36);
 assert.equal(stablefordOut.personal[0].stats.front.points,18);
 assert.equal(stablefordOut.personal[0].stats.back.points,18);
@@ -49,12 +59,22 @@ for(const mode of ['general','stableford','match_play','four_ball','universales'
   const cards=artifacts.build(modeSnapshot);
   assert.match(cards.global.html,/CON CATEGORÍA/,`${mode}: la Global debe mostrar el nombre guardado`);
   assert.match(cards.personal[0].html,/CON CATEGORÍA/,`${mode}: la Personal debe conservar el nombre`);
+  assert.match(cards.global.html,/VUELTA COMPLETA/,`${mode}: la Global debe mostrar Gross/HDCP/Neto por vuelta completa`);
+  assert.match(cards.personal[0].html,/VUELTA COMPLETA/,`${mode}: la Personal debe mostrar Gross/HDCP/Neto por vuelta completa`);
+  assert.match(cards.global.html,/<td>72<\/td><td>10<\/td><td>62<\/td>/,`${mode}: total de 18 hoyos debe coincidir con Gross 72, HDCP 10 y Neto 62`);
+  assert.match(cards.personal[0].html,/<td>72<\/td><td>10<\/td><td>62<\/td>/,`${mode}: tarjeta personal debe coincidir con Gross 72, HDCP 10 y Neto 62`);
+  assert.match(cards.global.html,/class="par-row"/,`${mode}: Global debe conservar la línea PAR`);
+  if(mode==='match_play'||mode==='four_ball')assert.match(cards.personal[0].html,/<th>HOYO<\/th><th>PAR<\/th>/,`${mode}: Personal debe mostrar el PAR de cada hoyo`);
+  else assert.match(cards.personal[0].html,/class="par-row"/,`${mode}: Personal debe conservar la línea PAR`);
+  assert.match(cards.personal[0].html,/VUELTA IN[\s\S]*?VUELTA OUT/,`${mode}: debe conservar subtotales por vuelta`);
   assert.doesNotMatch(cards.personal[1].html,/SIN CATEGORÍA/,`${mode}: no debe inventar categoría cuando el registro quedó vacío`);
 }
 console.log('PASS categoría opcional arriba del nombre en las diez tarjetas; HCP conservado');
 const universalesCards=artifacts.build({...snapshot,mode:'universales',players:optionalCategoryPlayers});
 assert.match(universalesCards.global.html,/color:#ff3030[\s\S]*PUNTOS/,'Universales Global debe identificar los puntos en rojo');
 assert.match(universalesCards.personal[0].html,/<th style="color:#ff3030">PUNTOS<\/th>[\s\S]*color:#ff3030/,'Universales Personal debe mostrar leyenda y valores de puntos en rojo');
+assert.match(universalesCards.global.html,/class="par-row"><th colspan="2">PAR<\/th>/);
+assert.match(universalesCards.personal[0].html,/class="par-row"><th>PAR<\/th>/);
 console.log('PASS leyenda, puntos por hoyo y totales Universales en rojo');
 
 // Legacy point fields cannot contaminate non-Universales artifacts.
@@ -69,5 +89,15 @@ const matchCards=artifacts.build(matchSnapshot);
 assert.equal(matchCards.global.mode,'match_play');
 assert.match(matchCards.global.html,/MODALIDAD · MATCH PLAY/);
 assert.match(matchCards.global.html,/match-arrow/,'Match Play digital debe conservar flechas');
+assert.match(matchCards.global.html,/<th>1<\/th>/,'Match Play deja el número de hoyo sin rótulo duplicado');
+assert.match(matchCards.global.html,/class="par-row"><th colspan="2">PAR<\/th>[\s\S]*?<td>3<\/td>/,'Match Play conserva una sola etiqueta PAR al inicio de la fila');
+assert.match(matchCards.personal[0].html,/<th>HOYO<\/th><th>PAR<\/th>/,'Match Play personal indica PAR por hoyo');
 assert.doesNotMatch(matchCards.global.html,/TEAM ·|★ MEJOR|MODALIDAD · FOUR BALL/,'Match Play digital no puede contener formato Four Ball');
 console.log('PASS tarjeta digital Match Play conserva flechas y no contamina Four Ball');
+
+const fourBallCards=artifacts.build({...snapshot,mode:'four_ball',players:matchPlayers.map((player,index)=>({...player,name:`FOUR ${index+1}`})),fourBall:{closed:true,decidedAt:18,resultLabel:'TEAM 1 UP'}});
+assert.match(fourBallCards.global.html,/<th>1<\/th>/,'Four Ball deja el número de hoyo sin rótulo duplicado');
+assert.match(fourBallCards.global.html,/class="par-row"><th colspan="3">PAR<\/th>[\s\S]*?<td>3<\/td>/,'Four Ball conserva una sola etiqueta PAR al inicio de la fila');
+assert.match(fourBallCards.personal[0].html,/<th>HOYO<\/th><th>PAR<\/th>/,'Four Ball personal indica PAR por hoyo');
+assert.match(fourBallCards.global.html,/VUELTA COMPLETA/);
+console.log('PASS tarjeta digital Four Ball: PAR y totales Gross/HDCP/Neto');
