@@ -5,6 +5,7 @@
 - `index-grupal.html`: el propietario tiene `PRUEBA · 48 H` para generar un solo enlace y `VER PRUEBA 48 H` para ver los grupos invitados por separado con jugadores, hoyos y totales de score card.
 - `test-r222-guest-48h-shared-link.mjs`: valida enlace único 48h, cupo 5, purga por vencimiento, telemetría sin consumir cupos y tarjetas de grupo visibles para el propietario.
 - `test-lab-r60-physical-matrix.mjs`: actualiza el candado físico para reconocer `PRUEBA · 48 H` como la invitación opcional vigente sin bloquear entrada libre.
+- `test-owner-invitation-ui.mjs`: actualiza la regresión del botón propietario a 48h y cubre que el nuevo botón `VER PRUEBA 48 H` no rompa el flujo de compartir.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: resella el inventario R222 con el ajuste del gate físico.
 - `release.json`, `service-worker.js` e `index-grupal.html`: publican identidad `20261008-R222`.
 

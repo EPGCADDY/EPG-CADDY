@@ -5,6 +5,7 @@
 - `index-grupal.html`: los invitados envían snapshot técnico de la ronda al persistir cambios; el propietario ve `VER PRUEBA 48 H` con grupos independientes, jugadores, hoyos, gross y neto/+/-.
 - `guest-access.js`: modo invitado 48h oculta herramientas de compartir y administración para que los amigos no redistribuyan desde la aplicación.
 - `test-r222-guest-48h-shared-link.mjs`, `test-r18-owner-guest-24h-access.mjs`, `test-lab-account-gate.mjs`, `test-lab-r60-physical-matrix.mjs` y `test-global-public-entry-policy.mjs`: bloquean regresión de entrada pública, aislamiento invitado, cupo, vencimiento y visibilidad de tarjetas.
+- `test-owner-invitation-ui.mjs`: sincroniza el mock del propietario con los dos controles R222 (`PRUEBA · 48 H` y `VER PRUEBA 48 H`) para que el build de Vercel valide el flujo completo.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: queda sincronizado con las fuentes R222 y el ajuste del gate físico.
 - `release.json`, `service-worker.js`, `index-grupal.html`: sincronizan R222, cache `v394-r222-owner-trial-48h-shared-link`, meta `20261008-R222`, badge `VERSIÓN R222` y `personal-events.js?v=20261008-R222`.
 
