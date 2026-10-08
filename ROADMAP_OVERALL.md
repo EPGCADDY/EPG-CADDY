@@ -1,3 +1,10 @@
+## R208 · backend acepta READY de Produccion aunque Vercel sea preview · 8 de octubre de 2026
+
+- R207 cargo el release, pero Produccion seguia devolviendo `PERSONAL_ACCESS_NOT_ENABLED`.
+- Causa raiz de codigo: `personalAccessEnabled` solo usaba `GSC_PERSONAL_ACCESS_PRODUCTION_READY` cuando `VERCEL_ENV==='production'`; el dominio publico estaba aliasado a un deployment de rama con `VERCEL_ENV=preview`.
+- Correccion: el backend habilita acceso personal si esta activo `GSC_PERSONAL_ACCESS_PRODUCTION_READY` o `GSC_PERSONAL_ACCESS_LAB_READY`, independientemente del target tecnico.
+- Estado: candidato R208 para publicar y verificar endpoint de Produccion.
+
 ## R207 · Produccion activa acceso personal en deployments publicados por alias · 8 de octubre de 2026
 
 - Reproduccion fisica: en Produccion R206 el codigo `9FCE819496` devuelve `CODIGO INCORRECTO O TORNEO VENCIDO`.

@@ -1,3 +1,10 @@
+## R208 · correccion definitiva del target Vercel para Produccion · 8 de octubre de 2026
+
+- Evidencia post R207: `release.json` mostraba R207, pero POST a Produccion seguia devolviendo `PERSONAL_ACCESS_NOT_ENABLED`.
+- Funcion afectada: `api/_lib/personal-access-activation.js`.
+- Cambio exacto: `personalAccessEnabled` deja de depender de `VERCEL_ENV` y acepta cualquiera de los flags READY ya configurados en el proyecto que esta sirviendo el dominio.
+- Validacion esperada: Produccion ya no debe devolver `PERSONAL_ACCESS_NOT_ENABLED`; si el codigo es invalido, la respuesta sera por datos del codigo, no por acceso apagado.
+
 ## R207 · fix Produccion no LAB para codigos de torneo · 8 de octubre de 2026
 
 - Aclaracion del propietario: el problema no era LAB, era Produccion.

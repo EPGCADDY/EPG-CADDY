@@ -1,3 +1,10 @@
+## RC-121 · personalAccessEnabled dependia de VERCEL_ENV y no del proyecto servido · 8 OCTUBRE 2026
+
+- Reincidencia confirmada: R207 desplegado y aliasado, pero Produccion seguia devolviendo `PERSONAL_ACCESS_NOT_ENABLED`.
+- Causa raiz: `personalAccessEnabled` usaba `VERCEL_ENV==='production'` para decidir que flag leer; los despliegues de rama aliasados a dominio publico tienen `VERCEL_ENV=preview`.
+- Correccion permanente: aceptar `GSC_PERSONAL_ACCESS_PRODUCTION_READY` o `GSC_PERSONAL_ACCESS_LAB_READY` como activadores explicitos y mantener permisos por servicio.
+- Estado: R208 modifica la funcion y fuerza redeploy.
+
 ## RC-120 · Produccion R206 sin acceso personal por target de env var · 8 OCTUBRE 2026
 
 - Reincidencia confirmada por captura del propietario: Produccion R206 con codigo `9FCE819496` muestra `CODIGO INCORRECTO O TORNEO VENCIDO`.
