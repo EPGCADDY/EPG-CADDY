@@ -1,3 +1,11 @@
+## R207 · Identidad de Score Card ante sesión de código activa · 8 de octubre de 2026
+
+- Fallo físico reportado en Producción: después de ingresar el código de organizador `4D9703E3E0`, la navegación a la Score Card terminó en pantalla negra `Acceso personal no autorizado`.
+- Causa raíz: cuando coexistían `gsc_event_device` y una `gsc_code_session`, la resolución de identidad podía validar acciones de Score Card con la sesión de código en vez del dispositivo persistente que tiene la membresía real del grupo.
+- Corrección: `resolveEventIdentity()` prioriza la identidad de dispositivo para `inspect-tournament-code`, `join-code`, `list` y `read` si ambas cookies existen; las sesiones de código explícitas conservan su identidad cuando no hay dispositivo y `identity` mantiene el comportamiento read-only aprobado.
+- Regresión: `test-lab-device-event-identity.mjs` cubre prioridad de dispositivo para entrada/lectura de Score Card con cookie de código coexistente, sin romper el visor por código ni la recuperación R206.
+- Estado: candidato R207 en verificación local; despliegue LAB/Producción pendiente tras gates.
+
 ## R206 · Recuperación de identidad al asignar Score Card · 8 de octubre de 2026
 
 - Fallo físico reportado en R205: al preparar/asignar una Score Card de torneo desde Registro aparecía `SCORE CARD ASIGNADA` seguido de `NO SE PUDO PREPARAR EL EVENTO · REINTENTA`.

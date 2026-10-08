@@ -1,3 +1,10 @@
+## RC-118 · R207 · Producción rechazó Score Card tras código de organizador · 8 OCTUBRE 2026
+
+- Síntoma físico: Producción mostró `Acceso personal no autorizado` después de capturar el código de organizador `4D9703E3E0`.
+- Causa: una `gsc_code_session` coexistente podía desplazar la identidad `gsc_event_device` durante `join-code`/`read`, dejando la URL de Score Card con `personalAccount` distinto del validado por middleware.
+- Control permanente: `test-lab-device-event-identity.mjs` exige que `join-code` y `read` prioricen el dispositivo cuando ambas cookies existen, mientras `identity` conserva el visor de código.
+- Estado: R207 candidato; publicación sujeta a gates y verificación remota.
+
 ## RC-117 · Score Card asignada no preparaba evento con sesión de código vencida · 8 OCTUBRE 2026
 
 - Defecto físico reportado en R205: la pantalla mostraba `SCORE CARD ASIGNADA` y luego `NO SE PUDO PREPARAR EL EVENTO · REINTENTA` al intentar asignar/preparar el torneo desde Registro.

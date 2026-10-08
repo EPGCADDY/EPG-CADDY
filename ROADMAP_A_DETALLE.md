@@ -1,3 +1,11 @@
+## R207 · Identidad de Score Card ante sesión de código activa · 8 de octubre de 2026
+
+- `api/personal-events.js`: para acciones propias del recorrido de Score Card (`inspect-tournament-code`, `join-code`, `list`, `read`), si el navegador trae una identidad de dispositivo vigente y además una `gsc_code_session`, se usa la identidad de dispositivo. Esto conserva la membresía recién asignada al grupo y evita que el middleware rechace `/index-grupal.html?personalEvent=...&personalAccount=...`.
+- `test-lab-device-event-identity.mjs`: agrega dos aserciones con ambas cookies presentes. `identity` sigue devolviendo el visor de código cuando corresponde, pero `join-code` y `read` usan el dispositivo persistente.
+- `release.json`, `index-grupal.html` y `service-worker.js`: release sincronizada `20261008-R207`, etiqueta visible `R207`, versión técnica `R207-SCORECARD-DEVICE-IDENTITY`.
+- Motivo físico: captura de Producción mostró `Acceso personal no autorizado` inmediatamente después de ingresar el código `4D9703E3E0`.
+- Estado: pruebas dirigidas y gates pendientes de ejecución antes de publicar.
+
 ## R206 · Recuperación de identidad al asignar Score Card · 8 de octubre de 2026
 
 - Archivo `api/personal-events.js`: `resolveEventIdentity()` ahora trata `ACCOUNT_UNAUTHORIZED` y `CODE_SESSION_INVALID` como sesiones de código caducas o inválidas para la acción `identity`; primero intenta identidad de dispositivo vigente y después crea una nueva identidad de dispositivo segura. No amplía permisos de `join-code`, escritura, administración ni lector.
