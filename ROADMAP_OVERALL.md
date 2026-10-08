@@ -1,3 +1,10 @@
+## R209 · Produccion aliasada requiere GSC_ENVIRONMENT production · 8 de octubre de 2026
+
+- R208 fallo el test porque la regla era demasiado amplia: un preview con flag de Produccion no debe activarse sin declarar que sirve Produccion.
+- Correccion: `personalAccessEnabled` usa `GSC_ENVIRONMENT=production` para permitir que un deployment tecnico preview, aliasado al dominio publico de Produccion, use `GSC_PERSONAL_ACCESS_PRODUCTION_READY`.
+- El comportamiento previo se conserva: preview sin `GSC_ENVIRONMENT=production` no se activa con el flag de Produccion.
+- Estado: candidato R209 para build, alias y verificacion directa del endpoint Produccion.
+
 ## R208 · backend acepta READY de Produccion aunque Vercel sea preview · 8 de octubre de 2026
 
 - R207 cargo el release, pero Produccion seguia devolviendo `PERSONAL_ACCESS_NOT_ENABLED`.

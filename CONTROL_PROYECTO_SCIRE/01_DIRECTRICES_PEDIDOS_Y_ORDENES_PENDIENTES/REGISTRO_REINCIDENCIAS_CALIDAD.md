@@ -1,3 +1,10 @@
+## RC-122 · R208 abria preview con flag de Produccion sin entorno declarado · 8 OCTUBRE 2026
+
+- Falla interna: R208 corrigio el caso operativo, pero rompio el control preventivo que impide activar preview solo por tener el flag de Produccion.
+- Causa raiz: regla de activacion demasiado amplia en `personalAccessEnabled`.
+- Control permanente: Produccion aliasada a preview requiere `GSC_ENVIRONMENT=production`; preview generico conserva la separacion de flags.
+- Estado: R209 ajusta funcion y test de regresion.
+
 ## RC-121 · personalAccessEnabled dependia de VERCEL_ENV y no del proyecto servido · 8 OCTUBRE 2026
 
 - Reincidencia confirmada: R207 desplegado y aliasado, pero Produccion seguia devolviendo `PERSONAL_ACCESS_NOT_ENABLED`.

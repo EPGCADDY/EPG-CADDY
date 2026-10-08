@@ -1,3 +1,10 @@
+## R209 · activacion personal por entorno declarado, no solo VERCEL_ENV · 8 de octubre de 2026
+
+- Falla exacta R208: `test-personal-access-activation.mjs` esperaba que `VERCEL_ENV=preview` con solo `GSC_PERSONAL_ACCESS_PRODUCTION_READY` siguiera bloqueado.
+- Cambio exacto: `personalAccessEnabled` acepta Produccion en preview solo si `GSC_ENVIRONMENT` o `GSC_APP_ENVIRONMENT` declara `production`.
+- Test actualizado: cubre Produccion real, LAB preview, Produccion aliasada a preview, y evita que LAB_READY active Produccion declarada.
+- Validacion esperada: build PASS y endpoint Produccion deja de devolver `PERSONAL_ACCESS_NOT_ENABLED`.
+
 ## R208 · correccion definitiva del target Vercel para Produccion · 8 de octubre de 2026
 
 - Evidencia post R207: `release.json` mostraba R207, pero POST a Produccion seguia devolviendo `PERSONAL_ACCESS_NOT_ENABLED`.
