@@ -1,5 +1,6 @@
 ## R214 · Reparar gate de entrega tras eliminar 403 textual · 8 de octubre de 2026
 
+- Resello remoto: el inventario se recalcula desde el arbol GitHub publicado y se guarda junto a ambos ROADMAPS para satisfacer el gate atomico de despliegue.
 - `test-update-delivery-control.mjs` y `test-personal-storage-access.mjs`: el recorte de prueba de `manualAppNavigation` ya no depende de `authorizedPersonalNavigation`, y la navegacion personal sin membresia inmediata carga shell en vez de 403 textual.
 - `service-worker.js`, `index-grupal.html` y `release.json`: release visible y cache suben a `20261008-R214` para forzar instalacion nueva con la correccion R213 completa.
 - Alcance: no cambia reglas de torneo ni APIs privadas; desbloquea el build para publicar el parche que evita la pantalla negra `Acceso personal no autorizado`.
