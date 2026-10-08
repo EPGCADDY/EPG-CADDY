@@ -63,6 +63,19 @@ export async function ensureAccessTable(sql=getDatabase()){
   await sql`ALTER TABLE app_access_grants ADD COLUMN IF NOT EXISTS annotations_count INTEGER NOT NULL DEFAULT 0`;
   await sql`ALTER TABLE app_access_grants ADD COLUMN IF NOT EXISTS current_snapshot JSONB`;
   await sql`ALTER TABLE app_access_grants ADD COLUMN IF NOT EXISTS feedback_updated_at TIMESTAMPTZ`;
+  await sql`CREATE TABLE IF NOT EXISTS app_access_guest_groups (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    grant_id UUID NOT NULL REFERENCES app_access_grants(id) ON DELETE CASCADE,
+    group_key TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    modality TEXT,
+    player_count SMALLINT NOT NULL DEFAULT 0,
+    holes_used SMALLINT NOT NULL DEFAULT 0,
+    annotations_count INTEGER NOT NULL DEFAULT 0,
+    current_snapshot JSONB,
+    UNIQUE(grant_id,group_key)
+  )`;
   return sql;
 }
 
@@ -134,6 +147,7 @@ export async function recordGuestFeedback(token,input={},database=getDatabase())
   const holes=Math.max(0,Math.min(18,Number(input.holesUsed)||0));
   const annotations=Math.max(0,Math.min(108,Number(input.annotationsCount)||0));
   const snapshot=sanitizedGuestSnapshot(input.snapshot);
+  const groupKey=boundedText(input.guestGroupId||input.groupId||snapshot?.groupLabel||"guest-group",120)||"guest-group";
   const rows=await sql`UPDATE app_access_grants SET
     opened_at=COALESCE(opened_at,now()),last_used_at=now(),
     modality=COALESCE(${modality},modality),max_players=GREATEST(max_players,${players}),
@@ -141,13 +155,30 @@ export async function recordGuestFeedback(token,input={},database=getDatabase())
     current_snapshot=COALESCE(${snapshot?JSON.stringify(snapshot):null}::jsonb,current_snapshot),
     feedback_updated_at=now()
     WHERE token_hash=${hash} AND revoked_at IS NULL AND expires_at>now() RETURNING id`;
-  return Boolean(rows[0]);
+  if(!rows[0])return false;
+  await sql`INSERT INTO app_access_guest_groups (grant_id,group_key,modality,player_count,holes_used,annotations_count,current_snapshot,updated_at)
+    VALUES (${rows[0].id}::uuid,${groupKey},${modality},${players},${holes},${annotations},${snapshot?JSON.stringify(snapshot):null}::jsonb,now())
+    ON CONFLICT (grant_id,group_key) DO UPDATE SET
+      updated_at=now(),
+      modality=COALESCE(EXCLUDED.modality,app_access_guest_groups.modality),
+      player_count=GREATEST(app_access_guest_groups.player_count,EXCLUDED.player_count),
+      holes_used=GREATEST(app_access_guest_groups.holes_used,EXCLUDED.holes_used),
+      annotations_count=GREATEST(app_access_guest_groups.annotations_count,EXCLUDED.annotations_count),
+      current_snapshot=COALESCE(EXCLUDED.current_snapshot,app_access_guest_groups.current_snapshot)`;
+  return true;
 }
 
 export async function ownerFeedback(owner,database=getDatabase()){
   const sql=await ensureAccessTable(database);await purgeExpiredAccess(sql);
-  return sql`SELECT id,created_at,expires_at,revoked_at,opened_at,last_used_at,use_count,max_uses,modality,max_players,holes_used,annotations_count,current_snapshot,feedback_updated_at
+  const grants=await sql`SELECT id,created_at,expires_at,revoked_at,opened_at,last_used_at,use_count,max_uses,modality,max_players,holes_used,annotations_count,current_snapshot,feedback_updated_at
     FROM app_access_grants WHERE owner_user_id=${owner.id} AND created_at>now()-interval '48 hours' ORDER BY created_at DESC`;
+  if(!grants.length)return grants;
+  const groups=await sql`SELECT gg.id,gg.grant_id,gg.group_key,gg.created_at,gg.updated_at,gg.modality,gg.player_count,gg.holes_used,gg.annotations_count,gg.current_snapshot
+    FROM app_access_guest_groups gg
+    JOIN app_access_grants ag ON ag.id=gg.grant_id
+    WHERE ag.owner_user_id=${owner.id} AND ag.created_at>now()-interval '48 hours'
+    ORDER BY gg.updated_at DESC`;
+  return grants.map(grant=>({...grant,guest_groups:groups.filter(group=>String(group.grant_id)===String(grant.id))}));
 }
 
 export async function resolveAppAccess(req){

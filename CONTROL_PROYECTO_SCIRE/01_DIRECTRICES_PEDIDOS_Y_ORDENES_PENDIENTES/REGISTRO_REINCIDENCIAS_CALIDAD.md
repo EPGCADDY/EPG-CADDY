@@ -1,3 +1,11 @@
+## RC-141 · Invitaciones 48h no aparecían como grupos individuales en Organizador · 8 OCTUBRE 2026
+
+- Síntoma operativo: el propietario necesitaba entrar a Organizador y ver cada grupo invitado 48h por separado, con sus jugadores y scores, mientras el invitado debía usar la Score Card normal sin acceso a funciones de organizador.
+- Causa raíz: el enlace 48h guardaba un único `current_snapshot` por grant; el último grupo podía sobrescribir la vista anterior y el Organizador no leía esa actividad como tarjetas propias.
+- Punto de escape: R222 validaba feedback propietario, pero no exigía que el mismo enlace compartido mantuviera múltiples grupos persistidos ni que aparecieran dentro de `event-administration-ui.js`.
+- Control permanente: `test-r222-guest-48h-shared-link.mjs` exige dos `guest_groups` independientes bajo un enlace 48h; `test-r227-guest48h-organizer-groups.mjs` exige sección `GRUPOS INVITADOS 48H` en Organizador y bloqueo de Organizador para invitados.
+- Estado: corregido en R227; pendiente publicación LAB/Producción y verificación pública en este turno.
+
 ## RC-140 · Compartir Live de Score Card abría lista de torneos · 8 OCTUBRE 2026
 
 - Síntoma físico: al compartir Live desde la Score Card de `LAB TEST`, el invitado entraba a `SCORES TORNEO` y veía opciones de torneos activos, incluyendo otros torneos en curso.

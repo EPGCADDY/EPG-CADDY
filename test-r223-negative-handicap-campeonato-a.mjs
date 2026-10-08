@@ -5,9 +5,9 @@ import vm from 'node:vm';
 const html = fs.readFileSync('index-grupal.html', 'utf8');
 const release = JSON.parse(fs.readFileSync('release.json', 'utf8'));
 
-assert.equal(release.label, 'R226');
-assert.match(html, /<meta name="gscg-release" content="20261008-R226">/);
-assert.match(html, /VERSIÓN R226/);
+assert.match(release.label, /^R\d+$/);
+assert.match(html, /<meta name="gscg-release" content="20261008-R\d+">/);
+assert.match(html, /VERSIÓN R\d+/);
 
 assert.match(
   html,

@@ -26,6 +26,19 @@ function administrationCard(e){
  const deleting='<button class="danger" data-delete="'+key+'">'+deleteLabel+'</button>';
  return '<article data-event-id="'+escape(e.id)+'" data-event-source="'+escape(e.source)+'"><h3>'+escape(e.name)+'</h3>'+scores+(e.joinCode?'<p>ID DE '+kind+'</p><output data-tournament-code>'+escape(e.joinCode)+'</output>':'')+sharing+'<p data-event-status="'+key+'" role="status" aria-live="polite"></p>'+deleting+'</article>';
 }
+function guestGroupTitle(group){
+ const snapshot=group.current_snapshot||{},names=(snapshot.players||[]).map(player=>String(player?.name||'').trim()).filter(Boolean).slice(0,4).join(' / ');
+ return snapshot.groupLabel||names||'GRUPO INVITADO 48H';
+}
+function guestGroupPlayerLine(player){
+ const totals=player?.totals||{},holes=Number.isFinite(Number(totals.holes))?Number(totals.holes):(Array.isArray(player?.holes)?player.holes.length:0),gross=Number.isFinite(Number(totals.gross))?String(totals.gross):'—',net=Number.isFinite(Number(totals.net))?String(totals.net):'—',relative=Number.isFinite(Number(totals.relativeToPar))?Number(totals.relativeToPar):null;
+ const rel=relative===null?'':relative===0?' · PAR':relative>0?' · +'+relative:' · '+relative;
+ return '<li><strong>'+escape(player?.name||'JUGADOR')+'</strong><span>'+holes+' hoyos · Gross '+escape(gross)+' · Neto '+escape(net)+escape(rel)+'</span></li>';
+}
+function guestGroupCard(group){
+ const snapshot=group.current_snapshot||{},players=Array.isArray(snapshot.players)?snapshot.players:[],sourceLabel=group.source==='lab'?'LABORATORIO':group.source==='production'?'PRODUCCIÓN':String(group.source||'LOCAL').toUpperCase(),updated=group.updated_at?format(group.updated_at):'SIN ACTUALIZACIÓN',expires=group.expires_at?format(group.expires_at):'—';
+ return '<article data-guest-group="'+escape(group.id)+'" data-event-source="'+escape(group.source)+'"><h3>'+escape(guestGroupTitle(group))+'</h3><p>INVITACIÓN 48H · '+escape(sourceLabel)+'</p><p>Actualizado: '+escape(updated)+' · vence: '+escape(expires)+'</p><p>Usos del enlace: '+escape(group.use_count||0)+'/'+escape(group.max_uses||5)+' · Jugadores: '+escape(players.length||group.player_count||0)+' · Hoyos: '+escape(group.holes_used||0)+'</p><ul>'+players.map(guestGroupPlayerLine).join('')+'</ul><p data-event-status role="status">Grupo invitado visible para propietario. El invitado usa Score Card normal; Organizador permanece bloqueado.</p></article>';
+}
 let refreshSequence=0,cachedLocal={ok:false},cachedDirectory={ok:false},cachedCodes={},lastRowsSignature='';
 async function refresh({automatic=false,signal}={}){
  const sequence=++refreshSequence;if(!automatic)$('status').textContent='CARGANDO TORNEOS…';
@@ -36,14 +49,15 @@ async function refresh({automatic=false,signal}={}){
  if(result.ok)cachedLocal=result;if(directory.ok&&!directory.partial)cachedDirectory=directory;
  else if(directory.ok)cachedDirectory=directory;
  if(result.ok&&(!automatic||localChanged)){await window.GSCPersonalEvents.sync();cachedCodes=await window.GSCPersonalEvents.organizerCodes()||{}}if(sequence!==refreshSequence||signal?.aborted)return{ok:false};
- const codes=cachedCodes,rows=administrationRows(cachedLocal,cachedDirectory);showStatus(result.ok?result:directory);
+ const codes=cachedCodes,rows=administrationRows(cachedLocal,cachedDirectory),guestGroups=result.ok?result.guestGroups||[]:cachedLocal.guestGroups||[];showStatus(result.ok?result:directory);
  if(!result.ok&&cachedLocal.ok)$('status').textContent='SIN CONEXIÓN · CONSERVANDO LA ÚLTIMA LISTA';
- const signature=JSON.stringify([rows,codes]);
+ const signature=JSON.stringify([rows,guestGroups,codes]);
  if(automatic&&(signature===lastRowsSignature||document.querySelector('dialog[open],#gscWhatsAppInvitation,[data-gsc-dialog-backdrop]')))return{ok:directory.ok,partial:directory.partial};
  lastRowsSignature=signature;
  if(!directory.ok||directory.partial)$('status').textContent+=' · LISTA GLOBAL INCOMPLETA · REINTENTO AUTOMÁTICO';else $('status').textContent='LISTA GLOBAL COMPLETA · LABORATORIO + PRODUCCIÓN';
- $('events').innerHTML='<h2>TORNEOS</h2>'+rows.map(e=>administrationCard(e)).join('');
+ $('events').innerHTML='<h2>TORNEOS</h2>'+rows.map(e=>administrationCard(e)).join('')+'<h2>GRUPOS INVITADOS 48H</h2>'+guestGroups.map(guestGroupCard).join('');
  if(!rows.length)$('events').insertAdjacentHTML('beforeend','<p>'+(!directory.ok||directory.partial||!result.ok?'NO SE PUDO COMPROBAR LA LISTA COMPLETA · REINTENTA':'NO HAY TORNEOS ACTIVOS DISPONIBLES PARA TU CUENTA.')+'</p>');
+ if(!guestGroups.length)$('events').insertAdjacentHTML('beforeend','<p>AÚN NO HAY GRUPOS 48H CON JUGADORES REGISTRADOS.</p>');
  document.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>remove(rows.find(e=>e.source+':'+e.event_kind+':'+e.id===b.dataset.delete)));
  document.querySelectorAll('[data-copy-tournament]').forEach(b=>b.onclick=()=>copyTournamentId(b,codes[b.dataset.copyTournament]));
  document.querySelectorAll('[data-share-event]').forEach(b=>b.onclick=()=>shareEvent(b,rows.find(e=>(e.canAdminister||e.joinCode)&&e.source+':'+e.event_kind+':'+e.id===b.dataset.shareEvent)));

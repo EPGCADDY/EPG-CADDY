@@ -1,7 +1,7 @@
 import {getDatabase} from './_lib/database.js';
 import {tournamentDirectoryEnvironment,tournamentDirectoryPeerUrl} from './tournament-score-directory.js';
 import {ensureTournamentOrganizers,issueTournamentOrganizer} from './_lib/tournament-organizers.js';
-import {requireOwner} from './_lib/app-access.js';
+import {requireOwner,ownerFeedback} from './_lib/app-access.js';
 import {requireAccountSession} from './_lib/account-auth.js';
 import {resolveEventIdentity} from './personal-events.js';
 import {ensurePersonalAccess,accessError,eventKind,limitPersonalAccess} from './_lib/personal-event-access.js';
@@ -39,14 +39,44 @@ export async function handleEventAdministration(req,res,database=getDatabase,own
  if(body.action==='claim-legacy')return res.status(200).json(await claimLegacyEvent(sql,{eventId:body.eventId,eventKind:eventKind(body.eventKind)},account,body.organizerSecret));
  if(String(body.action).startsWith('organizer-')){if(!owner)throw accessError('OWNER_REQUIRED');await ensureTournamentOrganizers(sql);if(body.action==='organizer-issue')return res.status(200).json(await issueTournamentOrganizer(sql,account,body));if(body.action==='organizer-list')return res.status(200).json({ok:true,grants:await sql`SELECT id,recipient_account_id,recipient_name,expires_at,redeemed_at,revoked_at FROM gsc_tournament_organizers ORDER BY created_at DESC`});if(body.action==='organizer-revoke'){await sql`UPDATE gsc_tournament_organizers SET revoked_at=now() WHERE id=${body.grantId}::uuid`;return res.status(200).json({ok:true})}throw accessError('ADMIN_ACTION_INVALID',400)}
  if(body.action==='redeem')return res.status(200).json(await redeemEventAdmin(sql,account,body.code));
+ const guestGroupRows=(items=[])=>{
+  const rows=[];
+  for(const grant of items){
+   const groups=Array.isArray(grant.guest_groups)&&grant.guest_groups.length?grant.guest_groups:[grant.current_snapshot?{id:grant.id,grant_id:grant.id,group_key:'legacy',updated_at:grant.feedback_updated_at,modality:grant.modality,player_count:grant.max_players,holes_used:grant.holes_used,annotations_count:grant.annotations_count,current_snapshot:grant.current_snapshot}:null].filter(Boolean);
+   for(const group of groups){
+    rows.push({
+     id:String(group.id||`${grant.id}-${group.group_key||'legacy'}`),
+     grantId:grant.id,
+     groupKey:group.group_key||'legacy',
+     event_kind:'guest48h',
+     source,
+     created_at:group.created_at||grant.created_at,
+     updated_at:group.updated_at||grant.feedback_updated_at||grant.last_used_at,
+     expires_at:grant.expires_at,
+     opened_at:grant.opened_at,
+     use_count:grant.use_count,
+     max_uses:grant.max_uses,
+     modality:group.modality||grant.modality,
+     player_count:group.player_count||grant.max_players||0,
+     holes_used:group.holes_used||grant.holes_used||0,
+     annotations_count:group.annotations_count||grant.annotations_count||0,
+     current_snapshot:group.current_snapshot||grant.current_snapshot,
+     canAdminister:false
+    });
+   }
+  }
+  return rows;
+ };
  if(body.action==='list'||body.action==='list-local'){
  const items=await sql`SELECT id,name,status,expires_at,'tournament' AS event_kind FROM live_tournaments UNION ALL SELECT id,name,status,expires_at,'private' AS event_kind FROM live_private_rounds`;
  const events=[];for(const item of items){try{const authority=await eventAdminAuthority(sql,{eventId:item.id,eventKind:item.event_kind},account,owner);if(item.status!=='revoked'&&new Date(item.expires_at)>new Date())events.push({...item,authority:authority.authority,source})}catch(error){if(error.code!=='EVENT_ADMIN_REQUIRED')throw error;if(item.status!=='revoked'&&new Date(item.expires_at)>new Date())events.push({...item,authority:null,canAdminister:false,source})}}
  const receipts=owner?await sql`SELECT * FROM gsc_event_deletions ORDER BY deleted_at DESC LIMIT 200`:await sql`SELECT * FROM gsc_event_deletions WHERE actor_account_id=${account.id} ORDER BY deleted_at DESC LIMIT 200`;
- if(body.action==='list-local')return res.status(200).json({ok:true,owner,accountCode:account.id,source,events,receipts});
- let partial=false,peerEvents=[];try{const remote=await relay('/api/event-administration',{action:'list-local'});if(remote.status===200&&remote.data?.ok)peerEvents=(remote.data.events||[]).map(event=>({...event,source:source==='lab'?'production':'lab'}));else partial=true}catch{partial=true}
+ const guestGroups=owner?guestGroupRows(await ownerFeedback(account,sql)):[];
+ if(body.action==='list-local')return res.status(200).json({ok:true,owner,accountCode:account.id,source,events,receipts,guestGroups});
+ let partial=false,peerEvents=[],peerGuestGroups=[];try{const remote=await relay('/api/event-administration',{action:'list-local'});if(remote.status===200&&remote.data?.ok){peerEvents=(remote.data.events||[]).map(event=>({...event,source:source==='lab'?'production':'lab'}));peerGuestGroups=(remote.data.guestGroups||[]).map(group=>({...group,source:source==='lab'?'production':'lab'}));}else partial=true}catch{partial=true}
  const merged=new Map();for(const item of events)merged.set(`${source}:${item.event_kind}:${item.id}`,item);for(const item of peerEvents)merged.set(`${item.source}:${item.event_kind}:${item.id}`,item);
- return res.status(200).json({ok:true,owner,accountCode:account.id,source,events:[...merged.values()],receipts,partial});
+ const mergedGuestGroups=new Map();for(const item of guestGroups)mergedGuestGroups.set(`${item.source}:${item.grantId}:${item.groupKey}:${item.id}`,item);for(const item of peerGuestGroups)mergedGuestGroups.set(`${item.source}:${item.grantId}:${item.groupKey}:${item.id}`,item);
+ return res.status(200).json({ok:true,owner,accountCode:account.id,source,events:[...merged.values()],receipts,guestGroups:[...mergedGuestGroups.values()],partial});
  }
  const event={eventId:body.eventId,eventKind:eventKind(body.eventKind)};
  if(body.action==='issue')return res.status(200).json(await issueEventAdmin(sql,event,account,owner,body));

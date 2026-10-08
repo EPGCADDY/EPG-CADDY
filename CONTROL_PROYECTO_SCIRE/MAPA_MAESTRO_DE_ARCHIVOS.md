@@ -1,3 +1,13 @@
+## R227 · Grupos invitados 48h dentro de Organizador
+
+| Archivo | Rol actualizado | Gate / evidencia |
+| --- | --- | --- |
+| `api/_lib/app-access.js` | Persistencia de `app_access_guest_groups` por invitado/grupo 48h y retorno de `guest_groups` al propietario. | `test-r222-guest-48h-shared-link.mjs` |
+| `api/event-administration.js` | Expone `guestGroups` en Organizador para cuenta propietaria, sin habilitar administración al invitado 48h. | `test-r227-guest48h-organizer-groups.mjs` |
+| `event-administration-ui.js` | Renderiza `GRUPOS INVITADOS 48H` con tarjetas individuales, jugadores y totales. | `test-r227-guest48h-organizer-groups.mjs` |
+| `index-grupal.html` | Genera `guestGroupId` estable para que el invitado cargue jugadores en la Score Card normal y publique su grupo. | `test-r227-guest48h-organizer-groups.mjs` |
+| `release.json`, `service-worker.js`, `scripts/build-manual-lab.mjs` | Identidad R227, caché PWA y banco obligatorio actualizado. | `scripts/release-matrix-gate.mjs` |
+
 ## R226 · WhatsApp precargado y Live de Score Card acotado
 
 | Archivo | Rol actualizado | Gate / evidencia |

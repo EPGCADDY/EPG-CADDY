@@ -1,3 +1,13 @@
+## R227 · Grupos invitados 48h visibles en Organizador · 8 de octubre de 2026
+
+- `api/_lib/app-access.js`: el feedback de invitados 48h ahora persiste filas independientes en `app_access_guest_groups`, una por dispositivo/grupo, sin perder el `current_snapshot` legacy del enlace.
+- `index-grupal.html`: cada Score Card invitada genera un `guestGroupId` estable y sigue usando la tarjeta normal para registrar hasta seis jugadores y sus scores.
+- `api/event-administration.js`: la acción `list` del Organizador devuelve `guestGroups` para propietario, mezclando LAB/Producción cuando el ambiente par responde.
+- `event-administration-ui.js`: Organizador muestra la sección `GRUPOS INVITADOS 48H` con una tarjeta por grupo, jugadores, hoyos, gross/neto y vencimiento del enlace; el invitado 48h conserva Organizador bloqueado.
+- `test-r227-guest48h-organizer-groups.mjs` y `test-r222-guest-48h-shared-link.mjs`: regresión permanente para múltiples grupos por enlace compartido y visualización en Organizador.
+- `scripts/build-manual-lab.mjs`, `release.json`, `service-worker.js` e `index-grupal.html`: incorporan R227 al banco obligatorio, badge visible, meta release y caché PWA.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: registran RC-141, mapa de archivos R227 y sello de inventario de la publicación.
+
 ## R226 · WhatsApp con código precargado y bloqueo robusto invitado 48h · 8 de octubre de 2026
 
 - `whatsapp-invitations.js`: los enlaces fallback de invitación ahora incluyen `codigo=<CÓDIGO>` en la URL de Registro; el texto indica que el código ya va cargado y no depende de copiar/pegar desde WhatsApp.

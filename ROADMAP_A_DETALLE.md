@@ -1,3 +1,17 @@
+## R227 · Invitaciones 48h como grupos individuales en Organizador · 8 de octubre de 2026
+
+- `api/_lib/app-access.js`: agrega tabla `app_access_guest_groups` con `grant_id`, `group_key`, snapshot, modalidad, jugadores, hoyos y contadores; `recordGuestFeedback()` hace upsert por grupo y `ownerFeedback()` devuelve `guest_groups`.
+- `index-grupal.html`: agrega `guestAccessGroupId()` y manda `guestGroupId` dentro del feedback 48h; el invitado sigue entrando a `index-grupal.html?source=guest48h` y registra jugadores en la Score Card normal.
+- `api/event-administration.js`: importa `ownerFeedback`, construye `guestGroupRows()` y expone `guestGroups` en `list` y `list-local`; el bloqueo `EVENT_ADMIN_GUEST_FORBIDDEN` para cookie invitada se mantiene.
+- `event-administration-ui.js`: agrega `guestGroupTitle()`, `guestGroupPlayerLine()` y `guestGroupCard()`; debajo de `TORNEOS` aparece `GRUPOS INVITADOS 48H` con tarjetas separadas por grupo.
+- `test-r222-guest-48h-shared-link.mjs`: ahora publica dos grupos (`telefono-jaime` y `telefono-becky`) bajo el mismo enlace 48h y exige que `ownerFeedback()` conserve ambos.
+- `test-r227-guest48h-organizer-groups.mjs`: valida persistencia por grupo, payload `guestGroupId`, API de Organizador, UI de tarjetas y bloqueo de Organizador para invitado.
+- `scripts/build-manual-lab.mjs`: agrega la regresión R227 al banco obligatorio.
+- `release.json`, `service-worker.js`, `index-grupal.html`: sincronizan `20261008-R227`, `VERSIÓN R227`, caché `v399-r227-guest48h-organizer-groups` y `personal-events.js?v=20261008-R227`.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: agrega RC-141 para la ausencia de grupos 48h individuales dentro de Organizador.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: registra el mapa R227 de backend, API, UI, Score Card y controles.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: queda resellado para incluir el árbol R227 publicado.
+
 ## R226 · WhatsApp sin copiar/pegar código · 8 de octubre de 2026
 
 - `whatsapp-invitations.js`: `registrationUrl(source, code)` añade `codigo` a `/index-grupal.html?inicio=1` cuando la invitación no trae `eventId`; el mensaje deja claro que el enlace ya carga el código.

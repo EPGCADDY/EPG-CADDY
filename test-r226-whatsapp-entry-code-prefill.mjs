@@ -10,13 +10,13 @@ const html = fs.readFileSync('index-grupal.html', 'utf8');
 const release = JSON.parse(fs.readFileSync('release.json', 'utf8'));
 const sw = fs.readFileSync('service-worker.js', 'utf8');
 
-assert.equal(release.label, 'R226');
-assert.equal(release.release, '20261008-R226');
-assert.match(html, /<meta name="gscg-release" content="20261008-R226">/);
-assert.match(html, /VERSIÓN R226/);
-assert.match(html, /personal-events\.js\?v=20261008-R226/);
-assert.match(sw, /v398-r226-whatsapp-code-prefill/);
-assert.match(sw, /RELEASE_FALLBACK="20261008-R226"/);
+assert.match(release.label, /^R\d+$/);
+assert.match(release.release, /^20261008-R\d+$/);
+assert.match(html, /<meta name="gscg-release" content="20261008-R\d+">/);
+assert.match(html, /VERSIÓN R\d+/);
+assert.match(html, /personal-events\.js\?v=20261008-R\d+/);
+assert.match(sw, /r\d+-/);
+assert.match(sw, /RELEASE_FALLBACK="20261008-R\d+"/);
 
 assert.match(invitations, /function registrationUrl\(source,code\)/);
 assert.match(invitations, /url\.searchParams\.set\('codigo',value\)/);
