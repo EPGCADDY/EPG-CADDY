@@ -1,6 +1,7 @@
 (function(){'use strict';
- const $=id=>document.getElementById(id),params=new URLSearchParams(location.search),visitor=params.get('visitor')==='1',legacyId=params.get('liveEvent'),legacyKind=params.get('liveKind')||'tournament',legacy=!!legacyId;
+ const $=id=>document.getElementById(id),params=new URLSearchParams(location.search),hashParams=new URLSearchParams(String(location.hash||'').slice(1)),visitor=params.get('visitor')==='1',legacyId=params.get('liveEvent'),legacyKind=params.get('liveKind')||'tournament',legacy=!!legacyId,prefilledCode=String(hashParams.get('code')||'').trim();
  if(visitor){document.body.classList.add('visitor-entry');$('guestScoresBackdrop').hidden=false;$('entryTitle').textContent='INGRESA TU CÓDIGO';$('entryLead').textContent='Abre los Scores compartidos en una vista privada de sólo lectura.';const panel=document.querySelector('main.entry');panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');panel.setAttribute('aria-labelledby','entryTitle')}
+ if(prefilledCode){$('entryCode').value=prefilledCode;try{const clean=new URL(location.href);clean.hash='';history.replaceState(null,'',clean.toString())}catch{}}
  if($('entryClose'))$('entryClose').onclick=()=>location.assign(new URL('/index-grupal.html',location.origin).toString());
  $('entryForm').addEventListener('submit',async event=>{
    event.preventDefault();const code=$('entryCode').value.trim();if(!code)return;

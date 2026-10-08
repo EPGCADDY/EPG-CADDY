@@ -1,3 +1,11 @@
+## R217 · WhatsApp de codigo de un solo uso abre con codigo precargado · 8 de octubre de 2026
+
+- Problema fisico: el mensaje de WhatsApp para invitado mostraba un codigo largo de un solo uso separado del enlace; en iPhone/WhatsApp no era practico seleccionarlo sin copiar todo el mensaje.
+- `live-share.js`: el enlace compartido ahora incluye `#code=...` y el texto indica tocar el enlace y luego ENTRAR; el codigo queda como respaldo, no como accion principal.
+- `code-entry.js`: al abrir el enlace, precarga el codigo en el campo, limpia el fragmento visible y no redime hasta que el invitado toque ENTRAR.
+- `test-lab-code-entry.mjs`: bloquea la regresion, exige enlace con codigo precargado y confirma que abrir el enlace no consume el codigo.
+- `release.json`, `service-worker.js` e `index-grupal.html`: identidad visible/cache en `20261008-R217`.
+
 ## R216 · Scores de torneo sin panel global de grupos/rondas activos · 8 de octubre de 2026
 
 - Pedido visual del propietario: en Scores General, Scores por Categoría y Buscar Jugador se elimina el bloque blanco de grupos/rondas activos, incluyendo lista global, nombres de grupos y hora de actualización.

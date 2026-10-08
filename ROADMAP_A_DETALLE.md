@@ -1,3 +1,10 @@
+## R217 · WhatsApp de codigo de un solo uso abre con codigo precargado · 8 de octubre de 2026
+
+- `live-share.js`: el mensaje de `GSCOneUseLive.share()` deja de depender de que el invitado copie manualmente un codigo largo. El enlace `/code-entry.html?visitor=1#code=...` transporta el codigo en el fragmento del navegador y el texto de WhatsApp indica tocar enlace + ENTRAR.
+- `code-entry.js`: lee `#code`, coloca el valor en `entryCode`, limpia el hash con `history.replaceState()` y mantiene la regla de seguridad: no consume ni redime automaticamente al abrir el link.
+- `test-lab-code-entry.mjs`: actualiza el contrato para exigir link precargado, mensaje entendible para invitado y cero redencion hasta submit; conserva el flujo legacy con `liveEvent/liveKind`.
+- `release.json`, `service-worker.js`, `index-grupal.html`: suben a `20261008-R217` / `R217-WHATSAPP-ONE-USE-CODE-PREFILL`.
+
 ## R216 · Scores de torneo sin panel global de grupos/rondas activos · 8 de octubre de 2026
 
 - `live-hub.html`: se elimina la sección `hubGlobalLiveDirectory`/`global-live-directory`, responsable del bloque blanco mostrado sobre los tabs de Scores.
