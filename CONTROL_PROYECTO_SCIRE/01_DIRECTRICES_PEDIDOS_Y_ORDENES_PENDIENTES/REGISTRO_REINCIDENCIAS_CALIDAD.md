@@ -1,3 +1,11 @@
+## RC-129 · R214 sellado fallaba en Vercel por archivos no versionados del install · 8 OCTUBRE 2026
+
+- Sintoma tecnico: deployments R214 `3eca61e` pasaron `PROJECT_QUALITY_GATE` y `ROADMAP GATE`, pero fallaron `INVENTORY GATE` durante el build.
+- Causa raiz: en Vercel el gate corria despues de instalar dependencias; `git ls-files --others` podia incluir archivos no versionados generados por el entorno y cambiar el digest aunque el arbol versionado estuviera sellado.
+- Punto de escape: el sellado local validaba el checkout limpio, pero no diferenciaba modo local de modo Vercel.
+- Control permanente: `scripts/inventory-gate.mjs` conserva deteccion local de archivos no registrados y en `VERCEL=1` valida solamente `git ls-files --cached`, que es el arbol desplegado.
+- Estado: R214 resellado para desbloquear despliegue LAB/Produccion sin cambiar reglas de juego ni APIs privadas.
+
 ## RC-128 · R213 completo bloqueo build por prueba anclada a funcion eliminada · 8 OCTUBRE 2026
 
 - Sintoma tecnico: deployment LAB de R213 fallo en `test-update-delivery-control.mjs` con `ReferenceError: self is not defined`.
