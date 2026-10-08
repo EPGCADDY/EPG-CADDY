@@ -22,7 +22,7 @@ assert.equal(JSON.parse(success.stored.get('golf-score-card-gt-private-round-v1'
 await success.make('[data-copy-event-code]').onclick();assert.equal(success.calls.find(call=>call.type==='copy').text,'ABCD234567');
 await success.make('[data-share-private-round]').onclick();
 await success.make('[data-send-invitation]').onclick();
-assert.equal(success.calls.find(call=>call.type==='share').payload.text,'GOLF SCORE CARD GT\nTe ha invitado a participar en el grupo de Jaime Kirste.\nAbre este enlace y registra a tus jugadores.\nhttps://golf.example/index-grupal.html?inicio=1\n\nMODALIDAD\nMI GRUPO\n\nCÓDIGO DE INGRESO\nABCD234567');
+assert.equal(success.calls.find(call=>call.type==='share').payload.text,'GOLF SCORE CARD GT\nTe ha invitado a participar en el grupo de Jaime Kirste.\nAbre este enlace; el código ya va cargado y podrás registrar a tus jugadores.\nhttps://golf.example/index-grupal.html?inicio=1&codigo=ABCD234567\n\nMODALIDAD\nMI GRUPO\n\nCÓDIGO DE INGRESO\nABCD234567');
 await success.make('[data-send-code]').onclick();
 assert.equal(success.calls.filter(call=>call.type==='share').length,2);
 assert.equal(success.calls.filter(call=>call.type==='share')[1].payload.text,'ABCD234567');
