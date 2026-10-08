@@ -631,3 +631,9 @@ Las rutas de entrada de la aplicación y PWA abren sin credenciales de propietar
 - Sólo se conserva una identidad de dispositivo si su cookie y registro son válidos. Si no existe y se consulta `identity`, se genera una nueva identidad segura. Esto no concede permisos sobre torneos.
 - Regresión: `test-lab-device-event-identity.mjs` valida recuperación, inspección sin consumo del código y aislamiento de terceros.
 - Estado de la corrección: dirigida PASS; build, navegador LAB y publicación pendientes.
+
+## R198 · sesión vencida al preparar ingreso por código
+- R197 en LAB fue confirmado por el propietario; en Producción, con R197, falló la inspección del código de torneo (`ACCOUNT_UNAUTHORIZED`).
+- `api/personal-events.js` recupera identidad de dispositivo para la acción de lectura `inspect-tournament-code`; no consume código ni entrega membresía. `join-code` conserva la autorización existente.
+- `test-lab-device-event-identity.mjs`: cuenta vencida sin cookie de dispositivo, código no consumido y dispositivo ajeno denegado.
+- R198 sincroniza app, `release.json`, Service Worker y caché exclusiva. Regresión dirigida PASS; gates y prueba física en LAB pendientes. Producción sigue en R197.
