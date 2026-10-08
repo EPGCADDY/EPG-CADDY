@@ -1,3 +1,10 @@
+## RC-125 · R211 paralelo cerraba gates sin parche cliente de preparacion · 8 OCTUBRE 2026
+
+- Falla interna: se publico un R211 documental/parcial sin las defensas de `personal-events.js` requeridas por la pantalla del iPhone.
+- Causa raiz: carrera entre commits R211 en la misma rama.
+- Control permanente: antes de desplegar, verificar que el commit servido contiene el marcador `joinSelectionFallbackRelease:'R211'` y el script versionado.
+- Estado: commit complementario reaplica el parche sobre la cabeza `e4e4e9e`.
+
 ## RC-124 · R211 · R210 mantuvo sombreado por sesion de codigo valida · 8 OCTUBRE 2026
 
 - Sintoma fisico: Produccion R210 mostro `NO SE PUDO PREPARAR EL EVENTO · REINTENTA` despues de ingresar el codigo `D50F9059FD`.

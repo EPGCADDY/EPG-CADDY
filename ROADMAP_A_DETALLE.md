@@ -1,3 +1,9 @@
+## R211 · Parche tecnico complementario al cierre de gates · 8 de octubre de 2026
+
+- `personal-events.js?v=20261008-R211` evita que PWA/Safari use un cliente anterior con modal de preparacion defectuoso.
+- `personal-events.js` conserva la seleccion asignada en `gsc-tournament-connect-selection-v1` ademas del almacenamiento por cuenta.
+- `index-grupal.html` lee seleccion scoped por `personalAccount`, conserva `source` y activa fallback `joinSelectionFallbackRelease:'R211'`.
+
 ## R211 · Codigo de torneo no queda sombreado por sesion de codigo · 8 de octubre de 2026
 
 - `api/personal-events.js`: la rama con `gsc_code_session` ya no deja que una sesion de codigo valida intercepte `inspect-tournament-code`/`join-code`. Primero lee `gsc_event_device`; si no existe, para esas acciones crea una identidad de dispositivo segura. En `list`/`read` solo prioriza el dispositivo si ya esta presente.

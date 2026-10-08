@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry-v371-r196-whatsapp-card-caption-v374-r200-stableford-gross-points-r199-tournament-join-v384-r210-production-env-var-redeploy";
+const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry-v371-r196-whatsapp-card-caption-v374-r200-stableford-gross-points-r199-tournament-join-v385-r211-tournament-assigned-card-cache-bust";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
 const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r148-entry-inspection`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r148-entry-inspection`;

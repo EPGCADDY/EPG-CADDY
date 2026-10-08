@@ -1,3 +1,9 @@
+## R211 · Defensa adicional de apertura tras codigo consumido · 8 de octubre de 2026
+
+- Se versiona `personal-events.js` desde `index-grupal.html` para forzar el cliente de join corregido.
+- La seleccion asignada se guarda en storage global y scoped para que la navegacion `personalAccount` no pierda contexto.
+- `openAssignedPersonalScoreCard` puede preparar desde la asignacion local cuando la lectura inmediata por cookie/device falla.
+
 ## R211 · Codigo de torneo no queda sombreado por sesion de codigo · 8 de octubre de 2026
 
 - Fallo fisico reportado sobre Produccion R210: el modal `INGRESE EL CODIGO` con codigo `D50F9059FD` respondio `NO SE PUDO PREPARAR EL EVENTO · REINTENTA`.
