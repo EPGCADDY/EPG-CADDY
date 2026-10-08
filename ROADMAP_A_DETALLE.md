@@ -1,12 +1,12 @@
 ## R214 · Gate de actualizacion compatible con R213 · 8 de octubre de 2026
 
-- Resello final: se sincroniza el digest con el orden exacto de `scripts/inventory-gate.mjs` para el arbol remoto publicado.
-- Resello remoto: el digest de inventario se recalcula sobre el arbol del commit remoto y se publica en la misma modificacion que estos ROADMAPS.
 - `test-update-delivery-control.mjs`: conserva la prueba de ACTUALIZAR y retorno a Administracion, pero extrae `manualAppNavigation` hasta `self.addEventListener("fetch"` porque R213 retiro la funcion `authorizedPersonalNavigation`.
 - `test-personal-storage-access.mjs`: actualiza el contrato de navegacion personal para no esperar 403 textual en pagina; mantiene el reingreso autenticado con redireccion reparada y deja la proteccion privada a las APIs.
 - `service-worker.js`: cache `v386-r214-no-raw-personal-auth-page-gate-fix` y `RELEASE_FALLBACK="20261008-R214"`.
 - `index-grupal.html`: meta release, badge visible, carga de `personal-events.js` y marca de fallback se sincronizan en R214.
-- `release.json`: publica `R214-R213-GATE-SLICE-FIX`.
+- `release.json`: publica `R214-NO-RAW-PERSONAL-403`.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sello regenerado sobre el arbol R214 final para corregir el bloqueo de `INVENTORY GATE` visto en Vercel.
+- `scripts/inventory-gate.mjs`: bajo `VERCEL=1` usa `git ls-files --cached`; localmente conserva `--others --exclude-standard` para detectar archivos fuente no registrados.
 - Objetivo operativo: permitir que LAB y Produccion compilen el parche que impide que una navegacion personal termine en la pagina negra textual `Acceso personal no autorizado`.
 
 ## R213 · Navegacion personal sin pantalla negra 403 · 8 de octubre de 2026
