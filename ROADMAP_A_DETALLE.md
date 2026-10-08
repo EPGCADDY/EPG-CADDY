@@ -1,3 +1,14 @@
+## R221 · Paridad funcional para Compartir Live desde directorios LAB/Producción · 8 de octubre de 2026
+
+- `live-hub.js`: `shareGeneral()` detecta `shareEvent.directory` antes de invocar `GSCOneUseLive.share()`. Para eventos de directorio construye `tournamentHubShareUrl(state.generalToken, dominioDueño, location.href)` y usa `navigator.share` o copia al portapapeles.
+- `live-hub.js`: el dominio dueño queda determinado por `shareEvent.source`: LAB comparte `https://golf-sc-gt-lab.vercel.app/live-hub.html?...#general=directory_lab_...`; Producción comparte `https://epg-caddy.vercel.app/live-hub.html?...#general=directory_production_...`.
+- `test-lab-code-entry.mjs`: agrega aserciones estáticas para asegurar que Scores de directorio comparte URL pública y manda eventos LAB al dominio LAB.
+- `CONTROL_PROYECTO_SCIRE/ARQUITECTURA_PARIDAD_LAB_PRODUCCION.json`: declara la paridad 360 obligatoria entre LAB y Producción: mismo árbol publicado, release/meta/badge/SW alineados, entrada pública, escritores, acceso personal, directorios, Live, PWA/cache, ROADMAPS, inventario y gates; sólo pueden variar dominios, project IDs, bases y secretos propios.
+- `test-r221-lab-production-architecture-parity.mjs`: valida que LAB y Producción usen entorno declarado, que ningún ambiente se active con la bandera del otro, que LAB conserve base aislada, que release visible/cache estén alineados y que el directorio público no dependa de código privado.
+- `test-v353-live-hub.mjs`: conserva el bloqueo del nombre interno en UI/textos LIVE y permite únicamente el dominio técnico canónico de Producción usado por el enlace público.
+- `scripts/build-manual-lab.mjs`: incorpora el nuevo gate de paridad al banco obligatorio.
+- `release.json`, `service-worker.js`, `index-grupal.html`: sincronizan R221, caché `v393-r221-fix-compartir-live-directory-public-share`, meta `20261008-R221`, badge `VERSIÓN R221` y `personal-events.js?v=20261008-R221`.
+
 ## R220 · Relay same-origin para Compartir Live de eventos LAB remotos · 8 de octubre de 2026
 
 - `live-share.js`: calcula el ambiente actual por hostname; si `personal.source` difiere, genera el código con `fetch('/api/event-administration', {action:'remote-share', source, eventId, eventKind})` y conserva el modal aprobado con enlace `/code-entry.html?visitor=1#code=...`.

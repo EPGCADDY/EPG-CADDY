@@ -1,3 +1,15 @@
+## R221 · Paridad 360 LAB/Producción y Compartir Live público
+
+| Archivo | Función | Verificación |
+|---|---|---|
+| `CONTROL_PROYECTO_SCIRE/ARQUITECTURA_PARIDAD_LAB_PRODUCCION.json` | Contrato 360 de una sola arquitectura para LAB y Producción: release, PWA/cache, entrada pública, acceso personal, directorios, Live, base aislada, permisos, ROADMAPS, inventario y gates. | `test-r221-lab-production-architecture-parity.mjs` |
+| `live-hub.js` | `COMPARTIR LIVE` en eventos de directorio comparte el enlace público del ambiente dueño del evento, no un código privado con cookie cruzada. | `test-lab-code-entry.mjs`, `test-r221-lab-production-architecture-parity.mjs` |
+| `test-r221-lab-production-architecture-parity.mjs` | Bloquea divergencias LAB/Producción de entorno declarado, activación cruzada, release/cache, base aislada y flujo público de directorio. | Banco LAB obligatorio |
+| `test-v353-live-hub.mjs` | Conserva el bloqueo del nombre interno en LIVE, permitiendo sólo el dominio técnico canónico necesario para compartir Producción. | Banco LAB obligatorio |
+| `scripts/build-manual-lab.mjs` | Incorpora el gate R221 al banco técnico obligatorio. | Build LAB |
+| `release.json`, `index-grupal.html`, `service-worker.js` | Sincronizan R221, meta visible, badge y caché PWA. | `scripts/release-matrix-gate.mjs` |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `INVENTARIOS_V311.lock.json` | Registro doble, reincidencia y sello del cambio. | Gates documental, roadmap e inventario |
+
 ## R200 · Tarjetas digitales Stableford
 
 | Archivo | Función | Verificación |

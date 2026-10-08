@@ -1,3 +1,11 @@
+## RC-134 · R220 Produccion valida privado un evento LAB de directorio · 8 OCTUBRE 2026
+
+- Sintoma fisico: en Produccion, al pulsar `COMPARTIR LIVE` sobre `LAB TEST`, aparece `NO SE PUDO VALIDAR EL ACCESO LIVE`; en LAB el mismo boton abre el modal `COMPARTIR LIVE` con codigo de un solo uso.
+- Causa raiz: Produccion estaba viendo un evento LAB desde el directorio publico, pero el boton intentaba generar un codigo privado LAB con la identidad/cookie de Produccion. LAB funcionaba porque el telefono tenia contexto/membresia LAB; Produccion no puede ni debe depender de esa cookie cruzada.
+- Punto de escape: R219/R220 corrigieron accion y red/CORS, pero no separaron el caso publico de directorio frente al caso privado personal/organizador, ni existia un gate 360 de paridad LAB/Produccion.
+- Control permanente: `test-lab-code-entry.mjs` exige que Scores de directorio comparta URL publica del dominio dueño; `CONTROL_PROYECTO_SCIRE/ARQUITECTURA_PARIDAD_LAB_PRODUCCION.json` y `test-r221-lab-production-architecture-parity.mjs` bloquean drift 360 de release, PWA/cache, entrada publica, acceso personal, directorios, Live, base aislada, permisos, ROADMAPS e inventario.
+- Estado: R221 elimina la validacion privada para directorios publicos y conserva codigos de un solo uso solo para eventos personales/privados donde corresponde.
+
 ## RC-133 · R219 mostraba SIN CONEXIÓN al compartir evento LAB desde otro dominio · 8 OCTUBRE 2026
 
 - Sintoma fisico: al pulsar `COMPARTIR LIVE`, el boton accionaba pero aparecia `SIN CONEXIÓN · CONSERVANDO LOS ÚLTIMOS SCORES` en la parte superior.

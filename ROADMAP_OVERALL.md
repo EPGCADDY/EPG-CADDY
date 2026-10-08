@@ -1,3 +1,12 @@
+## R221 · Compartir Live de directorio usa enlace público y gate de paridad · 8 de octubre de 2026
+
+- Regresión física reportada en Producción: al pulsar `COMPARTIR LIVE` sobre un evento LAB de directorio, aparecía `NO SE PUDO VALIDAR EL ACCESO LIVE`, mientras LAB abría el modal de código.
+- `live-hub.js`: si Scores viene de `directory_lab_*` o `directory_production_*`, el botón ya no intenta generar un código privado con cookie del otro ambiente; comparte el enlace público Live del dominio dueño del evento.
+- `test-lab-code-entry.mjs`: bloquea que el flujo de Scores de directorio vuelva a usar validación privada para compartir.
+- `CONTROL_PROYECTO_SCIRE/ARQUITECTURA_PARIDAD_LAB_PRODUCCION.json` y `test-r221-lab-production-architecture-parity.mjs`: agregan gate 360 de paridad LAB/Producción para release, PWA/cache, entrada pública, acceso personal, directorios, Live, base aislada, permisos y documentación.
+- `test-v353-live-hub.mjs`: mantiene prohibido exponer el nombre interno en LIVE, pero permite el dominio técnico canónico `epg-caddy.vercel.app` necesario para paridad de enlaces públicos.
+- `scripts/build-manual-lab.mjs`, `release.json`, `service-worker.js` e `index-grupal.html`: integran el gate y publican identidad `20261008-R221`.
+
 ## R220 · Compartir Live usa relay remoto y evita SIN CONEXIÓN · 8 de octubre de 2026
 
 - Regresión física reportada en iPhone: al pulsar `COMPARTIR LIVE` en Scores General, aparecía `SIN CONEXIÓN · CONSERVANDO LOS ÚLTIMOS SCORES`.

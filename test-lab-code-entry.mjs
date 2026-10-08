@@ -100,6 +100,8 @@ const liveHubSource=fs.readFileSync('live-hub.js','utf8');
 assert(liveHubSource.includes('function directoryEventDescriptor(token)'),'Scores button must understand directory_lab and directory_production tokens');
 assert(liveHubSource.includes('root.GSCOneUseLive?.share(kind,eventId,general?.name,shareEvent)'),'Scores button must pass source-aware share event into Compartir Live');
 assert(liveHubSource.includes("personalShare=!!(shareEvent?.source||shareEvent?.directory"),'Scores button must enable Compartir Live for directory personal events');
+assert(liveHubSource.includes("if(shareEvent?.directory){const url=tournamentHubShareUrl"),'Directory Scores sharing must use the public Live URL instead of private share-code validation');
+assert(liveHubSource.includes("shareEvent.source==='lab'?'https://golf-sc-gt-lab.vercel.app':'https://epg-caddy.vercel.app'"),'Directory Scores sharing must send LAB events to the LAB domain');
 // Native form submission (Enter) uses server destination, without client-supplied role.
 const fields=Object.fromEntries(['guestScoresBackdrop','entryTitle','entryLead','entryForm','entryCode','entryEnter','entryStatus'].map(id=>[id,{value:'',textContent:'',addEventListener(t,fn){this.handler=fn}}]));
 let entryRequests=0,entryDestination='',entryFailure=false;
