@@ -1,10 +1,10 @@
 ## R214 · Reparar gate de entrega tras eliminar 403 textual · 8 de octubre de 2026
 
-- Resello final: el inventario usa el mismo orden lexicografico de `git ls-files` que ejecuta el gate en Vercel.
-- Resello remoto: el inventario se recalcula desde el arbol GitHub publicado y se guarda junto a ambos ROADMAPS para satisfacer el gate atomico de despliegue.
 - `test-update-delivery-control.mjs` y `test-personal-storage-access.mjs`: el recorte de prueba de `manualAppNavigation` ya no depende de `authorizedPersonalNavigation`, y la navegacion personal sin membresia inmediata carga shell en vez de 403 textual.
 - `service-worker.js`, `index-grupal.html` y `release.json`: release visible y cache suben a `20261008-R214` para forzar instalacion nueva con la correccion R213 completa.
 - Alcance: no cambia reglas de torneo ni APIs privadas; desbloquea el build para publicar el parche que evita la pantalla negra `Acceso personal no autorizado`.
+- Cierre de publicacion: `release.json` queda en `R214-NO-RAW-PERSONAL-403` e inventario resellado para que Vercel no bloquee el despliegue por sello viejo.
+- `scripts/inventory-gate.mjs`: en Vercel valida exclusivamente fuentes versionadas para que dependencias generadas durante `install` no cambien falsamente el digest.
 
 ## R213 · Eliminar pantalla cruda de acceso personal no autorizado · 8 de octubre de 2026
 
