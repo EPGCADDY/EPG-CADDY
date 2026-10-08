@@ -1,3 +1,11 @@
+## R216 · Scores de torneo sin panel global de grupos/rondas activos · 8 de octubre de 2026
+
+- `live-hub.html`: se elimina la sección `hubGlobalLiveDirectory`/`global-live-directory`, responsable del bloque blanco mostrado sobre los tabs de Scores.
+- `live-hub.js`: se retiran `activeGlobalDirectory`, `renderActiveGlobalDirectory()` y `refreshActiveGlobalDirectory()`; la pantalla de Scores ya no consulta ni pinta `GRUPOS Y RONDAS GLOBALES ACTIVOS`, listas globales, grupos ni horas de actualización.
+- `test-r216-live-hub-no-global-directory-panel.mjs`: verifica ausencia de IDs/textos prohibidos y conserva `hubShowGeneral`, `hubShowCategories`, `hubShowIndividual` y `hubAddToBoard`.
+- `release.json`, `service-worker.js` e `index-grupal.html`: identidad visible/cache en `20261008-R216`.
+- Cierre de despliegue: tras reparar el blob remoto de `index-grupal.html`, ROADMAPS e inventario viajan juntos para satisfacer `roadmap-gate` e `inventory-gate` en Vercel.
+
 ## R215 · Sin purga local por ausencia remota en `list` · 8 de octubre de 2026
 
 - `personal-events.js`: `sync()` mantiene la union de eventos remotos, alias, cuenta y lectura de entorno par, pero deja de enviar `result.removedEvents` / `other.removedEvents` a `purgeDeletedEvents()`. El telefono conserva el torneo local si el servidor responde una lista vacia o no encuentra una fila conocida.

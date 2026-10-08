@@ -1,3 +1,10 @@
+## R216 · Scores de torneo sin panel global de grupos/rondas activos · 8 de octubre de 2026
+
+- Pedido visual del propietario: en Scores General, Scores por Categoría y Buscar Jugador se elimina el bloque blanco de grupos/rondas activos, incluyendo lista global, nombres de grupos y hora de actualización.
+- `live-hub.html` retira el panel `global-live-directory`; `live-hub.js` deja de refrescar esa lista desde la pantalla de Scores.
+- Se conservan botones de Scores, búsqueda, filtros, favoritos y tablas; `test-r216-live-hub-no-global-directory-panel.mjs` bloquea la reaparición del panel.
+- Cierre de despliegue: se repara el blob remoto de `index-grupal.html` y este commit vuelve a incluir ROADMAPS e inventario en la misma modificación para cumplir los gates de Vercel.
+
 ## R215 · No purgar torneos locales por lista remota vacia · 8 de octubre de 2026
 
 - Sintoma fisico: el telefono quedo sin torneos visibles despues de respuestas de Produccion/LAB con directorio remoto vacio o sin el evento esperado.
