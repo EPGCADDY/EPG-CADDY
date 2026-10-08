@@ -1,3 +1,12 @@
+## R226 · WhatsApp con código precargado y bloqueo robusto invitado 48h · 8 de octubre de 2026
+
+- `whatsapp-invitations.js`: los enlaces fallback de invitación ahora incluyen `codigo=<CÓDIGO>` en la URL de Registro; el texto indica que el código ya va cargado y no depende de copiar/pegar desde WhatsApp.
+- `personal-events.js`: al abrir `index-grupal.html?inicio=1&codigo=...`, el código se lee, se limpia de la barra del navegador, se precarga en el modal y se inspecciona automáticamente para preparar el Registro del torneo.
+- `live-control.js` y `live-share.js`: cuando `COMPARTIR LIVE` sale desde la Score Card conectada a un torneo, comparte el stream de esa ronda/grupo, no el acceso viewer al torneo completo.
+- `api/_lib/live-share.js`: el canje Live de un invitado queda limitado al `issuer_stream_id`; no puede listar otros grupos ni otros torneos en curso.
+- `test-r226-whatsapp-entry-code-prefill.mjs` y `test-lab-code-entry.mjs`: regresión permanente para enlace con código precargado, autoinspección, guardas de panel invitado y Live limitado a la Score Card compartida.
+- `scripts/build-manual-lab.mjs`, `release.json`, `service-worker.js` e `index-grupal.html`: incorporan R226 al banco obligatorio, badge visible, meta release y caché PWA.
+
 ## R225 · Invitado 48h sin Organizador y con Live permitido · 8 de octubre de 2026
 
 - `guest-access.js`: el modo invitado 48h conserva `COMPARTIR LIVE` y bloquea sólo controles privados/propietarios.

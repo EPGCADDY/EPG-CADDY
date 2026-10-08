@@ -1,10 +1,10 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry-v371-r196-whatsapp-card-caption-v374-r200-stableford-gross-points-r199-tournament-join-v397-r225-guest-48h-no-organizer-live";
+const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry-v371-r196-whatsapp-card-caption-v374-r200-stableford-gross-points-r199-tournament-join-v398-r226-whatsapp-code-prefill";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
 const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r148-entry-inspection`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r148-entry-inspection`;
-const RELEASE_FALLBACK="20261008-R225";
+const RELEASE_FALLBACK="20261008-R226";
 let RELEASE=RELEASE_FALLBACK;
 const UPDATE_DIAGNOSTICS={stage:"boot",resources:{}};
 async function fetchPublishedRelease(){
@@ -198,3 +198,4 @@ self.addEventListener("fetch",event=>{
   }
   if(SHELL.includes(url.pathname))event.respondWith((async()=>{await ensureApprovedShell();const response=await caches.match(url.pathname,{cacheName:APPROVED_CACHE_NAME})||await networkFirst(request);if(url.pathname!=="/shortcuts-ui.js"||!response.ok)return response;const headers=new Headers(response.headers);headers.delete('content-length');headers.set('content-type','application/javascript');return new Response((await response.text())+'\nimport("/app-update.js").catch(()=>{});',{status:response.status,headers})})());
 });
+

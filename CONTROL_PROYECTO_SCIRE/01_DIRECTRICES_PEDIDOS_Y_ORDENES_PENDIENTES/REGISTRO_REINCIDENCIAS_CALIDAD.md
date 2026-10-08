@@ -1,3 +1,11 @@
+## RC-140 · Compartir Live de Score Card abría lista de torneos · 8 OCTUBRE 2026
+
+- Síntoma físico: al compartir Live desde la Score Card de `LAB TEST`, el invitado entraba a `SCORES TORNEO` y veía opciones de torneos activos, incluyendo otros torneos en curso.
+- Causa raíz: la ruta de `COMPARTIR LIVE` en una Score Card conectada a torneo prefería `share-code` del evento personal, que concede vista viewer del torneo, en vez de emitir un share acotado al stream publicado por esa Score Card.
+- Punto de escape: la regresión anterior validaba que el código cargara automáticamente, pero no diferenciaba “ver torneo” contra “ver esta ronda/grupo compartido”.
+- Control permanente: `test-lab-code-entry.mjs` exige que `forceStream:true` use `/api/live-share` con `liveEvent/liveKind`, y `api/_lib/live-share.js` filtra lectura por `issuer_stream_id`.
+- Estado: corregido en R226; pendiente publicación LAB/Producción y verificación pública en este turno.
+
 ## RC-139 · Invitado 48h podía ver o intentar funciones de Organizador · 8 OCTUBRE 2026
 
 - Síntoma operativo: el invitado de prueba 48h debía poder compartir Live, pero no debía tener botón ni funciones de Organizador, administración, ID de torneo o creación de torneo.

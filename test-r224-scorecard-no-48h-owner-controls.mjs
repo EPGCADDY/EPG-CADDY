@@ -5,9 +5,9 @@ const html=fs.readFileSync('index-grupal.html','utf8');
 const access=fs.readFileSync('access.html','utf8');
 const release=JSON.parse(fs.readFileSync('release.json','utf8'));
 
-assert.equal(release.label,'R225');
-assert.match(html,/<meta name="gscg-release" content="20261008-R225">/);
-assert.match(html,/VERSIÓN R225/);
+assert.equal(release.label,'R226');
+assert.match(html,/<meta name="gscg-release" content="20261008-R226">/);
+assert.match(html,/VERSIÓN R226/);
 assert.doesNotMatch(html,/id="ownerShare24h"|id="ownerTrialReport"/);
 assert.doesNotMatch(html,/PRUEBA · 48 H|VER PRUEBA 48 H/);
 assert.doesNotMatch(html,/app-access\?action=status[\s\S]*role==="owner"/);

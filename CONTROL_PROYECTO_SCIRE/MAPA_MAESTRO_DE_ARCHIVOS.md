@@ -1,3 +1,13 @@
+## R226 · WhatsApp precargado y Live de Score Card acotado
+
+| Archivo | Rol actualizado | Gate / evidencia |
+| --- | --- | --- |
+| `whatsapp-invitations.js` | Los enlaces fallback de Registro incluyen `codigo` para no copiar/pegar desde WhatsApp. | `test-r226-whatsapp-entry-code-prefill.mjs` |
+| `personal-events.js` | Lee `codigo`/`code` de la URL, lo limpia, lo precarga e inspecciona automáticamente antes del Registro. | `test-r226-whatsapp-entry-code-prefill.mjs` |
+| `live-control.js`, `live-share.js` | `COMPARTIR LIVE` desde una Score Card conectada a torneo comparte el stream de esa ronda/grupo, no el torneo completo. | `test-lab-code-entry.mjs` |
+| `api/_lib/live-share.js` | El invitado de Live sólo lee el `issuer_stream_id` que originó el código. | `test-lab-code-entry.mjs` |
+| `release.json`, `service-worker.js`, `index-grupal.html`, `scripts/build-manual-lab.mjs` | Identidad R226, caché PWA y banco obligatorio actualizado. | `scripts/release-matrix-gate.mjs` |
+
 ## R225 · Invitado 48h sin Organizador y con Live permitido
 
 | Archivo | Rol actualizado | Gate / evidencia |

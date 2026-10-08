@@ -90,7 +90,15 @@
   const url=new URL('/'+(kind==='private'?'grupo':'torneo')+'/'+name,root.location.origin);
   url.hash='evento='+encodeURIComponent(event.eventId||event.id||event.tournamentId)+'&codigo='+encodeURIComponent(event.joinCode);return url.toString();
  }
- let linkInvitation=null;
+ let linkInvitation=null,startupJoinCode='';
+ function consumeStartupJoinCode(){const code=startupJoinCode;startupJoinCode='';return code}
+ function loadStartupJoinCode(){
+  try{
+   const url=new URL(root.location.href),code=String(url.searchParams.get('codigo')||url.searchParams.get('code')||'').trim().toUpperCase();
+   if(!/^[A-Z0-9]{10}$/.test(code))return '';
+   url.searchParams.delete('codigo');url.searchParams.delete('code');root.history.replaceState(null,'',url.toString());return code;
+  }catch{return ''}
+ }
  async function openLinkInvitation(){
   const url=new URL(root.location.href);if(url.searchParams.get('invitation')!=='1')return false;
   const params=new URLSearchParams(url.hash.slice(1)),id=params.get('evento'),code=params.get('codigo'),kind=url.searchParams.get('kind')==='private'?'private':'tournament';
@@ -108,12 +116,14 @@
  }
  function openTournamentBeforeRegistration(){
  const panel=dialog('INGRESE EL CÓDIGO','<label for="activeTournamentCode">CÓDIGO DEL ORGANIZADOR</label><input id="activeTournamentCode" maxlength="10" autocomplete="off" autocapitalize="characters"><button type="button" class="primary" data-inspect-tournament>CONTINUAR AL REGISTRO DE JUGADORES</button>');
- panel.querySelector('[data-inspect-tournament]').onclick=async()=>{const button=panel.querySelector('[data-inspect-tournament]');if(button.disabled)return;button.disabled=true;try{const result=await requestTournamentCode('inspect-tournament-code',{joinCode:panel.querySelector('input').value.trim()});status(panel,result);if(!result.ok)return;if(root.GSCPrepareEventInvitation?.(result)){close()}}finally{button.disabled=false}};
+ const input=panel.querySelector('input'),button=panel.querySelector('[data-inspect-tournament]'),prefill=consumeStartupJoinCode();if(prefill)input.value=prefill;
+ button.onclick=async()=>{if(button.disabled)return;button.disabled=true;try{const result=await requestTournamentCode('inspect-tournament-code',{joinCode:input.value.trim()});status(panel,result);if(!result.ok)return;if(root.GSCPrepareEventInvitation?.(result)){close()}}finally{button.disabled=false}};
+ if(prefill)root.setTimeout?.(()=>button.click(),80);
  }
  async function joinPendingRegistration(snapshot){let pending;try{pending=JSON.parse(root.localStorage.getItem('gsc-tournament-entry-draft-v1')||'null')}catch{}if(!pending)return null;const payload={eventId:pending.eventId,eventKind:'tournament',joinCode:pending.joinCode,players:snapshot.players,groupLabel:snapshot.groupLabel,mode:snapshot.mode,course:snapshot.course};const result=pending.source?await request('join-code',{...payload,source:pending.source},pending.source):await requestTournamentCode('join-code',payload);if(result?.ok)remember(result);return result}
  async function joinTournamentByCode(snapshot,onJoined){
   const panel=dialog('INGRESE EL CÓDIGO','<label for="activeTournamentCode">CÓDIGO DEL ORGANIZADOR</label><input id="activeTournamentCode" maxlength="10" autocomplete="off" autocapitalize="characters"><button class="primary" type="button" data-join-active>ENTRAR</button>');
-  if(linkInvitation?.eventKind==='tournament')panel.querySelector('input').value=linkInvitation.joinCode;
+  if(linkInvitation?.eventKind==='tournament')panel.querySelector('input').value=linkInvitation.joinCode;else{const prefill=consumeStartupJoinCode();if(prefill)panel.querySelector('input').value=prefill}
   panel.querySelector('[data-join-active]').onclick=async()=>{const b=panel.querySelector('[data-join-active]');if(b.disabled)return;b.disabled=true;try{
    const code=panel.querySelector('input').value.trim(),bound=linkInvitation?.joinCode===code?linkInvitation:null,payload={...(bound?{eventId:bound.eventId,...(bound.source?{source:bound.source}:{})}:{}),eventKind:'tournament',joinCode:code,players:snapshot.players,groupLabel:snapshot.groupLabel,mode:snapshot.mode,course:snapshot.course};
    const result=bound?.source?await request('join-code',payload,bound.source):await requestTournamentCode('join-code',payload);status(panel,result);if(!result.ok)return;
@@ -167,6 +177,7 @@
  async function administrationEvents(){await claimLegacyOwnedTournament();try{const response=await root.fetch('/api/event-administration',{method:'POST',credentials:'same-origin',cache:'no-store',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'list'})});const result=await response.json();return response.ok&&result.ok?result.events:[]}catch{return []}}
  function openAdministration(event){const url=new URL('/event-administration.html',root.location.origin);if(event?.eventId){url.searchParams.set('eventId',event.eventId);url.searchParams.set('eventKind',event.eventKind||'tournament')}root.location.assign(url.toString())}
  function membership(token){return members.get(token)}
+ startupJoinCode=loadStartupJoinCode();
  root.GSCPersonalEvents={openTournamentBeforeRegistration,joinPendingRegistration,organizerCodes,eventInvitationUrl,openLinkInvitation,organizerInvitations,administrationEvents,claimLegacyOwnedTournament,openAdministration,authorizeOrganizer,viewDirectoryEvent,joinTournament,hide,canonicalToken,reconcile,storageSuffix:()=>accountCode||'anonymous',request,message,descriptor,sync,purgeDeletedEvents,read,identity,invitation,organization,positions,membership,openAssignedCard,createPrivate,presentCreatedTournament,close};
  root.document.addEventListener('keydown',e=>{const panel=root.document.getElementById('gscPersonalDialog');if(!panel)return;if(e.key==='Escape'){e.preventDefault();close()}else if(e.key==='Tab'){const nodes=[...panel.querySelectorAll('button,input,select,a[href],summary')].filter(node=>!node.disabled&&node.getClientRects().length),first=nodes[0],last=nodes.at(-1);if(e.shiftKey&&root.document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&root.document.activeElement===last){e.preventDefault();first.focus()}}});
 })(globalThis);

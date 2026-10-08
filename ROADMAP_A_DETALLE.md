@@ -1,3 +1,15 @@
+## R226 · WhatsApp sin copiar/pegar código · 8 de octubre de 2026
+
+- `whatsapp-invitations.js`: `registrationUrl(source, code)` añade `codigo` a `/index-grupal.html?inicio=1` cuando la invitación no trae `eventId`; el mensaje deja claro que el enlace ya carga el código.
+- `personal-events.js`: agrega `loadStartupJoinCode()` y `consumeStartupJoinCode()` para capturar `codigo`/`code` de la URL, limpiar el parámetro y reutilizarlo en `openTournamentBeforeRegistration()` y `joinTournamentByCode()`.
+- `personal-events.js`: `openTournamentBeforeRegistration()` precarga el código y dispara `CONTINUAR AL REGISTRO DE JUGADORES` automáticamente, manteniendo la preparación oficial del torneo antes de escribir jugadores.
+- `live-control.js`: `quickShareGroup()` fuerza `forceStream:true` cuando la Score Card ya está conectada a un torneo; así `COMPARTIR LIVE` comparte sólo esa ronda/grupo y no el torneo completo.
+- `live-share.js`: `forceStream` evita la ruta `share-code` de viewer del torneo y usa `/api/live-share` con `liveEvent/liveKind` atado al stream publicado por la Score Card.
+- `api/_lib/live-share.js`: `readLiveShare()` filtra por `issuer_stream_id`; el invitado no ve otros streams, grupos ni torneos activos.
+- `test-r226-whatsapp-entry-code-prefill.mjs` y `test-lab-code-entry.mjs`: validan versión, URL con `codigo`, texto de WhatsApp, autoinspección, ausencia de crash por botones retirados y Live limitado a la Score Card compartida.
+- `scripts/build-manual-lab.mjs`: agrega la regresión R226 al banco técnico obligatorio.
+- `release.json`, `service-worker.js`, `index-grupal.html`: sincronizan `20261008-R226`, `VERSIÓN R226`, caché `v398-r226-whatsapp-code-prefill` y `personal-events.js?v=20261008-R226`.
+
 ## R225 · Invitado 48h sin Organizador y con Compartir Live · 8 de octubre de 2026
 
 - `guest-access.js`: `hideGuestPrivateControls()` ya no elimina `gscLiveLaunch` ni `shareRoundLiveButton`; el aviso visible declara `LIVE PERMITIDO · ORGANIZADOR BLOQUEADO`.
