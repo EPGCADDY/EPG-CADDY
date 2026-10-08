@@ -1,3 +1,11 @@
+## RC-117 · Maqueta Stableford mostrada como tarjeta real · 7 OCTUBRE 2026
+
+- Se mostró una vista previa local con datos de ejemplo como si confirmara la salida de la aplicación.
+- Causa raíz: no se distinguió el HTML local del artefacto servido por el deployment LAB.
+- Control permanente: confirmar alias, release y deployment READY; capturar la tarjeta desde la URL desplegada antes de describirla como real. Señalar cualquier dato de demostración.
+- Evidencia: Producción sirve R196 y LAB sirve R197; la maqueta local no fue publicada.
+- Estado: ABIERTO hasta capturar y validar la salida de Stableford en LAB R198.
+
 ## RC-116 · QuickType no insertaba la sugerencia en R192/R193 · 7 OCTUBRE 2026
 
 - El usuario volvió a probar R193 desde el Laboratorio ya actualizado y QuickType continuó sin insertar la palabra.

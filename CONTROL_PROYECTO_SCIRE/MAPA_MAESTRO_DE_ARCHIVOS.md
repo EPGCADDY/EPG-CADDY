@@ -1,3 +1,12 @@
+## R198 · Tarjetas digitales Stableford
+
+| Archivo | Función | Verificación |
+|---|---|---|
+| `card-artifacts.js` | Stableford Global y Personal sin HCP/HDCP/Neto; resultados Gross/Puntos; puntos verdes. | `test-card-artifacts.mjs`; navegador LAB pendiente |
+| `test-card-artifacts.mjs` | Regresión negativa HCP/HDCP/Neto y positiva de Gross/Puntos/colores; otras modalidades preservadas. | PASS local con el módulo exacto servido por LAB R197 |
+| `index-grupal.html`, `service-worker.js`, `release.json` | Release R198 y caché instalada sincronizados. | Gates Vercel pendientes |
+| ROADMAPS, matriz pendiente, registro e inventario | Trazabilidad y sello del candidato. | Gates Vercel pendientes |
+
 ## R190 · Campo editable desde Registro y entrada controlada al torneo
 
 | Archivo | Función | Verificación |

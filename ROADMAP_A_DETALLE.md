@@ -1,3 +1,20 @@
+## R198 · Stableford sin HDCP, Gross y Puntos como resultado · 7 de octubre de 2026
+
+- Regla aplicada a las tarjetas Stableford Global y Personal: sin columnas HCP/HDCP ni Neto; el resultado por vuelta y total muestra Gross y Puntos.
+- Gross conserva color blanco; todos los valores y rótulos de puntos usan verde. El resultado Stableford no calcula ni muestra golpes de handicap.
+- Regresión enfocada: `test-card-artifacts.mjs` valida ambos tipos de tarjeta, resultado completo Gross/Puntos, ausencia de HCP/HDCP/Neto, puntos verdes y que las demás modalidades mantengan sus rubros.
+- Estado actual: PRUEBA DIRIGIDA PASS sobre `card-artifacts.js` de LAB R197. Deployment R198, revisión en navegador real de LAB y publicación en Producción todavía pendientes.
+
+| Archivo | Cambio y evidencia |
+|---|---|
+| `card-artifacts.js` | Stableford Global y Personal omiten HCP, HDCP y Neto; Gross queda blanco y los puntos verdes. Totales IN/OUT/COMPLETA sólo muestran Gross y Puntos. |
+| `test-card-artifacts.mjs` | Aserciones de ausencia de rubros, colores y totales Stableford; conserva la cobertura de las otras modalidades. |
+| `index-grupal.html`, `service-worker.js`, `release.json` | Sincronizan release R198 y la caché instalada. |
+| Ambos ROADMAPS, matriz pendiente, mapa, reincidencias e inventario | Trazabilidad del cambio y sello de fuente. |
+
+- Prueba dirigida local sobre el código de la rama LAB R197: PASS.
+- Pendiente: Vercel build + controles documentales; despliegue READY en LAB; apertura real en navegador y captura del artefacto; Producción no modificada.
+
 ## R196 · Texto de WhatsApp de tarjetas digitales · 7 de octubre de 2026
 
 - Regresión: `test-lab-r60-card-share-mode-labels.mjs` verifica el texto de tres líneas en tarjetas compartidas y bloquea los rótulos anteriores.
