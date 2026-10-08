@@ -4309,3 +4309,10 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 - `api/personal-events.js`: si una cookie `gsc_code_session` vencida falla, usa únicamente una identidad de dispositivo cuya firma exista en la base y conserva la autorización del creador/organizador del torneo.
 - `test-event-administration.mjs`: reproduce cookie de sesión vencida más dispositivo válido; verifica el borrado al confirmar y conserva denegación a terceros. `test-event-administration.mjs` y `test-lab-device-event-identity.mjs` PASS; el primer build detectó un escape incorrecto de la expresión de cookie, corregido antes del siguiente candidato.
 - La compilación LAB y publicación siguen pendientes; Producción no cambia antes de PASS integral.
+## R197 · Recuperación de ingreso a torneo con sesión vencida · 8 de octubre de 2026
+
+- Rutas exactas: `api/personal-events.js`, `api/_lib/account-auth.js`, `test-lab-device-event-identity.mjs`, `scripts/build-manual-lab.mjs`, `index-grupal.html`, `service-worker.js`, `release.json`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md` e `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+- La recuperación sólo se aplica a identidad no autenticada tras rechazo de una cookie de código vencida/inválida/revocada. Una identidad de dispositivo existente se valida en base de datos; si falta, sólo se crea en la acción `identity`. No concede membresía ni rol de organizador.
+- Regresión `test-lab-device-event-identity.mjs`: cookie vencida sin dispositivo, nuevo cookie seguro, inspección de código de torneo sin consumo y denegación de otro dispositivo.
+- Release sincronizado: `index-grupal.html`, `service-worker.js` y `release.json` usan `20261008-R197` / `R197`.
+- Estado: prueba dirigida PASS; auditoría, revisión de navegador, prueba del propietario en iPhone y despliegues sujetos a gates.

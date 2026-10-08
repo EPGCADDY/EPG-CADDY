@@ -1555,3 +1555,10 @@ Causa: el despacho del atajo `tournaments` enviaba a `live-hub.html?directory=1`
 - Control permanente: `test-organizer-tournament-entry.mjs` verifica que el torneo no renderice continuación directa, que `CÓDIGO INGRESO` sólo copie y que el flujo de grupo privado continúe; `test-lab-edit-round-mode.mjs` verifica campo editable, persistencia, gross conservado y renovación del cierre oficial.
 - Corrección: se elimina la acción de continuación directa para torneos y la navegación automática al volver desde WhatsApp; se libera el selector del Registro y se guarda el campo antes de recalcular los scores netos.
 - Estado: INTEGRADO EN R190; ejecución automatizada y publicación registradas por los gates de despliegue.
+## RC-114 · ingreso a torneo bloqueado por sesión de código vencida · 8 octubre 2026
+
+- Defecto: en R196, al ingresar un código de torneo desde un dispositivo que conservaba una sesión de código vencida pero no una cookie de identidad de dispositivo válida, la API devolvía `NO SE PUDO PREPARAR EL EVENTO · REINTENTA`.
+- Causa raíz: la ruta con cookie `gsc_code_session` sólo recuperaba ante `ACCOUNT_UNAUTHORIZED`, no ante los rechazos propios de sesión inválida, vencida o revocada; además, al pedir `identity` no podía crear una identidad nueva si no quedaba dispositivo válido.
+- Punto de escape: la prueba previa cubría cookie vencida junto a identidad válida del dispositivo, pero no la combinación de sesión vencida y ausencia de cookie de dispositivo.
+- Control permanente: `test-lab-device-event-identity.mjs` reproduce esa combinación, comprueba alta de identidad segura, inspección de código sin consumirlo y denegación a otro dispositivo. La recuperación no crea membresía ni otorga permisos.
+- Estado: corregido en candidato R197; prueba dirigida PASS; gates, revisión LAB y despliegues pendientes.

@@ -7,6 +7,7 @@ import {resolveEventIdentity,handlePersonalEvents} from './api/personal-events.j
 // Explicit auth-provider fixture: device cookie is not an owner login; this isolated DB test must never call live Neon Auth.
 const realFetch=globalThis.fetch;globalThis.fetch=async(url,options)=>String(url).includes('/get-session')?new Response('{}',{status:401}):realFetch(url,options);
 const db=new PGlite(),sql=async(s,...v)=>(await db.query(s.reduce((q,x,i)=>q+(i?'$'+i:'')+x,''),v)).rows;
+process.env.GSC_PERSONAL_ACCESS_LAB_READY='1';
 for(const file of ['database/004_live_scorecards.sql','database/005_live_tournament_mode.sql'])await db.exec(await readFile(file,'utf8'));
 let cookie='';const response={setHeader(name,value){if(name==='Set-Cookie')cookie=value}};
 const request={method:'POST',headers:{host:'localhost:8877',origin:'http://localhost:8877'}};
@@ -15,10 +16,15 @@ assert.match(owner.id,/^device:/);assert.match(cookie,/HttpOnly; Secure; SameSit
 assert.equal((await readDeviceEventIdentity({...request,headers:{...request.headers,cookie}},sql)).id,owner.id);
 assert.equal(await readDeviceEventIdentity({...request,headers:{cookie:'gsc_event_device='+'A'.repeat(43)}},sql),null);
 const viewer=await resolveEventIdentity({...request,headers:{cookie:cookie+'; gsc_code_session='+'B'.repeat(43)}},response,sql,'identity',async()=>({id:'viewer',entryRole:'viewer'}));assert.equal(viewer.id,'viewer','Explicit viewer code retains read-only identity');
-async function call(body,identityCookie){let status=200,result;await handlePersonalEvents(Object.assign(Object.create({method:request.method,headers:{...request.headers,cookie:identityCookie}}),{method:request.method,body}),{setHeader(){},status(n){status=n;return this},json(v){result=v}},()=>sql,async()=>({id:'different-provider-account',name:'Wrong provider identity'}));return{status,...result}}
+async function call(body,identityCookie,resolver=async()=>({id:'different-provider-account',name:'Wrong provider identity'})){let status=200,result;const args=[()=>sql];if(resolver!==null)args.push(resolver);await handlePersonalEvents(Object.assign(Object.create({method:request.method,headers:{...request.headers,cookie:identityCookie}}),{method:request.method,body}),{setHeader(){},status(n){status=n;return this},json(v){result=v}},...args);return{status,...result}}
 await authorizeTestOrganizer(sql,owner.id);
 const created=await call({action:'create',eventKind:'tournament',name:'Copa Santa Delfina',course:'El Pulté',playedAt:'2026-09-30',mode:'general',categories:['senior'],groupLabel:'Friends',players:[{id:'p1',name:'Jaime',handicap:13,tournamentCategory:'senior'}]},cookie);assert.equal(created.status,200);assert.ok(created.eventId);
+const entry=await call({action:'organizer-entry-code',eventKind:'tournament',eventId:created.eventId},cookie);assert.equal(entry.status,200);assert.match(entry.joinCode,/^[A-Z0-9]{10}$/);
+const expiredCodeCookie='gsc_code_session='+'B'.repeat(43),identityResponse={cookie:'',setHeader(name,value){if(name==='Set-Cookie')this.cookie=value}};
+const refreshed=await resolveEventIdentity({...request,headers:{...request.headers,cookie:expiredCodeCookie}},identityResponse,sql,'identity');assert.match(refreshed.id,/^device:/);assert.match(identityResponse.cookie,/gsc_event_device=/,'Expired account cookie without a device cookie must establish a new device identity');
+const staleAndDeviceCookie=expiredCodeCookie+'; '+identityResponse.cookie.split(';')[0];
+const inspected=await call({action:'inspect-tournament-code',joinCode:entry.joinCode},staleAndDeviceCookie,null);assert.equal(inspected.status,200);assert.equal(inspected.eventId,created.eventId);assert.equal((await sql`SELECT consumed_at FROM gsc_tournament_entry_codes WHERE code=${entry.joinCode}`)[0].consumed_at,null,'Preparing an event must not consume its tournament code');
 const read=await call({action:'read',eventKind:'tournament',eventId:created.eventId},cookie);assert.equal(read.status,200);assert.equal(read.membership.role,'organizer');assert.equal(read.membership.players[0].name,'Jaime');
 const otherHeaders={setHeader(name,value){if(name==='Set-Cookie')this.cookie=value}};await resolveEventIdentity(request,otherHeaders,sql,'identity');const denied=await call({action:'read',eventKind:'tournament',eventId:created.eventId},otherHeaders.cookie);assert.equal(denied.code,'PERSONAL_EVENT_FORBIDDEN');
 await sql`UPDATE gsc_event_devices SET expires_at=now()-interval '1 second' WHERE id=${owner.id}`;assert.equal(await readDeviceEventIdentity({...request,headers:{cookie}},sql),null);
-await db.close();globalThis.fetch=realFetch;console.log('PASS R147.2: no-credential device identity, secure session, persistent owner, create/read tournament with roster, other device denied, viewer remains read-only, expired and forged sessions rejected');
+await db.close();globalThis.fetch=realFetch;console.log('PASS R147.2/R197: secure device identity, tournament code inspection after expired session without device cookie, code remains unconsumed, persistent organizer, roster read, viewer remains read-only, other device denied, forged/expired device cookies rejected');

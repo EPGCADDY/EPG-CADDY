@@ -20,9 +20,9 @@ export async function neonAuthRequest(path,{method="GET",cookie="",body=null}={}
   });
 }
 
-export async function requireAccountSession(req,{ownerOnly=false}={}){
-  if(!ownerOnly){const coded=await readCodeSession(req);if(coded)return coded;}
-  if(!ownerOnly){const device=await readDeviceEventIdentity(req);if(device)return device;}
+export async function requireAccountSession(req,{ownerOnly=false,sql}={}){
+  if(!ownerOnly){const coded=await readCodeSession(req,sql);if(coded)return coded;}
+  if(!ownerOnly){const device=await readDeviceEventIdentity(req,sql);if(device)return device;}
   if(!String(req.headers.cookie||'').trim())throw Object.assign(new Error('ACCOUNT_UNAUTHORIZED'),{code:'ACCOUNT_UNAUTHORIZED'});
   let response;
   try{response=await neonAuthRequest("/get-session",{cookie:req.headers.cookie||""})}

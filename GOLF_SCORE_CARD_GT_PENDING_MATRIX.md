@@ -625,3 +625,9 @@ Las rutas de entrada de la aplicación y PWA abren sin credenciales de propietar
 ## R188-B1 · desbloquear eliminación del torneo propio
 - Al confirmar borrar, recuperar identidad de dispositivo validada cuando la cookie de sesión ya venció; mantener permiso por torneo y rechazo a terceros.
 - `test-event-administration.mjs` y `test-lab-device-event-identity.mjs`: PASS dirigidos. Primer build detectó y corrigió escape de cookie; rebuild integral, LAB y publicación pendientes.
+## R197 · Recuperar ingreso a torneo después de una sesión vencida
+
+- Al validar un código de torneo, una cookie de código inválida, vencida o revocada no bloquea el flujo de identidad anónima del dispositivo.
+- Sólo se conserva una identidad de dispositivo si su cookie y registro son válidos. Si no existe y se consulta `identity`, se genera una nueva identidad segura. Esto no concede permisos sobre torneos.
+- Regresión: `test-lab-device-event-identity.mjs` valida recuperación, inspección sin consumo del código y aislamiento de terceros.
+- Estado de la corrección: dirigida PASS; build, navegador LAB y publicación pendientes.

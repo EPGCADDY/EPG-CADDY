@@ -4200,3 +4200,10 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 ## R188-B1 · borrado de torneo sin sesión propietaria vigente · 7 octubre 2026
 
 Una cookie de código caducada ya no bloquea una identidad de dispositivo válida. La API sigue comprobando que esa identidad sea creadora u organizadora autorizada del torneo. `test-event-administration.mjs` valida el borrado desde la confirmación única y mantiene el rechazo de terceros; `test-lab-device-event-identity.mjs` mantiene espectador en solo lectura. El primer build detectó un escape incorrecto de cookie, corregido. Gates y publicación pendientes.
+## R197 · Recuperación de ingreso a torneo con sesión vencida · 8 de octubre de 2026
+
+- Causa: el endpoint de identidad priorizaba una sesión de código vencida y no creaba una identidad de dispositivo cuando no existía una cookie de dispositivo válida. El alta al código se interrumpía antes de preparar el evento.
+- Corrección: los rechazos de sesión de código inválida, vencida o revocada permiten usar una identidad de dispositivo válida; durante la acción `identity`, si no existe una, se crea una nueva. El código de torneo no se consume al inspeccionarlo y los permisos del evento siguen limitados por su API.
+- Regresión: `test-lab-device-event-identity.mjs` reproduce sesión vencida sin cookie de dispositivo y verifica la inspección de un código recién emitido sin consumirlo ni autorizar a terceros. La prueba del código reportado por el propietario se ejecutó aparte en LAB y no se guarda en el repositorio.
+- Estado: REGRESIÓN DIRIGIDA PASS; gates integrales y publicación LAB/Producción pendientes.
+- Archivos: `api/personal-events.js`, `api/_lib/account-auth.js`, `test-lab-device-event-identity.mjs`, `scripts/build-manual-lab.mjs`, `index-grupal.html`, `service-worker.js`, `release.json`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, ambos ROADMAPS, `REGISTRO_REINCIDENCIAS_CALIDAD.md` e `INVENTARIOS_V311.lock.json`.
