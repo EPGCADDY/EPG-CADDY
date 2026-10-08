@@ -1,3 +1,11 @@
+## R200 · Tarjetas digitales Stableford
+
+| Archivo | Función | Verificación |
+|---|---|---|
+| `card-artifacts.js` | Stableford Global/Personal sin HCP, HDCP ni Neto; Gross blanco y puntos verdes; resultados Gross/Puntos. | `test-card-artifacts.mjs` |
+| `test-card-artifacts.mjs` | Comprueba rubros y colores Stableford, preservando las otras modalidades. | Build R200 |
+| `index-grupal.html`, `service-worker.js`, `release.json` | Actualizan release y caché de aplicación. | Gate R200 |
+
 ## R190 · Campo editable desde Registro y entrada controlada al torneo
 
 | Archivo | Función | Verificación |

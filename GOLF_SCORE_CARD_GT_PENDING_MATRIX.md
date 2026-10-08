@@ -1,3 +1,9 @@
+## R200 · Tarjetas digitales Stableford sin hándicap · 7 de octubre de 2026
+
+- Stableford Global y Personal omiten HCP, HDCP y Neto; Gross queda en blanco y los puntos por hoyo y por vuelta en verde.
+- RESULTADOS presenta IN, OUT y COMPLETA con Gross y Puntos. Se conserva la lógica de otras modalidades.
+- Regresión dirigida: `test-card-artifacts.mjs` y `test-lab-r60-card-mode-purity.mjs`; pruebas R198 PASS. Build combinado R200 pendiente sobre R199.
+
 ## R194 · QuickType en nombres: retirar transformación a mayúsculas · 7 de octubre de 2026
 
 - La prueba física R193 seguía fallando aun después de actualizar el alias del Laboratorio.

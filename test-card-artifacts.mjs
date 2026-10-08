@@ -17,11 +17,11 @@ assert.match(out.global.html,/CAMPO · El Pulté Golf/);assert.match(out.global.
 const stablefordPlayers=Array.from({length:6},(_,playerIndex)=>({
   id:`sf${playerIndex+1}`,
   name:`JUGADOR ${playerIndex+1}`,
-  handicap:0,
+  handicap:24,
   tee:'Blanco',
   holes:Object.fromEntries(Array.from({length:18},(_,i)=>{
     const hole=i+1,par=i%3===0?3:i%3===1?4:5;
-    return[hole,{hole,par,gross:par,status:null,points:2}];
+    return[hole,{hole,par,gross:par,strokes:2,net:par-2,status:null,points:2}];
   }))
 }));
 const stablefordSnapshot={status:'officially_closed',mode:'stableford',sha256:'b'.repeat(64),version:1,course:'Guatemala Country Club',tournament:{name:'Copa Oficial'},playedAt:'2026-08-22T14:00:00Z',stablefordCategory:'senior',stablefordRoundNumber:2,players:stablefordPlayers};
@@ -32,16 +32,23 @@ assert.equal(stablefordOut.global.mode,'stableford');
 assert.doesNotMatch(stablefordOut.global.html,/>Tarjeta Global Stableford/);assert.match(stablefordOut.global.html,/MODALIDAD · STABLEFORD/);
 assert.doesNotMatch(stablefordOut.global.html,/TORNEO · Copa Oficial/);
 assert.doesNotMatch(stablefordOut.global.html,/CATEGORÍA · SENIOR/);
-assert.match(stablefordOut.global.html,/G\/P = Gross \/ Puntos Stableford/);
-assert.match(stablefordOut.global.html,/class="par-row"><th colspan="3">PAR<\/th>/);
+assert.match(stablefordOut.global.html,/G\/P = Gross \/ <span class=\"points\">Puntos Stableford<\/span>/);
+assert.match(stablefordOut.global.html,/class="par-row"><th colspan="2">PAR<\/th>/);
 assert.match(stablefordOut.global.html,/VUELTA COMPLETA/);
-assert.doesNotMatch(stablefordOut.global.html.split('<section class="approved-round-totals">')[0],/<th>NETO<\/th>/,'La tabla Stableford mantiene su puntuación Gross/Puntos; Neto aparece sólo en el nuevo resumen común');
+assert.doesNotMatch(stablefordOut.global.html,/\bHCP\b|HDCP|NETO/,'La tarjeta Stableford completa elimina HCP, HDCP y Neto');
+assert.match(stablefordOut.global.html,/<th colspan="2">VUELTA IN<\/th>[\s\S]*?<th colspan="2">VUELTA OUT<\/th>[\s\S]*?<th colspan="2">VUELTA COMPLETA<\/th>/);
+assert.match(stablefordOut.global.html,/<th>GROSS<\/th><th class="points">PUNTOS<\/th>[\s\S]*?<td class="stableford-gross">72<\/td><td class="points">36<\/td>/,'El resultado Stableford completo se resume sólo con Gross y Puntos');
+assert.match(stablefordOut.global.html,/<span class="stableford-gross">3<\/span>\/<span class="points">2<\/span>/,'Gross queda blanco y los puntos por hoyo verdes');
 assert.doesNotMatch(stablefordOut.global.html,/ID OFICIAL · SHA-256/,"La Global limpia no debe mostrar ID técnico visible");
 assert.match(stablefordOut.global.html,/IN · HOYOS 1–9[\s\S]*?OUT · HOYOS 10–18/,"Stableford Global debe separar las dos vueltas en orden IN/OUT");
 assert.equal((stablefordOut.global.html.match(/class="score-half"/g)||[]).length,2,"Stableford Global debe tener exactamente dos bloques de vuelta");
 assert.match(stablefordOut.global.html,/global-clean-meta[\s\S]*?grid-template-columns:1fr!important/,"La cabecera Global móvil debe apilar Campo, Modalidad y Fecha");
 assert.doesNotMatch(stablefordOut.global.html,/ID OFICIAL · SHA-256/,"La Global limpia no muestra identificador técnico");
+assert.doesNotMatch(stablefordOut.personal[0].html,/\bHCP\b|HDCP|NETO/,'La Stableford Personal también elimina cualquier rubro HCP/HDCP/Neto');
 assert.match(stablefordOut.personal[0].html,/Puntos Stableford por hoyo/);
+assert.match(stablefordOut.personal[0].html,/<th class="points">PUNTOS<\/th>/);
+assert.match(stablefordOut.personal[0].html,/<span class="points">2<\/span>/);
+assert.match(stablefordOut.personal[0].html,/<span class="stableford-gross">72<\/span>/);
 assert.match(stablefordOut.personal[0].html,/Fecha clasificatoria/);
 assert.match(stablefordOut.personal[0].html,/class="par-row"><th>PAR<\/th>/);
 assert.match(stablefordOut.personal[0].html,/VUELTA OUT[\s\S]*?VUELTA COMPLETA/);
@@ -61,8 +68,14 @@ for(const mode of ['general','stableford','match_play','four_ball','universales'
   assert.match(cards.personal[0].html,/CON CATEGORÍA/,`${mode}: la Personal debe conservar el nombre`);
   assert.match(cards.global.html,/VUELTA COMPLETA/,`${mode}: la Global debe mostrar Gross/HDCP/Neto por vuelta completa`);
   assert.match(cards.personal[0].html,/VUELTA COMPLETA/,`${mode}: la Personal debe mostrar Gross/HDCP/Neto por vuelta completa`);
-  assert.match(cards.global.html,/<td>72<\/td><td>10<\/td><td>62<\/td>/,`${mode}: total de 18 hoyos debe coincidir con Gross 72, HDCP 10 y Neto 62`);
-  assert.match(cards.personal[0].html,/<td>72<\/td><td>10<\/td><td>62<\/td>/,`${mode}: tarjeta personal debe coincidir con Gross 72, HDCP 10 y Neto 62`);
+  if(mode==='stableford'){
+    assert.doesNotMatch(cards.global.html,/\bHCP\b|HDCP|NETO/);
+    assert.doesNotMatch(cards.personal[0].html,/\bHCP\b|HDCP|NETO/);
+    assert.match(cards.global.html,/<td class="stableford-gross">72<\/td><td class="points">36<\/td>/);
+  }else{
+    assert.match(cards.global.html,/<td>72<\/td><td>10<\/td><td>62<\/td>/,`${mode}: total de 18 hoyos debe coincidir con Gross 72, HDCP 10 y Neto 62`);
+    assert.match(cards.personal[0].html,/<td>72<\/td><td>10<\/td><td>62<\/td>/,`${mode}: tarjeta personal debe coincidir con Gross 72, HDCP 10 y Neto 62`);
+  }
   assert.match(cards.global.html,/class="par-row"/,`${mode}: Global debe conservar la línea PAR`);
   if(mode==='match_play'||mode==='four_ball')assert.match(cards.personal[0].html,/<th>HOYO<\/th><th>PAR<\/th>/,`${mode}: Personal debe mostrar el PAR de cada hoyo`);
   else assert.match(cards.personal[0].html,/class="par-row"/,`${mode}: Personal debe conservar la línea PAR`);
@@ -101,3 +114,4 @@ assert.match(fourBallCards.global.html,/class="par-row"><th colspan="3">PAR<\/th
 assert.match(fourBallCards.personal[0].html,/<th>HOYO<\/th><th>PAR<\/th>/,'Four Ball personal indica PAR por hoyo');
 assert.match(fourBallCards.global.html,/VUELTA COMPLETA/);
 console.log('PASS tarjeta digital Four Ball: PAR y totales Gross/HDCP/Neto');
+

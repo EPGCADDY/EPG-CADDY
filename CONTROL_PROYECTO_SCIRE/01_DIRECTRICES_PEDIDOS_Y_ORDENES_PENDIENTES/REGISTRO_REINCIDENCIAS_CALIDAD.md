@@ -1,3 +1,9 @@
+## RC-117 · Release Stableford quedó como preview y LAB avanzó a R199 · 7 OCTUBRE 2026
+
+- Causa: R198 Stableford quedó en deployment preview; el alias principal avanzó a R199 de torneo.
+- Corrección en curso: integrar los cambios de tarjeta sobre R199 y etiquetar el conjunto como R200, preservando ambas correcciones.
+- Estado: R199 sirve LAB y Producción; build combinado R200 y promoción pendientes.
+
 ## RC-116 · QuickType no insertaba la sugerencia en R192/R193 · 7 OCTUBRE 2026
 
 - El usuario volvió a probar R193 desde el Laboratorio ya actualizado y QuickType continuó sin insertar la palabra.
