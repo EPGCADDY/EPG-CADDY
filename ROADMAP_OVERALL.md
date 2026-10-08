@@ -1,3 +1,11 @@
+## R213 · Middleware repara navegacion autorizada aunque no vea cookie nominal · 8 de octubre de 2026
+
+- Fallo fisico reportado sobre Produccion R212: el iPhone siguio en pagina negra `Acceso personal no autorizado` al abrir Score Card asignada.
+- Causa raiz: R212 aun dependia de detectar nombres de cookies en middleware; en la navegacion instalada la autoridad real era la respuesta server-side de `/api/personal-events`.
+- Correccion: `middleware.js` elimina la condicion `personalCookie` para URL con `personalEvent` sin `personalAccount`; si `/api/personal-events` responde OK, completa `personalAccount` y reabre la tarjeta.
+- Regresion: `test-live-share-middleware.mjs` reproduce `personalEvent` sin `personalAccount` y sin cookie detectable; conserva rechazo cuando la cuenta explicita no coincide.
+- Release: `20261008-R213`.
+
 ## R212 · Navegacion de Score Card asignada sin cuenta explicita · 8 de octubre de 2026
 
 - Fallo fisico reportado sobre Produccion R211: despues de ingresar codigo, el telefono quedo en pagina negra con texto plano `Acceso personal no autorizado`.

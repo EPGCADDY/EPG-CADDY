@@ -1,3 +1,10 @@
+## R213 · Autoridad final por `/api/personal-events`, no por nombre de cookie · 8 de octubre de 2026
+
+- `middleware.js`: para `personalEvent` sin `personalAccount`, la reparacion depende de que la lectura server-side del evento responda OK; ya no bloquea por no encontrar `gsc_event_device`/`gsc_code_session` en el string de cookies.
+- `test-live-share-middleware.mjs`: el caso sin cuenta y sin cookie detectable exige redireccion con `personalAccount=device%3Aassigned`; cuenta explicita ajena sigue devolviendo 403.
+- `release.json`, `index-grupal.html` y `service-worker.js`: release sincronizada `20261008-R213`, etiqueta visible `R213`, version tecnica `R213-MIDDLEWARE-AUTHORITY-REPAIR`.
+- Motivo fisico: captura de Produccion R212 a las 06:03 mostro nuevamente `Acceso personal no autorizado`.
+
 ## R212 · Reparacion de navegacion personal autorizada sin `personalAccount` · 8 de octubre de 2026
 
 - `middleware.js`: mantiene la validacion server-side contra `/api/personal-events`, pero acepta el caso seguro donde la URL trae `personalEvent` y no trae `personalAccount`; si la respuesta confirma jugador/organizador/scorer con jugadores activos, redirige completando la cuenta autorizada.

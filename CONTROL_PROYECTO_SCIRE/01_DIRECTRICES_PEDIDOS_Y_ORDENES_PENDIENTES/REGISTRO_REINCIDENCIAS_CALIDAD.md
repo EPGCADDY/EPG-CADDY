@@ -1,3 +1,10 @@
+## RC-126 · R213 · R212 dependia de cookie nominal en middleware · 8 OCTUBRE 2026
+
+- Sintoma fisico: Produccion R212 siguio mostrando `Acceso personal no autorizado` en iPhone instalado.
+- Causa: la reparacion R212 validaba tambien presencia nominal de cookie; cuando esa deteccion no acompaña la navegacion, el middleware ignora que `/api/personal-events` si es la autoridad real.
+- Control permanente: `test-live-share-middleware.mjs` reproduce `personalEvent` sin `personalAccount` y sin cookie detectable, autorizando solo si la API server-side responde OK.
+- Estado: R213 pendiente de gates y publicacion.
+
 ## RC-125 · R212 · Score Card asignada sin cuenta cae en 403 textual · 8 OCTUBRE 2026
 
 - Sintoma fisico: Produccion R211 mostro pantalla negra con `Acceso personal no autorizado` despues del flujo de codigo de torneo.
