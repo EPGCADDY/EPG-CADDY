@@ -1,8 +1,8 @@
 {
   "version": "R214-R213-GATE-SLICE-FIX",
-  "generatedAt": "2026-10-08T13:05:00Z",
+  "generatedAt": "2026-10-08T13:10:00Z",
   "sourceFileCount": 924,
-  "sourceDigest": "97bdad20564d9b89c9f93c08c2ea2d7905f2670cb7e5efde38c193cfdd0dca52",
+  "sourceDigest": "cec7abde94021ddb5d7efd5c175f3b603b024331b64b78ed6abcae9f2ad7416e",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
