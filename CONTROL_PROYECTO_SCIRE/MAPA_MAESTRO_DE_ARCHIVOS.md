@@ -1,3 +1,12 @@
+## R224 · Score Card pública sin controles propietarios 48h
+
+| Archivo | Rol actualizado | Gate / evidencia |
+| --- | --- | --- |
+| `index-grupal.html` | Retira botones `PRUEBA · 48 H` / `VER PRUEBA 48 H` y la consulta owner de la barra pública; mantiene Registro y Score Card libres. | `test-r224-scorecard-no-48h-owner-controls.mjs`, `test-owner-invitation-ui.mjs` |
+| `index-grupal.html` | En edición de ronda activa permite `AGREGAR JUGADOR` hasta seis, con entrada desde el siguiente hoyo y scores existentes intactos. | `test-r224-registration-add-active-player.mjs`, `test-v263-compact-players-back-button.mjs` |
+| `access.html`, `api/app-access.js`, `api/_lib/app-access.js` | Conservan la administración privada de invitaciones temporales 48h fuera del scorecard público. | `test-r222-guest-48h-shared-link.mjs`, `test-r18-owner-guest-24h-access.mjs` |
+| `release.json`, `service-worker.js`, `scripts/build-manual-lab.mjs` | Identidad R224 y regresión obligatoria de publicación. | `scripts/release-matrix-gate.mjs`, `scripts/build-manual-lab.mjs` |
+
 ## R222 · Prueba 48h con cinco grupos visibles para organizador
 
 | Archivo | Rol actualizado | Gate / evidencia |

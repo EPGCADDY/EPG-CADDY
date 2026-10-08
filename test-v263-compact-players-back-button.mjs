@@ -4,12 +4,9 @@ import fs from "node:fs";
 const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
 
 // Una ronda registrada renderiza sólo sus jugadores reales, en orden continuo.
-assert.match(html,/const visualSlots=provisional\?playersByVisualSlot\(\):round\.players\.slice\(0,6\)/);
+assert.match(html,/const visualSlots=round\.players\.slice\(0,6\)/);
 assert.match(html,/for\(let i=0;i<visualSlots\.length;i\+\+\)html\+=playerBlock\(visualSlots\[i\],i\+1\)/);
 assert.match(html,/for\(let i=0;i<visualSlots\.length;i\+\+\)\{/);
-
-// La ronda sin registro conserva sus seis posiciones editables.
-assert.match(html,/provisional\?playersByVisualSlot\(\)/);
 
 // El antiguo flotante se sustituye por un único botón pequeño ATRÁS.
 assert.match(html,/id="backToRegistrationButton"[^>]*>ATRÁS<\/button>/);
@@ -18,11 +15,11 @@ assert.match(html,/\.back-registration-button,\.clear-round-scores\{width:100%;m
 assert.doesNotMatch(html,/REGRESAR A DATOS/);
 assert.doesNotMatch(html,/\.round-secondary-actions\{position:fixed;/);
 
-// La incorporación de jugadores después de iniciar la ronda se retiró por completo.
-assert.doesNotMatch(html,/addPlayerButton|openRosterEditor|rosterAddMode/);
-assert.match(html,/const registrationSlots=rosterEditMode\?Math\.max\(1,draftPlayers\.length\):6/);
-assert.match(html,/if\(rosterEditMode\)progressiveVisibleRegistrationCount=Math\.max\(1,Math\.min\(registrationSlots,draftPlayers\.length\)\)/,"La corrección mantiene visibles los jugadores existentes sin añadir una fila nueva");
-assert.match(html,/if\(rosterEditMode\)return false/);
+// La edición de ronda permite agregar jugadores hasta seis sin tocar scores previos.
+assert.match(html,/id="addRosterPlayer"[^>]*>AGREGAR JUGADOR<\/button>/);
+assert.match(html,/const registrationSlots=rosterEditMode\?Math\.min\(6,Math\.max\(1,draftPlayers\.length\+\(draftPlayers\.length<6\?1:0\)\)\):6/);
+assert.match(html,/AGREGAR JUGADOR · \$\{draftPlayers\.length\}\/6/);
+assert.match(html,/JUGADOR NUEVO ENTRA DESDE HOYO \$\{rosterEditJoinHole\} · MÁXIMO 6/);
 
 // ATRÁS conserva el acceso al registro y los scores existentes.
 assert.match(html,/backToRegistrationButton"\)\.addEventListener\("click",\(\)=>isStablefordRound\(\)\|\|round\.provisional\?openNewRoundDraft\(\):openCurrentRoundDataEditor\(\)\)/);
@@ -72,4 +69,4 @@ assert.equal(updatedRound.players[5].name,"DIEGO");
 assert.deepEqual(updatedRound.players.slice(0,5).map(p=>p.holes),initialPlayers.map(p=>p.holes));
 assert.deepEqual(updatedRound.players[5].holes,{});
 
-console.log("PASS R136 · jugadores compactos, ATRÁS no invasivo y alta posterior retirada");
+console.log("PASS R224 · jugadores compactos, ATRÁS no invasivo y alta posterior hasta seis preserva scores");

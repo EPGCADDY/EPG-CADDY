@@ -9,7 +9,7 @@ const organizerUi=fs.readFileSync("personal-events.js","utf8");
 const routes=JSON.parse(fs.readFileSync("vercel.json","utf8"));
 
 assert(!html.includes('src="./auth-gate.js"'),"La app principal no debe cargar el candado de cuenta");
-assert(html.includes('id="ownerShare24h"'),"Se conserva el botón de invitación temporal independiente");
+assert(!html.includes('id="ownerShare24h"')&&!html.includes('id="ownerTrialReport"'),"El scorecard público no debe mostrar controles propietarios de invitación temporal");
 assert(access.includes('type="password"')&&access.includes('CREAR ENLACE DE PRUEBA 48 HORAS'),"El panel temporal conserva administración autenticada de invitaciones");
 assert(!access.includes('ABRIR APLICACIÓN'),"La credencial del panel no puede ser requisito ni puerta para abrir la app");
 assert(access.includes('no necesitas credenciales'),"El panel debe aclarar que Registro es libre");

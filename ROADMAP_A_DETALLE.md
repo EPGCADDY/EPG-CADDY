@@ -1,3 +1,17 @@
+## R224 · Retiro de controles 48h de la Score Card pública · 8 de octubre de 2026
+
+- `index-grupal.html`: la barra de herramientas queda limitada a funciones públicas (`COMPARTIR LIVE` y `GUÍA DE USUARIO` según estado de ronda); ya no renderiza `ownerShare24h` ni `ownerTrialReport`.
+- `index-grupal.html`: se elimina el bloque que consultaba `app-access?action=status` para mostrar controles propietarios cuando la cuenta autenticada era owner, evitando que Producción muestre botones de laboratorio por sesión.
+- `index-grupal.html`: `renderDraft()` permite una fila adicional en edición de ronda activa hasta seis jugadores, `addRosterPlayer` revela esa fila, y `syncDraftPlayersFromManualRows()` procesa la fila nueva sin cortar en `draftPlayers.length`.
+- `index-grupal.html`: el jugador agregado conserva `activeFrom=rosterEditJoinHole`, por lo que no exige scores de hoyos ya jugados y los scores previos de los demás jugadores permanecen intactos.
+- `access.html`: mantiene la administración privada de invitaciones 48h mediante correo/contraseña, `create`, `report`, `revoke` y canje `/invite/<token>` hacia `source=guest48h`.
+- `test-r224-scorecard-no-48h-owner-controls.mjs`: valida release R224, ausencia de textos/IDs 48h en Score Card y presencia del panel privado en `access.html`.
+- `test-r224-registration-add-active-player.mjs`: valida botón `AGREGAR JUGADOR`, fila adicional hasta seis, sincronización de la fila nueva y entrada desde el siguiente hoyo.
+- `test-v263-compact-players-back-button.mjs`: se actualiza para exigir alta posterior hasta seis preservando scores existentes.
+- `test-owner-invitation-ui.mjs`, `test-r18-owner-guest-24h-access.mjs`, `test-lab-account-gate.mjs`, `test-lab-r60-physical-matrix.mjs`, `test-manual-startup-sharing.mjs` y `test-v311-live-support-link.mjs`: cambian de exigir el botón en Score Card a bloquear su exposición pública.
+- `scripts/build-manual-lab.mjs`: agrega el test R224 al banco de publicación LAB/Producción.
+- `release.json`, `service-worker.js`, `index-grupal.html`: sincronizan R224, cache `v396-r224-hide-trial-48h-scorecard`, meta `20261008-R224`, badge `VERSIÓN R224` y `personal-events.js?v=20261008-R224`.
+
 ## R223 · Tecla `-` y handicap bajo cero en Campeonato/A · 8 de octubre de 2026
 
 - `index-grupal.html`: Registro muestra una tecla `-` junto al campo HDCP de cada jugador; al tocarla alterna el signo negativo y conserva el valor en el borrador.

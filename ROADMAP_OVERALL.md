@@ -1,3 +1,12 @@
+## R224 · Score Card pública sin botones propietarios de prueba 48h · 8 de octubre de 2026
+
+- `index-grupal.html`: retira de la barra pública los botones `PRUEBA · 48 H` y `VER PRUEBA 48 H`, elimina la consulta propietaria `app-access?action=status` y deja la Score Card sin controles de laboratorio en Producción.
+- `index-grupal.html`: al regresar a Registro desde una ronda activa, muestra `AGREGAR JUGADOR` si hay menos de seis; el nuevo jugador se registra en la misma hoja y entra desde el siguiente hoyo sin borrar scores existentes.
+- `access.html`: conserva el panel privado autenticado para crear enlaces temporales de 48 horas y revisar actividad anónima; no vuelve a ser puerta de entrada de Registro.
+- `test-r224-scorecard-no-48h-owner-controls.mjs`, `test-r224-registration-add-active-player.mjs`, `test-v263-compact-players-back-button.mjs`, `test-owner-invitation-ui.mjs`, `test-r18-owner-guest-24h-access.mjs`, `test-lab-account-gate.mjs`, `test-lab-r60-physical-matrix.mjs`, `test-manual-startup-sharing.mjs` y `test-v311-live-support-link.mjs`: bloquean que los controles propietarios vuelvan a aparecer en el scorecard y que Registro vuelva a impedir altas posteriores hasta seis.
+- `scripts/build-manual-lab.mjs`: incorpora la regresión R224 al banco obligatorio.
+- `release.json`, `service-worker.js` e `index-grupal.html`: publican identidad `20261008-R224`.
+
 ## R223 · Handicap negativo con tecla visible para Campeonato y A · 8 de octubre de 2026
 
 - `index-grupal.html`: el campo HDCP de Registro cambia a captura textual con patrón `-?[0-9]*` y agrega una tecla visible `-` por jugador para no depender del teclado iPhone.

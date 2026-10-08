@@ -12,8 +12,8 @@ assert.ok(!/<a class="live-support-link"[^>]*target="_blank"/.test(html),"Suppor
 assert.ok(!html.includes('href="https://epg-caddy.vercel.app/manual-scg"'),"Preview nunca debe escapar al Manual de Producción");
 assert.ok(html.indexOf(expected)>html.indexOf('<main class="app">'),"La guía debe vivir en la barra estructural de la ronda");
 assert.match(html,/<nav class="round-utility-bar" id="roundUtilityBar"[\s\S]*class="live-support-link"/,"La guía debe estar dentro de la barra de herramientas");
-assert.match(html,/\.round-utility-bar \.gsc-live-launch,[^}]*#ownerShare24h\{position:static!important;/,"La guía y LIVE no deben flotar sobre el encabezado");
-assert.match(html,/ownerShare24h[\s\S]*INVITAR · 24 H/,"La invitación opcional de 24 horas permanece como control separado");
+assert.match(html,/\.round-utility-bar \.gsc-live-launch,[^}]*\.live-support-link\{position:static!important;/,"La guía y LIVE no deben flotar sobre el encabezado");
+assert.doesNotMatch(html,/ownerShare24h|ownerTrialReport|INVITAR · 24 H|PRUEBA · 48 H|VER PRUEBA 48 H/,"La barra pública no debe contener controles propietarios temporales");
 assert.doesNotMatch(html,/src="\.\/auth-gate\.js"/,"La aplicación no monta el candado global de cuenta");
 assert.match(mobileBuilder,/readFile\(path\.join\(root,"index-grupal\.html"\),"utf8"\)/,"El paquete nativo debe heredar el mismo Support vivo");
 assert.match(serviceWorker,/url\.pathname==="\/manual\.pdf"\|\|url\.pathname==="\/manual\.html"[\s\S]*fetch\("\/manual\.html\?__gscg_build_check=1"/,"Support debe evitar que la navegación PWA regrese silenciosamente a la Score Card");

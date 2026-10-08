@@ -10,9 +10,7 @@ const gateJson=JSON.parse(fs.readFileSync('CONTROL_PROYECTO_SCIRE/01_DIRECTRICES
 const pending=fs.readFileSync('GOLF_SCORE_CARD_GT_PENDING_MATRIX.md','utf8');
 assert.match(html,/type="password"[\s\S]*CREAR ENLACE DE PRUEBA 48 HORAS/);
 assert.match(html,/action=redeem[\s\S]*source=guest48h/);
-assert.match(app,/id="ownerShare24h"[\s\S]*PRUEBA · 48 H/);
-assert.match(app,/id="ownerTrialReport"[\s\S]*VER PRUEBA 48 H/);
-assert.match(app,/action=report/);
+assert.doesNotMatch(app,/id="ownerShare24h"|id="ownerTrialReport"|PRUEBA · 48 H|VER PRUEBA 48 H|action=report/);
 assert.doesNotMatch(app,/src="\.\/auth-gate\.js"/);
 assert.match(app,/function enforceGuestAccess/);
 assert.match(guest,/gscg-guest48h/);

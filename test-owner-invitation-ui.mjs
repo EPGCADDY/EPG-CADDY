@@ -1,17 +1,13 @@
 import fs from 'node:fs';
-import vm from 'node:vm';
 import assert from 'node:assert/strict';
-const html=fs.readFileSync('index-grupal.html','utf8');
-const source=html.slice(html.indexOf('let pendingOwnerInvitation='),html.indexOf('window.GSCLiveControl?.mount'));
-function setup(fail=false){
- let handler,requests=0,shares=0,gesture=false,message='';
- const button={textContent:'PRUEBA · 48 H',addEventListener:(t,fn)=>handler=fn};
- const reportButton={textContent:'VER PRUEBA 48 H',addEventListener(){}};
- const status={replaceChildren(node){message=node},append(){}};
- const ctx={$:id=>id==='ownerShare24h'?button:id==='ownerTrialReport'?reportButton:status,document:{createTextNode:x=>x,createElement:()=>({style:{},setAttribute(){},addEventListener(){}})},Date,console,navigator:{share(){assert(gesture,'Share must be invoked in the click gesture');shares++;return Promise.resolve()}},fetch:async()=>{requests++;gesture=false;return {ok:!fail,status:fail?503:201,json:async()=>fail?{code:'DATABASE_NOT_CONFIGURED'}:{url:'https://lab.example/invite/test',expiresAt:new Date(Date.now()+172800000).toISOString()}}}};
- vm.runInNewContext(source,ctx);
- return {async click(){gesture=true;await handler();gesture=false},get requests(){return requests},get shares(){return shares},get message(){return message},button};
-}
-const ok=setup();await ok.click();assert.equal(ok.requests,1);assert.equal(ok.shares,0);assert.match(ok.button.textContent,/COMPARTIR/);await ok.click();assert.equal(ok.requests,1);assert.equal(ok.shares,1);
-const fail=setup(true);await fail.click();assert.match(fail.message,/FALTA CONFIGURAR/);assert.equal(fail.button.disabled,false);assert.equal(fail.button.textContent,'REINTENTAR INVITACIÓN');
-console.log('PASS invitation: 48h server failure stays visible, retry enabled, prepared link shared in fresh gesture without duplicate creation');
+
+const app=fs.readFileSync('index-grupal.html','utf8');
+const access=fs.readFileSync('access.html','utf8');
+
+assert.doesNotMatch(app,/ownerShare24h|ownerTrialReport|PRUEBA · 48 H|VER PRUEBA 48 H|app-access\?action=status[\s\S]*role==="owner"/,'La Score Card pública no puede exponer botones propietarios de prueba 48h');
+assert.match(access,/CREAR ENLACE DE PRUEBA 48 HORAS/,'El panel privado conserva emisión de invitaciones 48h');
+assert.match(access,/VER ACTIVIDAD ANÓNIMA/,'El panel privado conserva consulta de actividad 48h');
+assert.match(access,/app-access\?action=\$\{action\}/,'El panel privado conserva API app-access autenticada');
+assert.match(access,/no necesitas credenciales/i,'El panel privado debe aclarar que la app normal abre libre');
+
+console.log('PASS invitation UI: 48h vive sólo en access.html; Score Card pública no muestra controles propietarios.');

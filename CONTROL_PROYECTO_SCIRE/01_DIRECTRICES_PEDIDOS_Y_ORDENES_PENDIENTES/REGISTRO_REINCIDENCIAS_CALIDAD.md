@@ -1,3 +1,18 @@
+## RC-137 · Producción mostraba botones propietarios de prueba 48h en la Score Card · 8 OCTUBRE 2026
+
+- Síntoma físico: Producción R223 mostraba `PRUEBA · 48 H` y `VER PRUEBA 48 H` en la barra del scorecard cuando la sesión era propietaria, mientras LAB no los mostraba en la captura comparativa.
+- Causa raíz: `index-grupal.html` conservaba una consulta a `/api/app-access?action=status` y desocultaba controles owner dentro de la pantalla pública; varias regresiones todavía exigían esa presencia en el scorecard.
+- Punto de escape: el gate verificaba que la entrada general no pidiera credenciales, pero no bloqueaba que controles privados de laboratorio aparecieran en Producción autenticada.
+- Control permanente: `test-r224-scorecard-no-48h-owner-controls.mjs` y las regresiones actualizadas exigen que la Score Card pública no contenga IDs/textos 48h ni lógica owner; el panel privado `access.html` conserva la administración temporal.
+- Estado: corregido en R224; publicación LAB/Producción y verificación pública pendientes en este turno.
+
+## RC-138 · Registro no permitía agregar jugadores después de iniciar ronda · 8 OCTUBRE 2026
+
+- Síntoma operativo: al volver a la hoja de Registro con una ronda ya iniciada y scores capturados, no había opción para agregar un jugador nuevo hasta completar el máximo de seis.
+- Causa raíz: en modo edición `renderDraft()` limitaba la cantidad de filas a `draftPlayers.length`, `revealNextRegistrationSlot()` salía de inmediato con `rosterEditMode`, y `syncDraftPlayersFromManualRows()` no leía ninguna fila posterior a los jugadores existentes.
+- Control permanente: `test-r224-registration-add-active-player.mjs` exige botón `AGREGAR JUGADOR`, fila adicional hasta seis, lectura de la fila nueva y `activeFrom=rosterEditJoinHole`; `test-v263-compact-players-back-button.mjs` verifica preservación de scores.
+- Estado: corregido en R224; publicación LAB/Producción y verificación pública pendientes en este turno.
+
 ## RC-136 · Handicap negativo dependía del teclado iPhone · 8 OCTUBRE 2026
 
 - Síntoma operativo: Campeonato y A necesitaban aceptar handicap `0` y bajo cero, por ejemplo `-2`, pero la captura en Registro dependía de un teclado numérico móvil que podía no mostrar el signo menos.
