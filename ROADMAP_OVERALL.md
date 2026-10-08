@@ -1,3 +1,11 @@
+## R202 · score card asignada recupera preparación tras join-code · 8 de octubre de 2026
+
+- Reproducción física del usuario en LAB R201: el código LAB `6D5ECEC172` avanzó hasta `SCORE CARD ASIGNADA`, pero falló con `NO SE PUDO PREPARAR EL EVENTO · REINTENTA`.
+- Causa raíz: el backend consumía el código y creaba la membresía, pero la lectura inmediata podía quedar sin sesión/membresía visible para el cliente; el cliente descartaba el resultado de join-code y no podía preparar la tarjeta asignada.
+- Corrección: `joinPersonalTournamentCode` devuelve `accountCode` y `membership`; `openAssignedCard` usa esos datos como recuperación si el `read` inmediato falla y ya existe configuración de torneo.
+- Release: R202 fuerza caché nueva sobre R201 para que iPhone reciba el fallback sin borrar scores ni membresías existentes.
+- Estado: pendiente build Vercel posterior al gate ROADMAP.
+
 ## R201 · ingreso de torneo LAB desde Producción sobre Stableford R200 · 7 de octubre de 2026
 
 - Causa raíz: el R200 vivo de Stableford preservaba el retry cruzado sólo para `LIVE_JOIN_CODE_INVALID`; al ingresar un código LAB desde Producción, el endpoint local devolvía `PERSONAL_ACCESS_NOT_ENABLED` y el cliente no saltaba al ambiente par.
