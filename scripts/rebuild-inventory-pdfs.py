@@ -133,8 +133,9 @@ def sha256(path):
 
 
 def source_state():
+    args = ["git", "ls-files", "--cached"] if os.environ.get("VERCEL") else ["git", "ls-files", "--cached", "--others", "--exclude-standard"]
     result = subprocess.run(
-        ["git", "ls-files", "--cached", "--others", "--exclude-standard"],
+        args,
         cwd=ROOT,
         check=True,
         capture_output=True,

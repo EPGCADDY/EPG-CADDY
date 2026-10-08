@@ -8,6 +8,8 @@
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: sello regenerado sobre el arbol R214 final para corregir el bloqueo de `INVENTORY GATE` visto en Vercel.
 - `scripts/inventory-gate.mjs`: bajo `VERCEL=1` usa `git ls-files --cached`; localmente conserva `--others --exclude-standard` para detectar archivos fuente no registrados.
 - Objetivo operativo: permitir que LAB y Produccion compilen el parche que impide que una navegacion personal termine en la pagina negra textual `Acceso personal no autorizado`.
+- Cierre atomico: ROADMAPS e inventario quedan en el mismo commit final para que `roadmap-gate` valide la publicacion remota R214.
+- `scripts/rebuild-inventory-pdfs.py`: al ejecutarse con `VERCEL=1`, calcula el sello desde `git ls-files --cached`, igual que `scripts/inventory-gate.mjs`.
 
 ## R213 · Navegacion personal sin pantalla negra 403 · 8 de octubre de 2026
 

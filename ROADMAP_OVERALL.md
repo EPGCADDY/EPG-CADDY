@@ -5,6 +5,8 @@
 - Alcance: no cambia reglas de torneo ni APIs privadas; desbloquea el build para publicar el parche que evita la pantalla negra `Acceso personal no autorizado`.
 - Cierre de publicacion: `release.json` queda en `R214-NO-RAW-PERSONAL-403` e inventario resellado para que Vercel no bloquee el despliegue por sello viejo.
 - `scripts/inventory-gate.mjs`: en Vercel valida exclusivamente fuentes versionadas para que dependencias generadas durante `install` no cambien falsamente el digest.
+- Cierre atomico: ROADMAPS e inventario viajan juntos en el ultimo commit para cumplir el gate remoto antes de aliasar LAB y Produccion.
+- `scripts/rebuild-inventory-pdfs.py`: usa la misma lista de fuentes que el gate bajo `VERCEL=1` al resellar desde el arbol versionado.
 
 ## R213 · Eliminar pantalla cruda de acceso personal no autorizado · 8 de octubre de 2026
 
