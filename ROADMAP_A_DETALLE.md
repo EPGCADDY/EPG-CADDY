@@ -1,5 +1,6 @@
 ## R214 · Gate de actualizacion compatible con R213 · 8 de octubre de 2026
 
+- Resello final: se sincroniza el digest con el orden exacto de `scripts/inventory-gate.mjs` para el arbol remoto publicado.
 - Resello remoto: el digest de inventario se recalcula sobre el arbol del commit remoto y se publica en la misma modificacion que estos ROADMAPS.
 - `test-update-delivery-control.mjs`: conserva la prueba de ACTUALIZAR y retorno a Administracion, pero extrae `manualAppNavigation` hasta `self.addEventListener("fetch"` porque R213 retiro la funcion `authorizedPersonalNavigation`.
 - `test-personal-storage-access.mjs`: actualiza el contrato de navegacion personal para no esperar 403 textual en pagina; mantiene el reingreso autenticado con redireccion reparada y deja la proteccion privada a las APIs.
