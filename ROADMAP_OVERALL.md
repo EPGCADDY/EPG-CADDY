@@ -3,7 +3,7 @@
 - Regla aplicada a las tarjetas Stableford Global y Personal: sin columnas HCP/HDCP ni Neto; el resultado por vuelta y total muestra Gross y Puntos.
 - Gross conserva color blanco; todos los valores y rótulos de puntos usan verde. El resultado Stableford no calcula ni muestra golpes de handicap.
 - Regresión enfocada: `test-card-artifacts.mjs` valida ambos tipos de tarjeta, resultado completo Gross/Puntos, ausencia de HCP/HDCP/Neto, puntos verdes y que las demás modalidades mantengan sus rubros.
-- Archivos exactos modificados: `card-artifacts.js`, `test-card-artifacts.mjs`, `index-grupal.html`, `service-worker.js`, `release.json`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+- Archivos exactos modificados: `card-artifacts.js`, `test-card-artifacts.mjs`, `test-lab-r60-card-mode-purity.mjs`, `index-grupal.html`, `service-worker.js`, `release.json`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
 - Estado actual: PRUEBA DIRIGIDA PASS sobre `card-artifacts.js` de LAB R197. Deployment R198, revisión en navegador real de LAB y publicación en Producción todavía pendientes.
 
 ## R196 · Texto de WhatsApp de tarjetas digitales · 7 de octubre de 2026

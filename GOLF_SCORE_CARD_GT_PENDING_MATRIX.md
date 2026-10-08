@@ -3,7 +3,7 @@
 - Stableford no usa handicap: eliminar HCP, HDCP y Neto de cada tarjeta Global y Personal, incluidos tabla de hoyos, encabezado y bloque RESULTADOS.
 - Mostrar Gross como resultado final; resultados por IN, OUT y vuelta completa con Gross y Puntos.
 - Gross en blanco; puntos por hoyo, vueltas, totales, encabezados y texto explicativo en verde.
-- Regresión: `test-card-artifacts.mjs` con jugadores de prueba que sí tienen handicap y golpes asignados; valida que esos datos no se filtren a Stableford y que General, Match Play y Four Ball no cambien.
+- Regresión: `test-card-artifacts.mjs` y `test-lab-r60-card-mode-purity.mjs` con jugadores de prueba que sí tienen handicap y golpes asignados; valida que esos datos no se filtren a Stableford y que General, Match Play y Four Ball no cambien.
 - Estado: prueba enfocada PASS sobre el archivo `card-artifacts.js` exacto servido por LAB R197. Build/deployment R198 y revisión en navegador real de LAB pendientes. Producción permanece en R196.
 
 ## R194 · QuickType en nombres: retirar transformación a mayúsculas · 7 de octubre de 2026

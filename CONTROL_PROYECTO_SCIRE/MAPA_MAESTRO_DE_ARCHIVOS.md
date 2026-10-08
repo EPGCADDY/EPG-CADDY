@@ -3,6 +3,7 @@
 | Archivo | Función | Verificación |
 |---|---|---|
 | `card-artifacts.js` | Stableford Global y Personal sin HCP/HDCP/Neto; resultados Gross/Puntos; puntos verdes. | `test-card-artifacts.mjs`; navegador LAB pendiente |
+| `test-lab-r60-card-mode-purity.mjs` | Actualiza la regresión del rótulo G/P para exigir el marcado verde de los puntos. | PASS local |
 | `test-card-artifacts.mjs` | Regresión negativa HCP/HDCP/Neto y positiva de Gross/Puntos/colores; otras modalidades preservadas. | PASS local con el módulo exacto servido por LAB R197 |
 | `index-grupal.html`, `service-worker.js`, `release.json` | Release R198 y caché instalada sincronizados. | Gates Vercel pendientes |
 | ROADMAPS, matriz pendiente, registro e inventario | Trazabilidad y sello del candidato. | Gates Vercel pendientes |
