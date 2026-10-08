@@ -4,6 +4,7 @@
 - Archivo `test-lab-device-event-identity.mjs`: se agregó el caso de cookie `gsc_code_session=expired` sin dispositivo previo; debe devolver un `device:*` y emitir `gsc_event_device` para que la siguiente acción de torneo pueda preparar/asignar el evento.
 - Archivos `release.json`, `index-grupal.html` y `service-worker.js`: release sincronizada `20261008-R206`, etiqueta visible `R206`, versión técnica `R206-EVENT-IDENTITY-RECOVERY`.
 - Controles ejecutados: `node test-lab-device-event-identity.mjs`, `node test-event-administration.mjs`, `node test-r191-cross-environment-tournament-entry.mjs`, `node test-r162-single-use-tournament-code.mjs`, `node test-event-directory-code.mjs`, `node test-project-quality-gate.mjs`, `node scripts/project-quality-gate.mjs` y `node scripts/build-manual-lab.mjs`.
+- Evidencia visual actualizada por el banco integral: `docs/quality/lab-r43-browser/lab-r43-six-player-auto-advance.jpg`.
 - Resultado: PASS local. Quedan pendientes despliegue, verificación remota READY y prueba física en iPhone sobre el flujo exacto de asignación.
 
 ## R194 · QuickType en nombres: retirar transformación a mayúsculas · 7 de octubre de 2026

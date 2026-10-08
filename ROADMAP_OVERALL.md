@@ -4,6 +4,7 @@
 - Causa raíz: una cookie `gsc_code_session` vencida o inválida hacía que `identity` terminara en `ACCOUNT_UNAUTHORIZED`/`CODE_SESSION_INVALID` antes de crear o recuperar la identidad de dispositivo.
 - Corrección: `resolveEventIdentity()` conserva códigos válidos, recupera una identidad de dispositivo ya existente y, sólo para `identity`, crea una nueva identidad de dispositivo cuando la sesión de código vieja no sirve.
 - Regresión: `test-lab-device-event-identity.mjs` exige recuperación con cookie de código vencida, cookie `gsc_event_device` nueva y aislamiento de otros dispositivos.
+- Evidencia visual regenerada por banco integral: `docs/quality/lab-r43-browser/lab-r43-six-player-auto-advance.jpg`.
 - Estado: pruebas dirigidas, banco integral LAB, `test-project-quality-gate.mjs` y `scripts/project-quality-gate.mjs` PASS locales; Preview/publicación y prueba física iPhone pendientes.
 
 ## R194 · QuickType en nombres: retirar transformación a mayúsculas · 7 de octubre de 2026
