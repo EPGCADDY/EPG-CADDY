@@ -1,4 +1,8 @@
 const $=id=>document.getElementById(id),escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+if(document.cookie.split(";").some(value=>value.trim()==="gsc_guest_mode=1")){
+  document.getElementById("status")&&(document.getElementById("status").textContent="ORGANIZADOR NO DISPONIBLE PARA INVITADOS 48H · COMPARTIR LIVE SÍ PERMANECE ACTIVO");
+  throw new Error("GUEST_48H_ADMIN_BLOCKED");
+}
 const messages={EVENT_ADMIN_REQUIRED:'NO TIENES PERMISO PARA ELIMINAR ESTE EVENTO',EVENT_NAME_CONFIRMATION_REQUIRED:'ESCRIBE EL NOMBRE EXACTO DEL EVENTO',EVENT_DELETE_REASON_REQUIRED:'ESCRIBE EL MOTIVO',ADMIN_RECIPIENT_REQUIRED:'INDICA EL NOMBRE Y CÓDIGO PERSONAL DE LA PERSONA',ADMIN_CODE_INVALID:'CÓDIGO INCORRECTO, USADO, VENCIDO O ASIGNADO A OTRA PERSONA',ACCOUNT_UNAUTHORIZED:'INICIA TU SESIÓN DE PROPIETARIO PARA TENER CONTROL PLENO',LIVE_EXPIRED:'EL EVENTO O PERMISO VENCIÓ'};
 async function call(action,payload={},signal){try{const response=await fetch('/api/event-administration',{method:'POST',credentials:'same-origin',cache:'no-store',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,...payload}),signal});return{...await response.json(),ok:response.ok}}catch{return{ok:false,code:'NETWORK_ERROR'}}}
 function showStatus(result,id='status'){ $(id).textContent=result.ok?'LISTO':messages[result.code]||'NO SE PUDO COMPLETAR · '+result.code }

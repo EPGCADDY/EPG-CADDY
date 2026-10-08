@@ -1,3 +1,15 @@
+## R225 · Invitado 48h sin Organizador y con Compartir Live · 8 de octubre de 2026
+
+- `guest-access.js`: `hideGuestPrivateControls()` ya no elimina `gscLiveLaunch` ni `shareRoundLiveButton`; el aviso visible declara `LIVE PERMITIDO · ORGANIZADOR BLOQUEADO`.
+- `shortcuts-ui.js`: `render()` omite `ORGANIZADOR` cuando `root.GSC_GUEST_ACCESS` está activo; `act()` intercepta `organizer`, `organizer-invitations`, `administration`, `create-tournament`, `add-tournament`, `remove-tournament` y `clear-board` con mensaje de bloqueo.
+- `live-control.js`: al montar el panel Live en invitado 48h elimina `liveOrganizerToggle` y `liveOrganizerPanel`, manteniendo el acceso rápido `quickShareGroup()`.
+- `event-administration.html`: si existe `gsc_guest_mode=1`, reemplaza la pantalla por un aviso de invitado 48h sin Organizador.
+- `event-administration-ui.js`: detiene la ejecución del módulo administrativo cuando detecta cookie invitada 48h.
+- `api/event-administration.js`: rechaza acciones administrativas con `EVENT_ADMIN_GUEST_FORBIDDEN` cuando hay `gsc_guest_mode=1`; conserva `remote-share` para compartir Live.
+- `test-r225-guest-48h-no-organizer-live-allowed.mjs`: valida ocultamiento de Organizador, bloqueo directo, API defensiva y Live permitido.
+- `test-r18-owner-guest-24h-access.mjs`: actualiza el contrato invitado para no remover botones Live.
+- `release.json`, `service-worker.js`, `index-grupal.html`: sincronizan R225, caché `v397-r225-guest-48h-no-organizer-live`, meta `20261008-R225`, badge `VERSIÓN R225` y `personal-events.js?v=20261008-R225`.
+
 ## R224 · Retiro de controles 48h de la Score Card pública · 8 de octubre de 2026
 
 - `index-grupal.html`: la barra de herramientas queda limitada a funciones públicas (`COMPARTIR LIVE` y `GUÍA DE USUARIO` según estado de ronda); ya no renderiza `ownerShare24h` ni `ownerTrialReport`.

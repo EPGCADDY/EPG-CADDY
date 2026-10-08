@@ -1,3 +1,13 @@
+## R225 · Invitado 48h sin Organizador y con Live permitido
+
+| Archivo | Rol actualizado | Gate / evidencia |
+| --- | --- | --- |
+| `guest-access.js` | El invitado 48h mantiene botones Live y pierde sólo controles privados/propietarios. | `test-r225-guest-48h-no-organizer-live-allowed.mjs`, `test-r18-owner-guest-24h-access.mjs` |
+| `shortcuts-ui.js` | Oculta `ORGANIZADOR` al invitado y bloquea acciones directas de administración/torneo. | `test-r225-guest-48h-no-organizer-live-allowed.mjs` |
+| `live-control.js` | Permite compartir Live rápido, pero retira herramientas de organización de torneo al invitado 48h. | `test-r225-guest-48h-no-organizer-live-allowed.mjs` |
+| `event-administration.html`, `event-administration-ui.js`, `api/event-administration.js` | Bloquean página y API administrativa para cookie invitada; conservan `remote-share` para Live. | `test-r225-guest-48h-no-organizer-live-allowed.mjs` |
+| `release.json`, `service-worker.js`, `index-grupal.html` | Identidad R225 y caché PWA nueva. | `scripts/release-matrix-gate.mjs` |
+
 ## R224 · Score Card pública sin controles propietarios 48h
 
 | Archivo | Rol actualizado | Gate / evidencia |

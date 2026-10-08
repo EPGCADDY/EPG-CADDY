@@ -1,3 +1,11 @@
+## RC-139 · Invitado 48h podía ver o intentar funciones de Organizador · 8 OCTUBRE 2026
+
+- Síntoma operativo: el invitado de prueba 48h debía poder compartir Live, pero no debía tener botón ni funciones de Organizador, administración, ID de torneo o creación de torneo.
+- Causa raíz: el aislamiento previo mezclaba `compartir` con `organizar`: retiraba también botones Live y no tenía bloqueo explícito de menú/ruta/API administrativa para cookie invitada.
+- Punto de escape: R224 validó retiro de controles 48h de la Score Card pública, pero no separó el permiso Live del permiso Organizador para invitados temporales.
+- Control permanente: `test-r225-guest-48h-no-organizer-live-allowed.mjs` exige Live permitido, Organizador oculto, acciones directas bloqueadas, panel Live sin herramientas de organización y API administrativa defensiva.
+- Estado: corregido en R225; publicación LAB/Producción y verificación pública pendientes en este turno.
+
 ## RC-137 · Producción mostraba botones propietarios de prueba 48h en la Score Card · 8 OCTUBRE 2026
 
 - Síntoma físico: Producción R223 mostraba `PRUEBA · 48 H` y `VER PRUEBA 48 H` en la barra del scorecard cuando la sesión era propietaria, mientras LAB no los mostraba en la captura comparativa.

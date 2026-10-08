@@ -14,10 +14,12 @@ assert.doesNotMatch(app,/id="ownerShare24h"|id="ownerTrialReport"|PRUEBA · 48 H
 assert.doesNotMatch(app,/src="\.\/auth-gate\.js"/);
 assert.match(app,/function enforceGuestAccess/);
 assert.match(guest,/gscg-guest48h/);
-assert.match(guest,/hideGuestSharingControls/);
-for(const hiddenControl of ['ownerShare24h','ownerTrialReport','gscLiveLaunch','shareRoundLiveButton','shareGlobalCard','sharePersonalCard']){
+assert.match(guest,/hideGuestPrivateControls/);
+for(const hiddenControl of ['ownerShare24h','ownerTrialReport','shareGlobalCard','sharePersonalCard']){
   assert.match(guest,new RegExp(hiddenControl),`Invitado temporal no debe conservar ${hiddenControl}`);
 }
+assert.doesNotMatch(guest,/["']gscLiveLaunch["']|["']shareRoundLiveButton["']/,'Invitado 48h debe conservar Compartir Live');
+assert.match(guest,/LIVE PERMITIDO · ORGANIZADOR BLOQUEADO/);
 assert.match(gateMatrix,/entrada normal no solicita correo, contraseña, inicio como propietario ni código global/);
 assert.match(gateMatrix,/invitación compartida de prueba de 48 horas se conserva como función opcional/);
 assert(gateJson.gates.some(gate=>gate.id==='G0-12'&&gate.name==='entrada_publica_sin_credenciales'),'La matriz JSON debe conservar G0-12 entrada pública sin credenciales');

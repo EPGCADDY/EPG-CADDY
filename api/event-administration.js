@@ -14,7 +14,8 @@ export async function handleEventAdministration(req,res,database=getDatabase,own
  try{
  if(req.method!=='POST')throw accessError('METHOD_NOT_ALLOWED',405);
  if(!isAllowedAppOrigin(req))throw accessError('ORIGIN_NOT_ALLOWED');
- const sql=database(),body=await readJson(req,4000);let account,owner=false;
+ const sql=database(),body=await readJson(req,4000),guestMode=String(req.headers?.cookie||"").split(";").some(value=>value.trim()==="gsc_guest_mode=1");let account,owner=false;
+ if(guestMode&&body.action!=="remote-share")throw accessError('EVENT_ADMIN_GUEST_FORBIDDEN',403);
  try{account=await ownerResolver(req);owner=true}catch(error){if(!['OWNER_REQUIRED','ACCOUNT_UNAUTHORIZED'].includes(error.code))throw error;account=await resolveEventIdentity(req,res,sql,'list',identityResolver)}
  await ensurePersonalAccess(sql);await ensureEventAdministration(sql);await refreshEventLifecycles(sql);await limitPersonalAccess(sql,account,'event-admin');
  const requestHost=req.headers?.['x-forwarded-host']||req.headers?.host||'',source=tournamentDirectoryEnvironment(env,requestHost),peerUrl=tournamentDirectoryPeerUrl(env,requestHost);

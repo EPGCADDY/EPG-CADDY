@@ -178,6 +178,7 @@
     viewer.id="liveViewerSection";viewer.classList.add("gsc-live-viewer");viewer.querySelector("h2").textContent="MONITOR DEL TORNEO EN VIVO";viewer.querySelector("p").textContent="VER RESULTADOS, BUSCAR JUGADORES O FILTRAR POR CATEGORÍA.";$("liveOpenHub").textContent="ABRIR MONITOR";
     const toggle=root.document.createElement("button");toggle.id="liveOrganizerToggle";toggle.className="gsc-live-organizer-toggle";toggle.type="button";toggle.setAttribute("aria-expanded","false");toggle.textContent="ORGANIZAR TORNEO";
     const organizer=root.document.createElement("div");organizer.id="liveOrganizerPanel";organizer.className="gsc-live-organizer-panel hidden";sections.forEach(section=>{if(["liveNoRound","liveActivate","liveActive"].includes(section.id))panel.appendChild(section);else organizer.appendChild(section)});panel.append(toggle,organizer);
+    if(root.GSC_GUEST_ACCESS){toggle.remove();organizer.remove()}
   }
   function bind(){
     $("gscLiveLaunch").onclick=()=>{if(currentSnapshot())return quickShareGroup();foregroundStatus=false;renderConsent();renderActive();root.document.body.classList.add("gsc-live-open");$("gscLiveOverlay").classList.add("visible");$("gscLiveOverlay").setAttribute("aria-hidden","false")};$("closeGscLive").onclick=()=>{root.document.body.classList.remove("gsc-live-open");$("gscLiveOverlay").classList.remove("visible");$("gscLiveOverlay").setAttribute("aria-hidden","true")};

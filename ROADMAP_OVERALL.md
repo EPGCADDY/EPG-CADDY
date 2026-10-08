@@ -1,3 +1,12 @@
+## R225 · Invitado 48h sin Organizador y con Live permitido · 8 de octubre de 2026
+
+- `guest-access.js`: el modo invitado 48h conserva `COMPARTIR LIVE` y bloquea sólo controles privados/propietarios.
+- `shortcuts-ui.js`: el menú del invitado 48h no muestra `ORGANIZADOR` y bloquea accesos directos a administración, ID de torneo o creación de torneo.
+- `live-control.js`: el invitado puede compartir Live de su ronda, pero no ve herramientas de organización de torneo dentro del panel Live.
+- `event-administration.html`, `event-administration-ui.js` y `api/event-administration.js`: la ruta directa y la API de administración quedan bloqueadas para cookie invitada 48h; `remote-share` queda permitido para no romper `Compartir Live`.
+- `test-r225-guest-48h-no-organizer-live-allowed.mjs` y `test-r18-owner-guest-24h-access.mjs`: regresión permanente para Live permitido y Organizador bloqueado.
+- `release.json`, `service-worker.js` e `index-grupal.html`: publican identidad `20261008-R225`.
+
 ## R224 · Score Card pública sin botones propietarios de prueba 48h · 8 de octubre de 2026
 
 - `index-grupal.html`: retira de la barra pública los botones `PRUEBA · 48 H` y `VER PRUEBA 48 H`, elimina la consulta propietaria `app-access?action=status` y deja la Score Card sin controles de laboratorio en Producción.
