@@ -12,6 +12,7 @@
 | `index-grupal.html`, `service-worker.js`, `release.json` | Sincronizan release R198 y la caché instalada. |
 | Ambos ROADMAPS, matriz pendiente, mapa, reincidencias e inventario | Trazabilidad del cambio y sello de fuente. |
 
+- Archivos exactos modificados: `card-artifacts.js`, `test-card-artifacts.mjs`, `index-grupal.html`, `service-worker.js`, `release.json`, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
 - Prueba dirigida local sobre el código de la rama LAB R197: PASS.
 - Pendiente: Vercel build + controles documentales; despliegue READY en LAB; apertura real en navegador y captura del artefacto; Producción no modificada.
 
