@@ -1,3 +1,11 @@
+## R211 · Codigo de torneo no queda sombreado por sesion de codigo · 8 de octubre de 2026
+
+- Fallo fisico reportado sobre Produccion R210: el modal `INGRESE EL CODIGO` con codigo `D50F9059FD` respondio `NO SE PUDO PREPARAR EL EVENTO · REINTENTA`.
+- Causa raiz: R210 recuperaba sesiones de codigo vencidas, pero una `gsc_code_session` todavia valida podia quedar primero que la identidad de Score Card y bloquear `join-code` antes de crear/usarse el dispositivo que debe recibir la membresia del grupo.
+- Correccion: `resolveEventIdentity()` para `inspect-tournament-code` y `join-code` usa el dispositivo vigente si existe; si no existe y la accion es entrada segura por codigo de torneo, crea `gsc_event_device` antes de consultar la sesion de codigo. `list/read` priorizan dispositivo cuando ya existe y conservan sesiones de visor cuando no hay dispositivo.
+- Regresion: `test-lab-device-event-identity.mjs` cubre sesion de codigo valida coexistente, sesion de codigo valida sin dispositivo, sesion vencida, inspeccion sin consumo, consumo solo al unir y lectura aislada por dispositivo.
+- Estado: candidato R211 sobre la linea activa R210 de Produccion; gates y despliegue pendientes.
+
 ## R210 · redeploy con GSC_ENVIRONMENT production en Produccion · 8 de octubre de 2026
 
 - R209 estaba correcto en codigo, pero el proyecto Produccion no tenia `GSC_ENVIRONMENT`; por eso seguia evaluando como preview generico.

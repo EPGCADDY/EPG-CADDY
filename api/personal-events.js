@@ -17,6 +17,10 @@ const categories=['championship','a','b','c','d','female','senior','super_senior
 export async function resolveEventIdentity(req,res,sql,action,resolver=requireAccountSession){
   const cookie=String(req.headers?.cookie||'');
   if(/(?:^|;\s*)gsc_code_session=/.test(cookie)){
+    if(['inspect-tournament-code','join-code','list','read'].includes(action)){
+      const device=await readDeviceEventIdentity(req,sql);if(device)return device;
+      if(resolver===requireAccountSession&&['inspect-tournament-code','join-code'].includes(action))return createDeviceEventIdentity(res,sql);
+    }
     try{return await resolver(req,{sql})}catch(error){
       if(!['ACCOUNT_UNAUTHORIZED','CODE_SESSION_INVALID','CODE_SESSION_EXPIRED','CODE_SESSION_REVOKED'].includes(error.code))throw error;
       const device=await readDeviceEventIdentity(req,sql);if(device)return device;

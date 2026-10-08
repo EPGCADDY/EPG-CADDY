@@ -1,7 +1,7 @@
 {
-  "release": "20261008-R210",
-  "label": "R210",
+  "release": "20261008-R211",
+  "label": "R211",
   "published": "2026-10-08",
-  "version": "R210-PRODUCTION-ENV-VAR-REDEPLOY",
-  "generatedAt": "2026-10-08T08:00:00Z"
+  "version": "R211-CODE-SESSION-SHADOW-FIX",
+  "generatedAt": "2026-10-08T08:15:00Z"
 }

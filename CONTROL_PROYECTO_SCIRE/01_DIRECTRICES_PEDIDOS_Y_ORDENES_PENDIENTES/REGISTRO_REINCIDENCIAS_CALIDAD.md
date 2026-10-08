@@ -1,3 +1,11 @@
+## RC-124 · R211 · R210 mantuvo sombreado por sesion de codigo valida · 8 OCTUBRE 2026
+
+- Sintoma fisico: Produccion R210 mostro `NO SE PUDO PREPARAR EL EVENTO · REINTENTA` despues de ingresar el codigo `D50F9059FD`.
+- Causa: R210 resolvia sesiones invalidas/vencidas, pero una `gsc_code_session` valida seguia retornando antes que la identidad de dispositivo en `join-code`, impidiendo preparar la Score Card del grupo.
+- Punto de escape: la regresion previa cubria sesion vencida y entrada sin cookie, pero no sesion de codigo valida sin dispositivo previo en la entrada de organizador.
+- Control permanente: `test-lab-device-event-identity.mjs` crea una sesion de visor real con `issueEntryCode`/`redeemEntryCode`, ejecuta `join-code` con esa cookie y exige identidad de dispositivo, membresia correcta y consumo del codigo de torneo.
+- Estado: R211 candidato sobre R210; publicacion sujeta a gates y verificacion remota.
+
 ## RC-123 · Produccion sin GSC_ENVIRONMENT despues de R209 · 8 OCTUBRE 2026
 
 - Reincidencia interna: R209 corrigio codigo y test, pero Produccion no tenia declaracion de entorno.

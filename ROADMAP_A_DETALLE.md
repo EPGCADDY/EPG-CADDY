@@ -1,3 +1,11 @@
+## R211 · Codigo de torneo no queda sombreado por sesion de codigo · 8 de octubre de 2026
+
+- `api/personal-events.js`: la rama con `gsc_code_session` ya no deja que una sesion de codigo valida intercepte `inspect-tournament-code`/`join-code`. Primero lee `gsc_event_device`; si no existe, para esas acciones crea una identidad de dispositivo segura. En `list`/`read` solo prioriza el dispositivo si ya esta presente.
+- `test-lab-device-event-identity.mjs`: importa `issueEntryCode`/`redeemEntryCode` y reproduce una sesion de visor valida que antes sombreaba la entrada del codigo de organizador; el join ahora entra con identidad de dispositivo y consume el codigo correcto.
+- `release.json`, `index-grupal.html` y `service-worker.js`: release sincronizada `20261008-R211`, etiqueta visible `R211`, version tecnica `R211-CODE-SESSION-SHADOW-FIX`.
+- Motivo fisico: captura R210 en Produccion mostro `NO SE PUDO PREPARAR EL EVENTO · REINTENTA` con `D50F9059FD`.
+- Estado: pruebas dirigidas y gates pendientes de ejecucion antes de publicar.
+
 ## R210 · Produccion declara entorno y recarga runtime · 8 de octubre de 2026
 
 - Evidencia: R209 servido, pero endpoint Produccion aun respondia `PERSONAL_ACCESS_NOT_ENABLED`.
