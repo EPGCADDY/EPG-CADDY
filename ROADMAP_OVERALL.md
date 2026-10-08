@@ -1,3 +1,11 @@
+## R222 · Prueba de fuego 48h con cinco grupos visibles para organizador · 8 de octubre de 2026
+
+- `api/_lib/app-access.js` y `api/app-access.js`: el enlace temporal ahora es compartido por 48 horas, admite hasta 5 aperturas controladas, conserva sesiones ya redimidas y se elimina al vencer.
+- `guest-access.js`: la sesión invitada 48h queda aislada y sin botones de compartir, Live público, envío de tarjetas ni herramientas propietarias.
+- `index-grupal.html`: el propietario tiene `PRUEBA · 48 H` para generar un solo enlace y `VER PRUEBA 48 H` para ver los grupos invitados por separado con jugadores, hoyos y totales de score card.
+- `test-r222-guest-48h-shared-link.mjs`: valida enlace único 48h, cupo 5, purga por vencimiento, telemetría sin consumir cupos y tarjetas de grupo visibles para el propietario.
+- `release.json`, `service-worker.js` e `index-grupal.html`: publican identidad `20261008-R222`.
+
 ## R221 · Compartir Live de directorio usa enlace público y gate de paridad · 8 de octubre de 2026
 
 - Regresión física reportada en Producción: al pulsar `COMPARTIR LIVE` sobre un evento LAB de directorio, aparecía `NO SE PUDO VALIDAR EL ACCESO LIVE`, mientras LAB abría el modal de código.

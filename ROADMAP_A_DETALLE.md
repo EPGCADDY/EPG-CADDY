@@ -1,3 +1,12 @@
+## R222 · Enlace de prueba 48h y tablero de grupos invitados · 8 de octubre de 2026
+
+- `api/_lib/app-access.js`: `app_access_grants` agrega `max_uses` y `current_snapshot`; `createGrant()` emite 48 horas/5 usos; `redeemGuestToken()` consume una apertura por redención y `recordGuestFeedback()` guarda la última tarjeta de cada grupo sin gastar usos.
+- `api/app-access.js`: `/api/app-access?action=create` entrega un único enlace `/invite/<token>` válido 48h; `/redeem` redirige a `source=guest48h`; `/feedback` acepta snapshot de score card; `/report` devuelve el tablero propietario.
+- `index-grupal.html`: los invitados envían snapshot técnico de la ronda al persistir cambios; el propietario ve `VER PRUEBA 48 H` con grupos independientes, jugadores, hoyos, gross y neto/+/-.
+- `guest-access.js`: modo invitado 48h oculta herramientas de compartir y administración para que los amigos no redistribuyan desde la aplicación.
+- `test-r222-guest-48h-shared-link.mjs`, `test-r18-owner-guest-24h-access.mjs`, `test-lab-account-gate.mjs` y `test-global-public-entry-policy.mjs`: bloquean regresión de entrada pública, aislamiento invitado, cupo, vencimiento y visibilidad de tarjetas.
+- `release.json`, `service-worker.js`, `index-grupal.html`: sincronizan R222, cache `v394-r222-owner-trial-48h-shared-link`, meta `20261008-R222`, badge `VERSIÓN R222` y `personal-events.js?v=20261008-R222`.
+
 ## R221 · Paridad funcional para Compartir Live desde directorios LAB/Producción · 8 de octubre de 2026
 
 - `live-hub.js`: `shareGeneral()` detecta `shareEvent.directory` antes de invocar `GSCOneUseLive.share()`. Para eventos de directorio construye `tournamentHubShareUrl(state.generalToken, dominioDueño, location.href)` y usa `navigator.share` o copia al portapapeles.

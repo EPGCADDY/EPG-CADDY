@@ -38,10 +38,10 @@ export default async function handler(req,res){
     if(action==="redeem"&&req.method==="POST"){
       if(!isAllowedAppOrigin(req))return res.status(403).json({ok:false,code:"ORIGIN_NOT_ALLOWED"});
       const token=String(req.query?.token||""),grant=await redeemGuestToken(token);
-      if(!grant)return res.status(401).send("ENLACE INVÁLIDO, VENCIDO O YA UTILIZADO");
+      if(!grant)return res.status(401).send("ENLACE INVÁLIDO, VENCIDO O SIN CUPOS");
       const seconds=Math.max(1,Math.floor((new Date(grant.expiresAt).getTime()-Date.now())/1000));
       res.setHeader("Set-Cookie",[accessCookie(token,seconds),guestModeCookie(seconds)]);
-      res.setHeader("Location","/index-grupal.html?source=guest24h");return res.status(302).end();
+      res.setHeader("Location","/index-grupal.html?source=guest48h");return res.status(302).end();
     }
     if(action==='redeem-code'&&req.method==='POST'){
       codeAccessEnabled();if(!isAllowedAppOrigin(req))return res.status(403).json({ok:false,code:'ORIGIN_NOT_ALLOWED'});
@@ -58,7 +58,7 @@ export default async function handler(req,res){
     if(!isAllowedAppOrigin(req))return res.status(403).json({ok:false,code:"ORIGIN_NOT_ALLOWED"});
     if(action==="feedback"){
       const access=await resolveAppAccess(req);if(!access.ok||access.role!=="guest")return res.status(403).json({ok:false,code:"GUEST_REQUIRED"});
-      const body=await readJson(req,2_000),saved=await recordGuestFeedback(String(req.headers.cookie||"").split(";").map(v=>v.trim()).find(v=>v.startsWith("gscg_app_access="))?.slice("gscg_app_access=".length)||"",body);
+      const body=await readJson(req,64_000),saved=await recordGuestFeedback(String(req.headers.cookie||"").split(";").map(v=>v.trim()).find(v=>v.startsWith("gscg_app_access="))?.slice("gscg_app_access=".length)||"",body);
       return res.status(saved?200:401).json({ok:saved,code:saved?null:"ACCESS_EXPIRED"});
     }
     if(action==="report"){
@@ -83,8 +83,8 @@ export default async function handler(req,res){
     if(action==="create"){
       const owner=await requireOwner(req);
       try{
-        const origin=inviteOrigin(),grant=await createGrant(owner);
-        return res.status(201).json({ok:true,id:grant.id,expiresAt:grant.expiresAt,url:`${origin}/invite/${encodeURIComponent(grant.token)}`});
+        const origin=inviteOrigin(),grant=await createGrant(owner,{hours:48,maxUses:5});
+        return res.status(201).json({ok:true,id:grant.id,expiresAt:grant.expiresAt,maxUses:grant.maxUses,url:`${origin}/invite/${encodeURIComponent(grant.token)}`});
       }catch(error){
         if(error?.code!=="DATABASE_NOT_CONFIGURED"||process.env.VERCEL_ENV!=="preview")throw error;
         const productionOrigin=String(process.env.APP_PUBLIC_ORIGIN||"https://golf-sc-gt-lab.vercel.app").replace(/\/$/,"");

@@ -1,3 +1,10 @@
+## RC-135 · Prueba 48h necesitaba cinco grupos visibles, no sólo contador · 8 OCTUBRE 2026
+
+- Síntoma físico: el enlace temporal servía para entrada/actividad, pero el propietario necesitaba ver cada grupo de cuatro jugadores por separado durante la prueba de fuego.
+- Causa raíz: el reporte anterior era agregado; no persistía snapshot de score card por invitado ni diferenciaba tarjetas de grupo en el organizador.
+- Control permanente: `test-r222-guest-48h-shared-link.mjs` exige enlace único 48h, cinco aperturas, snapshots por grupo en `ownerFeedback()` y telemetría que no consume usos extra.
+- Estado: R222 agrega `current_snapshot`, botón `VER PRUEBA 48 H`, aislamiento invitado sin compartir y publicación visible de tarjetas de grupo.
+
 ## RC-134 · R220 Produccion valida privado un evento LAB de directorio · 8 OCTUBRE 2026
 
 - Sintoma fisico: en Produccion, al pulsar `COMPARTIR LIVE` sobre `LAB TEST`, aparece `NO SE PUDO VALIDAR EL ACCESO LIVE`; en LAB el mismo boton abre el modal `COMPARTIR LIVE` con codigo de un solo uso.

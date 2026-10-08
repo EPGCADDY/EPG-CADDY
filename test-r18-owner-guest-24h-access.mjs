@@ -8,18 +8,22 @@ const guest=fs.readFileSync('guest-access.js','utf8');
 const gateMatrix=fs.readFileSync('CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md','utf8');
 const gateJson=JSON.parse(fs.readFileSync('CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json','utf8'));
 const pending=fs.readFileSync('GOLF_SCORE_CARD_GT_PENDING_MATRIX.md','utf8');
-assert.match(html,/type="password"[\s\S]*CREAR ENLACE DE 24 HORAS/);
-assert.match(html,/action=redeem[\s\S]*source=guest24h/);
-assert.match(app,/id="ownerShare24h"[\s\S]*INVITAR · 24 H/);
+assert.match(html,/type="password"[\s\S]*CREAR ENLACE DE PRUEBA 48 HORAS/);
+assert.match(html,/action=redeem[\s\S]*source=guest48h/);
+assert.match(app,/id="ownerShare24h"[\s\S]*PRUEBA · 48 H/);
+assert.match(app,/id="ownerTrialReport"[\s\S]*VER PRUEBA 48 H/);
+assert.match(app,/action=report/);
 assert.doesNotMatch(app,/src="\.\/auth-gate\.js"/);
 assert.match(app,/function enforceGuestAccess/);
-assert.match(guest,/gscg-guest24h/);
+assert.match(guest,/gscg-guest48h/);
+assert.match(guest,/hideGuestSharingControls/);
+for(const hiddenControl of ['ownerShare24h','ownerTrialReport','gscLiveLaunch','shareRoundLiveButton','shareGlobalCard','sharePersonalCard']){
+  assert.match(guest,new RegExp(hiddenControl),`Invitado temporal no debe conservar ${hiddenControl}`);
+}
 assert.match(gateMatrix,/entrada normal no solicita correo, contraseña, inicio como propietario ni código global/);
-assert.match(gateMatrix,/invitación individual de 24 horas se conserva como función opcional/);
-assert.equal(gateJson.applicationEntryPolicy.status,'OPEN');
-assert.equal(gateJson.applicationEntryPolicy.requiresOwnerCredentials,false);
-assert.match(gateJson.applicationEntryPolicy.twentyFourHourInvitation,/retained as an optional independent invite/);
-assert.match(pending,/Invitación individual opcional de 24 horas · CONSERVADA/);
+assert.match(gateMatrix,/invitación compartida de prueba de 48 horas se conserva como función opcional/);
+assert(gateJson.gates.some(gate=>gate.id==='G0-12'&&gate.name==='entrada_publica_sin_credenciales'),'La matriz JSON debe conservar G0-12 entrada pública sin credenciales');
+assert.match(pending,/Invitación compartida opcional de 48 horas · CONSERVADA/);
 for(const path of ['/','/index-grupal.html?inicio=1','/access.html']){
  const response=await accessGate(new Request('https://lab.example'+path));
  assert.equal(response.headers.get('x-middleware-next'),'1',`La entrada libre se bloqueó en ${path}`);
@@ -33,5 +37,5 @@ const expiryContext={window:{GSC_GUEST_ACCESS:true,gscgApiUrl:value=>value},docu
 vm.runInNewContext(expirySource+';enforceGuestAccess()',expiryContext);
 await new Promise(resolve=>setImmediate(resolve));
 assert.equal(redirected,false,'La expiración de la invitación no puede expulsar a una página propietaria');
-assert.match(noticeText,/Registro y Score Card siguen disponibles/i); console.log('PASS: entrada normal abierta; invitación opcional conserva emisión, canje, aislamiento y vencimiento de 24 horas');
-console.log('PASS: entrada normal abierta; invitación opcional conserva emisión, canje, aislamiento y vencimiento de 24 horas');
+assert.match(noticeText,/Registro y Score Card siguen disponibles/i); console.log('PASS: entrada normal abierta; enlace temporal opcional conserva emisión, canje, aislamiento y vencimiento de 48 horas');
+console.log('PASS: entrada normal abierta; enlace temporal opcional conserva emisión, canje, aislamiento y vencimiento de 48 horas');

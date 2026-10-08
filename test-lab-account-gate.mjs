@@ -10,7 +10,7 @@ const routes=JSON.parse(fs.readFileSync("vercel.json","utf8"));
 
 assert(!html.includes('src="./auth-gate.js"'),"La app principal no debe cargar el candado de cuenta");
 assert(html.includes('id="ownerShare24h"'),"Se conserva el botón de invitación temporal independiente");
-assert(access.includes('type="password"')&&access.includes('CREAR ENLACE DE 24 HORAS'),"El panel temporal conserva administración autenticada de invitaciones");
+assert(access.includes('type="password"')&&access.includes('CREAR ENLACE DE PRUEBA 48 HORAS'),"El panel temporal conserva administración autenticada de invitaciones");
 assert(!access.includes('ABRIR APLICACIÓN'),"La credencial del panel no puede ser requisito ni puerta para abrir la app");
 assert(access.includes('no necesitas credenciales'),"El panel debe aclarar que Registro es libre");
 for(const path of ["/","/index.html","/inicio"]){
@@ -26,4 +26,4 @@ assert(authInit.includes("if(new URLSearchParams(location.search).get('account')
 assert(!authInit.includes("if(!session.ok||!session.user?.id)show()"),"No-session no debe bloquear Registro ni Scores");
 assert(!organizerUi.includes("data-owner-login")&&!organizerUi.includes("GSCOpenAccountLogin"),"Organizador no debe saltar al formulario de correo y contraseña");
 assert(organizerUi.includes("data-redeem-organizer")&&organizerUi.includes("organizerAuthorizationCode"),"Organizador conserva un único control por código");
-console.log("PASS LAB: Registro no carga login global; credenciales permanecen sólo en la herramienta opcional de invitaciones de 24 horas");
+console.log("PASS LAB: Registro no carga login global; credenciales permanecen sólo en la herramienta opcional de invitaciones de 48 horas");

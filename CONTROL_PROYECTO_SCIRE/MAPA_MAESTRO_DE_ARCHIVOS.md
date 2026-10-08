@@ -1,3 +1,11 @@
+## R222 · Prueba 48h con cinco grupos visibles para organizador
+
+| Archivo | Rol actualizado | Gate / evidencia |
+| --- | --- | --- |
+| `api/_lib/app-access.js`, `api/app-access.js` | Enlace compartido 48h, máximo 5 aperturas, snapshot de score card por grupo y reporte propietario. | `test-r222-guest-48h-shared-link.mjs` |
+| `index-grupal.html`, `guest-access.js` | Botones `PRUEBA · 48 H` y `VER PRUEBA 48 H`; invitados sin controles de compartir ni administración. | `test-r18-owner-guest-24h-access.mjs` |
+| `release.json`, `service-worker.js` | Identidad R222 y cache PWA nueva para forzar descarga. | `scripts/release-matrix-gate.mjs` |
+
 ## R221 · Paridad 360 LAB/Producción y Compartir Live público
 
 | Archivo | Función | Verificación |
@@ -54,10 +62,10 @@
 
 | Archivos | Función | Protección |
 |---|---|---|
-| `middleware.js`, `access.html` | Las páginas normales abren libremente; `access.html` conserva canje de invitaciones y administración propietaria sólo para emitir/revocar invitaciones de 24 horas. | Ni el panel ni la invitación son requisitos de entrada; los permisos por torneo siguen aplicando. |
-| `index-grupal.html`, `guest-access.js` | La Score Card no carga el candado de entrada global; conserva el botón de invitación individual y el aislamiento/caducidad de la sesión invitada de 24 horas. | La expiración sólo afecta al invitado; no cierra la entrada normal ni elimina permisos por torneo. |
+| `middleware.js`, `access.html` | Las páginas normales abren libremente; `access.html` conserva canje de invitaciones y administración propietaria sólo para emitir/revocar enlaces compartidos de prueba de 48 horas. | Ni el panel ni la invitación son requisitos de entrada; los permisos por torneo siguen aplicando. |
+| `index-grupal.html`, `guest-access.js` | La Score Card no carga el candado de entrada global; conserva el botón de prueba compartida y el aislamiento/caducidad de la sesión invitada de 48 horas. | La expiración sólo afecta al invitado; no cierra la entrada normal ni elimina permisos por torneo. |
 | `release.json`, `service-worker.js` | Identificaron el candidato R146.1.1 y renovaron caché PWA. | Historial del cambio anterior. |
-| `test-live-share-middleware.mjs`, `test-owner-invitation-ui.mjs`, `test-r18-owner-guest-24h-access.mjs`, `test-v311-live-support-link.mjs`, `test-lab-r60-physical-matrix.mjs`, `test-manual-startup-sharing.mjs`, `test-lab-account-gate.mjs` | Impiden que vuelva la puerta global y comprueban que la invitación individual de 24 horas se conserva separada. | Gate técnico y build LAB. |
+| `test-live-share-middleware.mjs`, `test-owner-invitation-ui.mjs`, `test-r18-owner-guest-24h-access.mjs`, `test-v311-live-support-link.mjs`, `test-lab-r60-physical-matrix.mjs`, `test-manual-startup-sharing.mjs`, `test-lab-account-gate.mjs` | Impiden que vuelva la puerta global y comprueban que la invitación compartida de prueba de 48 horas se conserva separada. | Gate técnico y build LAB. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `INVENTARIOS_V311.lock.json` | Registro doble y sello del cambio. | Gates de roadmap e inventario. |
 
 ## LAB R136 · Registro simplificado · 29 septiembre 2026

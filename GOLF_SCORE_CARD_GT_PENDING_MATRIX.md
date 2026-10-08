@@ -55,7 +55,7 @@
 
 ## Política de acceso vigente · orden del propietario · 30 septiembre 2026
 
-La entrada a la aplicación es libre: Registro, Score Card local y Scores no requieren cuenta, correo, contraseña, autenticación como propietario ni código global. R147 fija como regresión permanente que `/`, `/index.html`, `/inicio` y la ruta de Registro abran directamente la aplicación. El acceso opcional a respaldos y la autorización de torneos privados son capacidades separadas por recurso; no pueden bloquear la pantalla inicial. Se conserva la invitación individual de 24 horas como herramienta opcional e independiente; nunca es un requisito de entrada.
+La entrada a la aplicación es libre: Registro, Score Card local y Scores no requieren cuenta, correo, contraseña, autenticación como propietario ni código global. R147 fija como regresión permanente que `/`, `/index.html`, `/inicio` y la ruta de Registro abran directamente la aplicación. El acceso opcional a respaldos y la autorización de torneos privados son capacidades separadas por recurso; no pueden bloquear la pantalla inicial. Se conserva la invitación compartida de prueba de 48 horas como herramienta opcional e independiente; nunca es un requisito de entrada.
 
 Este documento contiene únicamente funciones reales del producto pendientes o previstas. No incluye auditorías, ramas, publicaciones, permisos, facturación ni administración.
 
@@ -489,9 +489,9 @@ General y Stableford, control manual y voz, ronda nueva y recuperada, uno o seis
 - Separar secretos de publicación/lectura, guardar sólo SHA-256 y excluir contactos, ubicación, audio, IA, clima detallado y apuestas.
 - Especificación: `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/PEND_LIVE_018_GOLF_SCORE_CARD_GT_LIVE.md`.
 
-### 29. Invitación individual opcional de 24 horas · CONSERVADA
+### 29. Invitación compartida opcional de 48 horas · CONSERVADA
 
-**Estado:** CONSERVADA POR ACLARACIÓN DEL PROPIETARIO · 30 septiembre 2026. Invitación de un solo uso, con vencimiento a las 24 horas y sesión de invitado aislada. No es requisito de entrada; Registro y Score Card abren libremente.
+**Estado:** CONSERVADA POR ACLARACIÓN DEL PROPIETARIO · 30 septiembre 2026. Invitación compartida, con vencimiento a las 48 horas y hasta 5 accesos y sesión de invitado aislada. No es requisito de entrada; Registro y Score Card abren libremente.
 
 El panel de administración puede conservar autenticación propietaria para emitir, consultar o revocar invitaciones. No abre la aplicación ni protege la pantalla inicial. El vencimiento limita sólo la sesión invitada. Los códigos propios de un torneo siguen siendo permisos por evento, separados de la entrada general.
 
