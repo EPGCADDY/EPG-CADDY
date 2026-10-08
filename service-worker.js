@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry-v371-r196-whatsapp-card-caption-v374-r200-stableford-gross-points-r199-tournament-join-v384-r210-production-env-var-redeploy";
+const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-round-entry-v365-active-round-recovery-v366-principal-entry-recovery-v367-universal-voice-in-place-v368-canonical-home-entry-v371-r196-whatsapp-card-caption-v374-r200-stableford-gross-points-r199-tournament-join-v385-r213-no-raw-personal-auth-page";
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
 const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r148-entry-inspection`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r148-entry-inspection`;
@@ -178,24 +178,15 @@ async function manualAppNavigation(request){
   return approvedNavigationWithManualUpdate(request);
 }
 
-async function authorizedPersonalNavigation(request){
-  // Authorization must remain current, but a successful check is not update consent.
-  let authorization;
-  try{authorization=await fetch(request,{cache:"no-store"})}catch{return Response.error()}
-  if(!authorization.ok)return authorization;
-  if(authorization.redirected&&new URL(authorization.url).pathname!==OFFLINE_ENTRY)return authorization;
-  return manualAppNavigation(request);
-}
-
 self.addEventListener("fetch",event=>{
   const request=event.request;
   if(request.method!=="GET")return;
   const url=new URL(request.url);
   if(url.hostname==='vercel.live'){event.respondWith(new Response('',{headers:{'content-type':'application/javascript','cache-control':'no-store'}}));return}
   if(url.origin!==self.location.origin||url.pathname.startsWith("/api/"))return;
-  // Personal scorecards require current server membership; never serve the owner shell
-  // or a cached scorecard in response to a forged/revoked personal account URL.
-  if(request.mode==='navigate'&&(url.searchParams.has('personalEvent')||url.searchParams.has('personalAccount'))){event.respondWith(url.pathname===OFFLINE_ENTRY?authorizedPersonalNavigation(request):fetch(request,{cache:'no-store'}));return}
+  // Personal scorecards load the app shell first; private data stays protected by
+  // the read/publish APIs so a transient cookie miss never becomes a raw 403 page.
+  if(request.mode==='navigate'&&(url.searchParams.has('personalEvent')||url.searchParams.has('personalAccount'))){event.respondWith(url.pathname===OFFLINE_ENTRY?manualAppNavigation(request):fetch(request,{cache:'no-store'}));return}
   if(request.mode==="navigate"&&(url.pathname==="/access.html"||url.pathname==="/code-entry.html"||url.pathname==="/pwa-launch.html"||url.pathname.startsWith("/invite/"))){event.respondWith(fetch(request,{cache:"no-store"}));return}
   if(request.mode==="navigate"&&(url.pathname==="/manual.pdf"||url.pathname==="/manual.html")){event.respondWith(fetch("/manual.html?__gscg_build_check=1",{cache:"no-store"}));return}
   if(url.pathname==="/release.json"){event.respondWith(fetch(request,{cache:"no-store"}));return}

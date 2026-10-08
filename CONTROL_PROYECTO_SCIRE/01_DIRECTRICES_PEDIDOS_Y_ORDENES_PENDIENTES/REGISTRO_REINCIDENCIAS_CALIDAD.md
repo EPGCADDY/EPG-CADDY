@@ -1,9 +1,10 @@
-## RC-126 · R213 · R212 dependia de cookie nominal en middleware · 8 OCTUBRE 2026
+## RC-126 · R212 aun podia mostrar 403 textual por Service Worker/middleware · 8 OCTUBRE 2026
 
-- Sintoma fisico: Produccion R212 siguio mostrando `Acceso personal no autorizado` en iPhone instalado.
-- Causa: la reparacion R212 validaba tambien presencia nominal de cookie; cuando esa deteccion no acompaña la navegacion, el middleware ignora que `/api/personal-events` si es la autoridad real.
-- Control permanente: `test-live-share-middleware.mjs` reproduce `personalEvent` sin `personalAccount` y sin cookie detectable, autorizando solo si la API server-side responde OK.
-- Estado: R213 pendiente de gates y publicacion.
+- Sintoma fisico: pantalla negra con `Acceso personal no autorizado` despues de actualizar a R212/R211 en Produccion.
+- Causa raiz: la navegacion personal seguia validandose antes de cargar el shell; cualquier desajuste temporal de cookie, cuenta o cache convertia la ruta en respuesta textual 403.
+- Punto de escape: R212 reparo la cuenta faltante en middleware, pero no elimino la pantalla cruda ni restauro el fallback cliente completo en `index-grupal.html`.
+- Control permanente: `test-lab-update-recovery.mjs` exige que la navegacion personal conserve el shell aprobado sin exponer 403; `test-live-share-middleware.mjs` exige que una discordancia de navegacion cargue app y no texto crudo.
+- Estado: R213 elimina la pantalla cruda, conserva proteccion en APIs y versiona el cliente de torneo.
 
 ## RC-125 · R212 · Score Card asignada sin cuenta cae en 403 textual · 8 OCTUBRE 2026
 

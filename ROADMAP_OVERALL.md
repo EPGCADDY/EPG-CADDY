@@ -1,10 +1,9 @@
-## R213 · Middleware repara navegacion autorizada aunque no vea cookie nominal · 8 de octubre de 2026
+## R213 · Eliminar pantalla cruda de acceso personal no autorizado · 8 de octubre de 2026
 
-- Fallo fisico reportado sobre Produccion R212: el iPhone siguio en pagina negra `Acceso personal no autorizado` al abrir Score Card asignada.
-- Causa raiz: R212 aun dependia de detectar nombres de cookies en middleware; en la navegacion instalada la autoridad real era la respuesta server-side de `/api/personal-events`.
-- Correccion: `middleware.js` elimina la condicion `personalCookie` para URL con `personalEvent` sin `personalAccount`; si `/api/personal-events` responde OK, completa `personalAccount` y reabre la tarjeta.
-- Regresion: `test-live-share-middleware.mjs` reproduce `personalEvent` sin `personalAccount` y sin cookie detectable; conserva rechazo cuando la cuenta explicita no coincide.
-- Release: `20261008-R213`.
+- Sintoma fisico: Produccion mostro una pantalla negra con texto plano `Acceso personal no autorizado` al abrir la Score Card asignada.
+- Archivos modificados: `service-worker.js`, `middleware.js`, `index-grupal.html`, `release.json`, `test-live-share-middleware.mjs`, `test-lab-update-recovery.mjs`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+- Correccion: la navegacion personal carga el shell de la app; las APIs siguen validando membresia antes de leer/publicar datos privados.
+- Control: pruebas de middleware y recuperacion de update actualizadas para bloquear regresion de pantalla 403 textual.
 
 ## R212 · Navegacion de Score Card asignada sin cuenta explicita · 8 de octubre de 2026
 

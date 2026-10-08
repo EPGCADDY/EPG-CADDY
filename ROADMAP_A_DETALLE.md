@@ -1,9 +1,9 @@
-## R213 · Autoridad final por `/api/personal-events`, no por nombre de cookie · 8 de octubre de 2026
+## R213 · Navegacion personal sin pantalla negra 403 · 8 de octubre de 2026
 
-- `middleware.js`: para `personalEvent` sin `personalAccount`, la reparacion depende de que la lectura server-side del evento responda OK; ya no bloquea por no encontrar `gsc_event_device`/`gsc_code_session` en el string de cookies.
-- `test-live-share-middleware.mjs`: el caso sin cuenta y sin cookie detectable exige redireccion con `personalAccount=device%3Aassigned`; cuenta explicita ajena sigue devolviendo 403.
-- `release.json`, `index-grupal.html` y `service-worker.js`: release sincronizada `20261008-R213`, etiqueta visible `R213`, version tecnica `R213-MIDDLEWARE-AUTHORITY-REPAIR`.
-- Motivo fisico: captura de Produccion R212 a las 06:03 mostro nuevamente `Acceso personal no autorizado`.
+- `service-worker.js`: elimina la verificacion previa `authorizedPersonalNavigation`; `index-grupal.html` con `personalEvent` o `personalAccount` pasa por `manualAppNavigation` y no puede devolver texto plano como pagina final.
+- `middleware.js`: si la verificacion inmediata de `personalEvent` no confirma membresia, deja cargar la app en vez de responder `Acceso personal no autorizado`; las APIs conservan los rechazos propios.
+- `index-grupal.html`: sube a R213, carga `personal-events.js?v=20261008-R213` y mantiene fallback `joinSelectionFallbackRelease:'R213'` desde seleccion local/scoped.
+- `test-live-share-middleware.mjs` y `test-lab-update-recovery.mjs`: actualizan la expectativa a shell cargado sin 403 textual.
 
 ## R212 · Reparacion de navegacion personal autorizada sin `personalAccount` · 8 de octubre de 2026
 
