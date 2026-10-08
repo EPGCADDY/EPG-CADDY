@@ -1,3 +1,10 @@
+## R220 · Relay same-origin para Compartir Live de eventos LAB remotos · 8 de octubre de 2026
+
+- `live-share.js`: calcula el ambiente actual por hostname; si `personal.source` difiere, genera el código con `fetch('/api/event-administration', {action:'remote-share', source, eventId, eventKind})` y conserva el modal aprobado con enlace `/code-entry.html?visitor=1#code=...`.
+- `live-share.js`: la ruta del mismo ambiente mantiene `GSCPersonalEvents.request('share-code', payload)`; LIVE legacy conserva `request('create', ..., publisherSecret)`.
+- `test-lab-code-entry.mjs`: prueba tres rutas: personal sin publisher legacy, directorio LAB en LAB y directorio LAB desde producción vía relay; bloquea la llamada cross-origin directa que causaba `NETWORK_ERROR`.
+- `release.json`, `service-worker.js`, `index-grupal.html`: release `20261008-R220`, etiqueta visible `R220`, cache `v392-r220-fix-compartir-live-remote-share` y `personal-events.js?v=20261008-R220`.
+
 ## R219 · Compartir Live source-aware desde Scores de directorio LAB · 8 de octubre de 2026
 
 - `live-hub.js`: incorpora `directoryEventDescriptor()` para tokens `directory_lab_<uuid>`, `directory_production_<uuid>` y privados; `currentShareEvent()` centraliza el evento activo y conserva `eventId`, `eventKind`, `source` y marca de directorio.

@@ -1,3 +1,11 @@
+## RC-133 · R219 mostraba SIN CONEXIÓN al compartir evento LAB desde otro dominio · 8 OCTUBRE 2026
+
+- Sintoma fisico: al pulsar `COMPARTIR LIVE`, el boton accionaba pero aparecia `SIN CONEXIÓN · CONSERVANDO LOS ÚLTIMOS SCORES` en la parte superior.
+- Causa raiz: R219 conservó `source: lab`, pero `live-share.js` intentó llamar directo cross-origin a `/api/personal-events`; en iPhone/produccion esa llamada falla como red/CORS.
+- Punto de escape: la prueba cubria payload `source:'lab'` en la misma ruta, pero no el caso de dominio actual produccion contra evento LAB remoto.
+- Control permanente: `test-lab-code-entry.mjs` ahora exige que evento LAB remoto use `/api/event-administration` con `action:'remote-share'`, sin invocar `GSCPersonalEvents.request()` directo.
+- Estado: R220 usa relay same-origin para crear el codigo de invitado y conserva el modal/link aprobado.
+
 ## RC-132 · R218 no accionaba Compartir Live desde directorio LAB · 8 OCTUBRE 2026
 
 - Sintoma fisico: en iPhone, Scores General mostraba `COMPARTIR LIVE`, pero tocarlo no abria el modal ni generaba codigo en el torneo LAB.

@@ -1,3 +1,10 @@
+## R220 · Compartir Live usa relay remoto y evita SIN CONEXIÓN · 8 de octubre de 2026
+
+- Regresión física reportada en iPhone: al pulsar `COMPARTIR LIVE` en Scores General, aparecía `SIN CONEXIÓN · CONSERVANDO LOS ÚLTIMOS SCORES`.
+- `live-share.js`: cuando el torneo pertenece a otro ambiente (`source` distinto al dominio actual), ya no llama directo cross-origin a `/api/personal-events`; usa el relay same-origin `/api/event-administration` con `action:'remote-share'`.
+- `test-lab-code-entry.mjs`: agrega regresión para producción compartiendo un evento LAB y exige payload `remote-share` sin caer en `NETWORK_ERROR`.
+- `release.json`, `service-worker.js` e `index-grupal.html`: identidad visible/cache en `20261008-R220`.
+
 ## R219 · Compartir Live acciona desde directorio LAB · 8 de octubre de 2026
 
 - Regresión física reportada en iPhone: `COMPARTIR LIVE` aparece en Scores General, pero al tocarlo no abre el modal ni genera código cuando el torneo viene del directorio LAB.
