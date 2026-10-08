@@ -1,3 +1,10 @@
+## R210 · redeploy con GSC_ENVIRONMENT production en Produccion · 8 de octubre de 2026
+
+- R209 estaba correcto en codigo, pero el proyecto Produccion no tenia `GSC_ENVIRONMENT`; por eso seguia evaluando como preview generico.
+- Accion operativa: se agrego `GSC_ENVIRONMENT=production` en el proyecto `epg-caddy` para targets production y preview.
+- Release: R210 fuerza redeploy para cargar esa variable nueva en runtime.
+- Verificacion esperada: Produccion deja de responder `PERSONAL_ACCESS_NOT_ENABLED`.
+
 ## R209 · Produccion aliasada requiere GSC_ENVIRONMENT production · 8 de octubre de 2026
 
 - R208 fallo el test porque la regla era demasiado amplia: un preview con flag de Produccion no debe activarse sin declarar que sirve Produccion.

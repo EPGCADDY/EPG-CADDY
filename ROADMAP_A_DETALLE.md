@@ -1,3 +1,10 @@
+## R210 · Produccion declara entorno y recarga runtime · 8 de octubre de 2026
+
+- Evidencia: R209 servido, pero endpoint Produccion aun respondia `PERSONAL_ACCESS_NOT_ENABLED`.
+- Causa pendiente: faltaba variable `GSC_ENVIRONMENT=production` en Vercel project `epg-caddy`.
+- Accion: variable creada como plain para production y preview; R210 dispara deployment nuevo.
+- Validacion: POST a `/api/personal-events` debe pasar la puerta de acceso personal.
+
 ## R209 · activacion personal por entorno declarado, no solo VERCEL_ENV · 8 de octubre de 2026
 
 - Falla exacta R208: `test-personal-access-activation.mjs` esperaba que `VERCEL_ENV=preview` con solo `GSC_PERSONAL_ACCESS_PRODUCTION_READY` siguiera bloqueado.

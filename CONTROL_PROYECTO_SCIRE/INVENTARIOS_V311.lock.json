@@ -1,8 +1,8 @@
 {
-  "version": "R209-DECLARED-PRODUCTION-ALIAS-ACCESS",
-  "generatedAt": "2026-10-08T07:55:00Z",
+  "version": "R210-PRODUCTION-ENV-VAR-REDEPLOY",
+  "generatedAt": "2026-10-08T08:00:00Z",
   "sourceFileCount": 924,
-  "sourceDigest": "9b9e312f989f51593f2a325211303cb190681e562838908c7e1b6af6d295e1c8",
+  "sourceDigest": "f84c6a1564e53aa3576c71851db44ebd634ab6cc228682acc64d6d0ba05a20b7",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",

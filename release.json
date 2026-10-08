@@ -1,7 +1,7 @@
 {
-  "release": "20261008-R209",
-  "label": "R209",
+  "release": "20261008-R210",
+  "label": "R210",
   "published": "2026-10-08",
-  "version": "R209-DECLARED-PRODUCTION-ALIAS-ACCESS",
-  "generatedAt": "2026-10-08T07:55:00Z"
+  "version": "R210-PRODUCTION-ENV-VAR-REDEPLOY",
+  "generatedAt": "2026-10-08T08:00:00Z"
 }

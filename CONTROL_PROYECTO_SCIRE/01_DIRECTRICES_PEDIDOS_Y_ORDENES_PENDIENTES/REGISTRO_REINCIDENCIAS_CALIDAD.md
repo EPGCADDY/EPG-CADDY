@@ -1,3 +1,10 @@
+## RC-123 · Produccion sin GSC_ENVIRONMENT despues de R209 · 8 OCTUBRE 2026
+
+- Reincidencia interna: R209 corrigio codigo y test, pero Produccion no tenia declaracion de entorno.
+- Causa raiz: configuracion Vercel incompleta para proyecto `epg-caddy`.
+- Control permanente: todo dominio publico aliasado a deployment de rama debe tener `GSC_ENVIRONMENT` explicito.
+- Estado: R210 agrega variable y redeploy.
+
 ## RC-122 · R208 abria preview con flag de Produccion sin entorno declarado · 8 OCTUBRE 2026
 
 - Falla interna: R208 corrigio el caso operativo, pero rompio el control preventivo que impide activar preview solo por tener el flag de Produccion.
