@@ -17,7 +17,7 @@ for(const token of [
   'officialCorrectionOverlay',
   'mandatoryUpdateButton'
 ]) assert(app.includes(token),'Falta función física: '+token);
-assert(app.includes('INVITAR · 24 H'),'La invitación opcional de 24 horas debe conservarse sin bloquear la entrada libre');
+assert(app.includes('PRUEBA · 48 H'),'La invitación opcional de prueba de 48 horas debe conservarse sin bloquear la entrada libre');
 assert(!app.includes('src="./auth-gate.js"'),'La entrada no debe cargar autenticación global');
 
 assert(hub.includes('TABLERO DE MIS FAVORITOS'),'Falta favoritos');
