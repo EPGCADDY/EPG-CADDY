@@ -637,3 +637,11 @@ Las rutas de entrada de la aplicación y PWA abren sin credenciales de propietar
 - `api/personal-events.js` recupera identidad de dispositivo para la acción de lectura `inspect-tournament-code`; no consume código ni entrega membresía. `join-code` conserva la autorización existente.
 - `test-lab-device-event-identity.mjs`: cuenta vencida sin cookie de dispositivo, código no consumido y dispositivo ajeno denegado.
 - R198 sincroniza app, `release.json`, Service Worker y caché exclusiva. Regresión dirigida PASS; gates y prueba física en LAB pendientes. Producción sigue en R197.
+
+## R199 · ingreso cruzado Producción/LAB consume código con identidad segura · 8 octubre 2026
+
+- Defecto observado: en Producción R198 el código `6D5ECEC172` seguía mostrando `NO SE PUDO PREPARAR EL EVENTO · REINTENTA`. La API de Producción respondió `LIVE_JOIN_CODE_INVALID`; el código mostrado en la tarjeta pertenecía a LAB.
+- Causa raíz: el cliente sí reintentaba el código en el otro ambiente, pero la llamada final `join-code` podía llegar al ambiente dueño sin cookie same-site persistida. R198 cubría la inspección segura, pero no el consumo/unión del código en ese mismo contexto.
+- Corrección: `resolveEventIdentity()` permite crear una identidad de dispositivo segura también en `join-code` cuando no hay sesión de cuenta válida. La membresía sigue dependiendo de poseer el código, de la configuración campo/modalidad y de capacidad; sólo se consume el código dentro de la unión oficial.
+- Control permanente: `test-lab-device-event-identity.mjs` ahora reproduce inspección sin consumir y unión sin cookie previa; confirma cookie de dispositivo nueva, consumo de código de un solo uso y rechazo a terceros. `test-r191-cross-environment-tournament-entry.mjs` conserva el reintento Producción→LAB.
+- Estado: regresión dirigida PASS local; despliegue LAB y Producción R199 pendiente.

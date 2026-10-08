@@ -1563,3 +1563,11 @@ Causa: el despacho del atajo `tournaments` enviaba a `live-hub.html?directory=1`
 - Control permanente: `test-lab-device-event-identity.mjs` reproduce esa combinación, comprueba alta de identidad segura, inspección de código sin consumirlo y denegación a otro dispositivo. La recuperación no crea membresía ni otorga permisos.
 - Estado: corregido en candidato R197; prueba dirigida PASS; gates, revisión LAB y despliegues pendientes.
 - Seguimiento R198: el propietario confirmó R197 en LAB; en Producción R197 falló al inspeccionar un nuevo código (`ACCOUNT_UNAUTHORIZED`). La ruta podía omitir `identity` si el cliente retenía identidad en memoria y vencía su sesión. R198 aplica identidad segura sólo a la inspección de lectura, sin consumo ni membresía; `test-lab-device-event-identity.mjs` reproduce el caso y queda PASS. Revisión LAB pendiente antes de Producción.
+
+## R199 · ingreso cruzado Producción/LAB consume código con identidad segura · 8 octubre 2026
+
+- Defecto observado: en Producción R198 el código `6D5ECEC172` seguía mostrando `NO SE PUDO PREPARAR EL EVENTO · REINTENTA`. La API de Producción respondió `LIVE_JOIN_CODE_INVALID`; el código mostrado en la tarjeta pertenecía a LAB.
+- Causa raíz: el cliente sí reintentaba el código en el otro ambiente, pero la llamada final `join-code` podía llegar al ambiente dueño sin cookie same-site persistida. R198 cubría la inspección segura, pero no el consumo/unión del código en ese mismo contexto.
+- Corrección: `resolveEventIdentity()` permite crear una identidad de dispositivo segura también en `join-code` cuando no hay sesión de cuenta válida. La membresía sigue dependiendo de poseer el código, de la configuración campo/modalidad y de capacidad; sólo se consume el código dentro de la unión oficial.
+- Control permanente: `test-lab-device-event-identity.mjs` ahora reproduce inspección sin consumir y unión sin cookie previa; confirma cookie de dispositivo nueva, consumo de código de un solo uso y rechazo a terceros. `test-r191-cross-environment-tournament-entry.mjs` conserva el reintento Producción→LAB.
+- Estado: regresión dirigida PASS local; despliegue LAB y Producción R199 pendiente.

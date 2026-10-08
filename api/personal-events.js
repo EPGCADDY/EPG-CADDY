@@ -20,14 +20,14 @@ export async function resolveEventIdentity(req,res,sql,action,resolver=requireAc
     try{return await resolver(req,{sql})}catch(error){
       if(!['ACCOUNT_UNAUTHORIZED','CODE_SESSION_INVALID','CODE_SESSION_EXPIRED','CODE_SESSION_REVOKED'].includes(error.code))throw error;
       const device=await readDeviceEventIdentity(req,sql);if(device)return device;
-      if(resolver===requireAccountSession&&['identity','inspect-tournament-code'].includes(action))return createDeviceEventIdentity(res,sql);
+      if(resolver===requireAccountSession&&['identity','inspect-tournament-code','join-code'].includes(action))return createDeviceEventIdentity(res,sql);
       throw error;
     }
   }
   const device=await readDeviceEventIdentity(req,sql);if(device)return device;
   if(resolver===requireAccountSession&&action==='identity'&&!/session[_-]token|neon.*session|auth.*session/i.test(cookie))return createDeviceEventIdentity(res,sql);
   try{return await resolver(req,{sql})}catch(error){
-    if(resolver===requireAccountSession&&['identity','inspect-tournament-code'].includes(action)&&error.code==='ACCOUNT_UNAUTHORIZED')return createDeviceEventIdentity(res,sql);
+    if(resolver===requireAccountSession&&['identity','inspect-tournament-code','join-code'].includes(action)&&error.code==='ACCOUNT_UNAUTHORIZED')return createDeviceEventIdentity(res,sql);
     throw error;
   }
 }
