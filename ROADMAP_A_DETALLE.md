@@ -1,3 +1,12 @@
+## R202 · recuperación de score card asignada tras código de torneo · 8 de octubre de 2026
+
+- Evidencia de datos LAB: `6D5ECEC172` quedó consumido por `device:762b62b9-401e-4ae7-aa28-ecf44b3633a1`; existe membresía scorer para `Jaime`, categoría `senior`, tee `Blanco`, HDCP 13, dentro del torneo `EPG Produccion`.
+- Escape detectado: R201 corrigió el retry Producción/LAB, pero no blindó el paso siguiente; después de asignar la score card, `openAssignedCard` dependía exclusivamente de `request('read', event)`.
+- Corrección backend: `api/_lib/personal-event-access.js` devuelve en join-code los datos mínimos de preparación: cuenta, rol scorer, grupo y jugadores.
+- Corrección frontend: `personal-events.js` reconstruye un resultado válido desde join-code si el read inmediato falla, preservando el evento, la modalidad y los jugadores asignados.
+- Validación esperada: ingresar el mismo código en el mismo iPhone ya no debe quedar bloqueado en `NO SE PUDO PREPARAR EL EVENTO`; debe abrir la tarjeta personal asignada.
+- Estado: pendiente build Vercel posterior al gate ROADMAP.
+
 ## R201 · ingreso de torneo LAB desde Producción sobre Stableford R200 · 7 de octubre de 2026
 
 - Reproducción física del usuario: Producción mostraba R200 y el código LAB `6D5ECEC172`, pero al entrar devolvía `ACCESO PERSONAL AÚN NO ACTIVADO EN LAB`.
