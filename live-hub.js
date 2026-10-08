@@ -128,7 +128,20 @@
   function setStatus(message,tone){
     const target=$("hubState");if(!target)return;target.textContent=message;target.className="state"+(tone?" "+tone:"");
   }
-  function directoryEventKind(token){return /^directory_private_/.test(String(token||''))?'private':(root.GSCPersonalEvents?.descriptor(token)||root.GSCOneUseLive?.descriptor(token))?.eventKind}
+  function directoryEventDescriptor(token){
+    const match=String(token||'').match(/^directory_(private_)?(lab|production)_([0-9a-f-]{36})$/i);
+    return match?{eventId:match[3],eventKind:match[1]?'private':'tournament',source:match[2],directory:true}:null
+  }
+  function directoryEventKind(token){return directoryEventDescriptor(token)?.eventKind||(root.GSCPersonalEvents?.descriptor(token)||root.GSCOneUseLive?.descriptor(token))?.eventKind}
+  function currentShareEvent(){
+    const personal=root.GSCPersonalEvents?.descriptor?.(state.generalToken),
+      legacy=root.GSCOneUseLive?.descriptor?.(state.generalToken),
+      directory=directoryEventDescriptor(state.generalToken),
+      saved=general?.id?root.GSCPersonalEvents?.descriptor?.('personal_'+general.id):null,
+      event=personal||legacy||directory||saved||(general?.id?{eventId:general.id,eventKind:directoryEventKind(state.generalToken)||'tournament'}:null);
+    if(event&&general?.id&&!event.eventId)event.eventId=general.id;
+    return event
+  }
   async function read(kind,token,payload){
     const directory=String(token||'').match(/^directory_(?:(private)_)?(lab|production)_([0-9a-f-]{36})$/i);
     if(directory){try{const response=await root.fetch('/api/tournament-score-directory',{method:'POST',headers:{'Content-Type':'application/json'},cache:'no-store',credentials:'same-origin',body:JSON.stringify({action:'read',source:directory[2],eventId:directory[3],eventKind:directory[1]?'private':'tournament'})}),body=await response.json();return{...body,ok:response.ok&&body?.ok!==false,status:response.status}}catch{return{ok:false,code:'NETWORK_ERROR'}}}
@@ -328,7 +341,7 @@
   function renderScoresHeading(){
     if(!root.GSCScoresUI||root.document.body.classList.contains('public-display'))return;
     const notice=$('hubMembershipNotice');if(notice){const joined=state.tournaments.some(item=>root.GSCPersonalEvents?.descriptor(item.token)?.eventKind==='tournament'&&root.GSCPersonalEvents?.membership(item.token)?.players?.length);const directoryView=String(state.generalToken||'').startsWith('directory_');notice.hidden=directoryView||joined||root.GSCPersonalEvents?.descriptor(state.generalToken)?.eventKind==='private';notice.textContent=directoryView?'':membershipVerified?'NO PERTENECES A NINGÚN TORNEO':'NO SE PUDO COMPROBAR TU PARTICIPACIÓN · REINTENTA';}
-    const visible=!tournamentPortalOpen;if($("hubScoresReturn"))$("hubScoresReturn").hidden=false;if($('hubShareGeneral')){const shareKind=root.GSCPersonalEvents?.descriptor(state.generalToken)?.eventKind||root.GSCOneUseLive?.descriptor(state.generalToken)?.eventKind||directoryEventKind(state.generalToken)||'tournament',personalShare=!!(general?.id&&root.GSCPersonalEvents?.descriptor?.('personal_'+general.id));$('hubShareGeneral').hidden=!visible;$('hubShareGeneral').disabled=!(personalShare||root.GSCOneUseLive?.publisher(shareKind,general?.id));}root.document.body.classList.toggle('hub-scores-view',visible);
+    const visible=!tournamentPortalOpen;if($("hubScoresReturn"))$("hubScoresReturn").hidden=false;if($('hubShareGeneral')){const shareEvent=currentShareEvent(),shareKind=shareEvent?.eventKind||'tournament',personalShare=!!(shareEvent?.source||shareEvent?.directory||(general?.id&&root.GSCPersonalEvents?.descriptor?.('personal_'+general.id)));$('hubShareGeneral').hidden=!visible;$('hubShareGeneral').disabled=!(shareEvent?.eventId&&(personalShare||root.GSCOneUseLive?.publisher(shareKind,shareEvent.eventId)));}root.document.body.classList.toggle('hub-scores-view',visible);
     const privateView=directoryEventKind(state.generalToken)==='private';root.document.body.classList.toggle('private-live-view',privateView);if($('hubScoresHelp')){$('hubScoresHelp').hidden=!visible;$('hubScoresHelp').innerHTML='DOBLE TOQUE EN EL JUGADOR: VER 18 SCORES'+(privateView?'':'<span>☆ AGREGA · ★ QUITA FAVORITO</span>')}
     if(!visible){if($('hubPersonalScoreCard'))$('hubPersonalScoreCard').hidden=true;if($('hubPersonalOrganization'))$('hubPersonalOrganization').hidden=true;if($('hubMyPosition'))$('hubMyPosition').hidden=true;if($('hubEventName'))$('hubEventName').textContent='';if($('hubEventMeta'))$('hubEventMeta').textContent='';return}
     const personalMembership=root.GSCPersonalEvents?.membership(state.generalToken);
@@ -383,7 +396,7 @@
     clearTimeout(timer);timer=setTimeout(refresh,POLL_MS);
   }
   function shareAccessMessage(code){return({CODE_SESSION_EXPIRED:'ESTE ENLACE LIVE VENCIÓ',CODE_SESSION_REVOKED:'ESTE ENLACE LIVE FUE REVOCADO',CODE_EVENT_CLOSED:'ESTA RONDA YA ESTÁ CERRADA',LIVE_SHARE_EVENT_CLOSED:'ESTA RONDA YA ESTÁ CERRADA',PERSONAL_EVENT_CLOSED:'ESTA RONDA YA ESTÁ CERRADA',LIVE_SHARE_EVENT_EXPIRED:'ESTE ENLACE LIVE VENCIÓ',LIVE_SHARE_REVOKED:'ESTE ENLACE LIVE FUE REVOCADO',LIVE_SHARE_EVENT_INVALID:'ENLACE LIVE INVÁLIDO',LIVE_SHARE_CODE_INVALID_OR_USED:'ESTE CÓDIGO YA SE USÓ O CADUCÓ · PIDE UNO NUEVO',LIVE_SHARE_SESSION_REQUIRED:'INGRESA EL CÓDIGO DE INVITADO',NETWORK_ERROR:'SIN CONEXIÓN · CONSERVANDO LOS ÚLTIMOS SCORES'})[code]||'NO SE PUDO VALIDAR EL ACCESO LIVE'}
-  async function shareGeneral(){const kind=root.GSCPersonalEvents?.descriptor(state.generalToken)?.eventKind||root.GSCOneUseLive?.descriptor(state.generalToken)?.eventKind||'tournament';const result=await root.GSCOneUseLive?.share(kind,general?.id,general?.name);if(!result?.ok){setStatus(result?.code==='LIVE_SHARE_PLAYER_REQUIRED'?'SOLO JUGADORES INSCRITOS PUEDEN COMPARTIR LIVE':shareAccessMessage(result?.code),'warning');return false}return true}
+  async function shareGeneral(){const shareEvent=currentShareEvent(),kind=shareEvent?.eventKind||'tournament',eventId=shareEvent?.eventId||general?.id;const result=await root.GSCOneUseLive?.share(kind,eventId,general?.name,shareEvent);if(!result?.ok){setStatus(result?.code==='LIVE_SHARE_PLAYER_REQUIRED'?'SOLO JUGADORES INSCRITOS PUEDEN COMPARTIR LIVE':shareAccessMessage(result?.code),'warning');return false}return true}
   function showMonitor(kind){
     const individual=kind==="individual",categories=kind==="categories",add=kind==="add";
     const pageTitle=add?"BUSCAR JUGADOR":categories?"SCORES POR CATEGORÍA":individual?"MIS FAVORITOS":"SCORES GENERAL";

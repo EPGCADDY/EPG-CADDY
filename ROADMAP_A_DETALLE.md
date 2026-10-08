@@ -1,3 +1,11 @@
+## R219 · Compartir Live source-aware desde Scores de directorio LAB · 8 de octubre de 2026
+
+- `live-hub.js`: incorpora `directoryEventDescriptor()` para tokens `directory_lab_<uuid>`, `directory_production_<uuid>` y privados; `currentShareEvent()` centraliza el evento activo y conserva `eventId`, `eventKind`, `source` y marca de directorio.
+- `live-hub.js`: `renderScoresHeading()` habilita `COMPARTIR LIVE` cuando el evento actual proviene del directorio personal, además de los casos `personal_<eventId>` y LIVE legacy; `shareGeneral()` pasa el descriptor completo a `GSCOneUseLive.share()`.
+- `live-share.js`: `GSCOneUseLive.share(kind,eventId,name,event)` usa el descriptor recibido, manda `source` a `GSCPersonalEvents.request('share-code', ...)` y conserva el enlace con `#code=...` para invitado.
+- `test-lab-code-entry.mjs`: agrega VM `directory_lab` sin `publisherSecret`, comprueba payload `{eventId,eventKind:'tournament',source:'lab'}` y bloquea que el botón vuelva a perder el source.
+- `release.json`, `service-worker.js`, `index-grupal.html`: release `20261008-R219`, etiqueta visible `R219`, cache `v391-r219-fix-compartir-live-directory-lab` y `personal-events.js?v=20261008-R219`.
+
 ## R218 · Compartir Live habilitado en Scores personales · 8 de octubre de 2026
 
 - `live-share.js`: `GSCOneUseLive.share()` detecta `personal_<eventId>` antes de pedir `publisher(kind,eventId)`. Si el evento es personal, llama directamente a `GSCPersonalEvents.request('share-code',{eventId,eventKind})` y conserva el enlace R217 con `#code=...`.

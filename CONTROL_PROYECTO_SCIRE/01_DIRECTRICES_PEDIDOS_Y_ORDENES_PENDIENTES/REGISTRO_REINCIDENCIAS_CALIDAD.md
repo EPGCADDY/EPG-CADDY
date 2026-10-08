@@ -1,3 +1,11 @@
+## RC-132 · R218 no accionaba Compartir Live desde directorio LAB · 8 OCTUBRE 2026
+
+- Sintoma fisico: en iPhone, Scores General mostraba `COMPARTIR LIVE`, pero tocarlo no abria el modal ni generaba codigo en el torneo LAB.
+- Causa raiz: R218 habilito la ruta personal para `personal_<eventId>`, pero el caso visible venia de `directory_lab_<eventId>`; `shareGeneral()` descartaba `source: lab` y `GSCOneUseLive.share()` no aceptaba descriptor de directorio.
+- Punto de escape: la regresion cubria evento personal guardado sin `publisherSecret`, no el token de directorio LAB usado al entrar desde la lista remota.
+- Control permanente: `test-lab-code-entry.mjs` ejecuta `GSCOneUseLive.share()` con `{eventId,eventKind:'tournament',source:'lab',directory:true}` sin publisher legacy y exige `share-code` con `source:'lab'`.
+- Estado: R219 pasa el descriptor completo desde `live-hub.js`, conserva el source al crear codigo y mantiene enlace invitado con codigo precargado.
+
 ## RC-131 · R217 dejo sin accion COMPARTIR LIVE en Scores personales · 8 OCTUBRE 2026
 
 - Sintoma fisico: en Scores General del torneo personal el boton `COMPARTIR LIVE` estaba visible, pero no accionaba.

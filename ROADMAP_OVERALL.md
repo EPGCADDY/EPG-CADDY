@@ -1,3 +1,11 @@
+## R219 · Compartir Live acciona desde directorio LAB · 8 de octubre de 2026
+
+- Regresión física reportada en iPhone: `COMPARTIR LIVE` aparece en Scores General, pero al tocarlo no abre el modal ni genera código cuando el torneo viene del directorio LAB.
+- `live-hub.js`: agrega descriptor para `directory_lab_<eventId>` / `directory_production_<eventId>` y pasa a `GSCOneUseLive.share()` el `eventId`, `eventKind` y `source` reales.
+- `live-share.js`: acepta eventos source-aware y llama `GSCPersonalEvents.request('share-code', {eventId,eventKind,source})` sin exigir `publisherSecret` legacy.
+- `test-lab-code-entry.mjs`: reproduce `directory_lab` sin publisher legacy y exige enlace `/code-entry.html?visitor=1#code=...`.
+- `release.json`, `service-worker.js` e `index-grupal.html`: identidad visible/cache en `20261008-R219`.
+
 ## R218 · Compartir Live vuelve a funcionar en Scores personales · 8 de octubre de 2026
 
 - Regresión reportada en iPhone: tras R217, el botón `COMPARTIR LIVE` visible en Scores General no accionaba.
