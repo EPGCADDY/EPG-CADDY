@@ -1,3 +1,13 @@
+## R223 · Tecla `-` y handicap bajo cero en Campeonato/A · 8 de octubre de 2026
+
+- `index-grupal.html`: Registro muestra una tecla `-` junto al campo HDCP de cada jugador; al tocarla alterna el signo negativo y conserva el valor en el borrador.
+- `index-grupal.html`: el campo HDCP acepta texto con patrón `-?[0-9]*` para que iPhone no bloquee la captura de valores como `-2`.
+- `index-grupal.html`: `strokesOnHole()` mantiene la distribución negativa y `scoreObject()` conserva `net=gross-strokes`, por lo que `-2` aumenta el neto donde el jugador entrega golpes al campo.
+- `index-grupal.html`: la fila HDCP pinta los golpes entregados con `hcp-stroke-give` y la respuesta avanzada de handicap dice `entrega` en lugar de `no recibe`.
+- `test-r223-negative-handicap-campeonato-a.mjs`: agrega control específico para Campeonato/A, tecla visible `-`, cálculo de `-2`, suma total `-2` y neto inverso.
+- `scripts/build-manual-lab.mjs`: agrega el test R223 al banco de publicación LAB/Producción.
+- `release.json`, `service-worker.js`, `index-grupal.html`: sincronizan R223, cache `v395-r223-negative-handicap-campeonato-a`, meta `20261008-R223`, badge `VERSIÓN R223` y `personal-events.js?v=20261008-R223`.
+
 ## R222 · Enlace de prueba 48h y tablero de grupos invitados · 8 de octubre de 2026
 
 - `api/_lib/app-access.js`: `app_access_grants` agrega `max_uses` y `current_snapshot`; `createGrant()` emite 48 horas/5 usos; `redeemGuestToken()` consume una apertura por redención y `recordGuestFeedback()` guarda la última tarjeta de cada grupo sin gastar usos.

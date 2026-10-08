@@ -1,3 +1,10 @@
+## RC-136 · Handicap negativo dependía del teclado iPhone · 8 OCTUBRE 2026
+
+- Síntoma operativo: Campeonato y A necesitaban aceptar handicap `0` y bajo cero, por ejemplo `-2`, pero la captura en Registro dependía de un teclado numérico móvil que podía no mostrar el signo menos.
+- Causa raíz: el motor ya soportaba handicap negativo, pero la interfaz no tenía una tecla propia para el signo `-`.
+- Control permanente: `test-r223-negative-handicap-campeonato-a.mjs` exige tecla visible `-`, captura `-2`, distribución negativa y neto inverso.
+- Estado: R223 agrega tecla `-`, patrón de captura negativo, marca visual de golpes entregados y respuesta de voz `entrega`.
+
 ## RC-135 · Prueba 48h necesitaba cinco grupos visibles, no sólo contador · 8 OCTUBRE 2026
 
 - Síntoma físico: el enlace temporal servía para entrada/actividad, pero el propietario necesitaba ver cada grupo de cuatro jugadores por separado durante la prueba de fuego.

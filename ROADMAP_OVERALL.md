@@ -1,3 +1,12 @@
+## R223 · Handicap negativo con tecla visible para Campeonato y A · 8 de octubre de 2026
+
+- `index-grupal.html`: el campo HDCP de Registro cambia a captura textual con patrón `-?[0-9]*` y agrega una tecla visible `-` por jugador para no depender del teclado iPhone.
+- `index-grupal.html`: el motor conserva el cálculo inverso de handicap negativo; un jugador con `-2` entrega golpes al campo y su neto aumenta en los hoyos correspondientes.
+- `index-grupal.html`: la fila HDCP marca visualmente los golpes entregados con círculo amarillo punteado y la consulta de voz responde `entrega` cuando el jugador tiene handicap bajo cero.
+- `test-r223-negative-handicap-campeonato-a.mjs`: valida Campeonato/A, tecla `-`, captura `-2`, distribución de golpes negativos y neto inverso.
+- `scripts/build-manual-lab.mjs`: incorpora la regresión R223 al banco obligatorio.
+- `release.json`, `service-worker.js` e `index-grupal.html`: publican identidad `20261008-R223`.
+
 ## R222 · Prueba de fuego 48h con cinco grupos visibles para organizador · 8 de octubre de 2026
 
 - `api/_lib/app-access.js` y `api/app-access.js`: el enlace temporal ahora es compartido por 48 horas, admite hasta 5 aperturas controladas, conserva sesiones ya redimidas y se elimina al vencer.
