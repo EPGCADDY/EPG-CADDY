@@ -1,3 +1,11 @@
+## R206 · Recuperación de identidad al asignar Score Card · 8 de octubre de 2026
+
+- Archivo `api/personal-events.js`: `resolveEventIdentity()` ahora trata `ACCOUNT_UNAUTHORIZED` y `CODE_SESSION_INVALID` como sesiones de código caducas o inválidas para la acción `identity`; primero intenta identidad de dispositivo vigente y después crea una nueva identidad de dispositivo segura. No amplía permisos de `join-code`, escritura, administración ni lector.
+- Archivo `test-lab-device-event-identity.mjs`: se agregó el caso de cookie `gsc_code_session=expired` sin dispositivo previo; debe devolver un `device:*` y emitir `gsc_event_device` para que la siguiente acción de torneo pueda preparar/asignar el evento.
+- Archivos `release.json`, `index-grupal.html` y `service-worker.js`: release sincronizada `20261008-R206`, etiqueta visible `R206`, versión técnica `R206-EVENT-IDENTITY-RECOVERY`.
+- Controles ejecutados: `node test-lab-device-event-identity.mjs`, `node test-event-administration.mjs`, `node test-r191-cross-environment-tournament-entry.mjs`, `node test-r162-single-use-tournament-code.mjs`, `node test-event-directory-code.mjs`, `node test-project-quality-gate.mjs`, `node scripts/project-quality-gate.mjs` y `node scripts/build-manual-lab.mjs`.
+- Resultado: PASS local. Quedan pendientes despliegue, verificación remota READY y prueba física en iPhone sobre el flujo exacto de asignación.
+
 ## R194 · QuickType en nombres: retirar transformación a mayúsculas · 7 de octubre de 2026
 
 - La prueba física R193 seguía fallando aun después de actualizar el alias del Laboratorio.

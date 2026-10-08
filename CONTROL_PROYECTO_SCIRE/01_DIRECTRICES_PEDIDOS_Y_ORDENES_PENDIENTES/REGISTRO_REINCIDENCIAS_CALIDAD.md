@@ -1,3 +1,11 @@
+## RC-117 · Score Card asignada no preparaba evento con sesión de código vencida · 8 OCTUBRE 2026
+
+- Defecto físico reportado en R205: la pantalla mostraba `SCORE CARD ASIGNADA` y luego `NO SE PUDO PREPARAR EL EVENTO · REINTENTA` al intentar asignar/preparar el torneo desde Registro.
+- Causa raíz: una cookie `gsc_code_session` vencida o inválida entraba en la rama de código, el proveedor respondía `ACCOUNT_UNAUTHORIZED` o `CODE_SESSION_INVALID`, y `identity` no creaba identidad de dispositivo nueva.
+- Punto de escape: la regresión cubría sesión vencida con dispositivo válido, pero no sesión de código vencida sin `gsc_event_device`.
+- Control permanente: `test-lab-device-event-identity.mjs` agrega cookie `gsc_code_session=expired`, exige creación de `device:*` y emisión de `gsc_event_device`; códigos válidos y otros dispositivos siguen aislados.
+- Estado: CORREGIDO LOCAL R206; PRUEBAS DIRIGIDAS Y BANCO INTEGRAL PASS; PREVIEW/PUBLICACIÓN Y PRUEBA FÍSICA IPHONE PENDIENTES; PRODUCCIÓN NO VERIFICADA DESDE ESTE TURNO.
+
 ## RC-116 · QuickType no insertaba la sugerencia en R192/R193 · 7 OCTUBRE 2026
 
 - El usuario volvió a probar R193 desde el Laboratorio ya actualizado y QuickType continuó sin insertar la palabra.

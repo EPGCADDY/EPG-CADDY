@@ -15,6 +15,10 @@ assert.match(owner.id,/^device:/);assert.match(cookie,/HttpOnly; Secure; SameSit
 assert.equal((await readDeviceEventIdentity({...request,headers:{...request.headers,cookie}},sql)).id,owner.id);
 assert.equal(await readDeviceEventIdentity({...request,headers:{cookie:'gsc_event_device='+'A'.repeat(43)}},sql),null);
 const viewer=await resolveEventIdentity({...request,headers:{cookie:cookie+'; gsc_code_session='+'B'.repeat(43)}},response,sql,'identity',async()=>({id:'viewer',entryRole:'viewer'}));assert.equal(viewer.id,'viewer','Explicit viewer code retains read-only identity');
+let recoveredCookie='';const staleCodeResponse={setHeader(name,value){if(name==='Set-Cookie')recoveredCookie=value}};
+const recovered=await resolveEventIdentity({...request,headers:{...request.headers,cookie:'gsc_code_session=expired'}},staleCodeResponse,sql,'identity');
+assert.match(recovered.id,/^device:/,'Expired code-only sessions recover by creating a device identity');
+assert.match(recoveredCookie,/gsc_event_device=/,'Recovered identity must set the device cookie for the next tournament action');
 async function call(body,identityCookie){let status=200,result;await handlePersonalEvents(Object.assign(Object.create({method:request.method,headers:{...request.headers,cookie:identityCookie}}),{method:request.method,body}),{setHeader(){},status(n){status=n;return this},json(v){result=v}},()=>sql,async()=>({id:'different-provider-account',name:'Wrong provider identity'}));return{status,...result}}
 await authorizeTestOrganizer(sql,owner.id);
 const created=await call({action:'create',eventKind:'tournament',name:'Copa Santa Delfina',course:'El Pulté',playedAt:'2026-09-30',mode:'general',categories:['senior'],groupLabel:'Friends',players:[{id:'p1',name:'Jaime',handicap:13,tournamentCategory:'senior'}]},cookie);assert.equal(created.status,200);assert.ok(created.eventId);

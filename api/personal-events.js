@@ -18,8 +18,9 @@ export async function resolveEventIdentity(req,res,sql,action,resolver=requireAc
   const cookie=String(req.headers?.cookie||'');
   if(/(?:^|;\s*)gsc_code_session=/.test(cookie)){
     try{return await resolver(req)}catch(error){
-      if(error.code!=='ACCOUNT_UNAUTHORIZED')throw error;
+      if(!['ACCOUNT_UNAUTHORIZED','CODE_SESSION_INVALID'].includes(error.code))throw error;
       const device=await readDeviceEventIdentity(req,sql);if(device)return device;
+      if(resolver===requireAccountSession&&action==='identity')return createDeviceEventIdentity(res,sql);
       throw error;
     }
   }

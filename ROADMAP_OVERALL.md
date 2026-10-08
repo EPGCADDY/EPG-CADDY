@@ -1,3 +1,11 @@
+## R206 · Recuperación de identidad al asignar Score Card · 8 de octubre de 2026
+
+- Fallo físico reportado en R205: al preparar/asignar una Score Card de torneo desde Registro aparecía `SCORE CARD ASIGNADA` seguido de `NO SE PUDO PREPARAR EL EVENTO · REINTENTA`.
+- Causa raíz: una cookie `gsc_code_session` vencida o inválida hacía que `identity` terminara en `ACCOUNT_UNAUTHORIZED`/`CODE_SESSION_INVALID` antes de crear o recuperar la identidad de dispositivo.
+- Corrección: `resolveEventIdentity()` conserva códigos válidos, recupera una identidad de dispositivo ya existente y, sólo para `identity`, crea una nueva identidad de dispositivo cuando la sesión de código vieja no sirve.
+- Regresión: `test-lab-device-event-identity.mjs` exige recuperación con cookie de código vencida, cookie `gsc_event_device` nueva y aislamiento de otros dispositivos.
+- Estado: pruebas dirigidas, banco integral LAB, `test-project-quality-gate.mjs` y `scripts/project-quality-gate.mjs` PASS locales; Preview/publicación y prueba física iPhone pendientes.
+
 ## R194 · QuickType en nombres: retirar transformación a mayúsculas · 7 de octubre de 2026
 
 - La prueba física R193 seguía fallando aun después de actualizar el alias del Laboratorio.
