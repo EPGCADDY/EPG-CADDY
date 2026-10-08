@@ -1,3 +1,10 @@
+## R203 · publicacion atomica del fix de score card asignada · 8 de octubre de 2026
+
+- Motivo: Vercel rechazo R202 con `FAIL ROADMAP GATE` porque el ultimo commit no incluia ambos ROADMAPS junto con la modificacion de codigo.
+- Accion: se consolida una nueva modificacion que toca `api/_lib/personal-event-access.js`, `personal-events.js`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `index-grupal.html`, `service-worker.js` y `release.json`.
+- Control funcional: el cliente puede preparar la tarjeta desde la respuesta de join-code cuando `request('read')` falla inmediatamente despues de asignar la score card.
+- Validacion esperada: en LAB R203, el iPhone que ya consumio `6D5ECEC172` debe entrar a la score card asignada sin quedar en `NO SE PUDO PREPARAR EL EVENTO`.
+
 ## R202 · recuperación de score card asignada tras código de torneo · 8 de octubre de 2026
 
 - Evidencia de datos LAB: `6D5ECEC172` quedó consumido por `device:762b62b9-401e-4ae7-aa28-ecf44b3633a1`; existe membresía scorer para `Jaime`, categoría `senior`, tee `Blanco`, HDCP 13, dentro del torneo `EPG Produccion`.

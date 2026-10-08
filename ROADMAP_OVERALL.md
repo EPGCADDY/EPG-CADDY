@@ -1,3 +1,10 @@
+## R203 · commit atomico score card asignada y ROADMAPS · 8 de octubre de 2026
+
+- Ajuste de publicación: el gate exige que codigo, ROADMAPS y versionado viajen en la misma modificacion; R202 quedo documentado pero separado por commits.
+- Correccion funcional incluida: join-code entrega cuenta/membresia y la apertura de score card usa esos datos como respaldo cuando el read inmediato todavia no esta listo.
+- Alcance: no borra scores, no recrea el torneo y mantiene el codigo consumido por el mismo dispositivo.
+- Estado: candidato de build atomico para publicar en LAB y PROD.
+
 ## R202 · score card asignada recupera preparación tras join-code · 8 de octubre de 2026
 
 - Reproducción física del usuario en LAB R201: el código LAB `6D5ECEC172` avanzó hasta `SCORE CARD ASIGNADA`, pero falló con `NO SE PUDO PREPARAR EL EVENTO · REINTENTA`.
