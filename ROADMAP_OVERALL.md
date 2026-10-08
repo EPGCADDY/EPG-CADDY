@@ -1,3 +1,10 @@
+## R206 · score card asignada conserva respuesta join-code · 8 de octubre de 2026
+
+- Reproduccion fisica R205: el iPhone muestra `VERSIÓN R205`, pero al ingresar el codigo queda otra vez en `SCORE CARD ASIGNADA · NO SE PUDO PREPARAR EL EVENTO`.
+- Causa raiz final: `index-grupal.html` llamaba `openAssignedCard({eventId,eventKind})` y descartaba `membership`, `configuration`, `source` y `accountCode` devueltos por `join-code`; por eso el fallback de R205 nunca tenia datos.
+- Correccion: la llamada conserva el resultado completo de join-code; el flujo de grupo conectado tambien usa la respuesta de join-code si el read inmediato falla.
+- Estado: candidato R206 para publicar en LAB y Produccion.
+
 ## R205 · badge visible sincronizado con release · 8 de octubre de 2026
 
 - Motivo: el build R204 avanzo hasta `build-manual-lab`, pero `test-update-delivery-control.mjs` bloqueo porque el primer badge visible seguia en `VERSIÓN R201` mientras el release declarado era R204.

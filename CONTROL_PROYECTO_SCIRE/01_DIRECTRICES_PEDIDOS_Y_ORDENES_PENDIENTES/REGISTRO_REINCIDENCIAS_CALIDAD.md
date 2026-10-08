@@ -1,3 +1,11 @@
+## RC-119 · R205 descartaba la respuesta join-code antes de abrir score card · 8 OCTUBRE 2026
+
+- Reincidencia confirmada por captura del propietario en R205: `SCORE CARD ASIGNADA` seguido de `NO SE PUDO PREPARAR EL EVENTO · REINTENTA`.
+- Causa raiz: la correccion R205 estaba en `openAssignedCard`, pero el flujo de registro en `index-grupal.html` invocaba `openAssignedCard({eventId,eventKind})`, eliminando los datos necesarios para el fallback.
+- Punto de escape: no existia control que verificara que el caller conservara `membership`, `configuration`, `source` y `accountCode` despues de `join-code`.
+- Control permanente: todo flujo de codigo de torneo debe pasar el resultado completo de `join-code` o reconstruir access desde ese resultado cuando `read` falle.
+- Estado: R206 corrige caller y flujo de grupo conectado; pendiente validacion de build y publicacion.
+
 ## RC-118 · R200 Stableford no reintentaba LAB cuando Producción no tenía acceso personal · 7 OCTUBRE 2026
 
 - Reincidencia confirmada en Producción R200 con el código LAB `6D5ECEC172`: la inspección saltaba al flujo de torneo, pero el alta final devolvía `PERSONAL_ACCESS_NOT_ENABLED`.

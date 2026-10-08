@@ -1,3 +1,10 @@
+## R206 · fix real del fallo R205 al preparar score card · 8 de octubre de 2026
+
+- Evidencia del usuario: captura R205 con `SCORE CARD ASIGNADA` y `NO SE PUDO PREPARAR EL EVENTO · REINTENTA`.
+- Error de implementacion: backend y `personal-events.js` ya preparaban el fallback, pero el caller de registro envio a `openAssignedCard` solo `eventId` y `eventKind`.
+- Cambio exacto: `registrationJoinTournament` pasa `{...result,eventKind:result.eventKind||eventKind}`; `joinCurrentRoundGroup` reconstruye access desde `result.membership` y `result.configuration` cuando `read` falla.
+- Resultado esperado: el codigo ya consumido por el mismo dispositivo debe abrir la tarjeta personal asignada sin depender del read inmediato.
+
 ## R205 · control de entrega visible para score card asignada · 8 de octubre de 2026
 
 - Falla exacta: `actual: VERSIÓN R201`, `expected: VERSIÓN R204`; el test exige que el primer badge visible coincida antes de ejecutar JavaScript.

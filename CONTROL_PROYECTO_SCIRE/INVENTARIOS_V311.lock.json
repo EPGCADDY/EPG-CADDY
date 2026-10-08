@@ -1,8 +1,8 @@
 {
-  "version": "R205-VISIBLE-BADGE-JOIN-CODE-SCORECARD-RECOVERY",
-  "generatedAt": "2026-10-08T03:15:00Z",
+  "version": "R206-PRESERVE-JOIN-RESPONSE-SCORECARD",
+  "generatedAt": "2026-10-08T05:58:00Z",
   "sourceFileCount": 924,
-  "sourceDigest": "03fcff4e8939ebad66c30a794ee05f17bb147a77015c40af24b5ecc17919a619",
+  "sourceDigest": "558228c2828023edbb21ae6ee9d3d470a76524d6de0b0d69442718360840ce26",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
