@@ -1,3 +1,11 @@
+## R218 · Compartir Live vuelve a funcionar en Scores personales · 8 de octubre de 2026
+
+- Regresión reportada en iPhone: tras R217, el botón `COMPARTIR LIVE` visible en Scores General no accionaba.
+- `live-share.js`: la ruta personal de torneo usa `GSCPersonalEvents.request('share-code')` sin exigir `publisherSecret`; la exigencia de publisher queda sólo para enlaces LIVE legacy.
+- `live-hub.js`: el botón de Scores se habilita cuando el evento personal existe, no únicamente cuando hay stream publisher local.
+- `test-lab-code-entry.mjs`: agrega regresión para compartir desde Scores personales sin publisher legacy y bloquea que el botón dependa sólo del secreto LIVE.
+- `release.json`, `service-worker.js` e `index-grupal.html`: identidad visible/cache en `20261008-R218`.
+
 ## R217 · WhatsApp de codigo de un solo uso abre con codigo precargado · 8 de octubre de 2026
 
 - Problema fisico: el mensaje de WhatsApp para invitado mostraba un codigo largo de un solo uso separado del enlace; en iPhone/WhatsApp no era practico seleccionarlo sin copiar todo el mensaje.

@@ -1,3 +1,11 @@
+## RC-131 · R217 dejo sin accion COMPARTIR LIVE en Scores personales · 8 OCTUBRE 2026
+
+- Sintoma fisico: en Scores General del torneo personal el boton `COMPARTIR LIVE` estaba visible, pero no accionaba.
+- Causa raiz: R217 corrigio el mensaje de WhatsApp dentro de `GSCOneUseLive.share()`, pero la funcion y el estado disabled de `live-hub.js` seguian exigiendo `publisherSecret` legacy antes de entrar a la ruta personal `share-code`.
+- Punto de escape: la regresion cubria mensaje con codigo precargado, pero no el caso de Scores personales sin publisher legacy local.
+- Control permanente: `test-lab-code-entry.mjs` ahora ejecuta `GSCOneUseLive.share()` sin publisher legacy y exige generar codigo personal via `GSCPersonalEvents.request('share-code')`; tambien bloquea que `hubShareGeneral` dependa unicamente de `publisherSecret`.
+- Estado: R218 separa rutas personal y legacy, habilita el boton por descriptor personal y conserva el enlace precargado de R217.
+
 ## RC-130 · R214 podia ocultar torneos locales al recibir lista remota vacia · 8 OCTUBRE 2026
 
 - Sintoma fisico: Produccion llego a R207/R210, pero al continuar la prueba ya no aparecian torneos disponibles y la pantalla daba la impresion de que se habian eliminado.

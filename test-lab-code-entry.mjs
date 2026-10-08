@@ -75,6 +75,16 @@ assert.equal(shareCalls,1);assert.equal(control('output').textContent,'FIXTURE-N
 assert.equal(control('[data-share-link]').textContent,'https://lab.example/code-entry.html?visitor=1#code=FIXTURE-NOT-A-CREDENTIAL');
 await control('[data-copy-share]').onclick();assert(copied.includes('FIXTURE-NOT-A-CREDENTIAL'));assert(copied.includes('/code-entry.html?visitor=1#code=FIXTURE-NOT-A-CREDENTIAL'));assert(copied.includes('Toca este enlace'),'WhatsApp must tell the guest to tap the link instead of copying the long code');
 assert(rendered.innerHTML.includes('COMPARTIR LIVE'));
+const controlsNoPublisher=new Map(),controlNoPublisher=selector=>controlsNoPublisher.get(selector)||controlsNoPublisher.set(selector,{textContent:'',focus(){},addEventListener(type,handler){this['on'+type]=handler}}).get(selector);
+let noPublisherCalls=0;
+const noPublisherRoot={URL,URLSearchParams,location:{origin:'https://lab.example'},localStorage:{getItem:()=> '{}'},GSCPersonalEvents:{descriptor:token=>token==='personal_'+streamId?{eventId:streamId,eventKind:'tournament'}:null,request:async(action,payload)=>{noPublisherCalls++;assert.equal(action,'share-code');assert.equal(payload.eventId,streamId);assert.equal(payload.eventKind,'tournament');return{ok:true,code:'PERSONAL-SHARE-CODE'}}},navigator:{clipboard:{writeText:async()=>{}}},document:{activeElement:{focus(){}},getElementById:()=>null,createElement:()=>({setAttribute(){},querySelector:controlNoPublisher}),body:{appendChild(){}},addEventListener(){},removeEventListener(){}}};
+vm.runInNewContext(fs.readFileSync('live-share.js','utf8'),noPublisherRoot);
+assert.equal((await noPublisherRoot.GSCOneUseLive.share('tournament',streamId,'DEMO')).ok,true,'Personal Scores sharing must not require legacy publisherSecret');
+assert.equal(noPublisherCalls,1);
+assert.equal(controlNoPublisher('[data-share-link]').textContent,'https://lab.example/code-entry.html?visitor=1#code=PERSONAL-SHARE-CODE');
+const liveHubSource=fs.readFileSync('live-hub.js','utf8');
+assert(liveHubSource.includes("personalShare=!!(general?.id&&root.GSCPersonalEvents?.descriptor?.('personal_'+general.id))"),'Scores button must enable Compartir Live for personal events');
+assert(liveHubSource.includes("$('hubShareGeneral').disabled=!(personalShare||root.GSCOneUseLive?.publisher(shareKind,general?.id));"),'Scores button must not depend only on legacy publisherSecret');
 // Native form submission (Enter) uses server destination, without client-supplied role.
 const fields=Object.fromEntries(['guestScoresBackdrop','entryTitle','entryLead','entryForm','entryCode','entryEnter','entryStatus'].map(id=>[id,{value:'',textContent:'',addEventListener(t,fn){this.handler=fn}}]));
 let entryRequests=0,entryDestination='',entryFailure=false;

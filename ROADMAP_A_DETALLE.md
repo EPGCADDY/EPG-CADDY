@@ -1,3 +1,10 @@
+## R218 · Compartir Live habilitado en Scores personales · 8 de octubre de 2026
+
+- `live-share.js`: `GSCOneUseLive.share()` detecta `personal_<eventId>` antes de pedir `publisher(kind,eventId)`. Si el evento es personal, llama directamente a `GSCPersonalEvents.request('share-code',{eventId,eventKind})` y conserva el enlace R217 con `#code=...`.
+- `live-hub.js`: `renderScoresHeading()` calcula `shareKind` desde el descriptor personal/one-use/directorio y define `personalShare` con `GSCPersonalEvents.descriptor('personal_'+general.id)`. `hubShareGeneral` queda deshabilitado sólo si no hay evento personal ni publisher legacy.
+- `test-lab-code-entry.mjs`: añade VM sin `publisherSecret` para reproducir el caso de Scores General del torneo personal y exige que el modal genere `/code-entry.html?visitor=1#code=...`; además verifica estáticamente la condición del botón.
+- `release.json`, `service-worker.js`, `index-grupal.html`: release `20261008-R218`, etiqueta visible `R218`, cache `v390-r218-fix-compartir-live-personal-scores` y `personal-events.js?v=20261008-R218`.
+
 ## R217 · WhatsApp de codigo de un solo uso abre con codigo precargado · 8 de octubre de 2026
 
 - `live-share.js`: el mensaje de `GSCOneUseLive.share()` deja de depender de que el invitado copie manualmente un codigo largo. El enlace `/code-entry.html?visitor=1#code=...` transporta el codigo en el fragmento del navegador y el texto de WhatsApp indica tocar enlace + ENTRAR.
