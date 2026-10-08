@@ -1,3 +1,10 @@
+## R205 · badge visible sincronizado con release · 8 de octubre de 2026
+
+- Motivo: el build R204 avanzo hasta `build-manual-lab`, pero `test-update-delivery-control.mjs` bloqueo porque el primer badge visible seguia en `VERSIÓN R201` mientras el release declarado era R204.
+- Correccion: se sincroniza el badge HTML estatico con R205, junto con metadata, service worker, release e inventario.
+- Alcance funcional conservado: recuperacion de score card asignada desde join-code cuando el read inmediato falla.
+- Estado: candidato R205 para despliegue LAB/PROD.
+
 ## R204 · inventario sellado para score card asignada · 8 de octubre de 2026
 
 - Motivo: R203 paso proyecto y ROADMAP, pero `inventory-gate` bloqueo el build porque el sello no reflejaba los archivos activos posteriores al fix.

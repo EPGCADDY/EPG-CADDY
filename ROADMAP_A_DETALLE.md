@@ -1,3 +1,10 @@
+## R205 · control de entrega visible para score card asignada · 8 de octubre de 2026
+
+- Falla exacta: `actual: VERSIÓN R201`, `expected: VERSIÓN R204`; el test exige que el primer badge visible coincida antes de ejecutar JavaScript.
+- Accion: `index-grupal.html` actualiza el badge estatico, `gscg-release`, service worker y `release.json`; el inventario se vuelve a sellar con el arbol resultante.
+- Archivos activos tocados en la misma modificacion: backend, frontend, ROADMAPS, versionado visible y sello de inventarios.
+- Validacion esperada: superar `test-update-delivery-control.mjs` y completar build READY.
+
 ## R204 · sello de inventarios para publicar fix de torneo · 8 de octubre de 2026
 
 - Bloqueo reproducido: Vercel R203 mostro `PASS ROADMAP GATE` y luego `FAIL INVENTORY GATE` por cambios activos posteriores al ultimo sellado.
