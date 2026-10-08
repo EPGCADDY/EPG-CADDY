@@ -1,8 +1,8 @@
 {
-  "version": "R213-NO-RAW-PERSONAL-AUTH-PAGE",
-  "generatedAt": "2026-10-08T12:03:00Z",
+  "version": "R214-R213-GATE-SLICE-FIX",
+  "generatedAt": "2026-10-08T13:05:00Z",
   "sourceFileCount": 924,
-  "sourceDigest": "18f5938d3f40ce9857f648076657ee853f339dabdc522de0a614937262b70aac",
+  "sourceDigest": "97bdad20564d9b89c9f93c08c2ea2d7905f2670cb7e5efde38c193cfdd0dca52",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",

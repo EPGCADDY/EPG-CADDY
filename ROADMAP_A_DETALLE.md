@@ -1,3 +1,12 @@
+## R214 · Gate de actualizacion compatible con R213 · 8 de octubre de 2026
+
+- `test-update-delivery-control.mjs`: conserva la prueba de ACTUALIZAR y retorno a Administracion, pero extrae `manualAppNavigation` hasta `self.addEventListener("fetch"` porque R213 retiro la funcion `authorizedPersonalNavigation`.
+- `test-personal-storage-access.mjs`: actualiza el contrato de navegacion personal para no esperar 403 textual en pagina; mantiene el reingreso autenticado con redireccion reparada y deja la proteccion privada a las APIs.
+- `service-worker.js`: cache `v386-r214-no-raw-personal-auth-page-gate-fix` y `RELEASE_FALLBACK="20261008-R214"`.
+- `index-grupal.html`: meta release, badge visible, carga de `personal-events.js` y marca de fallback se sincronizan en R214.
+- `release.json`: publica `R214-R213-GATE-SLICE-FIX`.
+- Objetivo operativo: permitir que LAB y Produccion compilen el parche que impide que una navegacion personal termine en la pagina negra textual `Acceso personal no autorizado`.
+
 ## R213 · Navegacion personal sin pantalla negra 403 · 8 de octubre de 2026
 
 - `service-worker.js`: elimina la verificacion previa `authorizedPersonalNavigation`; `index-grupal.html` con `personalEvent` o `personalAccount` pasa por `manualAppNavigation` y no puede devolver texto plano como pagina final.

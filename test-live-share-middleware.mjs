@@ -18,12 +18,12 @@ try{
  assert.equal(forbiddenReturn.headers.get('x-middleware-next'),'1','A personal navigation mismatch loads the app shell instead of a raw 403; APIs still enforce event authorization');
  assert.match(restored.headers.get('location'),/live-hub\.html\?personalEvent=saved-event/,'Implicit personal return keeps its authorized event');
  globalThis.fetch=async()=>Response.json({ok:true,accountCode:'device:assigned',membership:{role:'player',players:[{id:'p1',name:'Jaime'}]},tournament:{status:'active'}});
- const missingAccount=await accessGate(new Request('https://lab.example/index-grupal.html?personalEvent=assigned-event&personalKind=tournament',{headers:{cookie:'gsc_event_device=device-token'}}));
+ const missingAccount=await accessGate(new Request('https://lab.example/index-grupal.html?personalEvent=assigned-event&personalKind=tournament'));
  assert.equal(missingAccount.status,307,'Authorized personal event navigation without account is repaired instead of rejected');
  assert.match(missingAccount.headers.get('location'),/personalAccount=device%3Aassigned/);
  assert.match(missingAccount.headers.get('location'),/manual_action=personal-scorecard/);
  globalThis.fetch=async()=>Response.json({ok:true,accountCode:'device:assigned',membership:{role:'viewer',players:[]},tournament:{status:'active'}});
- const viewerCard=await accessGate(new Request('https://lab.example/index-grupal.html?personalEvent=viewer-event&personalKind=tournament',{headers:{cookie:'gsc_code_session=viewer-token'}}));
+ const viewerCard=await accessGate(new Request('https://lab.example/index-grupal.html?personalEvent=viewer-event&personalKind=tournament'));
  assert.match(viewerCard.headers.get('location'),/live-hub\.html\?personalEvent=viewer-event/,'Read-only code sessions go to monitor instead of raw forbidden page');
  globalThis.fetch=async()=>new Response(JSON.stringify({ok:false,code:'ACCESS_REQUIRED'}),{status:401});
  const api=await accessGate(new Request('https://lab.example/api/live-share',{method:'POST'}));assert.equal(api.headers.get('x-middleware-next'),'1');

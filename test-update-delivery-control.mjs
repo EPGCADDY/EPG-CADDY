@@ -70,7 +70,11 @@ console.log('PASS real ACTUALIZAR: scoped Familia card/account, current scores a
 
 // The approved worker returns to Administration only after a complete successful update.
 const workerSource=fs.readFileSync('service-worker.js','utf8');
-const updateNavigation=workerSource.slice(workerSource.indexOf('async function manualAppNavigation('),workerSource.indexOf('async function authorizedPersonalNavigation('));
+const manualNavigationStart=workerSource.indexOf('async function manualAppNavigation(');
+const fetchHandlerStart=workerSource.indexOf('self.addEventListener("fetch"',manualNavigationStart);
+assert.ok(manualNavigationStart>=0,'manualAppNavigation must stay available for update recovery');
+assert.ok(fetchHandlerStart>manualNavigationStart,'fetch handler must stay after manualAppNavigation');
+const updateNavigation=workerSource.slice(manualNavigationStart,fetchHandlerStart);
 for(const complete of [false,true])for(const target of ['/event-administration.html?returnTo=%2Findex-grupal.html','https://evil.example/event-administration.html','/live-hub.html']){
  let promoted=0;
  const context=vm.createContext({URL,Response,RELEASE:'CURRENT',OFFLINE_ENTRY:'/index-grupal.html',APPROVED_CACHE_NAME:'approved',fetchPublishedRelease:async()=>{},refreshShell:async()=>complete,promoteCandidate:async()=>promoted++,caches:{match:async()=>new Response('approved-card')},approvedNavigationWithManualUpdate:async()=>new Response('previous-card'),networkFirst:async()=>new Response('network-card')});

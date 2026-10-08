@@ -1,3 +1,19 @@
+## RC-128 · R213 completo bloqueo build por prueba anclada a funcion eliminada · 8 OCTUBRE 2026
+
+- Sintoma tecnico: deployment LAB de R213 fallo en `test-update-delivery-control.mjs` con `ReferenceError: self is not defined`.
+- Causa raiz: la prueba extraia `manualAppNavigation` usando como limite `authorizedPersonalNavigation`; R213 elimino esa funcion correctamente, por lo que el recorte incluyo tambien el handler `fetch` del Service Worker.
+- Punto de escape: se cambio la arquitectura del Service Worker, pero el gate de entrega seguia acoplado al nombre de una funcion retirada.
+- Control permanente: `test-update-delivery-control.mjs` localiza `manualAppNavigation` y corta antes de `self.addEventListener("fetch"`, con aserciones explicitas de ambos limites; `test-personal-storage-access.mjs` exige shell en navegacion personal sin exponer 403 textual.
+- Estado: R214 corrige el gate y fuerza release/cache nuevos para publicar el parche anti 403 textual.
+
+## RC-127 · R213 aun podia depender de cookie para reparar la Score Card asignada · 8 OCTUBRE 2026
+
+- Sintoma fisico: Produccion R213 siguio mostrando pantalla negra con `Acceso personal no autorizado` al abrir la ruta personal del torneo.
+- Causa raiz: la eliminacion de la pantalla cruda quedo incompleta; la reparacion server-side de `personalAccount` todavia exigia detectar una cookie especifica antes de confiar en la respuesta autorizada de `/api/personal-events`.
+- Punto de escape: la regresion cubria el caso con cookie presente, no la navegacion directa `index-grupal.html?personalEvent=...&personalKind=tournament` sin cookie inicial.
+- Control permanente: `test-live-share-middleware.mjs` reproduce la navegacion sin cookie y exige redireccion reparada; la verificacion publica debe incluir curl directo a Produccion y comprobar que no responde HTTP 403/texto plano.
+- Estado: R214 elimina la dependencia de cookie por nombre, mantiene APIs privadas protegidas y fuerza cache nueva.
+
 ## RC-126 · R212 aun podia mostrar 403 textual por Service Worker/middleware · 8 OCTUBRE 2026
 
 - Sintoma fisico: pantalla negra con `Acceso personal no autorizado` despues de actualizar a R212/R211 en Produccion.
