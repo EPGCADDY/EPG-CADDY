@@ -4,6 +4,7 @@
 - `test-lab-device-event-identity.mjs`: importa `issueEntryCode`/`redeemEntryCode` y reproduce una sesion de visor valida que antes sombreaba la entrada del codigo de organizador; el join ahora entra con identidad de dispositivo y consume el codigo correcto.
 - `release.json`, `index-grupal.html` y `service-worker.js`: release sincronizada `20261008-R211`, etiqueta visible `R211`, version tecnica `R211-CODE-SESSION-SHADOW-FIX`.
 - Motivo fisico: captura R210 en Produccion mostro `NO SE PUDO PREPARAR EL EVENTO · REINTENTA` con `D50F9059FD`.
+- Cierre de despliegue: se corrige el escape de publicacion subiendo ROADMAPS e `INVENTARIOS_V311.lock.json` dentro del mismo commit, despues de regenerar los tres inventarios PDF.
 - Estado: pruebas dirigidas y gates pendientes de ejecucion antes de publicar.
 
 ## R210 · Produccion declara entorno y recarga runtime · 8 de octubre de 2026
