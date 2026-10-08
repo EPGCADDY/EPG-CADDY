@@ -1,3 +1,11 @@
+## RC-120 · Produccion R206 sin acceso personal por target de env var · 8 OCTUBRE 2026
+
+- Reincidencia confirmada por captura del propietario: Produccion R206 con codigo `9FCE819496` muestra `CODIGO INCORRECTO O TORNEO VENCIDO`.
+- Causa raiz: el deployment servido por alias publico era de rama/preview y no recibia `GSC_PERSONAL_ACCESS_PRODUCTION_READY`, configurada solo para target production.
+- Efecto: Produccion devolvia `PERSONAL_ACCESS_NOT_ENABLED`; el cliente reintentaba LAB y terminaba mostrando `LIVE_JOIN_CODE_INVALID`.
+- Control permanente: variables de acceso personal deben cubrir todo target que pueda ser aliasado a dominio publico, o el dominio debe apuntar a deployment production real.
+- Estado: R207 redeploy con env var extendida a preview.
+
 ## RC-119 · R205 descartaba la respuesta join-code antes de abrir score card · 8 OCTUBRE 2026
 
 - Reincidencia confirmada por captura del propietario en R205: `SCORE CARD ASIGNADA` seguido de `NO SE PUDO PREPARAR EL EVENTO · REINTENTA`.

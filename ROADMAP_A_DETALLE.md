@@ -1,3 +1,10 @@
+## R207 · fix Produccion no LAB para codigos de torneo · 8 de octubre de 2026
+
+- Aclaracion del propietario: el problema no era LAB, era Produccion.
+- Evidencia tecnica: POST directo a `https://epg-caddy.vercel.app/api/personal-events` con `9FCE819496` devolvio `PERSONAL_ACCESS_NOT_ENABLED`; LAB devolvio `LIVE_JOIN_CODE_INVALID`.
+- Causa: variable de acceso personal de Produccion existia solo para target `production`, pero el dominio estaba aliasado a un deployment de rama/preview.
+- Accion: extender `GSC_PERSONAL_ACCESS_PRODUCTION_READY=1` a `preview` y redeploy R207.
+
 ## R206 · fix real del fallo R205 al preparar score card · 8 de octubre de 2026
 
 - Evidencia del usuario: captura R205 con `SCORE CARD ASIGNADA` y `NO SE PUDO PREPARAR EL EVENTO · REINTENTA`.

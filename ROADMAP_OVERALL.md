@@ -1,3 +1,10 @@
+## R207 · Produccion activa acceso personal en deployments publicados por alias · 8 de octubre de 2026
+
+- Reproduccion fisica: en Produccion R206 el codigo `9FCE819496` devuelve `CODIGO INCORRECTO O TORNEO VENCIDO`.
+- Diagnostico real: el endpoint de Produccion respondia `PERSONAL_ACCESS_NOT_ENABLED`; la app reintentaba LAB y terminaba mostrando `LIVE_JOIN_CODE_INVALID`.
+- Correccion operativa: `GSC_PERSONAL_ACCESS_PRODUCTION_READY` queda aplicado a `production` y `preview`, porque los alias publicos apuntan a deployments de rama.
+- Release: R207 fuerza redeploy para que Produccion cargue la variable en runtime.
+
 ## R206 · score card asignada conserva respuesta join-code · 8 de octubre de 2026
 
 - Reproduccion fisica R205: el iPhone muestra `VERSIÓN R205`, pero al ingresar el codigo queda otra vez en `SCORE CARD ASIGNADA · NO SE PUDO PREPARAR EL EVENTO`.
