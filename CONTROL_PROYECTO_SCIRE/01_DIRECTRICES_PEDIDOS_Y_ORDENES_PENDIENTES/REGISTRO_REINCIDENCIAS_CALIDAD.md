@@ -1,3 +1,11 @@
+## RC-130 · R214 podia ocultar torneos locales al recibir lista remota vacia · 8 OCTUBRE 2026
+
+- Sintoma fisico: Produccion llego a R207/R210, pero al continuar la prueba ya no aparecian torneos disponibles y la pantalla daba la impresion de que se habian eliminado.
+- Causa raiz: `personal-events.js` mezclaba `removedEvents` devueltos por la accion `list` con purga fisica local. Si el servidor publico estaba sin filas, apuntaba a rama/base vacia o no encontraba un torneo conocido del telefono, el cliente interpretaba esa ausencia como autorizacion para limpiar la Score Card, archivo local, hub y codigos.
+- Punto de escape: la regresion existente validaba la purga explicita/manual, pero no el caso de lista remota vacia con torneo local guardado.
+- Control permanente: `test-r215-personal-list-no-local-purge.mjs` reproduce una lista vacia con `removedEvents` y exige conservar torneo local, ronda activa, archivo, hub y codigo. `test-event-total-purge.mjs` conserva el control separado de eliminacion explicita.
+- Estado: R215 deja de usar `removedEvents` de `list` para purgar eventos locales; conserva la limpieza de streams y la purga explicita.
+
 ## RC-129 · R214 sellado fallaba en Vercel por archivos no versionados del install · 8 OCTUBRE 2026
 
 - Sintoma tecnico: deployments R214 `3eca61e` pasaron `PROJECT_QUALITY_GATE` y `ROADMAP GATE`, pero fallaron `INVENTORY GATE` durante el build.

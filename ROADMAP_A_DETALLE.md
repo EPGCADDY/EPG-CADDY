@@ -1,3 +1,14 @@
+## R215 · Sin purga local por ausencia remota en `list` · 8 de octubre de 2026
+
+- `personal-events.js`: `sync()` mantiene la union de eventos remotos, alias, cuenta y lectura de entorno par, pero deja de enviar `result.removedEvents` / `other.removedEvents` a `purgeDeletedEvents()`. El telefono conserva el torneo local si el servidor responde una lista vacia o no encuentra una fila conocida.
+- `personal-events.js`: se mantiene la purga por `removedStreams` para referencias de stream y se conserva `GSCPersonalEvents.purgeDeletedEvents()` para borrado fisico explicito/manual.
+- `test-r215-personal-list-no-local-purge.mjs`: VM del cliente con `gsc-personal-events-v1`, seleccion de torneo, ronda activa, archivo local, hub y live-control; el mock de `/api/personal-events` devuelve `events:[]` y `removedEvents:[...]`; la prueba exige conservar todo y no emitir `gsc-events-removed`.
+- `test-event-total-purge.mjs`: sigue verificando que una purga explicita borre ID, seleccion, ronda activa, archivo, hub, codigos y cola de sync, sin tocar perfiles ajenos.
+- `scripts/build-manual-lab.mjs`: agrega la regresion R215 al banco LAB.
+- `release.json`, `index-grupal.html`, `service-worker.js`: etiqueta visible, meta release, `personal-events.js?v=20261008-R215`, cache `v387-r215-no-list-purge-local-tournaments` y version tecnica `R215-NO-LIST-PURGE-LOCAL-TOURNAMENTS`.
+- Motivo operativo: las bases consultadas mostraban directorio publico vacio antes y despues de R214; el cliente no debe interpretar una ausencia remota como orden de borrar datos locales del jugador.
+- Archivos: `personal-events.js`, `test-r215-personal-list-no-local-purge.mjs`, `scripts/build-manual-lab.mjs`, `release.json`, `index-grupal.html`, `service-worker.js`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` e `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
 ## R214 · Gate de actualizacion compatible con R213 · 8 de octubre de 2026
 
 - `test-update-delivery-control.mjs`: conserva la prueba de ACTUALIZAR y retorno a Administracion, pero extrae `manualAppNavigation` hasta `self.addEventListener("fetch"` porque R213 retiro la funcion `authorizedPersonalNavigation`.
@@ -4452,3 +4463,10 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 - Corrección: `resolveEventIdentity()` permite crear una identidad de dispositivo segura también en `join-code` cuando no hay sesión de cuenta válida. La membresía sigue dependiendo de poseer el código, de la configuración campo/modalidad y de capacidad; sólo se consume el código dentro de la unión oficial.
 - Control permanente: `test-lab-device-event-identity.mjs` ahora reproduce inspección sin consumir y unión sin cookie previa; confirma cookie de dispositivo nueva, consumo de código de un solo uso y rechazo a terceros. `test-r191-cross-environment-tournament-entry.mjs` conserva el reintento Producción→LAB.
 - Estado: regresión dirigida PASS local; despliegue LAB y Producción R199 pendiente.
+
+## R216 · limpieza visual de tarjetas Scores de torneo · 8 octubre 2026
+
+- `live-hub.html`: se elimina el `section.global-live-directory` que mostraba `GRUPOS Y RONDAS GLOBALES ACTIVOS`, `LISTA GLOBAL COMPLETA · LABORATORIO + PRODUCCIÓN`, nombres de grupos y fecha/hora de actualización encima de las tarjetas de Scores.
+- `live-hub.js`: se retira el estado `activeGlobalDirectory`, el render del panel eliminado y el intervalo que consultaba `list_active_tournaments` sólo para llenar ese bloque visual. La lectura funcional de torneos y scores permanece en `refreshRegisteredDirectory`, `selectSavedTournament`, `refresh` y las vistas General/Categoría/Buscar/Favoritos.
+- `test-r216-live-hub-no-global-directory-panel.mjs`: regresión dirigida que exige ausencia de IDs/textos del panel retirado y presencia de los cuatro accesos de Scores.
+- `release.json`, `service-worker.js`, `index-grupal.html`: identidad visible y caché sincronizadas a `20261008-R216` / `R216`.

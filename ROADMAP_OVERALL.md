@@ -1,3 +1,12 @@
+## R215 · No purgar torneos locales por lista remota vacia · 8 de octubre de 2026
+
+- Sintoma fisico: el telefono quedo sin torneos visibles despues de respuestas de Produccion/LAB con directorio remoto vacio o sin el evento esperado.
+- `personal-events.js`: `sync()` ya no convierte `removedEvents` de la accion `list` en borrado fisico local; una ausencia remota transitoria no elimina ronda activa, archivo local, hub ni codigos guardados.
+- Seguridad conservada: `purgeDeletedEvents()` sigue disponible para eliminaciones explicitas y la limpieza de streams se conserva separada.
+- Regresion: `test-r215-personal-list-no-local-purge.mjs` reproduce lista vacia + torneo local existente y exige que no haya evento `gsc-events-removed`; `test-event-total-purge.mjs` mantiene la purga explicita.
+- Release: `release.json`, `index-grupal.html`, `service-worker.js` y cache suben a `20261008-R215` para forzar descarga del cliente corregido.
+- Archivos: `personal-events.js`, `test-r215-personal-list-no-local-purge.mjs`, `scripts/build-manual-lab.mjs`, `release.json`, `index-grupal.html`, `service-worker.js`, `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`, `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` e `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`.
+
 ## R214 · Reparar gate de entrega tras eliminar 403 textual · 8 de octubre de 2026
 
 - `test-update-delivery-control.mjs` y `test-personal-storage-access.mjs`: el recorte de prueba de `manualAppNavigation` ya no depende de `authorizedPersonalNavigation`, y la navegacion personal sin membresia inmediata carga shell en vez de 403 textual.
@@ -4340,3 +4349,10 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - Corrección: `resolveEventIdentity()` permite crear una identidad de dispositivo segura también en `join-code` cuando no hay sesión de cuenta válida. La membresía sigue dependiendo de poseer el código, de la configuración campo/modalidad y de capacidad; sólo se consume el código dentro de la unión oficial.
 - Control permanente: `test-lab-device-event-identity.mjs` ahora reproduce inspección sin consumir y unión sin cookie previa; confirma cookie de dispositivo nueva, consumo de código de un solo uso y rechazo a terceros. `test-r191-cross-environment-tournament-entry.mjs` conserva el reintento Producción→LAB.
 - Estado: regresión dirigida PASS local; despliegue LAB y Producción R199 pendiente.
+
+## R216 · Scores de torneo sin panel global de grupos/rondas activos · 8 octubre 2026
+
+- Pedido visual del propietario: en Scores General, Scores por Categoría y Buscar Jugador se elimina el bloque blanco de grupos/rondas activos, incluyendo lista global, nombres de grupos y hora de actualización.
+- `live-hub.html` retira el panel `global-live-directory`; `live-hub.js` deja de refrescar esa lista desde la pantalla de Scores. Se conservan los botones Scores General, Scores por Categoría, Buscar Jugador, Mis Favoritos, búsqueda, filtros y tablas.
+- `test-r216-live-hub-no-global-directory-panel.mjs` bloquea la reaparición de esos textos y confirma que las vistas de Scores siguen presentes.
+- Identidad de entrega sincronizada: `release.json`, `service-worker.js` e `index-grupal.html` pasan a R216.
