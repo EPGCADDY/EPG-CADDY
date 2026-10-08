@@ -1,8 +1,15 @@
+## RC-118 · R200 Stableford no reintentaba LAB cuando Producción no tenía acceso personal · 7 OCTUBRE 2026
+
+- Reincidencia confirmada en Producción R200 con el código LAB `6D5ECEC172`: la inspección saltaba al flujo de torneo, pero el alta final devolvía `PERSONAL_ACCESS_NOT_ENABLED`.
+- Causa raíz: el build R200 vivo era el combinado Stableford y conservaba retry cruzado sólo para `LIVE_JOIN_CODE_INVALID`.
+- Corrección R201: `requestTournamentCode` reintenta el ambiente par también ante `PERSONAL_ACCESS_NOT_ENABLED`, preservando Stableford R200.
+- Estado: gates dirigidos, build y publicación R201 pendientes.
+
 ## RC-117 · Release Stableford quedó como preview y LAB avanzó a R199 · 7 OCTUBRE 2026
 
 - Causa: R198 Stableford quedó en deployment preview; el alias principal avanzó a R199 de torneo.
 - Corrección en curso: integrar los cambios de tarjeta sobre R199 y etiquetar el conjunto como R200, preservando ambas correcciones.
-- Estado: R199 sirve LAB y Producción; build combinado R200 y promoción pendientes.
+- Estado: R200 combinado publicado; R201 corrige el retry de código de torneo sobre ese build.
 
 ## RC-116 · QuickType no insertaba la sugerencia en R192/R193 · 7 OCTUBRE 2026
 

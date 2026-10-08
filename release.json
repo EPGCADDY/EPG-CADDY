@@ -1,7 +1,7 @@
 {
-  "release": "20261008-R200",
-  "label": "R200",
+  "release": "20261008-R201",
+  "label": "R201",
   "published": "2026-10-08",
-  "version": "R200-STABLEFORD-GROSS-POINTS-R199-TOURNAMENT-JOIN",
-  "generatedAt": "2026-10-08T01:41:52Z"
+  "version": "R201-STABLEFORD-R200-TOURNAMENT-PEER-FALLBACK",
+  "generatedAt": "2026-10-08T02:00:00Z"
 }

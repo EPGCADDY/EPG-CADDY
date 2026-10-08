@@ -16,7 +16,7 @@ assert.equal(isAllowedAppOrigin({headers:{origin:'https://attacker.example',host
 const storage=new Map(),calls=[];
 const root={location:{hostname:'epg-caddy.vercel.app'},localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,String(value)),removeItem:key=>storage.delete(key),get length(){return storage.size},key:index=>[...storage.keys()][index]},document:{addEventListener(){},getElementById(){return null}},fetch:async(url,init)=>{
  calls.push({url,init});const remote=String(url).startsWith('https://golf-sc-gt-lab.vercel.app/'),body=JSON.parse(init.body);
- if(body.action==='identity')return{ok:true,status:200,json:async()=>({ok:true,personalCode:remote?'lab-device':'production-device'})};
+ if(body.action==='identity')return remote?{ok:true,status:200,json:async()=>({ok:true,personalCode:'lab-device'})}:{ok:false,status:503,json:async()=>({ok:false,code:'PERSONAL_ACCESS_NOT_ENABLED'})};
  if(body.action==='join-code')return remote?{ok:true,status:200,json:async()=>({ok:true,eventId:'11111111-1111-4111-8111-111111111111',eventKind:'tournament',name:'LAB CUP',configuration:{course:'EL PULTÉ GOLF',mode:'general'},accountCode:'lab-device'})}:{ok:false,status:404,json:async()=>({ok:false,code:'LIVE_JOIN_CODE_INVALID'})};
  if(body.action==='read')return remote?{ok:true,status:200,json:async()=>({ok:true,accountCode:'lab-device'})}:{ok:false,status:404,json:async()=>({ok:false,code:'LIVE_JOIN_CODE_INVALID'})};
  return{ok:true,status:200,json:async()=>({ok:true,events:[],aliases:[],removedEvents:[],removedStreams:[],accountCode:remote?'lab-device':'production-device'})};
@@ -31,4 +31,4 @@ assert.ok(calls.some(call=>call.url==='https://golf-sc-gt-lab.vercel.app/api/per
 assert.equal(api.descriptor('personal_11111111-1111-4111-8111-111111111111').source,'lab','source survives registration');
 const read=await api.request('read',{eventId:joined.eventId,eventKind:'tournament'});
 assert.equal(read.ok,true);assert.equal(calls.at(-1).url,'https://golf-sc-gt-lab.vercel.app/api/personal-events','later event reads return to the owning environment');
-console.log('PASS R191 cross-environment tournament entry: invalid local code retries the peer, peer identity uses credentials, and event reads stay on the owner environment.');
+console.log('PASS R191 cross-environment tournament entry: local personal access disabled retries the peer, peer identity uses credentials, and event reads stay on the owner environment.');

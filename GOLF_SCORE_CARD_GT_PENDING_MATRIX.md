@@ -1,8 +1,15 @@
+## R201 · ingreso de torneo LAB desde Producción sobre Stableford R200 · 7 de octubre de 2026
+
+- Producción R200 Stableford conservaba el ingreso cruzado sólo para código inválido, pero no cuando el endpoint local devolvía `PERSONAL_ACCESS_NOT_ENABLED`.
+- `personal-events.js` reintenta LAB/Producción también ante `PERSONAL_ACCESS_NOT_ENABLED`, sin consumir el código durante inspección.
+- R201 mantiene el build Stableford R200 y sólo corrige el fallback de código de torneo.
+- Estado: gates dirigidos, build y publicación R201 pendientes.
+
 ## R200 · Tarjetas digitales Stableford sin hándicap · 7 de octubre de 2026
 
 - Stableford Global y Personal omiten HCP, HDCP y Neto; Gross queda en blanco y los puntos por hoyo y por vuelta en verde.
 - RESULTADOS presenta IN, OUT y COMPLETA con Gross y Puntos. Se conserva la lógica de otras modalidades.
-- Regresión dirigida: `test-card-artifacts.mjs` y `test-lab-r60-card-mode-purity.mjs`; pruebas R198 PASS. Build combinado R200 pendiente sobre R199.
+- Regresión dirigida: `test-card-artifacts.mjs` y `test-lab-r60-card-mode-purity.mjs`; pruebas R198 PASS. Build combinado R200 publicado.
 
 ## R194 · QuickType en nombres: retirar transformación a mayúsculas · 7 de octubre de 2026
 

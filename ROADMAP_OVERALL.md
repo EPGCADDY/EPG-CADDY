@@ -1,3 +1,10 @@
+## R201 · ingreso de torneo LAB desde Producción sobre Stableford R200 · 7 de octubre de 2026
+
+- Causa raíz: el R200 vivo de Stableford preservaba el retry cruzado sólo para `LIVE_JOIN_CODE_INVALID`; al ingresar un código LAB desde Producción, el endpoint local devolvía `PERSONAL_ACCESS_NOT_ENABLED` y el cliente no saltaba al ambiente par.
+- Corrección: `personal-events.js` reintenta el ambiente par para `LIVE_JOIN_CODE_INVALID` y `PERSONAL_ACCESS_NOT_ENABLED`.
+- Release: `index-grupal.html`, `service-worker.js` y `release.json` suben a R201 para forzar instalación visible sin perder Stableford R200.
+- Estado: gates dirigidos, build y publicación R201 pendientes.
+
 ## R200 · Stableford sin HDCP, Gross y Puntos · 7 de octubre de 2026
 
 - Tarjetas Stableford Global y Personal: sin HCP, HDCP ni Neto. Gross blanco; todos los puntos verdes.
@@ -5,7 +12,7 @@
 - Regresión: `test-card-artifacts.mjs` y `test-lab-r60-card-mode-purity.mjs`; conservan resultados de Medal Play, Match Play, Four Ball y Universales.
 - Integración sobre R199 para conservar el ingreso cruzado Producción/LAB.
 - Archivos: `card-artifacts.js`, `test-card-artifacts.mjs`, `test-lab-r60-card-mode-purity.mjs`, `index-grupal.html`, `service-worker.js`, `release.json`, ambos ROADMAPS, `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`, `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`, `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `INVENTARIOS_V311.lock.json`.
-- Estado: tarjeta real comprobada en la aplicación LAB; build combinado y publicación R200 por completar.
+- Estado: tarjeta real comprobada en la aplicación LAB; build combinado R200 publicado.
 
 ## R196 · Texto de WhatsApp de tarjetas digitales · 7 de octubre de 2026
 
