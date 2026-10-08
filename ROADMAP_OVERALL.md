@@ -1,3 +1,10 @@
+## R204 · inventario sellado para score card asignada · 8 de octubre de 2026
+
+- Motivo: R203 paso proyecto y ROADMAP, pero `inventory-gate` bloqueo el build porque el sello no reflejaba los archivos activos posteriores al fix.
+- Accion: se recalcula `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` junto con codigo, ROADMAPS y versionado en la misma modificacion.
+- Alcance funcional conservado: score card asignada por codigo de torneo usa fallback de join-code cuando el read inmediato aun no responde.
+- Estado: candidato R204 para publicar en LAB y PROD.
+
 ## R203 · commit atomico score card asignada y ROADMAPS · 8 de octubre de 2026
 
 - Ajuste de publicación: el gate exige que codigo, ROADMAPS y versionado viajen en la misma modificacion; R202 quedo documentado pero separado por commits.

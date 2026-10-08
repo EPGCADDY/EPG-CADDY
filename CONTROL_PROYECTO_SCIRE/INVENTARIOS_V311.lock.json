@@ -1,8 +1,8 @@
 {
-  "version": "R201-LAB-RELEASE",
-  "generatedAt": "2026-10-08T01:53:54Z",
+  "version": "R204-INVENTORY-SEALED-JOIN-CODE-SCORECARD-RECOVERY",
+  "generatedAt": "2026-10-08T03:05:00Z",
   "sourceFileCount": 924,
-  "sourceDigest": "31e7f4984ec12372fd9c867201c07026d83305ee439745a5c4afa5287cc8873f",
+  "sourceDigest": "8d0da6d3d233836dce286a475f269685e4755a1fa9738bef4030058b3f0fc725",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",

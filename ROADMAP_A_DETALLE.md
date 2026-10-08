@@ -1,3 +1,10 @@
+## R204 · sello de inventarios para publicar fix de torneo · 8 de octubre de 2026
+
+- Bloqueo reproducido: Vercel R203 mostro `PASS ROADMAP GATE` y luego `FAIL INVENTORY GATE` por cambios activos posteriores al ultimo sellado.
+- Control actualizado: source digest y conteo de fuentes se regeneran contra el arbol R204 excluyendo `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`, como exige `scripts/inventory-gate.mjs`.
+- Archivos en la misma modificacion: backend de join-code, frontend de apertura de score card, ambos ROADMAPS, release visible, service worker e inventario.
+- Resultado esperado: build pasa proyecto, roadmap e inventario; luego LAB/PROD pueden apuntar a R204.
+
 ## R203 · publicacion atomica del fix de score card asignada · 8 de octubre de 2026
 
 - Motivo: Vercel rechazo R202 con `FAIL ROADMAP GATE` porque el ultimo commit no incluia ambos ROADMAPS junto con la modificacion de codigo.
