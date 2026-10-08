@@ -9,6 +9,7 @@
 - `test-r226-whatsapp-entry-code-prefill.mjs` y `test-lab-code-entry.mjs`: validan versión, URL con `codigo`, texto de WhatsApp, autoinspección, ausencia de crash por botones retirados y Live limitado a la Score Card compartida.
 - `scripts/build-manual-lab.mjs`: agrega la regresión R226 al banco técnico obligatorio.
 - `release.json`, `service-worker.js`, `index-grupal.html`: sincronizan `20261008-R226`, `VERSIÓN R226`, caché `v398-r226-whatsapp-code-prefill` y `personal-events.js?v=20261008-R226`.
+- `test-lab-private-round-share-flow.mjs`: actualiza la aserción histórica de ronda privada para exigir el mensaje R226 con código precargado; evita que Vercel rechace la publicación por una expectativa anterior.
 
 ## R225 · Invitado 48h sin Organizador y con Compartir Live · 8 de octubre de 2026
 
