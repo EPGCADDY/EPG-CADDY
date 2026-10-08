@@ -5,6 +5,7 @@
 - `test-live-share-middleware.mjs`: agrega regresion para la captura R211 con `Acceso personal no autorizado`; tambien conserva el control negativo de cuenta explicita ajena.
 - `release.json`, `index-grupal.html` y `service-worker.js`: release sincronizada `20261008-R212`, etiqueta visible `R212`, version tecnica `R212-PERSONAL-EVENT-NAVIGATION-REPAIR`.
 - Motivo fisico: captura de Produccion mostro pantalla negra con `Acceso personal no autorizado` despues del intento con codigo de torneo.
+- Cierre de despliegue: `INVENTARIOS_V311.lock.json` se recalcula sobre el HEAD remoto exacto, incluyendo el parche cliente ya presente en la rama activa.
 - Estado: gates y despliegue pendientes antes de pedir nueva prueba fisica.
 
 ## R211 · Codigo de torneo no queda sombreado por sesion de codigo · 8 de octubre de 2026

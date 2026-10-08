@@ -5,6 +5,7 @@
 - Correccion: `middleware.js` ahora consulta `/api/personal-events` como antes, pero si la sesion vigente autoriza el evento y falta `personalAccount`, redirige a la misma Score Card completando `personalAccount` y `manual_action=personal-scorecard`. Los visores sin jugadores se redirigen al monitor `live-hub.html`.
 - Regresion: `test-live-share-middleware.mjs` cubre tarjeta asignada sin cuenta, redireccion reparada, visor read-only al hub y mantiene 403 cuando hay cuenta explicita incorrecta.
 - Release: `release.json`, `index-grupal.html` y `service-worker.js` sincronizados como `20261008-R212`.
+- Cierre de despliegue: se resella `INVENTARIOS_V311.lock.json` sobre el HEAD remoto exacto para incluir el parche cliente vigente en `personal-events.js`.
 - Estado: pendiente regenerar inventario, gates y despliegue LAB/Produccion.
 
 ## R211 · Codigo de torneo no queda sombreado por sesion de codigo · 8 de octubre de 2026
