@@ -17,6 +17,14 @@ try{
  const forbiddenReturn=await accessGate(new Request('https://lab.example/index-grupal.html?round_return=1&personalEvent=other-event&personalAccount=other-account',{headers:{cookie:'gsc_personal_context='+context}}));
  assert.equal(forbiddenReturn.status,403,'Return intent never bypasses explicit personal event authorization');
  assert.match(restored.headers.get('location'),/live-hub\.html\?personalEvent=saved-event/,'Implicit personal return keeps its authorized event');
+ globalThis.fetch=async()=>Response.json({ok:true,accountCode:'device:assigned',membership:{role:'player',players:[{id:'p1',name:'Jaime'}]},tournament:{status:'active'}});
+ const missingAccount=await accessGate(new Request('https://lab.example/index-grupal.html?personalEvent=assigned-event&personalKind=tournament',{headers:{cookie:'gsc_event_device=device-token'}}));
+ assert.equal(missingAccount.status,307,'Authorized personal event navigation without account is repaired instead of rejected');
+ assert.match(missingAccount.headers.get('location'),/personalAccount=device%3Aassigned/);
+ assert.match(missingAccount.headers.get('location'),/manual_action=personal-scorecard/);
+ globalThis.fetch=async()=>Response.json({ok:true,accountCode:'device:assigned',membership:{role:'viewer',players:[]},tournament:{status:'active'}});
+ const viewerCard=await accessGate(new Request('https://lab.example/index-grupal.html?personalEvent=viewer-event&personalKind=tournament',{headers:{cookie:'gsc_code_session=viewer-token'}}));
+ assert.match(viewerCard.headers.get('location'),/live-hub\.html\?personalEvent=viewer-event/,'Read-only code sessions go to monitor instead of raw forbidden page');
  globalThis.fetch=async()=>new Response(JSON.stringify({ok:false,code:'ACCESS_REQUIRED'}),{status:401});
  const api=await accessGate(new Request('https://lab.example/api/live-share',{method:'POST'}));assert.equal(api.headers.get('x-middleware-next'),'1');
  const directory=await accessGate(new Request('https://lab.example/api/tournament-score-directory',{method:'POST'}));assert.equal(directory.headers.get('x-middleware-next'),'1','public Scores directory POST reaches its own read-only handler without app login');

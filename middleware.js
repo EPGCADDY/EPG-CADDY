@@ -31,14 +31,28 @@ export default async function accessGate(request){
   if((path==="/api/live"||path==="/api/live-share"||path==="/api/personal-events"||path==="/api/event-administration")&&request.method==="POST")return next();
   if(path==='/index-grupal.html'){
     let context=null;
+    const personalCookie=/(?:^|;\s*)(?:gsc_event_device|gsc_code_session|gsc_personal_context)=/.test(request.headers.get('cookie')||'');
     if(url.searchParams.get('personalEvent'))context={eventId:url.searchParams.get('personalEvent'),eventKind:url.searchParams.get('personalKind')||'tournament',accountId:url.searchParams.get('personalAccount')};
     else if(url.searchParams.get('inicio')!=='1'&&url.searchParams.get('source')!=='pwa'&&url.searchParams.get('round_return')!=='1')try{const raw=(request.headers.get('cookie')||'').split(';').map(value=>value.trim()).find(value=>value.startsWith('gsc_personal_context='));if(raw)context=JSON.parse(decodeURIComponent(raw.slice('gsc_personal_context='.length)))}catch{}
     if(context){
       try{
         const response=await fetch(new URL('/api/personal-events',request.url),{method:'POST',headers:{cookie:request.headers.get('cookie')||'','content-type':'application/json'},body:JSON.stringify({action:'read',eventId:context.eventId,eventKind:context.eventKind}),cache:'no-store'}),data=await response.json();
-        if(response.ok&&data.accountCode===context.accountId){
+        if(response.ok&&((context.accountId&&data.accountCode===context.accountId)||(!context.accountId&&personalCookie))){
           const writer=['organizer','player','scorer'].includes(data.membership?.role)&&data.membership.players?.length&&data.tournament?.status!=='closed';
-          if(url.searchParams.get('personalEvent')){if(writer)return next()}
+          if(url.searchParams.get('personalEvent')){
+            if(writer){
+              if(!context.accountId){
+                const target=new URL('/index-grupal.html',request.url);
+                target.searchParams.set('personalEvent',context.eventId);
+                target.searchParams.set('personalKind',context.eventKind);
+                target.searchParams.set('personalAccount',data.accountCode);
+                target.searchParams.set('manual_action',url.searchParams.get('manual_action')||'personal-scorecard');
+                return Response.redirect(target,307);
+              }
+              return next();
+            }
+            if(!context.accountId)return Response.redirect(new URL('/live-hub.html?personalEvent='+encodeURIComponent(context.eventId)+'&personalKind='+encodeURIComponent(context.eventKind),request.url),307);
+          }
           else{const target=new URL(writer?'/index-grupal.html':'/live-hub.html',request.url);target.searchParams.set('personalEvent',context.eventId);target.searchParams.set('personalKind',context.eventKind);if(writer){target.searchParams.set('personalAccount',data.accountCode);target.searchParams.set('manual_action',url.searchParams.get('manual_action')||'personal-scorecard')}return Response.redirect(target,307)}
         }
       }catch{}

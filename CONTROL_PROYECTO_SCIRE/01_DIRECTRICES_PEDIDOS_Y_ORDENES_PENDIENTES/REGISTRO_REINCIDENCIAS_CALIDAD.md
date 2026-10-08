@@ -1,9 +1,10 @@
-## RC-125 · R211 paralelo cerraba gates sin parche cliente de preparacion · 8 OCTUBRE 2026
+## RC-125 · R212 · Score Card asignada sin cuenta cae en 403 textual · 8 OCTUBRE 2026
 
-- Falla interna: se publico un R211 documental/parcial sin las defensas de `personal-events.js` requeridas por la pantalla del iPhone.
-- Causa raiz: carrera entre commits R211 en la misma rama.
-- Control permanente: antes de desplegar, verificar que el commit servido contiene el marcador `joinSelectionFallbackRelease:'R211'` y el script versionado.
-- Estado: commit complementario reaplica el parche sobre la cabeza `e4e4e9e`.
+- Sintoma fisico: Produccion R211 mostro pantalla negra con `Acceso personal no autorizado` despues del flujo de codigo de torneo.
+- Causa: la URL de Score Card asignada podia incluir `personalEvent` sin `personalAccount`; el middleware validaba contra cuenta ausente y devolvia 403 aunque la cookie vigente si autorizara el evento.
+- Punto de escape: R211 cubrio la preparacion de evento y la identidad de dispositivo, pero no la navegacion final servida por middleware.
+- Control permanente: `test-live-share-middleware.mjs` exige redireccion reparada con `personalAccount` cuando la sesion server-side confirma jugador/organizador/scorer, y conserva rechazo si una cuenta explicita ajena intenta entrar.
+- Estado: R212 pendiente de gates y publicacion.
 
 ## RC-124 · R211 · R210 mantuvo sombreado por sesion de codigo valida · 8 OCTUBRE 2026
 

@@ -1,14 +1,11 @@
-## R211 · Sello de inventario junto al parche cliente · 8 de octubre de 2026
+## R212 · Navegacion de Score Card asignada sin cuenta explicita · 8 de octubre de 2026
 
-- Gate Vercel: el commit de sello aislado quedo bloqueado porque `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` no cambiaron en la misma modificacion.
-- Accion: se registra en ambos ROADMAPS el sellado de `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` para el parche cliente de codigos de torneo.
-- Alcance: conserva el cache-bust de `personal-events.js` y el fallback de tarjeta asignada R211.
-
-## R211 · Defensa adicional de apertura tras codigo consumido · 8 de octubre de 2026
-
-- Se versiona `personal-events.js` desde `index-grupal.html` para forzar el cliente de join corregido.
-- La seleccion asignada se guarda en storage global y scoped para que la navegacion `personalAccount` no pierda contexto.
-- `openAssignedPersonalScoreCard` puede preparar desde la asignacion local cuando la lectura inmediata por cookie/device falla.
+- Fallo fisico reportado sobre Produccion R211: despues de ingresar codigo, el telefono quedo en pagina negra con texto plano `Acceso personal no autorizado`.
+- Causa raiz: la navegacion a `/index-grupal.html?personalEvent=...` podia llegar sin `personalAccount`; `middleware.js` exigia igualdad contra cuenta ausente y devolvia 403 antes de dejar que la Score Card cargara.
+- Correccion: `middleware.js` ahora consulta `/api/personal-events` como antes, pero si la sesion vigente autoriza el evento y falta `personalAccount`, redirige a la misma Score Card completando `personalAccount` y `manual_action=personal-scorecard`. Los visores sin jugadores se redirigen al monitor `live-hub.html`.
+- Regresion: `test-live-share-middleware.mjs` cubre tarjeta asignada sin cuenta, redireccion reparada, visor read-only al hub y mantiene 403 cuando hay cuenta explicita incorrecta.
+- Release: `release.json`, `index-grupal.html` y `service-worker.js` sincronizados como `20261008-R212`.
+- Estado: pendiente regenerar inventario, gates y despliegue LAB/Produccion.
 
 ## R211 · Codigo de torneo no queda sombreado por sesion de codigo · 8 de octubre de 2026
 

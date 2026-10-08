@@ -1,14 +1,11 @@
-## R211 · Sello de inventario junto al parche cliente · 8 de octubre de 2026
+## R212 · Reparacion de navegacion personal autorizada sin `personalAccount` · 8 de octubre de 2026
 
-- Gate Vercel: el commit de inventario aislado fallo porque el ROADMAP gate exige `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` dentro de la misma modificacion.
-- Archivo registrado: `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` queda sellado con el digest de las fuentes activas del parche R211.
-- Validacion esperada: `node scripts/roadmap-gate.mjs` y `VERCEL=1 node scripts/inventory-gate.mjs` deben pasar en el proximo deployment.
-
-## R211 · Parche tecnico complementario al cierre de gates · 8 de octubre de 2026
-
-- `personal-events.js?v=20261008-R211` evita que PWA/Safari use un cliente anterior con modal de preparacion defectuoso.
-- `personal-events.js` conserva la seleccion asignada en `gsc-tournament-connect-selection-v1` ademas del almacenamiento por cuenta.
-- `index-grupal.html` lee seleccion scoped por `personalAccount`, conserva `source` y activa fallback `joinSelectionFallbackRelease:'R211'`.
+- `middleware.js`: mantiene la validacion server-side contra `/api/personal-events`, pero acepta el caso seguro donde la URL trae `personalEvent` y no trae `personalAccount`; si la respuesta confirma jugador/organizador/scorer con jugadores activos, redirige completando la cuenta autorizada.
+- `middleware.js`: cuando la sesion confirmada es solo visor, redirige a `live-hub.html` en lugar de entregar texto plano de 403.
+- `test-live-share-middleware.mjs`: agrega regresion para la captura R211 con `Acceso personal no autorizado`; tambien conserva el control negativo de cuenta explicita ajena.
+- `release.json`, `index-grupal.html` y `service-worker.js`: release sincronizada `20261008-R212`, etiqueta visible `R212`, version tecnica `R212-PERSONAL-EVENT-NAVIGATION-REPAIR`.
+- Motivo fisico: captura de Produccion mostro pantalla negra con `Acceso personal no autorizado` despues del intento con codigo de torneo.
+- Estado: gates y despliegue pendientes antes de pedir nueva prueba fisica.
 
 ## R211 · Codigo de torneo no queda sombreado por sesion de codigo · 8 de octubre de 2026
 
