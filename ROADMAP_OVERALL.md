@@ -1,3 +1,9 @@
+## R211 · Sello de inventario junto al parche cliente · 8 de octubre de 2026
+
+- Gate Vercel: el commit de sello aislado quedo bloqueado porque `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` no cambiaron en la misma modificacion.
+- Accion: se registra en ambos ROADMAPS el sellado de `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` para el parche cliente de codigos de torneo.
+- Alcance: conserva el cache-bust de `personal-events.js` y el fallback de tarjeta asignada R211.
+
 ## R211 · Defensa adicional de apertura tras codigo consumido · 8 de octubre de 2026
 
 - Se versiona `personal-events.js` desde `index-grupal.html` para forzar el cliente de join corregido.

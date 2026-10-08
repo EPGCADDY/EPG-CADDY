@@ -1,3 +1,9 @@
+## R211 · Sello de inventario junto al parche cliente · 8 de octubre de 2026
+
+- Gate Vercel: el commit de inventario aislado fallo porque el ROADMAP gate exige `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md` dentro de la misma modificacion.
+- Archivo registrado: `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` queda sellado con el digest de las fuentes activas del parche R211.
+- Validacion esperada: `node scripts/roadmap-gate.mjs` y `VERCEL=1 node scripts/inventory-gate.mjs` deben pasar en el proximo deployment.
+
 ## R211 · Parche tecnico complementario al cierre de gates · 8 de octubre de 2026
 
 - `personal-events.js?v=20261008-R211` evita que PWA/Safari use un cliente anterior con modal de preparacion defectuoso.
