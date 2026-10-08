@@ -1,3 +1,11 @@
+## RC-118 · R199 se detenía en Producción antes de probar LAB · 8 OCTUBRE 2026
+
+- Defecto físico reportado: en Producción R199 el código `6D5ECEC172` mostraba `ACCESO PERSONAL AÚN NO ACTIVADO EN LAB` al tocar ENTRAR.
+- Causa raíz: el cliente ejecutaba `identity` en el ambiente local antes del `join-code`; Producción respondía `PERSONAL_ACCESS_NOT_ENABLED` y `requestTournamentCode()` sólo reintentaba el ambiente par con `LIVE_JOIN_CODE_INVALID`.
+- Punto de escape: R199 probó la API LAB directa y el consumo sin cookie, pero no simuló Producción con acceso personal local desactivado antes del salto a LAB.
+- Control permanente: `test-r191-cross-environment-tournament-entry.mjs` ahora reproduce esa condición exacta y exige reintento a LAB; `test-lab-device-event-identity.mjs` mantiene la identidad segura y consumo único.
+- Estado: CORREGIDO EN CANDIDATO R200; publicación y verificación externa pendientes.
+
 ## RC-116 · QuickType no insertaba la sugerencia en R192/R193 · 7 OCTUBRE 2026
 
 - El usuario volvió a probar R193 desde el Laboratorio ya actualizado y QuickType continuó sin insertar la palabra.

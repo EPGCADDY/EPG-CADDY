@@ -3968,6 +3968,13 @@ El gate `test-v307-match-arrows-format.mjs` quedó desfasado: buscaba `· MEDAL 
 El control V307 tenía una segunda expectativa obsoleta: `matchSymbol` ahora representa el empate con `=` accesible además de las flechas de victoria/derrota. El test se alinea al comportamiento vigente; no cambia la aplicación. CI remoto pendiente.
 
 
+## R200 · ingreso de torneo LAB desde Producción con acceso local apagado · 8 octubre 2026
+
+- `personal-events.js`: el flujo de código de torneo reintenta el ambiente par cuando el ambiente local responde `PERSONAL_ACCESS_NOT_ENABLED`, para no detenerse antes de llegar al origen dueño del código.
+- `test-r191-cross-environment-tournament-entry.mjs`: reproduce Producción sin acceso personal local y LAB activo; exige que `join-code` llegue a LAB con credenciales cross-origin.
+- `index-grupal.html`, `service-worker.js` y `release.json`: suben a R200 para forzar actualización visible.
+- No se consume el código real durante verificación automática; la unión oficial sigue dependiendo del código de un solo uso en el backend dueño.
+
 ## R173-B1 CI follow-up · 5 octubre 2026 · matriz de categorías
 El diagnóstico R80 detectó que la tarjeta global de juego general imprimía sólo el nombre del jugador. Se corrigió `strokeHalf` para incluir categoría y nombre con el mismo formato accesible que las demás modalidades. CI remoto pendiente.
 

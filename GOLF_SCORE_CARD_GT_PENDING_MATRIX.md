@@ -1,3 +1,11 @@
+## R200 · código de LAB desde Producción salta si el acceso personal local está apagado · 8 octubre 2026
+
+- Defecto observado en Producción R199: el código `6D5ECEC172` ya se inspeccionaba correctamente en LAB, pero al tocar ENTRAR el cliente mostraba `ACCESO PERSONAL AÚN NO ACTIVADO EN LAB`.
+- Causa raíz: `requestTournamentCode()` intentaba primero `identity` en Producción y se detenía cuando Producción respondía `PERSONAL_ACCESS_NOT_ENABLED`; nunca alcanzaba el ambiente LAB dueño del código.
+- Corrección: para `inspect-tournament-code` y `join-code`, `PERSONAL_ACCESS_NOT_ENABLED` en el ambiente local se trata como condición de reintento hacia el ambiente par, igual que `LIVE_JOIN_CODE_INVALID`. El backend dueño conserva la validación del código, campo, modalidad, jugadores, capacidad y consumo único.
+- Control permanente: `test-r191-cross-environment-tournament-entry.mjs` reproduce Producción con acceso personal local desactivado y LAB activo; `test-lab-device-event-identity.mjs` conserva identidad segura y consumo de un solo uso.
+- Estado: regresiones dirigidas PASS local; publicación R200 LAB/Producción pendiente.
+
 ## R194 · QuickType en nombres: retirar transformación a mayúsculas · 7 de octubre de 2026
 
 - La prueba física R193 seguía fallando aun después de actualizar el alias del Laboratorio.

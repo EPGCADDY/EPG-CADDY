@@ -4072,6 +4072,15 @@ El gate `test-v307-match-arrows-format.mjs` quedó desfasado: buscaba `· MEDAL 
 El control V307 tenía una segunda expectativa obsoleta: `matchSymbol` ahora representa el empate con `=` accesible además de las flechas de victoria/derrota. El test se alinea al comportamiento vigente; no cambia la aplicación. CI remoto pendiente.
 
 
+## R200 · ingreso de torneo LAB desde Producción con acceso local apagado · 8 octubre 2026
+
+- `personal-events.js` · agrega `shouldTryPeerTournamentCode()` para que `PERSONAL_ACCESS_NOT_ENABLED` del ambiente local no bloquee el reintento contra el ambiente par durante `inspect-tournament-code` y `join-code`.
+- `test-r191-cross-environment-tournament-entry.mjs` · cambia el escenario base: Producción responde `PERSONAL_ACCESS_NOT_ENABLED` en `identity`, LAB responde identidad válida y `join-code` correcto; confirma source `lab` y lecturas futuras contra LAB.
+- `release.json` · `20261008-R200`, `R200-TOURNAMENT-ENTRY-PEER-FALLBACK-WHEN-LOCAL-PERSONAL-OFF`.
+- `index-grupal.html` · meta `gscg-release` y badge visible `VERSIÓN R200`.
+- `service-worker.js` · cache y fallback R200 para invalidar la versión instalada R199.
+- `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md` y registro de reincidencias · documentan causa, escape y control permanente.
+
 ## R173-B1 CI follow-up · 5 octubre 2026 · matriz de categorías
 El diagnóstico R80 detectó que la tarjeta global de juego general imprimía sólo el nombre del jugador. Se corrigió `strokeHalf` para incluir categoría y nombre con el mismo formato accesible que las demás modalidades. CI remoto pendiente.
 
