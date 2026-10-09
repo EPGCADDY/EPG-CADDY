@@ -2,7 +2,7 @@
 
 - `event-administration-ui.js`: se revierte el filtro que dejaba pasar sólo `tournament`; Administración vuelve a mostrar `tournament` y `private` de LAB/Producción bajo `TORNEOS Y RONDAS`, conservando Scores General/Categorías, compartir código, eliminar y la sección separada `GRUPOS INVITADOS 48H`.
 - `event-administration-ui.js`: la consulta al directorio global vuelve a pedir `includeGroups:true` para que las rondas/grupos activos federados no desaparezcan de LAB ni Producción.
-- `test-r185-round-delete-ui.mjs`, `test-r167-admin-share-feedback.mjs` y `test-r181-global-groups-directory.mjs`: las regresiones ya no protegen el listado sólo de torneos; ahora exigen que las rondas/grupos privados ordinarios aparezcan junto con los torneos.
+- `test-r185-round-delete-ui.mjs`, `test-r167-admin-share-feedback.mjs`, `test-r177-cross-device-admin.mjs` y `test-r181-global-groups-directory.mjs`: las regresiones ya no protegen el listado sólo de torneos; ahora exigen que las rondas/grupos privados ordinarios aparezcan junto con los torneos.
 - `release.json`, `index-grupal.html` y `service-worker.js`: identidad R239 y caché sincronizado para entregar la corrección por ACTUALIZAR.
 
 ## R238 · LAB espejo firmado de accesos 48h de Producción · 9 de octubre de 2026

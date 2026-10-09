@@ -3,7 +3,7 @@
 - Síntoma físico: el propietario reportó que las listas de torneos y rondas desaparecieron en Organizador/Administrador después de los cambios de invitaciones 48h.
 - Causa raíz: la regresión R188 dejó `event-administration-ui.js` filtrando `administrationRows()` exclusivamente a `event_kind:'tournament'` y la consulta al directorio global ya no pedía `includeGroups:true`; las rondas/grupos ordinarios seguían en API, pero la UI los descartaba.
 - Punto de escape: varios bancos quedaron protegiendo el estado equivocado de “sólo torneos”, por lo que el build podía pasar aunque faltaran rondas/grupos activos.
-- Control permanente: `test-r185-round-delete-ui.mjs`, `test-r167-admin-share-feedback.mjs` y `test-r181-global-groups-directory.mjs` ahora exigen que Administración liste torneos y rondas/grupos ordinarios, manteniendo `GRUPOS INVITADOS 48H` separado.
+- Control permanente: `test-r185-round-delete-ui.mjs`, `test-r167-admin-share-feedback.mjs`, `test-r177-cross-device-admin.mjs` y `test-r181-global-groups-directory.mjs` ahora exigen que Administración liste torneos y rondas/grupos ordinarios, manteniendo `GRUPOS INVITADOS 48H` separado.
 - Estado: corregido en R239; publicación LAB/Producción y verificación pública pendientes en este turno.
 
 ## RC-142 · LAB instalado no mostraba los muchos accesos 48h visibles en Producción · 9 OCTUBRE 2026

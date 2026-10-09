@@ -4683,6 +4683,7 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `event-administration-ui.js` | `GRUPOS INVITADOS 48H` queda como sección independiente, por lo que la restauración de rondas ordinarias no mezcla los accesos 48h ni rompe la tarjeta Live invitada. |
 | `test-r185-round-delete-ui.mjs` | Exige que una ronda/grupo local y una ronda/grupo remoto activo aparezcan junto a los torneos, con Scores y eliminación. |
 | `test-r167-admin-share-feedback.mjs` | Actualiza el control global para aceptar el grupo privado propio en Administración y conservar permisos, colisiones de ID y acciones ajenas protegidas. |
+| `test-r177-cross-device-admin.mjs` | Actualiza la federación LAB/Producción para exigir que el grupo privado remoto siga siendo relayable y además visible en Administración. |
 | `test-r181-global-groups-directory.mjs` | Actualiza la expectativa del directorio global: Administración debe pedir grupos y mostrarlos, no excluirlos. |
 | `release.json`, `index-grupal.html`, `service-worker.js` | Publicación R239 y caché nuevo `r239-organizer-tournaments-rounds-restored`. |
 
