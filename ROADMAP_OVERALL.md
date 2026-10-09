@@ -1,6 +1,19 @@
 Warning: truncated output (original token count: 161452)
 Total output lines: 4562
 
+## R250 · Doble toque de jugador usa voz femenina y Live 48H aísla scroll · 9 de octubre de 2026
+
+- `index-grupal.html`: el audio individual disparado al tocar dos veces el nombre del jugador deja de crear su propia `SpeechSynthesisUtterance` y ahora usa `window.GSCDeviceClosures.speak()`, la misma ruta de primera vuelta, segunda vuelta y total.
+- `device-closures.js`: se conserva como fuente única de selección de voz local en español, priorizando voces femeninas como Paulina/Mónica antes de cualquier voz masculina disponible en el dispositivo.
+- `test-r250-player-double-tap-female-voice.mjs`: nuevo candado para impedir que el doble toque vuelva a seleccionar voces por separado con `speechSynthesis.getVoices()` o caiga en voz masculina.
+- `test-lab-r60-physical-matrix.mjs`: actualiza el contrato físico para exigir el texto de doble toque `LLAMANDO VOZ FEMENINA`.
+- `live.html` y `event-administration-ui.js`: la Tarjeta Live compartida por invitados 48H refuerza capas de scroll; cada bloque de jugador queda aislado con `contain:paint`, la tabla queda por encima y el resumen inferior ya no contamina el gesto horizontal.
+- `test-r242-live-scroll-layering.mjs`: amplía el candado de scroll/capas para exigir `z-index` correcto, `overscroll-behavior:contain`, aislamiento por jugador y resultados inferiores detrás de la tabla.
+- `scripts/build-manual-lab.mjs`, `release.json`, `index-grupal.html` y `service-worker.js`: incorporan R250 al banco obligatorio, badge visible y caché sincronizado.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: registra RC-147 para que la voz individual no vuelva a separarse de la voz femenina de resultados.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: resellado R250 con 949 fuentes y tres PDFs de inventario.
+- `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registran la modificación R250 y sus archivos dentro de la misma versión.
+
 ## R249 · Eliminar invitación 48H bloquea Score Card y Live · 9 de octubre de 2026
 
 - `event-administration-ui.js`: cada tarjeta de `GRUPOS INVITADOS 48H` agrega botón rojo `ELIMINAR 48H`, con confirmación antes de borrar.

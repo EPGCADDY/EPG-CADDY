@@ -6,7 +6,7 @@ const hub=fs.readFileSync('live-hub.js','utf8');
 const ui=fs.readFileSync('shortcuts-ui.js','utf8');
 
 for(const token of [
-  'SEGUNDO TOQUE DETECTADO · LLAMANDO VOZ LOCAL',
+  'SEGUNDO TOQUE DETECTADO · LLAMANDO VOZ FEMENINA',
   'if(isUniversalesRound())',
   'if(isStablefordRound())',
   'Acumulado total. Puntos',

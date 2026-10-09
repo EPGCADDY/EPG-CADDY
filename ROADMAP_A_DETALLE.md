@@ -1,6 +1,23 @@
 Warning: truncated output (original token count: 168243)
 Total output lines: 4732
 
+## R250 · Voz femenina unificada y scroll Live 48H aislado · 9 de octubre de 2026
+
+- Pedido físico del propietario: la voz de la señora que ya anuncia primera vuelta, segunda vuelta y total debe anunciar también el resultado individual de cada jugador al tocar dos veces su nombre; no debe sonar una voz masculina distinta.
+- Pedido físico adicional del propietario: revisar el scroll de la Tarjeta Live compartida desde invitados 48H porque la pantalla o resumen debajo de la tarjeta podía estar contaminando el gesto.
+- `index-grupal.html`: `speakPlayerResultDirectLocal(player)` deja de usar `window.speechSynthesis`, `new SpeechSynthesisUtterance`, `getVoices()` y una selección local paralela. Ahora obtiene el texto con `requestedPlayerResultSpeech(player)` y lo reproduce con `window.GSCDeviceClosures.speak(speech)`.
+- `index-grupal.html`: el segundo toque conserva el flujo físico aprobado, pero el estado visible cambia a `SEGUNDO TOQUE DETECTADO · LLAMANDO VOZ FEMENINA` y el resultado se anuncia por el mismo helper de cierres.
+- `device-closures.js`: queda como selector único de voz local en español para cierres y resultado individual; mantiene prioridad femenina (`Paulina`, `Mónica`, `Marisol`, `femenina`, etc.) antes de voces españolas genéricas.
+- `live.html`: refuerza la Tarjeta Live compartida con `.player-live{z-index:2;contain:paint}`, `.score-scroll{z-index:3;overscroll-behavior:contain}` y `.group-results{z-index:1}` para que la tabla del jugador no quede contaminada por la pantalla inferior.
+- `event-administration-ui.js`: aplica el mismo refuerzo al diálogo de Tarjeta Live 48H abierto desde Organizador.
+- `test-r242-live-scroll-layering.mjs`: actualiza el candado para exigir aislamiento de pintura por jugador, tabla arriba y resumen inferior detrás.
+- `test-r250-player-double-tap-female-voice.mjs`: valida que el doble toque use `GSCDeviceClosures`, que no exista selección paralela en esa función y que el candado esté dentro de `scripts/build-manual-lab.mjs`.
+- `test-lab-r60-physical-matrix.mjs`: cambia el requisito histórico de `LLAMANDO VOZ LOCAL` a `LLAMANDO VOZ FEMENINA`.
+- Release: `release.json`, `service-worker.js` e `index-grupal.html` sincronizan `20261009-R250`, etiqueta visible `R250` y versión técnica `R250-VOICE-AND-LIVE48H-SCROLL-LAYER`.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: agrega RC-147 con causa raíz, escape y control permanente.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: queda resellado como `R250-LAB-RELEASE` con 949 fuentes y PDFs regenerados.
+- `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: quedan actualizados dentro de la misma modificación para cubrir todos los archivos R250.
+
 ## R249 · Botón rojo para eliminar invitaciones 48H · 9 de octubre de 2026
 
 - Pedido físico del propietario: en `GRUPOS INVITADOS 48H`, cada ronda compartida debe tener la misma posibilidad de eliminación que los torneos; al eliminarla no debe quedar rastro funcional en Score Card ni tarjeta Live.

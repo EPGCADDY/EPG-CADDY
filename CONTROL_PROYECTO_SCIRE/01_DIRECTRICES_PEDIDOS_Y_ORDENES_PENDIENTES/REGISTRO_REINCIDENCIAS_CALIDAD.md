@@ -1,3 +1,19 @@
+## RC-148 · Scroll Live 48H podía recibir interferencia del resumen inferior · 9 OCTUBRE 2026
+
+- Síntoma físico: el propietario reportó que el scroll de la Tarjeta Live compartida desde invitados 48H parecía contaminado por la pantalla o contenido que queda debajo de la tarjeta.
+- Causa raíz probable: aunque R242 había aislado `.score-scroll`, el contenedor `.player-live` seguía con `z-index:0`; el resumen inferior se pintaba después en el mismo `group-card` y podía competir con la tabla al gesto táctil.
+- Punto de escape: el candado R242 validaba la capa de `.score-scroll`, pero no exigía `contain:paint` ni orden explícito entre bloque de jugador y `group-results`.
+- Control permanente: `test-r242-live-scroll-layering.mjs` ahora exige `.player-live` con `z-index:2; contain:paint`, `.score-scroll` con `z-index:3` y `overscroll-behavior:contain`, y `group-results` detrás con `z-index:1`.
+- Estado: reforzado en R250 para Live público y diálogo de Organizador 48H; pendiente publicación y verificación pública LAB/Producción en este turno.
+
+## RC-147 · Doble toque individual usaba voz masculina distinta · 9 OCTUBRE 2026
+
+- Síntoma físico: la voz femenina correcta anunciaba primera vuelta, segunda vuelta y total, pero al tocar dos veces un jugador el resultado individual salía con una voz masculina distinta y poco entendible.
+- Causa raíz: `speakPlayerResultDirectLocal()` tenía una ruta paralela con `SpeechSynthesisUtterance` y `speechSynthesis.getVoices()` que escogía la primera voz local en español por región, sin reutilizar el selector femenino de `device-closures.js`.
+- Punto de escape: los candados existentes validaban el contenido del doble toque y la voz femenina de cierres/48H, pero no exigían que el doble toque individual compartiera el mismo helper de voz.
+- Control permanente: `test-r250-player-double-tap-female-voice.mjs` exige que el doble toque use `window.GSCDeviceClosures.speak()`, no seleccione voces en paralelo y quede en el banco obligatorio.
+- Estado: corregido en R250; pendiente publicación y verificación pública LAB/Producción en este turno.
+
 ## RC-146 · Organizador mostraba invitaciones 48H vacías e históricas · 9 OCTUBRE 2026
 
 - Síntoma físico: Producción mostró muchas tarjetas `ACCESO COMPARTIDO 48H` sin tarjeta Live, mientras el propietario esperaba ver sólo la ronda activa cuyo primer jugador era `CHINITO`; LAB no reflejaba esa tarjeta activa.
