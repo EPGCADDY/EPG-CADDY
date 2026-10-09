@@ -4652,3 +4652,14 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `live.html`, `release.json`, `index-grupal.html`, `service-worker.js` | Identidad R233 y cache actualizado. |
 | `event-administration.html` | El `X` del Organizador queda fijo, tocable y sin tapar la lista o tarjetas 48h; el Organizador y la tarjeta Live conservan scroll táctil. |
 | `test-r231-live-card-readability.mjs` | Regresión para exigir `+/- ACUMULADO` en Live/Organizador y el cierre fijo del Organizador. |
+
+
+## R237 · invitaciones 48h Producción/LAB en Organizador · 9 octubre 2026
+
+| Archivo | Cambio |
+|---|---|
+| `api/event-administration.js` | `guestGroupRows()` crea una fila visible para cada grant 48h aunque `guest_groups` venga vacío; marca `has_snapshot` y mantiene la fusión del ambiente par para mostrar en LAB lo creado en Producción. |
+| `event-administration-ui.js` | La tarjeta del Organizador cambia a `ACCESO COMPARTIDO 48H`, muestra `LAB`/`PRODUCTION`, vencimiento y deshabilita sólo el botón Live cuando aún no hay snapshot, sin ocultar la invitación. |
+| `release.json`, `index-grupal.html`, `service-worker.js` | Identidad R237 y cache sincronizado. |
+| `test-r237-cross-environment-48h-invitations.mjs` | Banco nuevo que exige invitaciones 48h cruzadas entre ambientes y filas visibles sin tarjeta Live registrada. |
+| `test-r229-organizer-guest48h-live-card.mjs`, `test-r231-live-card-readability.mjs` | Expectativas actualizadas para el nuevo estado pendiente y la línea de origen/vigencia. |
