@@ -1,3 +1,24 @@
+## R230 · Access propietario sólo comparte app 48 horas · 8 de octubre de 2026
+
+- `access.html`: el panel propietario queda reducido a una sola opción visible: `COMPARTIR APP 48 HORAS`; se retiran código para jugador, actividad anónima y textos de consulta.
+- `test-r230-owner-access-48h-only.mjs`: nuevo candado para impedir que vuelvan opciones ajenas a la invitación 48h.
+- `scripts/build-manual-lab.mjs`, `release.json`, `service-worker.js` e `index-grupal.html`: incorporan R230 al banco obligatorio, badge visible, meta release y caché PWA.
+
+## R229 · Organizador abre tarjeta Live de grupos invitados 48h · 8 de octubre de 2026
+
+- `event-administration-ui.js`: las tarjetas compactas de `GRUPOS INVITADOS 48H` ya no usan el nombre del grupo como identificador; muestran como título el primer jugador registrado en la Score Card.
+- `event-administration-ui.js`: al tocar `ABRIR TARJETA LIVE`, Organizador abre una tarjeta digital completa tipo Live con 18 hoyos, nombres verdes en mayúsculas, `RESULTADOS ACUMULADOS` y `+/- POR HOYO`.
+- `event-administration.html`: el diálogo de Organizador se amplía para tarjeta Live móvil, con tabla horizontal y sin el resumen de bullets como vista principal.
+- `test-r229-organizer-guest48h-live-card.mjs`: nuevo candado para vista Live desde Organizador y título por primer jugador.
+- `scripts/build-manual-lab.mjs`, `release.json`, `service-worker.js` e `index-grupal.html`: incorporan R229 al banco obligatorio, badge visible, meta release y caché PWA.
+
+## R228 · Tarjeta Live 48h sin traslape y con resultados acumulados · 8 de octubre de 2026
+
+- `live-view.js`: la tarjeta Live compartida por el invitado 48h deja de mostrar el título del grupo, mantiene campo/fecha/modalidad, cambia `+ / −` a `+/- POR HOYO` y agrega el separador `RESULTADOS ACUMULADOS` entre la tabla de 18 hoyos y los totales.
+- `live.html`: corrige el montaje superior de la vista Live reservando espacio seguro para cerrar/menú; los nombres de jugadores quedan en mayúsculas, verdes y sin subrayado.
+- `test-r228-live-48h-shared-card-layout.mjs`: nuevo candado para tarjeta Live 48h compartida, nombres, título eliminado, `RESULTADOS ACUMULADOS`, `+/- POR HOYO` y traslape superior.
+- `scripts/build-manual-lab.mjs`, `release.json`, `service-worker.js` e `index-grupal.html`: incorporan R228 al banco obligatorio, badge visible, meta release y caché PWA.
+
 ## R227 · Grupos invitados 48h visibles en Organizador · 8 de octubre de 2026
 
 - `api/_lib/app-access.js`: el feedback de invitados 48h ahora persiste filas independientes en `app_access_guest_groups`, una por dispositivo/grupo, sin perder el `current_snapshot` legacy del enlace.

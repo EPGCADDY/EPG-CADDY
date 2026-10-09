@@ -1,3 +1,32 @@
+## R230 · Access propietario con única opción 48 horas · 8 de octubre de 2026
+
+- `access.html`: el texto del panel propietario se reduce a crear únicamente el enlace compartido válido por 48 horas; conserva la aclaración de que Registro no necesita credenciales.
+- `access.html`: la sección propietaria elimina `CREAR CÓDIGO PARA JUGADOR`, `VER ACTIVIDAD ANÓNIMA`, `reportData`, `create-code`, `revoke-code` y el handler de reporte.
+- `access.html`: el único botón operativo queda con el texto exacto `COMPARTIR APP 48 HORAS`; copiar y revocar se mantienen como controles del mismo enlace.
+- `test-r230-owner-access-48h-only.mjs`: valida la opción única 48h, el texto aprobado, ausencia de opciones/reportes/códigos y entrada libre.
+- `scripts/build-manual-lab.mjs`: ejecuta el gate R230 dentro del banco obligatorio.
+- `release.json`, `service-worker.js`, `index-grupal.html`: sincronizan `20261008-R230`, `VERSIÓN R230`, caché `v402-r230-owner-access-48h-only` y `personal-events.js?v=20261008-R230`.
+
+## R229 · Tarjeta Live desde Organizador para invitados 48h · 8 de octubre de 2026
+
+- `event-administration-ui.js`: `guestGroupTitle()` identifica cada grupo invitado por el primer jugador del registro de la Score Card; deja de usar `snapshot.groupLabel` como título visible.
+- `event-administration-ui.js`: agrega `guestGroupLiveCard()`, `guestPlayerLiveCard()` y utilidades de tabla para que el propietario abra cada ronda invitada 48h como una tarjeta digital tipo Live completa.
+- `event-administration-ui.js`: `guestGroupCard()` queda como tarjeta compacta con botón `ABRIR TARJETA LIVE`; el resumen de jugadores en bullets deja de ser la vista principal.
+- `event-administration.html`: agrega reglas de diálogo ancho móvil, tabla `score-live`, nombres verdes/mayúsculos/sin subrayado, separador `RESULTADOS ACUMULADOS` y totales acumulados.
+- `test-r229-organizer-guest48h-live-card.mjs`: valida apertura dedicada desde Organizador, tabla de 18 hoyos, título por primer jugador, ausencia de `groupLabel` como título y bloqueo del resumen de bullets.
+- `scripts/build-manual-lab.mjs`: ejecuta el gate R229 dentro del banco obligatorio.
+- `release.json`, `service-worker.js`, `index-grupal.html`: sincronizan `20261008-R229`, `VERSIÓN R229`, caché `v401-r229-organizer-guest48h-live-card` y `personal-events.js?v=20261008-R229`.
+
+## R228 · Tarjeta digital Live del invitado 48h · 8 de octubre de 2026
+
+- `live-view.js`: `streamCard()` elimina el `<h2>` con el nombre del grupo para que no aparezca `GRUPO CHINITO` ni ningún título equivalente en la tarjeta Live compartida.
+- `live-view.js`: `playerCard()` cambia la fila de resultado por hoyo a `+/- POR HOYO`, agrega `RESULTADOS ACUMULADOS` antes de los totales y cambia la tarjeta de totales a la misma nomenclatura.
+- `live.html`: la vista Live declara `gsc-navigation-unused`, fija su propio botón de cierre y reserva `padding-top` seguro para evitar que el cierre/menú se monte sobre la tarjeta.
+- `live.html`: los nombres de jugadores en la tarjeta Live quedan verdes, mayúsculos y sin subrayado, conservando foco accesible.
+- `test-r228-live-48h-shared-card-layout.mjs`: valida el flujo estático de la tarjeta Live 48h compartida con datos de `GRUPO CHINITO`, bloqueo del título, metadatos visibles, separación de resumen y etiquetas solicitadas.
+- `scripts/build-manual-lab.mjs`: agrega la regresión R228 al banco obligatorio.
+- `release.json`, `service-worker.js`, `index-grupal.html`: sincronizan `20261008-R228`, `VERSIÓN R228`, caché `v400-r228-live-48h-shared-card-layout` y `personal-events.js?v=20261008-R228`.
+
 ## R227 · Invitaciones 48h como grupos individuales en Organizador · 8 de octubre de 2026
 
 - `api/_lib/app-access.js`: agrega tabla `app_access_guest_groups` con `grant_id`, `group_key`, snapshot, modalidad, jugadores, hoyos y contadores; `recordGuestFeedback()` hace upsert por grupo y `ownerFeedback()` devuelve `guest_groups`.

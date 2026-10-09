@@ -1,3 +1,29 @@
+## R230 · Access propietario sólo 48 horas
+
+| Archivo | Rol actualizado | Gate / evidencia |
+| --- | --- | --- |
+| `access.html` | Deja una sola opción propietaria: `COMPARTIR APP 48 HORAS`; retira código para jugador, actividad anónima y handlers asociados. | `test-r230-owner-access-48h-only.mjs` |
+| `test-r230-owner-access-48h-only.mjs` | Regresión de opción única 48h, texto exacto, ausencia de opciones retiradas y entrada libre. | Banco LAB obligatorio |
+| `release.json`, `service-worker.js`, `index-grupal.html`, `scripts/build-manual-lab.mjs` | Identidad R230, caché PWA y banco obligatorio actualizado. | `scripts/release-matrix-gate.mjs` |
+
+## R229 · Organizador abre tarjeta Live de invitados 48h
+
+| Archivo | Rol actualizado | Gate / evidencia |
+| --- | --- | --- |
+| `event-administration-ui.js` | Identifica cada tarjeta compacta por el primer jugador de la Score Card y abre una vista tipo Live completa por grupo invitado 48h. | `test-r229-organizer-guest48h-live-card.mjs` |
+| `event-administration.html` | Amplía el diálogo móvil y agrega estilos Live para tabla de 18 hoyos, nombres verdes/mayúsculos y resultados acumulados. | `test-r229-organizer-guest48h-live-card.mjs` |
+| `test-r229-organizer-guest48h-live-card.mjs` | Regresión de apertura desde Organizador, ausencia de título por grupo, título por primer jugador y bloqueo del resumen de bullets. | Banco LAB obligatorio |
+| `release.json`, `service-worker.js`, `index-grupal.html`, `scripts/build-manual-lab.mjs` | Identidad R229, caché PWA y banco obligatorio actualizado. | `scripts/release-matrix-gate.mjs` |
+
+## R228 · Tarjeta digital Live 48h compartida
+
+| Archivo | Rol actualizado | Gate / evidencia |
+| --- | --- | --- |
+| `live-view.js` | Quita el título del grupo en la tarjeta Live compartida; agrega `RESULTADOS ACUMULADOS`; cambia `+ / −` por `+/- POR HOYO`. | `test-r228-live-48h-shared-card-layout.mjs` |
+| `live.html` | Corrige traslape superior de cierre/menú y fija nombres de jugadores verdes, mayúsculos y sin subrayado. | `test-r228-live-48h-shared-card-layout.mjs` |
+| `test-r228-live-48h-shared-card-layout.mjs` | Regresión de tarjeta Live invitado 48h con datos de `GRUPO CHINITO`. | Banco LAB obligatorio |
+| `release.json`, `service-worker.js`, `index-grupal.html`, `scripts/build-manual-lab.mjs` | Identidad R228, caché PWA y banco obligatorio actualizado. | `scripts/release-matrix-gate.mjs` |
+
 ## R227 · Grupos invitados 48h dentro de Organizador
 
 | Archivo | Rol actualizado | Gate / evidencia |

@@ -18,7 +18,8 @@ assert.match(adminUi,/GRUPOS INVITADOS 48H/,'Organizer UI must render the 48h gu
 assert.match(adminUi,/function guestGroupCard\(group\)/,'Organizer UI must render an individual card for each 48h guest group');
 assert.match(adminUi,/current_snapshot/,'Organizer guest group card must use the score-card snapshot');
 assert.match(adminUi,/GUEST_48H_ADMIN_BLOCKED/,'Guest 48h mode must remain blocked from Organizer');
-assert.equal(release.release,'20261008-R227','Release id must be bumped to R227');
-assert.equal(release.label,'R227','Visible label must be R227');
+const releaseNumber=Number(String(release.label||'').replace(/^R/,''));
+assert.ok(releaseNumber>=227,'Release label must remain at R227 or later');
+assert.match(release.release,/^20261008-R\d+$/,'Release id must remain in the project release format');
 
 console.log('PASS R227 guest 48h groups: Organizer shows individual invited groups while guests stay blocked from Organizer.');

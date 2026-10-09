@@ -11,7 +11,7 @@ assert.match(html,/VERSIÓN R\d+/);
 assert.doesNotMatch(html,/id="ownerShare24h"|id="ownerTrialReport"/);
 assert.doesNotMatch(html,/PRUEBA · 48 H|VER PRUEBA 48 H/);
 assert.doesNotMatch(html,/app-access\?action=status[\s\S]*role==="owner"/);
-assert.match(access,/CREAR ENLACE DE PRUEBA 48 HORAS/);
-assert.match(access,/VER ACTIVIDAD ANÓNIMA/);
+assert.match(access,/COMPARTIR APP 48 HORAS/);
+assert.doesNotMatch(access,/VER ACTIVIDAD ANÓNIMA|CREAR CÓDIGO PARA JUGADOR/);
 
 console.log('PASS R224: Score Card pública sin botones 48h; panel privado conserva administración temporal.');

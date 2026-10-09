@@ -8,7 +8,7 @@ const guest=fs.readFileSync('guest-access.js','utf8');
 const gateMatrix=fs.readFileSync('CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.md','utf8');
 const gateJson=JSON.parse(fs.readFileSync('CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/MATRIZ_GATE_0_PROYECTO.json','utf8'));
 const pending=fs.readFileSync('GOLF_SCORE_CARD_GT_PENDING_MATRIX.md','utf8');
-assert.match(html,/type="password"[\s\S]*CREAR ENLACE DE PRUEBA 48 HORAS/);
+assert.match(html,/type="password"[\s\S]*COMPARTIR APP 48 HORAS/);
 assert.match(html,/action=redeem[\s\S]*source=guest48h/);
 assert.doesNotMatch(app,/id="ownerShare24h"|id="ownerTrialReport"|PRUEBA · 48 H|VER PRUEBA 48 H|action=report/);
 assert.doesNotMatch(app,/src="\.\/auth-gate\.js"/);
