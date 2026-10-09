@@ -2031,3 +2031,13 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `live.html` | Añade estilos del bloque grupal para lectura clara en móvil y escritorio. |
 | `test-r244-live-shared-group-results.mjs` | Nueva regresión que valida el bloque, columnas y acumulados por jugador. |
 | `scripts/build-manual-lab.mjs`, `test-r228-live-48h-shared-card-layout.mjs`, `test-r229-organizer-guest48h-live-card.mjs` | Integran R244 en el banco obligatorio y amplían los candados existentes de Live 48h. |
+
+## R245 · handicap plus y colores Live profesionales · 9 octubre 2026
+
+| Archivo | Cambio |
+|---|---|
+| `index-grupal.html` | Cambia la tecla de Registro de signo negativo a `+`, permite patrón `[+-]?[0-9]*`, transforma `+2` a handicap plus interno y lo vuelve a mostrar como `+2` en Registro, confirmación, Score Card y resúmenes. |
+| `index-grupal.html` | Mantiene el motor de golpes en índices altos: `+2` entrega en HDCP 17 y 18; `+3` entrega en HDCP 16, 17 y 18. Los círculos de esos tiros quedan rojos y ya no heredan el color de marca del jugador. |
+| `test-r223-negative-handicap-campeonato-a.mjs` | Actualiza el banco histórico para exigir captura `+2`, display `+2`, conversión interna a entrega de tiros al campo, neto inverso y círculo rojo en los HDCP más fáciles. |
+| `test-r244-live-shared-group-results.mjs` | Agrega casos `-1` verde y `+1` rojo en `+/- POR HOYO` y en `RESULTADOS DEL GRUPO`, sin restaurar `RESULTADOS ACUMULADOS` por jugador. |
+| `test-lab-live-mode-summary.mjs` | Ajusta la regresión antigua para el nuevo resumen grupal al pie y evita que el build vuelva a exigir acumulados individuales eliminados. |

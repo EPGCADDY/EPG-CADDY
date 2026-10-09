@@ -11,14 +11,26 @@ assert.match(html, /VERSIÓN R\d+/);
 
 assert.match(
   html,
-  /class="draft-hcp-input"[^>]+type="text"[^>]+inputmode="text"[^>]+pattern="-\?\[0-9\]\*"/,
-  'El HDCP de Registro debe permitir capturar signo menos en iPhone'
+  /class="draft-hcp-input"[^>]+type="text"[^>]+inputmode="text"[^>]+pattern="\[\+-\]\?\[0-9\]\*"/,
+  'El HDCP de Registro debe permitir capturar signo plus en iPhone'
 );
 assert.match(html, /championship">CAMPEONATO/);
 assert.match(html, /a">A/);
 assert.match(html, /hcp-stroke-give/);
+assert.match(html, /displayHandicapValue\(value\)[\s\S]*number<0\?`\+\$\{Math\.abs\(number\)\}`/);
+assert.match(html, /parseManualHandicapValue\(value\)[\s\S]*return-Number\(raw\.slice\(1\)\)/);
+assert.match(
+  html,
+  /\.hcp-stroke-give\{[^}]*color:var\(--red\)!important[^}]*border:2px solid var\(--red\)!important[^}]*border-radius:50%/s,
+  'Los tiros que el jugador entrega al campo deben marcarse con círculo rojo en la fila HDCP'
+);
+assert.match(
+  html,
+  /giveClass=st<0[\s\S]*style=giveClass\?"":` style="color:\$\{tee\.color\}"`[\s\S]*class="hcp-stroke-circle \$\{giveClass\?"hcp-stroke-give":""\}"/,
+  'El círculo de tiros entregados no debe heredar el color de la marca del jugador'
+);
 assert.match(html, /entrega \$\{given\.map/);
-assert.match(html, /data-draft-hcp-sign="\$\{i\}"/, 'Registro debe tener tecla visible - para HDCP');
+assert.match(html, /data-draft-hcp-sign="\$\{i\}"[^>]+aria-label="Poner handicap plus jugador \$\{i\+1\}">\+/s, 'Registro debe tener tecla visible + para handicap plus');
 assert.match(html, /draft-hcp-sign\.active/);
 assert.match(html, /net=gross-strokes/);
 
@@ -50,10 +62,16 @@ const context = {
 vm.createContext(context);
 vm.runInContext(`
 ${extractFunction('normalizeHandicapValue')}
+${extractFunction('displayHandicapValue')}
+${extractFunction('parseManualHandicapValue')}
 ${extractFunction('strokesOnHole')}
 this.strokesOnHole = strokesOnHole;
+this.displayHandicapValue = displayHandicapValue;
+this.parseManualHandicapValue = parseManualHandicapValue;
 `, context);
 
+assert.equal(context.parseManualHandicapValue('+2'), -2);
+assert.equal(context.displayHandicapValue(-2), '+2');
 assert.equal(context.strokesOnHole(-2, 17, context.SI_MEN), -1);
 assert.equal(context.strokesOnHole(-2, 18, context.SI_MEN), -1);
 assert.equal(Math.abs(context.strokesOnHole(-2, 1, context.SI_MEN)), 0);
@@ -66,4 +84,4 @@ assert.equal(
   -2
 );
 
-console.log('PASS R224/R223: Campeonato/A capturan HDCP negativo; -2 entrega tiros al campo y sube el neto.');
+console.log('PASS R224/R223: Campeonato/A capturan HDCP plus; +2 entrega tiros al campo en HDCP 17 y 18.');

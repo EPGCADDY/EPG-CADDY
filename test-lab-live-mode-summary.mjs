@@ -9,9 +9,10 @@ for(const mode of ['general','four_ball','stableford','universales']){
   for(const points of [0,6]){
     const snapshot={...serverSnapshot,mode,players:serverSnapshot.players.map(p=>({...p,totals:{...p.totals,stablefordPoints:points,universalesPoints:points}}))};
     const card=viewer.streamCard({id:'mode-regression',snapshot});
-    assert.equal(card.includes('<small>PUNTOS UNIVERSALES</small>'),mode==='universales',`Universales summary in ${mode}`);
-    assert.equal(card.includes('<small>PUNTOS</small>'),mode==='stableford',`Stableford summary in ${mode}`);
-    assert(card.includes('<small>GROSS</small>')&&card.includes('<small>NETO</small>'));
+    assert.equal(card.includes('universales-live-points'),mode==='universales',`Universales score row in ${mode}`);
+    assert(card.includes('RESULTADOS DEL GRUPO'));
+    assert(card.includes('<th>GROSS</th>')&&card.includes('<th>NETO</th>'));
+    assert(!card.includes('RESULTADOS ACUMULADOS'));
   }
 }
 console.log('PASS LIVE point summaries follow round mode, including legacy zero values');

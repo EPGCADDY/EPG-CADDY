@@ -2134,3 +2134,10 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - `live-view.js`: la tarjeta Live compartida agrega al pie `RESULTADOS DEL GRUPO` con `NOMBRE`, `HOYO`, `GROSS`, `NETO` y `+/-`, acumulando desde el primer hoyo capturado hasta el hoyo actual o final.
 - `event-administration-ui.js` y `live.html`: el Organizador 48h y la vista compartida usan el mismo resumen grupal y estilos compactos.
 - `test-r244-live-shared-group-results.mjs`: regresion obligatoria para bloquear que el resumen grupal desaparezca.
+
+## R245 · handicap plus y colores Live profesionales · 9 octubre 2026
+
+- `index-grupal.html`: la tecla de Registro pasa a `+`; un handicap escrito como `+2` se muestra así al jugador, pero opera internamente como plus handicap: el jugador entrega golpes al campo en los índices HDCP más fáciles.
+- `index-grupal.html`: los tiros entregados al campo se marcan con círculo rojo en la fila HDCP; `+2` marca HDCP 17 y 18, `+3` marca HDCP 16, 17 y 18.
+- `test-r223-negative-handicap-campeonato-a.mjs`: queda como candado de handicap plus para captura `+2`, display `+2`, neto inverso y distribución oficial en los índices altos.
+- `test-r244-live-shared-group-results.mjs` y `test-lab-live-mode-summary.mjs`: bloquean que Live duplique acumulados por jugador y validan rojo para `+` y verde para `-` en resultados por hoyo y acumulados del grupo.
