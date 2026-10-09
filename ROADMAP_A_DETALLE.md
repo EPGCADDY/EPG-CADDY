@@ -4664,3 +4664,11 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 - `test-r157-uniform-navigation.mjs`: agrega regresión para bloqueo de scroll en paneles generales del Organizador.
 - `test-r231-live-card-readability.mjs`: agrega regresión para cierre interno, bloqueo de scroll de fondo y scroll vertical propio del modal.
 - `live.html`, `release.json`, `index-grupal.html` y `service-worker.js`: identidad visible R234 y caché renovada para LAB y Producción idénticos.
+
+## R236 · MENÚ recupera acción móvil y alta de jugador activo · 8 octubre 2026
+
+- `shortcuts-ui.js`: `open()` ya no llama `lockShortcutScroll()` y `close()` ya no llama `unlockShortcutScroll()`; esto evita que el `body` fijo intercepte o congele taps en el botón MENÚ de LAB y Producción. El overlay conserva `position:fixed`, `overflow:auto` y cierre propio.
+- `index-grupal.html`: `renderDraft()` en `rosterEditMode` respeta `progressiveVisibleRegistrationCount`; al presionar `AGREGAR JUGADOR` la fila nueva queda visible hasta 6 jugadores y entra desde `rosterEditJoinHole`, preservando los scores existentes.
+- `test-r157-uniform-navigation.mjs`: cambia el candado para exigir que MENÚ no vuelva a aplicar body-lock y mantenga scroll interno.
+- `test-r224-registration-add-active-player.mjs` y `test-v263-compact-players-back-button.mjs`: confirman que el alta posterior hasta seis no borra la ronda ni los scores.
+- `release.json`, `service-worker.js`, `index-grupal.html`, `live.html` y `test-r231-live-card-readability.mjs`: sincronizan release `20261008-R236`, etiqueta visible `R236`, `personal-events.js?v=20261008-R236`, `live-view.js?v=20261008-R236` y cache `v408-r236-menu-tap-restore`.

@@ -4519,3 +4519,10 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - `test-r157-uniform-navigation.mjs`: agrega regresión para bloqueo de scroll en paneles generales del Organizador.
 - `test-r231-live-card-readability.mjs`: agrega regresión para cierre interno, bloqueo de scroll de fondo y scroll vertical propio del modal.
 - `live.html`, `release.json`, `index-grupal.html` y `service-worker.js`: identidad visible R234 y caché renovada para LAB y Producción idénticos.
+
+## R236 · MENÚ recupera acción móvil y alta de jugador activo · 8 octubre 2026
+
+- `shortcuts-ui.js`: el overlay MENÚ deja de fijar el `body` al abrir/cerrar para no perder taps en LAB/Producción; mantiene scroll propio del overlay y los botones vuelven a accionar.
+- `index-grupal.html`: al tocar `AGREGAR JUGADOR` durante una ronda activa se conserva visible la fila nueva hasta seis jugadores, sin borrar scores previos.
+- `test-r157-uniform-navigation.mjs` y `test-r224-registration-add-active-player.mjs`: bloquean la regresión de MENÚ con body-lock y la fila nueva oculta.
+- `live.html`, `release.json`, `service-worker.js` y `test-r231-live-card-readability.mjs`: sincronizan R236, cache `v408-r236-menu-tap-restore` y tarjeta Live/Organizador vigente.
