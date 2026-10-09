@@ -2043,3 +2043,13 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `test-lab-live-mode-summary.mjs` | Ajusta la regresión antigua para el nuevo resumen grupal al pie y evita que el build vuelva a exigir acumulados individuales eliminados. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Resellan juntos R245 para que ROADMAP gate e inventory gate validen el mismo árbol remoto en Vercel. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Sello final R245: conserva una modificación real de ROADMAPS en el mismo commit que reemite los blobs UTF-8 correctos para publicación. |
+
+## R246 · audio acumulado individual en Live 48h · 9 octubre 2026
+
+| Archivo | Cambio |
+|---|---|
+| `live.html` | Carga `device-closures.js` antes de `scores-ui.js` para reutilizar la misma voz local femenina de resultados en la tarjeta Live compartida. |
+| `live-view.js` | Agrega `playerAudioSummary()` y pasa `audioText` por jugador a `GSCScoresUI.bindRows()`, con frase acumulada hasta el hoyo actual. |
+| `scores-ui.js` | Si la fila trae `audioText`, un clic sobre el nombre reproduce sólo ese jugador y un segundo clic lo detiene; sin `audioText`, se conserva el flujo histórico de 18 scores. |
+| `test-r246-live-48h-player-audio-summary.mjs` | Valida carga de voz compartida, resumen individual hasta el hoyo actual, clic único para hablar y segundo clic para parar. |
+| `scripts/build-manual-lab.mjs` | Integra R246 al banco obligatorio del laboratorio para evitar regresiones en futuras publicaciones. |
