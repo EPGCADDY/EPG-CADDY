@@ -4526,3 +4526,11 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - `index-grupal.html`: al tocar `AGREGAR JUGADOR` durante una ronda activa se conserva visible la fila nueva hasta seis jugadores, sin borrar scores previos.
 - `test-r157-uniform-navigation.mjs` y `test-r224-registration-add-active-player.mjs`: bloquean la regresión de MENÚ con body-lock y la fila nueva oculta.
 - `live.html`, `release.json`, `service-worker.js` y `test-r231-live-card-readability.mjs`: sincronizan R236, cache `v408-r236-menu-tap-restore` y tarjeta Live/Organizador vigente.
+
+
+## R237 · LAB ve rondas privadas invitado 48h de Producción · 9 octubre 2026
+
+- `personal-events.js`: al entrar a `GRUPOS PARTICULARES`, LAB consulta su directorio local y el de Producción, etiqueta cada ronda como `LABORATORIO` o `PRODUCCIÓN` y enruta `join-code` al ambiente dueño de la ronda seleccionada.
+- `personal-events.js`: los enlaces de invitación privada reintentan `view-code` contra el ambiente par y conservan esa fuente al leer la ronda, evitando que LAB rechace una ronda creada en Producción.
+- `index-grupal.html`, `release.json` y `service-worker.js`: identidad R237 y cache nuevo para entregar `personal-events.js?v=20261009-R237`.
+- `test-r237-lab-private-guest-production-directory.mjs` y `scripts/build-manual-lab.mjs`: regresión permanente para directorio cruzado, source routing y cache bust de la corrección.
