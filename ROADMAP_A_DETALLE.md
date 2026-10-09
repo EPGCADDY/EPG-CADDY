@@ -4686,6 +4686,7 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `test-r177-cross-device-admin.mjs` | Actualiza la federación LAB/Producción para exigir que el grupo privado remoto siga siendo relayable y además visible en Administración. |
 | `test-r181-global-groups-directory.mjs` | Actualiza la expectativa del directorio global: Administración debe pedir grupos y mostrarlos, no excluirlos. |
 | `release.json`, `index-grupal.html`, `service-worker.js` | Publicación R239 y caché nuevo `r239-organizer-tournaments-rounds-restored`. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Resella el inventario con 940 fuentes reales del repo remoto, excluyendo el `package-lock.json` transitorio generado sólo por instalación local. |
 
 ## R238-B1 · ajuste de compuerta para relay firmado 48h · 9 octubre 2026
 
