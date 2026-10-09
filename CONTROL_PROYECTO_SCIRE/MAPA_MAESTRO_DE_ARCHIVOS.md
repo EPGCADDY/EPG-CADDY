@@ -1,3 +1,13 @@
+## R242 · Filtro de invitados 48H activos
+
+| Archivo | Función | Control |
+|---|---|---|
+| `api/event-administration.js` | Devuelve en `guestGroups` sólo accesos 48H con Score Card Live real y jugadores nombrados. | `test-r242-guest48h-only-live-groups.mjs` |
+| `event-administration-ui.js` | Filtra visualmente `GRUPOS INVITADOS 48H`, elimina tarjetas vacías y conserva título por primer jugador. | `test-r229-organizer-guest48h-live-card.mjs`, `test-r242-guest48h-only-live-groups.mjs` |
+| `test-r237-cross-environment-48h-invitations.mjs` | Actualiza el contrato LAB/Producción para espejo firmado sólo de tarjetas Live activas. | Banco LAB obligatorio |
+| `scripts/build-manual-lab.mjs` | Incorpora R242 al banco obligatorio. | `node scripts/build-manual-lab.mjs` |
+| `release.json`, `service-worker.js`, `index-grupal.html` | Identidad R242, caché PWA y asset query sincronizados. | `scripts/release-matrix-gate.mjs` |
+
 ## R241 · Backoff de cuota Neon en Organizador
 
 | Archivo | Rol actualizado | Gate / evidencia |
