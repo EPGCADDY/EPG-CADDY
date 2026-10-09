@@ -1,3 +1,11 @@
+## RC-149 · Información de Ronda no mostraba el hoyo actual en invitado 48H · 9 OCTUBRE 2026
+
+- Síntoma físico: en la Score Card de invitados 48 horas, `INFORMACIÓN DE RONDA` mostraba jugador y acumulados, pero no indicaba en qué hoyo iba cada jugador/grupo.
+- Causa raíz: el resumen general no tenía columna de progreso por jugador; el dato existía en la tarjeta viva pero no en el bloque local de información de ronda.
+- Punto de escape: los candados de títulos e IN/OUT validaban columnas existentes, pero no exigían columna de hoyo actual entre nombre y Gross IN.
+- Control permanente: `test-r251-guest48h-round-info-hole-column.mjs` exige columna `HOYO`, posición correcta y valor desde `latestRecordedHoleForPlayer(p)`.
+- Estado: corregido en R251; pendiente publicación y verificación pública LAB/Producción en este turno.
+
 ## RC-148 · Scroll Live 48H podía recibir interferencia del resumen inferior · 9 OCTUBRE 2026
 
 - Síntoma físico: el propietario reportó que el scroll de la Tarjeta Live compartida desde invitados 48H parecía contaminado por la pantalla o contenido que queda debajo de la tarjeta.

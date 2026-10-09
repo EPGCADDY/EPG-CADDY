@@ -1,6 +1,16 @@
 Warning: truncated output (original token count: 168243)
 Total output lines: 4732
 
+## R251 · Columna HOYO en Información de Ronda para invitados 48H · 9 de octubre de 2026
+
+- Pedido físico del propietario con foto: en la Score Card de invitados 48 horas, dentro de `INFORMACIÓN DE RONDA`, debe aparecer una columna entre `JUGADOR` y `GROSS IN` que indique el hoyo en que van.
+- `index-grupal.html`: el encabezado inicial, el encabezado regenerado por `render()` y el encabezado de tarjeta final agregan `HOYO` inmediatamente después de `JUGADOR`.
+- `index-grupal.html`: cada fila del resumen calcula `currentHole=latestRecordedHoleForPlayer(p)||""` y pinta ese valor antes del `GROSS IN`.
+- `index-grupal.html`: las filas vacías del resumen pasan de seis a siete celdas para conservar alineación.
+- `test-r251-guest48h-round-info-hole-column.mjs`: valida orden visual, dato de hoyo actual, filas vacías y permanencia del flujo invitado `source=guest48h`.
+- `test-round-information.mjs` y `test-v397-card-in-out-back-contract.mjs`: sincronizan el contrato histórico de títulos/IN/OUT con la nueva columna.
+- Release: `release.json`, `service-worker.js` e `index-grupal.html` sincronizan `20261009-R251`, etiqueta visible `R251` y versión técnica `R251-GUEST48H-ROUND-INFO-HOLE-COLUMN`.
+
 ## R250 · Voz femenina unificada y scroll Live 48H aislado · 9 de octubre de 2026
 
 - Pedido físico del propietario: la voz de la señora que ya anuncia primera vuelta, segunda vuelta y total debe anunciar también el resultado individual de cada jugador al tocar dos veces su nombre; no debe sonar una voz masculina distinta.

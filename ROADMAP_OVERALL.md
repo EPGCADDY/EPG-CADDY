@@ -1,6 +1,13 @@
 Warning: truncated output (original token count: 161452)
 Total output lines: 4562
 
+## R251 · Invitados 48H ven columna HOYO en Información de Ronda · 9 de octubre de 2026
+
+- `index-grupal.html`: `INFORMACIÓN DE RONDA` agrega columna `HOYO` inmediatamente después de `JUGADOR`, antes de `GROSS IN`, para mostrar el hoyo más reciente registrado por cada jugador.
+- `test-r251-guest48h-round-info-hole-column.mjs`: nuevo candado para validar la columna `HOYO`, su posición y el uso de `latestRecordedHoleForPlayer(p)`.
+- `test-round-information.mjs` y `test-v397-card-in-out-back-contract.mjs`: actualizan el contrato histórico de orden de columnas a `JUGADOR`, `HOYO`, `GROSS IN`, `GROSS OUT`, `GROSS TOTAL`.
+- `scripts/build-manual-lab.mjs`, `release.json`, `index-grupal.html` y `service-worker.js`: incorporan R251 al banco obligatorio, badge visible y caché sincronizado.
+
 ## R250 · Doble toque de jugador usa voz femenina y Live 48H aísla scroll · 9 de octubre de 2026
 
 - `index-grupal.html`: el audio individual disparado al tocar dos veces el nombre del jugador deja de crear su propia `SpeechSynthesisUtterance` y ahora usa `window.GSCDeviceClosures.speak()`, la misma ruta de primera vuelta, segunda vuelta y total.
