@@ -2166,5 +2166,4 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - `test-r177-cross-device-admin.mjs`: corrige el candado que esperaba el payload viejo de `list-peer-guest48h` y ahora exige `ownerAccountId`, desbloqueando el build.
 - `test-r222-guest-48h-shared-link.mjs`: cubre el reingreso por `/invite/<token>` hacia `index-grupal.html?source=guest48h` y bloquea que vuelva a fallar el enlace compartido.
 - `release.json`, `service-worker.js` e `index-grupal.html`: identidad visible pasa a R248 para publicar la corrección del enlace 48h reabrible.
-
-- Resellado R248 remoto: `index-grupal.html` y `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` quedan en el mismo árbol publicado para que Vercel valide inventario, sin cambiar la regla funcional del enlace 48h.
+- Resellado R248: `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` queda regenerado con el árbol exacto de publicación para que Vercel valide inventario sin cambiar la regla funcional del enlace 48h.

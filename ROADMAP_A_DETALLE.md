@@ -2074,5 +2074,4 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `test-r177-cross-device-admin.mjs` | Actualiza la regresión que bloqueó el build R247 para exigir el nuevo payload `ownerAccountId` del espejo firmado LAB/Producción. |
 | `test-r222-guest-48h-shared-link.mjs` | Agrega candado para el reingreso por el mismo enlace de WhatsApp: conserva `/invite/<token>`, vuelve a `index-grupal.html?source=guest48h` y no gasta un cupo adicional cuando la cookie coincide. |
 | `release.json`, `service-worker.js`, `index-grupal.html` | Identidad visible y cache pasan a R248 para publicar la corrección nueva y evitar servir el cliente anterior. |
-
-| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Resellado remoto R248 contra el árbol exacto publicado en GitHub para que Vercel valide el inventario después del ajuste de `index-grupal.html`. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Resellado R248 con el digest oficial calculado por `scripts/inventory-gate.mjs` sobre el árbol exacto que se publica. |
