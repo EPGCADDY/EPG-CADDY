@@ -1,3 +1,12 @@
+## R242 · Invitaciones 48H visibles sólo cuando tienen tarjeta Live · 9 de octubre de 2026
+
+- Defecto físico reportado: Producción mostraba muchas tarjetas `ACCESO COMPARTIDO 48H` con `SIN TARJETA LIVE AÚN`; el propietario indicó que sólo debe verse la ronda activa cuyo primer jugador en Score Card es `CHINITO`.
+- `api/event-administration.js`: `guestGroupRows()` ahora descarta cualquier grant/grupo 48H sin `current_snapshot.players` con nombre real; esto evita que Producción y el espejo de LAB publiquen invitaciones vacías.
+- `event-administration-ui.js`: `visibleGuestGroups()` refuerza el filtro en cliente, ordena por actualización reciente y `guestGroupCard()` conserva únicamente `ABRIR TARJETA LIVE`.
+- Sincronización LAB/Producción: la ruta firmada `list-peer-guest48h` sigue vigente; al filtrar en API, LAB debe recibir la misma tarjeta activa de Producción sin depender de cookie cruzada ni mostrar grants vacíos.
+- Regresión: `test-r242-guest48h-only-live-groups.mjs` exige filtro backend, filtro UI, eliminación de `SIN TARJETA LIVE AÚN`, título por primer jugador y presencia en el banco obligatorio.
+- Release: `release.json`, `index-grupal.html` y `service-worker.js` suben a `20261009-R242` / `R242-GUEST48H-LIVE-ONLY`.
+
 ## R241 · Backoff de directorio para no seguir quemando Neon · 9 de octubre de 2026
 
 - Diagnóstico operativo: el proyecto Neon `bold-block-51864691` está en plan `free_v3`, con periodo de cuota del 1 de octubre al 1 de noviembre de 2026; LAB y Producción son las ramas activas que acumularon consumo.
