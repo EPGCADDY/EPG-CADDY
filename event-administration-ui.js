@@ -1,4 +1,5 @@
 const $=id=>document.getElementById(id),escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function ensureGuestLiveScrollLayer(){if(document.getElementById('gscGuestLiveScrollLayer'))return;const style=document.createElement('style');style.id='gscGuestLiveScrollLayer';style.textContent='.guest-live-card{position:relative;isolation:isolate}.guest-live-card .player-live{position:relative;z-index:0}.guest-live-card .score-scroll{position:relative;z-index:2;display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;touch-action:pan-x;-webkit-overflow-scrolling:touch}.guest-live-card .score-live th:first-child,.guest-live-card .score-live td:first-child{z-index:3}.guest-live-card .player-total-title,.guest-live-card .player-total{position:relative;z-index:1}dialog:has(.guest-live-card){overscroll-behavior:contain}';document.head.appendChild(style)}
 if(document.cookie.split(";").some(value=>value.trim()==="gsc_guest_mode=1")){
   document.getElementById("status")&&(document.getElementById("status").textContent="ORGANIZADOR NO DISPONIBLE PARA INVITADOS 48H · COMPARTIR LIVE SÍ PERMANECE ACTIVO");
   throw new Error("GUEST_48H_ADMIN_BLOCKED");
@@ -47,8 +48,13 @@ function guestGroupLiveCard(group){
  return '<article class="group-card guest-live-card" data-guest-live-card="'+escape(group.id)+'"><header class="group-head"><div><div class="group-meta">'+escape(snapshot.course||'CAMPO')+(snapshot.tournament?' · '+escape(snapshot.tournament):'')+' · '+escape(date?format(date):'—')+'</div></div><span class="group-badge">'+escape(liveModeLabel(snapshot.mode))+' · RONDA EN CURSO</span></header>'+players.map((player,index)=>guestPlayerLiveCard(player,snapshot,index)).join('')+'</article>';
 }
 function guestGroupCard(group){
- const canOpen=!!group.current_snapshot;
- return '<article data-guest-group="'+escape(group.id)+'" data-event-source="'+escape(group.source)+'"><h3>'+escape(guestGroupTitle(group))+'</h3><p>'+escape(String(group.source||'').toUpperCase())+' · 48H'+(group.expires_at?' · VENCE '+escape(format(group.expires_at)):'')+'</p>'+(canOpen?'<button type="button" data-guest-group-open="'+escape(group.id)+'">ABRIR TARJETA LIVE</button>':'<button type="button" disabled>SIN TARJETA LIVE AÚN</button>')+'</article>';
+ return '<article data-guest-group="'+escape(group.id)+'" data-event-source="'+escape(group.source)+'"><h3>'+escape(guestGroupTitle(group))+'</h3><p>'+escape(String(group.source||'').toUpperCase())+' · 48H'+(group.expires_at?' · VENCE '+escape(format(group.expires_at)):'')+'</p><button type="button" data-guest-group-open="'+escape(group.id)+'">ABRIR TARJETA LIVE</button></article>';
+}
+function visibleGuestGroups(groups=[]){
+ return groups.filter(group=>{
+  const players=group?.current_snapshot?.players;
+  return Array.isArray(players)&&players.some(player=>String(player?.name||'').trim());
+ }).sort((a,b)=>new Date(b.updated_at||b.created_at||0)-new Date(a.updated_at||a.created_at||0));
 }
 let refreshSequence=0,cachedLocal={ok:false},cachedDirectory={ok:false},cachedCodes={},lastRowsSignature='';
 async function refresh({automatic=false,signal}={}){
@@ -60,7 +66,7 @@ async function refresh({automatic=false,signal}={}){
  if(result.ok)cachedLocal=result;if(directory.ok&&!directory.partial)cachedDirectory=directory;
  else if(directory.ok)cachedDirectory=directory;
  if(result.ok&&(!automatic||localChanged)){await window.GSCPersonalEvents.sync();cachedCodes=await window.GSCPersonalEvents.organizerCodes()||{}}if(sequence!==refreshSequence||signal?.aborted)return{ok:false};
- const codes=cachedCodes,rows=administrationRows(cachedLocal,cachedDirectory),guestGroups=result.ok?result.guestGroups||[]:cachedLocal.guestGroups||[];showStatus(result.ok?result:directory);
+ const codes=cachedCodes,rows=administrationRows(cachedLocal,cachedDirectory),guestGroups=visibleGuestGroups(result.ok?result.guestGroups||[]:cachedLocal.guestGroups||[]);showStatus(result.ok?result:directory);
  if(!result.ok&&cachedLocal.ok)$('status').textContent='SIN CONEXIÓN · CONSERVANDO LA ÚLTIMA LISTA';
  const signature=JSON.stringify([rows,guestGroups,codes]);
  if(automatic&&(signature===lastRowsSignature||document.querySelector('dialog[open],#gscWhatsAppInvitation,[data-gsc-dialog-backdrop]')))return{ok:directory.ok,partial:directory.partial,code:result.code||directory.code};
@@ -79,6 +85,7 @@ async function refresh({automatic=false,signal}={}){
 function event(e){return{eventId:e.id,eventKind:e.event_kind}}
 function preserveReturnTarget(){const link=document.querySelector('[data-gsc-close]'),target=new URLSearchParams(location.search).get('returnTo');if(!link||!target)return;try{const destination=new URL(target,location.origin);if(destination.origin===location.origin&&destination.pathname==='/index-grupal.html')link.href=destination.pathname+destination.search+destination.hash}catch{}}
 preserveReturnTarget();
+ensureGuestLiveScrollLayer();
 function open(content){$('action').innerHTML=content;$('actionStatus').textContent='';$('actionDialog').showModal()}
 function openGuestGroupLive(group){if(!group)return;open('<h2>TARJETA LIVE · INVITADO 48H</h2>'+guestGroupLiveCard(group))}
 function remove(e){if(!e)return;const label='ELIMINAR '+(e.event_kind==='private'?'GRUPO':'TORNEO');open('<h2>'+(e.event_kind==='tournament'?'CONFIRMA ELIMINAR':'CONFIRMAR '+label)+'</h2><p>'+escape(e.name)+'</p><p>¿DESEAS ELIMINAR ESTE '+(e.event_kind==='private'?'GRUPO':'TORNEO')+'?</p><button type="button" id="cancelDelete">CANCELAR</button><button class="danger" id="confirmDelete">'+label+'</button>');$('cancelDelete').onclick=()=>$('actionDialog').close();$('confirmDelete').onclick=async()=>{const b=$('confirmDelete');b.disabled=true;const local=e.source===cachedLocal.source,result=await call(local?'delete':'remote-delete',{...event(e),...(local?{}:{source:e.source}),confirmName:e.name,reason:'Eliminación confirmada por el usuario'});showStatus(result,'actionStatus');if(result.ok){cachedLocal.events=(cachedLocal.events||[]).filter(row=>row.id!==e.id||row.source&&row.source!==e.source);cachedDirectory.events=(cachedDirectory.events||[]).filter(row=>row.id!==e.id||row.source!==e.source);cachedDirectory.groups=(cachedDirectory.groups||[]).filter(row=>row.tournament_id!==e.id||row.source!==e.source);if(local)window.GSCPersonalEvents?.purgeDeletedEvents?.([{eventId:e.id,eventKind:e.event_kind}]);$('actionDialog').close();await refresh()}else b.disabled=false}}
