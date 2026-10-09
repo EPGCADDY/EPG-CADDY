@@ -4673,3 +4673,10 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `test-r237-cross-environment-48h-invitations.mjs` | Amplía la regresión R237 para bloquear el fallo visto en iPhone: Producción mostraba muchos accesos, pero LAB instalado no los recibía por autenticación cruzada. |
 | `test-r227-guest48h-organizer-groups.mjs` | Actualiza expectativas rígidas de import/release para aceptar el helper nuevo sin debilitar el bloqueo de invitados al Organizador. |
 | `release.json`, `index-grupal.html`, `service-worker.js` | Identidad R238 y cache `r238-lab-signed-production-guest48h-mirror` para forzar entrega nueva. |
+
+## R238-B1 · ajuste de compuerta para relay firmado 48h · 9 octubre 2026
+
+| Archivo | Cambio |
+|---|---|
+| `test-r177-cross-device-admin.mjs` | La prueba conserva la lectura `list-local` con cookie para torneos y agrega la expectativa de `list-peer-guest48h` con `Authorization` para grupos invitados 48h. Evita que la compuerta antigua bloquee el build R238. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Registran el ajuste de compuerta en el mismo commit que desbloquea la publicación. |

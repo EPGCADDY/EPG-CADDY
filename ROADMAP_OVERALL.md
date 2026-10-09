@@ -4522,3 +4522,7 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - `release.json`, `index-grupal.html` y `service-worker.js`: identidad R237 y caché actualizada para distribuir la corrección.
 - `test-r237-cross-environment-48h-invitations.mjs`, `test-r229-organizer-guest48h-live-card.mjs` y `test-r231-live-card-readability.mjs`: regresiones para bloquear que LAB vuelva a ocultar invitaciones 48h de Producción o que exija tarjeta Live antes de listarlas.
 - R237-INVENTARIO: `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` queda sellado con 940 fuentes después de agregar el banco `test-r237-cross-environment-48h-invitations.mjs`.
+
+## R238-B1 · build acepta espejo firmado 48h · 9 octubre 2026
+
+- `test-r177-cross-device-admin.mjs`: actualiza la regresión histórica LAB/Producción para esperar dos lecturas peer: `list-local` con cookie para torneos y `list-peer-guest48h` con `Authorization` para accesos 48h. Esto mantiene el bloqueo de administración cruzada y permite compilar R238 con el espejo firmado real.
