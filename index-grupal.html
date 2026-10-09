@@ -4451,4 +4451,317 @@ async function refreshCentralAccount(silent=false){
 }
 function openCentralAccount(){{}applyRememberedAccount();$("accountBackupOverlay")?.classList.add("visible");$("accountBackupOverlay")?.setAttribute("aria-hidden","false");refreshCentralAccount(true)}
 function hideCentralAccountPassword(){if($("accountPassword"))$("accountPassword").type="password";if($("accountPasswordVisible"))$("accountPasswordVisible").checked=false}
-function closeCentralAccount(){hideCentralAccountPassword();$("accountBackupOverlay")?.classList.remove("vis
+function closeCentralAccount(){hideCentralAccountPassword();$("accountBackupOverlay")?.classList.remove("visible");$("accountBackupOverlay")?.setAttribute("aria-hidden","true")}async function submitCentralAccount(action){
+  const email=$("accountEmail").value.trim().toLowerCase(),password=$("accountPassword").value,name=$("accountName").value.trim();
+  if(!/^\S+@\S+\.\S+$/.test(email)){setCentralAccountStatus("CORREO INVÁLIDO");return false}
+  if(password.length<8){setCentralAccountStatus("LA CONTRASEÑA DEBE TENER AL MENOS 8 CARACTERES");return false}
+  setCentralAccountStatus(action==="signup"?"CREANDO CUENTA…":"INICIANDO SESIÓN…");
+  const result=await window.GSCAccountBackup.account(action,{name,email,password});
+  if(!result.ok){setCentralAccountStatus(centralAccountMessage(result.code));return false}
+  persistRememberedAccount(name,email);$("accountPassword").value="";hideCentralAccountPassword();await refreshCentralAccount(true);queueMasterDataSnapshot("account-connected");await masterSyncChain;masterSyncBlockedUntil=0;await flushMasterSyncQueue();setCentralAccountStatus(`CUENTA CONECTADA · ${email.toUpperCase()}`);return true;
+}
+async function backupCentralNow(){
+  if(window.GSC_ACCOUNT_SIGNED_IN!==true){setCentralAccountStatus("INICIA SESIÓN PARA RESPALDAR");return false}
+  const uniqueRounds=window.GSCAccountBackup.officialRoundsForBackup(readRoundArchive(),round);
+  setCentralAccountStatus(`RESPALDANDO ${uniqueRounds.length} RONDAS…`);
+  if(uniqueRounds.length)for(const storedRound of uniqueRounds)queueMasterDataSnapshot("manual-central-backup",{roundOverride:storedRound});else queueMasterDataSnapshot("manual-central-backup",{includeRound:false});
+  await masterSyncChain;masterSyncBlockedUntil=0;await flushMasterSyncQueue();
+  const pending=window.GSCSyncQueue?.pendingOnly(readMasterSyncQueue())?.length||0;setCentralAccountStatus(pending?`RESPALDO PENDIENTE · ${pending} ENVÍOS EN COLA`:`RESPALDO CENTRAL COMPLETO · ${uniqueRounds.length} RONDAS`);return pending===0;
+}
+function restoreCentralProfiles(profiles){
+  const players=(profiles||[]).map(window.GSCAccountBackup.playerFromProfile).filter(player=>player?.name);if(!players.length)return 0;
+  const registry=window.GSCPlayerRegistry;if(registry){const current=readPlayerDirectory().map(item=>item.profile).filter(Boolean),merged=registry.upsertProfiles(current,players,{source:"central-recovery"});localStorage.setItem(PLAYER_REGISTRY_KEY,JSON.stringify(merged));localStorage.setItem(PLAYER_DIRECTORY_KEY,JSON.stringify(merged.map(item=>({name:item.fullName,key:canonicalPlayerNameKey(item.fullName),registrationCode:item.registrationCode,handicap:item.handicap,tee:item.tee,whatsapp:item.whatsapp?.nationalNumber||"",updatedAt:item.updatedAt}))));return merged.length}
+  savePlayersToDirectory(players,{source:"central-recovery"});return players.length;
+}
+async function restoreCentralBackup(){
+  if(window.GSC_ACCOUNT_SIGNED_IN!==true){setCentralAccountStatus("INICIA SESIÓN PARA RECUPERAR");return false}
+  setCentralAccountStatus("RECUPERANDO RESPALDO…");const result=await window.GSCAccountBackup.recover();if(!result.ok){setCentralAccountStatus(centralAccountMessage(result.code));return false}
+  const deleted=readRoundArchiveDeleted(),restored=(result.rounds||[]).map(window.GSCAccountBackup.localRound).map(normalizeStoredRound).filter(item=>item&&!deleted.has(String(item.id))),archive=window.GSCAccountBackup.mergeRounds(readRoundArchive(),restored);localStorage.setItem(ROUND_ARCHIVE_KEY,JSON.stringify(archive));const profiles=restoreCentralProfiles(result.profiles||[]);render();renderPreviousRoundControls();setCentralAccountStatus(`RECUPERACIÓN COMPLETA · ${restored.length} RONDAS · ${profiles} JUGADORES`);return true;
+}
+document.querySelectorAll("[data-account-entry]").forEach(button=>button.addEventListener("click",openCentralAccount));$("closeAccountBackup")?.addEventListener("click",closeCentralAccount);$("accountPasswordVisible")?.addEventListener("change",event=>{$("accountPassword").type=event.target.checked?"text":"password"});for(const id of ["accountName","accountEmail"])$(id)?.addEventListener("input",persistCentralAccountDraft);$("accountRemember")?.addEventListener("change",persistCentralAccountDraft);$("accountSignUp")?.addEventListener("click",()=>submitCentralAccount("signup"));$("accountSignIn")?.addEventListener("click",()=>submitCentralAccount("signin"));$("accountBackupNow")?.addEventListener("click",backupCentralNow);$("accountRestoreNow")?.addEventListener("click",restoreCentralBackup);$("accountSignOut")?.addEventListener("click",async()=>{await window.GSCAccountBackup.account("signout");await window.GSCCommerce?.signOut();window.GSC_ACCOUNT_SIGNED_IN=false;centralAccountUser=null;renderCentralAccount();setCentralAccountStatus("SESIÓN CERRADA · EL JUEGO LOCAL SIGUE ACTIVO")});
+applyRememberedAccount();renderCentralAccount();setTimeout(()=>refreshCentralAccount(true),500);
+async function refreshCommercialAccess(){
+  const button=$("commercialProButton"),commerce=window.GSCCommerce;if(!button||!commerce||!window.GSC_NATIVE_PLATFORM){button?.classList.add("hidden");return false}
+  const state=await commerce.configure({appUserID:centralAccountUser?.id||""});button.classList.toggle("hidden",!state.available);button.classList.toggle("active",state.entitlementActive===true);button.textContent=state.entitlementActive?"PRO ✓":"PRO";return state.available;
+}
+$("commercialProButton")?.addEventListener("click",async()=>{const button=$("commercialProButton");button.disabled=true;const state=await window.GSCCommerce.presentPaywall();button.disabled=false;button.classList.toggle("active",state.entitlementActive===true);button.textContent=state.entitlementActive?"PRO ✓":"PRO"});
+window.addEventListener("gsc-native-ready",refreshCommercialAccess);setTimeout(refreshCommercialAccess,800);
+let deferredInstallPrompt=null;
+const iosDevice=()=>/iphone|ipad|ipod/i.test(navigator.userAgent);
+function setInstallGuide(){
+  const steps=$("installAppSteps"),confirm=$("confirmInstallApp");if(!steps||!confirm)return;
+  if(iosDevice()){
+    steps.innerHTML="<li>Toca el botón Compartir de Safari.</li><li>Selecciona Agregar a pantalla de inicio.</li><li>Confirma Agregar.</li>";
+    confirm.textContent="ENTENDIDO";
+  }else if(deferredInstallPrompt){
+    steps.innerHTML="<li>Toca INSTALAR.</li><li>Confirma la instalación cuando el teléfono la solicite.</li>";
+    confirm.textContent="INSTALAR";
+  }else{
+    steps.innerHTML="<li>Abre el menú del navegador.</li><li>Selecciona Instalar aplicación o Agregar a pantalla de inicio.</li>";
+    confirm.textContent="ENTENDIDO";
+  }
+}
+function showInstallControl(){const button=$("installAppButton"),blocked=document.body?.classList.contains("gsc-setup-open")||document.body?.classList.contains("gsc-live-open")||document.body?.classList.contains("gsc-history-open");if(button)button.classList.toggle("hidden",standaloneApp()||blocked)}
+function openInstallGuide(){setInstallGu$("installAppOverlay")?.classList.add("visible");$("installAppOverlay")?.setAttribute("aria-hidden","false")}
+function closeInstallGuide(){$("installAppOverlay")?.classList.remove("visible");$("installAppOverlay")?.setAttribute("aria-hidden","true")}
+window.addEventListener("beforeinstallprompt",event=>{event.preventDefault();deferredInstallPrompt=event;showInstallControl()});
+window.addEventListener("appinstalled",()=>{deferredInstallPrompt=null;closeInstallGuide();showInstallControl()});
+$("installAppButton")?.addEventListener("click",openInstallGuide);
+$("closeInstallApp")?.addEventListener("click",closeInstallGuide);
+$("confirmInstallApp")?.addEventListener("click",async()=>{
+  if(!deferredInstallPrompt){closeInstallGuide();return}
+  const prompt=deferredInstallPrompt;deferredInstallPrompt=null;await prompt.prompt();await prompt.userChoice.catch(()=>null);closeInstallGuide();showInstallControl();
+});
+showInstallControl();
+function applyAuditedHoleRepairs(repairs){
+  let changed=false;
+  for(const repair of repairs||[]){
+    if(repair.roundId!==round.id||(round.appliedHoleRepairs||[]).includes(repair.id)||round.officiallyClosedAt)continue;
+    const mapping=Object.entries(repair.mapping||{}).map(([from,to])=>[Number(from),Number(to)]);
+    if(!mapping.length||mapping.some(([from,to])=>!Number.isInteger(from)||!Number.isInteger(to)||from<1||from>18||to<1||to>18||from===to))continue;
+    const matches=round.players.length===repair.players?.length&&round.players.every(player=>{const expected=repair.players.find(p=>p.id===player.id);return expected&&mapping.every(([from,to])=>!player.holes?.[to]&&player.holes?.[from]?.gross===expected.gross[String(from)])});
+    if(!matches)continue;
+    for(const player of round.players){const moved=mapping.map(([from,to])=>[to,{...player.holes[from]}]);for(const [from]of mapping)delete player.holes[from];for(const [to,entry]of moved)player.holes[to]=scoreObject(player,to,entry.gross,entry);player.lastHole=Math.max(0,...Object.keys(player.holes).map(Number))}
+    round.appliedHoleRepairs=[...(round.appliedHoleRepairs||[]),repair.id];round.announced={front:false,back:false,complete:false};changed=true;
+  }
+  if(changed){closeRoundScoreKeypad();const manual=document.getElementById('roundManualEntry');if(manual){manual.dataset.activePlayerId='';delete manual.dataset.roundId}persist();render();$('status').textContent='HOYOS CORREGIDOS · SCORES CONSERVADOS'}
+  return changed;
+}
+window.GSCLiveControl?.mount({
+  getRound:()=>round,
+  getCourseName:()=>COURSE_CATALOG[ACTIVE_COURSE_KEY]?.displayName||COURSE_CATALOG[ACTIVE_COURSE_KEY]?.name||round.course,
+  getPars:()=>PAR,
+  applyScoreRepairs:applyAuditedHoleRepairs
+});
+$("shareRoundLiveButton")?.addEventListener("click",()=>window.GSCLiveControl?.quickShareGroup());
+if(!window.GSC_NATIVE_PLATFORM&&"serviceWorker" in navigator){navigator.serviceWorker.addEventListener("controllerchange",()=>{try{sessionStorage.setItem("gscg-sw-controller-changed","1")}catch{} syncPublishedAppVersion()},{once:true});window.addEventListener("load",()=>navigator.serviceWorker.register("/service-worker.js",{scope:"/",updateViaCache:"none"}).then(reg=>reg.update()).catch(error=>console.warn("PWA_SERVICE_WORKER",error?.message||error)),{once:true});}
+function recoverInstalledAppScrolling(){
+  const root=document.scrollingElement||document.documentElement;
+  for(const element of new Set([document.documentElement,document.body,root])){element.style.setProperty("overflow-y","auto","important");element.style.setProperty("height","auto","important");element.style.webkitOverflowScrolling="touch"}
+  for(const overlay of document.querySelectorAll(".overlay.visible")){
+    if(overlay.id==="setupOverlay"){overlay.style.removeProperty("height");overlay.style.removeProperty("overflow-y");overlay.style.removeProperty("-webkit-overflow-scrolling");continue}
+    overlay.style.setProperty("height","100dvh");overlay.style.setProperty("overflow-y","auto","important");overlay.style.webkitOverflowScrolling="touch"
+  }
+}
+window.addEventListener("pageshow",recoverInstalledAppScrolling);
+window.addEventListener("focus",recoverInstalledAppScrolling);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)recoverInstalledAppScrolling()});
+setTimeout(recoverInstalledAppScrolling,0);
+// V192: actualización obligatoria. Una versión vencida queda bloqueada hasta ACTUALIZAR.
+const CURRENT_APP_BUILD=document.querySelector('meta[name="gscg-release"]')?.content||"";
+function appVersionLabel(build){
+  const match=String(build||"").match(/-R(\d+(?:\.\d+)*)(?:-[A-Z0-9]+)?$/i);
+  return match?`R${match[1]}`:String(build||"—");
+}
+function paintAppVersionBadge(latestBuild=""){
+  const badge=$("appReleaseBadge");
+  const current=appVersionLabel(CURRENT_APP_BUILD),latest=appVersionLabel(latestBuild);
+  if(badge)badge.textContent=latestBuild&&latestBuild!==CURRENT_APP_BUILD?`VERSIÓN ${current} · ÚLTIMA ${latest}`:`VERSIÓN ${current}`;
+  const versionId=$("appVersionId");if(versionId)versionId.textContent=current;
+}
+paintAppVersionBadge();
+let appBuildCheckRunning=false,appBuildReloading=false,pendingPublishedBuild="";
+function showBuildCheckFailure(needsAccess=false){
+  pendingPublishedBuild="";
+  const button=$("mandatoryUpdateButton");button.disabled=false;button.setAttribute("aria-disabled","false");
+  button.dataset.needsAccess=needsAccess?"1":"0";
+  $("mandatoryUpdateAction").textContent=needsAccess?"INICIAR SESIÓN":"REINTENTAR";
+  $("mandatoryUpdate").classList.remove("available");
+  $("mandatoryUpdate").style.display="block";
+}
+function showCurrentBuild(){
+  $("mandatoryUpdateButton").dataset.needsAccess="0";
+  pendingPublishedBuild=CURRENT_APP_BUILD;
+  const button=$("mandatoryUpdateButton");button.disabled=true;button.setAttribute("aria-disabled","true");
+  $("mandatoryUpdateAction").textContent="ACTUALIZADO";
+  const updateBox=$("mandatoryUpdate");updateBox.classList.remove("available");updateBox.style.display="none";
+  paintAppVersionBadge(CURRENT_APP_BUILD);
+}
+function showMandatoryUpdate(build){
+  if(!build||build===CURRENT_APP_BUILD)return false;
+  pendingPublishedBuild=build;
+  const button=$("mandatoryUpdateButton");button.disabled=false;button.setAttribute("aria-disabled","false");
+  $("mandatoryUpdateAction").textContent="ACTUALIZAR";
+  const updateBox=$("mandatoryUpdate");updateBox.style.display="";updateBox.classList.add("available");
+  paintAppVersionBadge(build);
+  return true;
+}
+async function installMandatoryUpdate(){
+  if(appBuildReloading)return;
+  if(!pendingPublishedBuild){
+    if($("mandatoryUpdateButton").dataset.needsAccess==="1")location.assign(new URL("/access.html",location.origin).href);
+    else await syncPublishedAppVersion();
+    return;
+  }
+  appBuildReloading=true;
+  if($("setupOverlay")?.classList.contains("visible")){captureVisibleRegistrationValues();syncDraftPlayersFromManualRows({strict:false,renderAfter:false});persistDraftState()}
+  persist();
+  // Keep the approved offline build until the worker finishes the requested update.
+  const nextUrl=new URL(round.configured?currentRoundReturnPath():location.href,location.origin);nextUrl.pathname="/index-grupal.html";nextUrl.searchParams.set("__gscg_build_check","1");nextUrl.searchParams.set("app_version",pendingPublishedBuild);nextUrl.searchParams.set("update_check",String(Date.now()));location.replace(nextUrl.toString());
+}
+async function syncPublishedAppVersion(){
+  if(appBuildCheckRunning||appBuildReloading||document.hidden)return;
+  appBuildCheckRunning=true;
+  const controller=new AbortController(),checkTimeout=setTimeout(()=>controller.abort(),8000);
+  try{
+    const checkUrl=new URL("/release.json",location.origin);
+    checkUrl.searchParams.set("t",String(Date.now()));
+    const response=await fetch(checkUrl,{cache:"no-store",signal:controller.signal,headers:{"Cache-Control":"no-cache"}});
+    if(!response.ok){showBuildCheckFailure();return}
+    const release=await response.json().catch(()=>({}));
+    const published=String(release.release||"");
+    if(!published){showBuildCheckFailure();return}
+    if(published===CURRENT_APP_BUILD)showCurrentBuild();else showMandatoryUpdate(published);
+  }catch(error){showBuildCheckFailure();console.warn("APP_VERSION_SYNC",error?.message||error)}
+  finally{clearTimeout(checkTimeout);appBuildCheckRunning=false}
+}
+
+$("mandatoryUpdateButton").addEventListener("click",installMandatoryUpdate);
+$("mandatoryUpdateButton").disabled=true;
+$("mandatoryUpdateAction").textContent="COMPROBANDO";
+setTimeout(syncPublishedAppVersion,1200);
+setInterval(syncPublishedAppVersion,30000);
+window.addEventListener("online",syncPublishedAppVersion);
+window.addEventListener("pageshow",syncPublishedAppVersion);
+window.addEventListener("focus",syncPublishedAppVersion);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)setTimeout(syncPublishedAppVersion,800)});
+window.addEventListener("scroll",()=>{const button=$("mandatoryUpdateButton");if(button&&button.disabled&&$("mandatoryUpdateAction")?.textContent==="ACTUALIZADO")button.classList.add("gsc-update-confirmed");},{passive:true});
+</script>
+<script>window.GSCDeviceClosures.bindControls();</script><a id="gscShortcutsButton" href="/live-hub.html" aria-label="Abrir Atajos"><span>ATAJOS</span></a><script src="./shortcuts-ui.js"></script>
+<script id="gsc-manual-action-router">
+document.addEventListener("DOMContentLoaded",()=>{
+  const params=new URLSearchParams(location.search),historyAction=params.get("history");
+  if(["saved","previous"].includes(historyAction)){setTimeout(()=>window.GSCMenuRoundActions[historyAction](),450);return}
+  const action=params.get("manual_action");
+  if(!action)return;
+  const later=(fn)=>setTimeout(()=>{try{fn()}catch(error){console.warn("MANUAL_ACTION",action,error?.message||error)}},450);
+  const click=id=>document.getElementById(id)?.click();
+  const scroll=id=>document.getElementById(id)?.scrollIntoView({block:"start",behavior:"smooth"});
+  const handlers={
+    "registration":()=>openRegistrationPreservingActiveRound(),
+    "friends-round":()=>openFriendsRoundDraft(),
+    "private-round":()=>openPrivateRoundDraft(),
+    "create-round":()=>createPrivateRoundFromMenu(),
+    "group-scores":()=>window.GSCPrivateRounds.openGroupScores(round),
+    "tournament-scores":()=>openRoundTournament(true,"general"),
+    "personal-scorecard":()=>openAssignedPersonalScoreCard(),
+    "organizer-invitations":()=>window.GSCPersonalEvents.organizerInvitations(),
+    setup:()=>openNewRoundDraft(),
+    stableford:()=>openFreshStablefordSetup(),
+    scorecard:()=>{document.querySelector(".app")?.scrollIntoView({block:"start"});},
+    manual:()=>{scroll("roundManualEntry");},
+    final:()=>round?.configured?openFinalDigitalCard():openNewRoundDraft(),
+    history:()=>openCardLibrary(),
+    stats:()=>openHistoryInsights(),
+    account:()=>openCentralAccount(),
+    menu:()=>document.getElementById("gscShortcutsButton")?.click(),
+    timer:()=>scroll("roundTimerToggle"),
+    rules:()=>document.querySelector(".golf-rules-launch")?.click(),
+    install:()=>document.querySelector(".pwa-install-button")?.click(),
+    correction:()=>{if(round?.configured&&round?.officiallyClosedAt)openOfficialCorrection();else openCardLibrary();}
+  };
+  if(handlers[action])later(handlers[action]);
+});
+</script>
+<script id="gsc-tournament-center-direct">
+document.addEventListener("DOMContentLoaded",()=>{
+  const button=document.getElementById("tournamentLiveHome");
+  if(!button)return;
+  button.addEventListener("click",event=>{
+    event.preventDefault();
+    const url=new URL("/live-hub.html",location.origin);
+    const share=new URL(location.href).searchParams.get("_vercel_share");
+    if(share)url.searchParams.set("_vercel_share",share);
+    location.assign(url.toString());
+  });
+});
+</script>
+<style id="gsc-tournament-connect-r129">
+.gsc-tournament-connect{width:100%;margin:12px 0 16px;padding:12px;border:1px solid #343838;border-radius:14px;background:#050606;color:#fff}
+.gsc-tournament-connect-title{margin:0 0 9px;color:#31ff00;font-size:15px;font-weight:900;letter-spacing:.5px}
+.gsc-tournament-picker,.gsc-tournament-action{width:100%;min-height:52px;border:1px solid #31ff00;border-radius:11px;background:#020402;color:#31ff00;font:900 15px Arial,sans-serif}
+.gsc-tournament-picker{display:flex;align-items:center;justify-content:space-between;padding:0 14px;text-align:left}
+.gsc-tournament-picker span:last-child{font-size:28px;line-height:1}
+.gsc-tournament-action{margin-top:9px}
+.gsc-tournament-create{width:100%;min-height:48px;margin-top:9px;border:1px solid #31ff00;border-radius:11px;background:#020402;color:#31ff00;font:900 15px Arial,sans-serif}
+.gsc-tournament-list{display:grid;gap:7px;margin-top:7px;padding:7px;border:1px solid #343838;border-radius:10px;background:#000}
+.gsc-tournament-list.hidden{display:none}
+.gsc-tournament-list button{min-height:44px;padding:8px 10px;border:1px solid #343838;border-radius:9px;background:#070808;color:#fff;text-align:left;font-weight:800}
+.gsc-tournament-connect-round{max-width:430px;margin:8px 0 12px}
+@media(max-width:800px){.gsc-tournament-connect{padding:10px}.gsc-tournament-connect-round{max-width:none}.gsc-tournament-picker,.gsc-tournament-action{min-height:48px}}
+</style>
+<script id="gsc-tournament-connect-r129">
+document.addEventListener("DOMContentLoaded",()=>{
+  const LIVE_KEY="golf-score-card-gt-live-control-v1",PENDING_KEY="gsc-tournament-connect-selection-v1";
+  const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key)||"null")||fallback}catch{return fallback}};
+  const write=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value))}catch{}};
+  const live=()=>read(LIVE_KEY,{version:1}),selected=()=>read(PENDING_KEY,{label:"",id:""});
+  const esc=v=>String(v||"").replace(/[&<>"]/g,s=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[s]));
+  function connected(){return !!live().stream?.tournamentId}
+  function render(){
+    const pick=selected(),ls=live(),isConnected=connected();
+    document.querySelectorAll(".gsc-tournament-connect").forEach(panel=>{
+      const name=panel.querySelector("[data-gsc-tournament-name]"),action=panel.querySelector("[data-gsc-tournament-action]");
+      if(name)name.textContent=pick.label||ls.tournamentOwned?.name||"NOMBRE TORNEO / GRUPO";
+      if(action)action.textContent=isConnected?"SALIR":"CONECTAR";
+    });
+  }
+  async function activeTournaments(){
+    const response=await fetch("/api/live",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({action:"list_active_tournaments"}),cache:"no-store"});
+    const data=await response.json().catch(()=>({})); if(!response.ok||data?.ok!==true)throw new Error(data?.code||"LIVE_TOURNAMENT_LIST_FAILED");
+    return Array.isArray(data.tournaments)?data.tournaments:[];
+  }
+  function openExistingConnect(pick){
+    const launch=document.getElementById("gscLiveLaunch");if(launch)launch.click();
+    setTimeout(()=>{
+      const toggle=document.getElementById("liveOrganizerToggle"),panel=document.getElementById("liveOrganizerPanel");
+      if(toggle&&panel?.classList.contains("hidden"))toggle.click();
+      const group=document.getElementById("liveGroupLabel");
+      if(group&&!group.value.trim())group.value="GRUPO";
+      const owned=live().tournamentOwned;
+      const code=document.getElementById("liveJoinCode");
+      if(code&&owned?.name===pick.label&&owned?.joinCode)code.value=owned.joinCode;
+      document.getElementById("liveJoinTournament")?.scrollIntoView({block:"center",behavior:"smooth"});
+    },80);
+  }
+  document.querySelectorAll("[data-gsc-tournament-picker]").forEach(button=>button.addEventListener("click",async()=>{
+    const panel=button.closest(".gsc-tournament-connect"),list=panel.querySelector("[data-gsc-tournament-list]");
+    list.innerHTML='<button type="button">BUSCANDO TORNEOS EN JUEGO…</button>';list.classList.remove("hidden");
+    try{
+      const items=await activeTournaments();
+      list.innerHTML=items.length?items.map((item,i)=>'<button type="button" data-tour-i="'+i+'">'+esc(item.name)+'</button>').join(""):'<button type="button" disabled>NO HAY TORNEOS EN JUEGO</button>';
+      list.querySelectorAll("[data-tour-i]").forEach((row,i)=>row.onclick=()=>{const item=items[i];write(PENDING_KEY,{label:item.name,id:item.id,mode:item.mode||""});list.classList.add("hidden");render()});
+    }catch(error){list.innerHTML='<button type="button" disabled>NO SE PUDO CARGAR TORNEOS</button>'}
+  }));
+  document.querySelectorAll("[data-gsc-tournament-create]").forEach(button=>button.addEventListener("click",async()=>{
+    const name=prompt("NOMBRE DEL TORNEO");if(!name?.trim())return;
+    button.disabled=true;button.textContent="CREANDO…";
+    try{
+      const mode=(window.round?.mode||"general"),result=await window.GSCLiveControl?.createTournamentDirect?.(name.trim(),mode);
+      if(!result?.ok)throw new Error(result?.code||"LIVE_CREATE_FAILED");
+      write(PENDING_KEY,{label:result.name,id:result.tournamentId,mode:result.mode||mode});render();button.textContent="TORNEO CREADO";
+    }catch(error){button.textContent=String(error?.message||"NO SE PUDO CREAR").replace(/^LIVE_/,"").replaceAll("_"," ")}
+    finally{button.disabled=false;setTimeout(()=>{button.textContent="CREAR TORNEO";render()},1800)}
+  }));
+  document.querySelectorAll("[data-gsc-tournament-action]").forEach(button=>button.addEventListener("click",async()=>{
+    button.disabled=true;
+    try{
+      if(connected()){
+        const result=await window.GSCLiveControl?.disconnectTournament?.();
+        if(!result?.ok)throw new Error(result?.code||"LIVE_LEAVE_FAILED");
+        render();return;
+      }
+      const pick=selected();if(!pick.id){button.textContent="SELECCIONA TORNEO";return}
+      const groupLabel=(window.round?.liveGroupLabel||window.round?.players?.[0]?.name&&("GRUPO "+window.round.players[0].name)||"GRUPO");
+      const result=await window.GSCLiveControl?.connectTournamentById?.(pick.id,groupLabel);
+      if(!result?.ok)throw new Error(result?.code||"LIVE_JOIN_FAILED");
+      render();
+    }catch(error){button.textContent=String(error?.message||"NO SE PUDO CONECTAR").replace(/^LIVE_/,"").replaceAll("_"," ")}
+    finally{button.disabled=false;setTimeout(render,1800)}
+  }));
+  window.addEventListener("storage",render);document.addEventListener("visibilitychange",()=>{if(!document.hidden)render()});render();
+});
+</script>
+<!-- PROD DEPLOY TRIGGER 2026-09-23 R67 -->
+</body>
+</html>
