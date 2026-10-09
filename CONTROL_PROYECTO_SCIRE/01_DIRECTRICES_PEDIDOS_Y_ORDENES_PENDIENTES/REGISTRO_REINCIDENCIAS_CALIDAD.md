@@ -1,3 +1,11 @@
+## RC-146 · Organizador mostraba invitaciones 48H vacías e históricas · 9 OCTUBRE 2026
+
+- Síntoma físico: Producción mostró muchas tarjetas `ACCESO COMPARTIDO 48H` sin tarjeta Live, mientras el propietario esperaba ver sólo la ronda activa cuyo primer jugador era `CHINITO`; LAB no reflejaba esa tarjeta activa.
+- Causa raíz: `guestGroupRows()` convertía cada grant 48H reciente en una tarjeta aunque no tuviera `current_snapshot` real, y la UI mostraba el estado `SIN TARJETA LIVE AÚN`.
+- Punto de escape: R237 protegía la visibilidad cruzada de grants pendientes; el requisito cambió a visibilidad operativa de grupos en juego, pero la regresión quedó defendiendo el estado antiguo.
+- Control permanente: `test-r242-guest48h-only-live-groups.mjs` exige que backend y UI filtren accesos sin Score Card Live, eliminen `SIN TARJETA LIVE AÚN` y conserven el título por primer jugador.
+- Estado: corregido en R242; pendiente publicación y verificación real LAB/Producción.
+
 ## RC-145 · Organizador reintentaba directorios con Neon ya sin cuota · 9 OCTUBRE 2026
 
 - Síntoma operativo: después de exponer `DATABASE_QUOTA_EXCEEDED`, Organizador seguía usando el ciclo automático heredado de 5 segundos para intentar leer directorios aunque Neon rechazara las consultas por HTTP 402.
