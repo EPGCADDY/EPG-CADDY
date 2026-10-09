@@ -4674,6 +4674,18 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `test-r227-guest48h-organizer-groups.mjs` | Actualiza expectativas rígidas de import/release para aceptar el helper nuevo sin debilitar el bloqueo de invitados al Organizador. |
 | `release.json`, `index-grupal.html`, `service-worker.js` | Identidad R238 y cache `r238-lab-signed-production-guest48h-mirror` para forzar entrega nueva. |
 
+## R239 · restauración de listas de torneos y rondas en Organizador · 9 octubre 2026
+
+| Archivo | Cambio |
+|---|---|
+| `event-administration-ui.js` | `administrationRows()` vuelve a aceptar `event_kind:'tournament'` y `event_kind:'private'`; el orden prioriza torneos y luego rondas/grupos, sin ocultar eventos activos de LAB o Producción. |
+| `event-administration-ui.js` | La llamada a `/api/tournament-score-directory` usa `includeGroups:true` y el encabezado visible cambia a `TORNEOS Y RONDAS`; el mensaje vacío también distingue que pueden faltar torneos o rondas. |
+| `event-administration-ui.js` | `GRUPOS INVITADOS 48H` queda como sección independiente, por lo que la restauración de rondas ordinarias no mezcla los accesos 48h ni rompe la tarjeta Live invitada. |
+| `test-r185-round-delete-ui.mjs` | Exige que una ronda/grupo local y una ronda/grupo remoto activo aparezcan junto a los torneos, con Scores y eliminación. |
+| `test-r167-admin-share-feedback.mjs` | Actualiza el control global para aceptar el grupo privado propio en Administración y conservar permisos, colisiones de ID y acciones ajenas protegidas. |
+| `test-r181-global-groups-directory.mjs` | Actualiza la expectativa del directorio global: Administración debe pedir grupos y mostrarlos, no excluirlos. |
+| `release.json`, `index-grupal.html`, `service-worker.js` | Publicación R239 y caché nuevo `r239-organizer-tournaments-rounds-restored`. |
+
 ## R238-B1 · ajuste de compuerta para relay firmado 48h · 9 octubre 2026
 
 | Archivo | Cambio |

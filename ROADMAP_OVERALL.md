@@ -1,3 +1,10 @@
+## R239 · Organizador vuelve a listar torneos y rondas · 9 de octubre de 2026
+
+- `event-administration-ui.js`: se revierte el filtro que dejaba pasar sólo `tournament`; Administración vuelve a mostrar `tournament` y `private` de LAB/Producción bajo `TORNEOS Y RONDAS`, conservando Scores General/Categorías, compartir código, eliminar y la sección separada `GRUPOS INVITADOS 48H`.
+- `event-administration-ui.js`: la consulta al directorio global vuelve a pedir `includeGroups:true` para que las rondas/grupos activos federados no desaparezcan de LAB ni Producción.
+- `test-r185-round-delete-ui.mjs`, `test-r167-admin-share-feedback.mjs` y `test-r181-global-groups-directory.mjs`: las regresiones ya no protegen el listado sólo de torneos; ahora exigen que las rondas/grupos privados ordinarios aparezcan junto con los torneos.
+- `release.json`, `index-grupal.html` y `service-worker.js`: identidad R239 y caché sincronizado para entregar la corrección por ACTUALIZAR.
+
 ## R238 · LAB espejo firmado de accesos 48h de Producción · 9 de octubre de 2026
 
 - `api/event-administration.js`: LAB deja de depender de que la cookie local sirva en Producción para leer `GRUPOS INVITADOS 48H`; agrega la acción interna firmada `list-peer-guest48h` y usa `EVENT_ADMIN_PEER_SECRET` o `CRON_SECRET` para traer los accesos activos desde el ambiente dueño.

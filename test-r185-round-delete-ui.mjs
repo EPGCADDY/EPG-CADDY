@@ -22,16 +22,16 @@ const rows=context.administrationRows(
     {id:'prod-finished',name:'Grupo finalizado',event_kind:'private',source:'production',status:'finished'},
   ],groups:[{id:'ordinary-round',group_label:'Ronda ordinaria',source:'production',event_kind:'private'}]},
 );
-assert.deepEqual(Array.from(rows,row=>row.id).sort(),['lab-tour','prod-tour']);
-for(const tournament of rows){
-  assert.match(context.administrationCard(tournament),/SCORES · GENERAL/);
-  assert.match(context.administrationCard(tournament),/SCORES · CATEGORÍAS/);
-  assert.match(context.administrationCard(tournament),/data-delete=/);
+assert.deepEqual(Array.from(rows,row=>row.id).sort(),['lab-group','lab-tour','prod-group','prod-tour']);
+for(const event of rows){
+  assert.match(context.administrationCard(event),/SCORES · GENERAL/);
+  assert.match(context.administrationCard(event),/SCORES · CATEGORÍAS/);
+  assert.match(context.administrationCard(event),/data-delete=/);
 }
 assert.match(context.administrationCard(rows.find(row=>row.id==='prod-tour')),/ABC123/);
 
-assert.match(source,/JSON\.stringify\(\{action:'list',withCodes:true\}\)/,'directory request lists tournaments and codes only');
-assert.match(source,/innerHTML='<h2>TORNEOS<\/h2>'\+rows\.map\(e=>administrationCard\(e\)\)\.join\(''\)/);
-assert.doesNotMatch(source,/includeGroups|RONDAS GLOBALES EN CURSO|globalRoundCard|removeRound|data-delete-round|ELIMINAR RONDA/);
-assert.match(source,/NO HAY TORNEOS ACTIVOS DISPONIBLES PARA TU CUENTA/);
-console.log('PASS Administration tournament-only: local and global groups/ordinary rounds omitted; General, Categories, tournament ID/share code, and delete controls retained.');
+assert.match(source,/JSON\.stringify\(\{action:'list',withCodes:true,includeGroups:true\}\)/,'directory request lists tournaments, rounds/groups and codes');
+assert.match(source,/innerHTML='<h2>TORNEOS Y RONDAS<\/h2>'\+rows\.map\(e=>administrationCard\(e\)\)\.join\(''\)/);
+assert.doesNotMatch(source,/RONDAS GLOBALES EN CURSO|globalRoundCard|removeRound|data-delete-round|ELIMINAR RONDA/);
+assert.match(source,/NO HAY TORNEOS NI RONDAS ACTIVAS DISPONIBLES PARA TU CUENTA/);
+console.log('PASS Administration lists tournaments and ordinary rounds/groups again; General, Categories, ID/share code, and delete controls retained.');
