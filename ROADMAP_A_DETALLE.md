@@ -4672,3 +4672,14 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 - `test-r157-uniform-navigation.mjs`: cambia el candado para exigir que MENÚ no vuelva a aplicar body-lock y mantenga scroll interno.
 - `test-r224-registration-add-active-player.mjs` y `test-v263-compact-players-back-button.mjs`: confirman que el alta posterior hasta seis no borra la ronda ni los scores.
 - `release.json`, `service-worker.js`, `index-grupal.html`, `live.html` y `test-r231-live-card-readability.mjs`: sincronizan release `20261008-R236`, etiqueta visible `R236`, `personal-events.js?v=20261008-R236`, `live-view.js?v=20261008-R236` y cache `v408-r236-menu-tap-restore`.
+
+
+## R237 · LAB lista y abre rondas privadas invitado 48h creadas en Producción · 9 octubre 2026
+
+| Archivo | Cambio |
+|---|---|
+| `personal-events.js` | Agrega `eventDirectory(eventKind)`: para grupos privados consulta LAB y Producción, deduplica por `source:id`, muestra la etiqueta `LABORATORIO`/`PRODUCCIÓN` y conserva `data-event-source` en cada opción. |
+| `personal-events.js` | Al presionar `ENTRAR`, `join-code` viaja al `selectedSource`; la ronda invitada de Producción ya no se intenta unir contra la base de LAB. |
+| `personal-events.js` | El flujo `invitation=1&kind=private` incluye fallback de `view-code` al ambiente par y lee la ronda desde `invitationSource`, preservando el enlace de invitado 48h cruzado. |
+| `index-grupal.html`, `release.json`, `service-worker.js` | Actualizan identidad `20261009-R237`, etiqueta `R237`, query `personal-events.js?v=20261009-R237` y cache `r237-lab-private-guest-production-directory`. |
+| `test-r237-lab-private-guest-production-directory.mjs`, `scripts/build-manual-lab.mjs` | Nuevo test enfocado para bloquear regresión de directorio cruzado, source routing, enlaces privados cruzados y cache bust. |
