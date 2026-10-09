@@ -37,8 +37,8 @@ assert.doesNotMatch(liveJs, /<small>HCP \$\{escapeHtml\(player\.handicap\)\}/, '
 assert.doesNotMatch(organizerJs, /<small>HCP '\+escape\(player\.handicap/, 'event-administration-ui.js: organizer live card must not show handicap/tee text');
 assert.doesNotMatch(organizerJs, /INVITACIÓN 48H|Jugadores:|Toca la ronda/, 'event-administration-ui.js: compact organizer guest card must show only name and open button');
 assert.match(organizerJs, /<h3>'\+escape\(guestGroupTitle\(group\)\)\+'<\/h3><button type="button" data-guest-group-open="/, 'event-administration-ui.js: compact organizer guest card keeps title and ABRIR SCORE CARD');
-assert.equal(release.label, 'R235');
-assert.match(liveHtml, /live-view\.js\?v=20261008-R235/);
+assert.equal(release.label, 'R236');
+assert.match(liveHtml, /live-view\.js\?v=20261008-R236/);
 assert.match(organizerHtml, /body\.guest-live-modal-open\{overflow:hidden!important;position:fixed!important/, 'event-administration.html: opening guest Live card must lock the background page scroll');
 assert.match(organizerHtml, /dialog\[open\]\.guest-live-dialog\{position:fixed!important;.*overflow:hidden!important.*touch-action:none!important\}/, 'event-administration.html: guest Live dialog must own the viewport and block backdrop touch scroll');
 assert.match(organizerHtml, /\.guest-live-scroll\{[^}]*overflow-y:auto!important[^}]*overscroll-behavior:contain!important[^}]*touch-action:pan-y!important/, 'event-administration.html: guest Live card must scroll inside the modal, not the background');

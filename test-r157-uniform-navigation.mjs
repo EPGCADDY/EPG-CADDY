@@ -29,7 +29,7 @@ assert.equal(button.textContent,'×');assert.equal(button.label,'Cerrar');button
 const personal=fs.readFileSync('personal-events.js','utf8');
 assert.match(personal,/function lockDialogScroll\(\).*gsc-personal-dialog-open/s,'personal dialog must lock background scroll');
 assert.match(personal,/function close\(\).*unlockDialogScroll\(\)/s,'personal dialog close must restore background scroll');
-assert.match(source,/gsc-shortcuts-overlay-open/,'shortcuts overlay must lock background scroll');
-assert.match(source,/overscroll-behavior:contain!important;touch-action:pan-y!important/,'shared overlays must own touch scroll');
+assert.doesNotMatch(source,/function open\(\).*lockShortcutScroll\(\)/s,'MENÚ overlay must not body-lock taps on mobile');
+assert.match(source,/#gscShortcutsOverlay\{position:fixed;inset:0;z-index:2147483001;display:none;background:rgba\(0,0,0,\.84\);backdrop-filter:blur\(10px\);padding:18px;overflow:auto\}/,'MENÚ overlay keeps its own fixed scroll without disabling button actions');
 const admin=fs.readFileSync('event-administration.html','utf8');assert(admin.includes('/shortcuts-ui.js'));assert(admin.includes('data-gsc-menu'));assert(admin.includes('data-gsc-close'));
 console.log('PASS R157: Registro follows Manual once; all routes use existing non-destructive opening; close normalization is idempotent and retains action; Administration has shared navigation. Not a visual/browser PASS.');
