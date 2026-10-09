@@ -16,6 +16,7 @@ for(const test of ['scripts/release-matrix-gate.mjs','test-r240-database-quota-d
 execFileSync(process.execPath,['test-r229-organizer-guest48h-live-card.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['test-r242-guest48h-only-live-groups.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['test-r242-live-scroll-layering.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['test-r243-guest48h-scorecard-shared-female-voice.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['test-r230-owner-access-48h-only.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['test-r231-live-card-readability.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/manual-screen-parity-gate.mjs'],{stdio:'inherit'});

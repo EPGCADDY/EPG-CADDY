@@ -3,9 +3,15 @@
  let last='',busy=false,queue=[],activeFinish=null,activeUtterance=null,activeKind=null,playbackToken=0;
  const synth=root.speechSynthesis;
  function status(text){const el=root.document?.getElementById('deviceClosureStatus');if(el)el.textContent=text}
+ const femaleVoiceName=/(paulina|marisol|mónica|monica|sofia|sofía|sabina|elena|laura|lucia|lucía|maria|maría|female|woman|mujer|femenina)/i;
+ function selectPreferredLocalSpanishVoice(voices=synth?.getVoices()||[]){
+  const localSpanish=Array.from(voices||[]).filter(v=>v?.localService===true&&/^es(?:-|_)/i.test(v.lang||''));
+  return localSpanish.find(v=>femaleVoiceName.test(v.name||''))||
+    localSpanish.find(v=>/^es[-_](MX|GT|US|CO|AR|CL|PE)/i.test(v.lang||''))||
+    localSpanish[0]||null;
+ }
  function voice(){
-  const voices=(synth?.getVoices()||[]).filter(v=>v.localService===true&&/^es(?:-|_)/i.test(v.lang));
-  return voices.find(v=>/^es[-_](MX|GT|US|CO|AR|CL|PE)/i.test(v.lang))||voices[0]||null;
+  return selectPreferredLocalSpanishVoice();
  }
  // Request the device's voice inventory before the first nine-hole closure.
  voice();
@@ -75,5 +81,6 @@
   bind('deviceClosureBack','back','BACK · 10 - 18');
   bind('deviceClosureTotal','total','TOTAL · 1 - 18');
 }
+ root.GSCDeviceVoice={selectPreferredLocalSpanishVoice};
  root.GSCDeviceClosures={speak,cancel,bindControls};
 })(typeof window!=='undefined'?window:globalThis);
