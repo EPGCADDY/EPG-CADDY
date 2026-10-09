@@ -18,6 +18,7 @@ assert.doesNotMatch(html,/\.round-secondary-actions\{position:fixed;/);
 // La edición de ronda permite agregar jugadores hasta seis sin tocar scores previos.
 assert.match(html,/id="addRosterPlayer"[^>]*>AGREGAR JUGADOR<\/button>/);
 assert.match(html,/const registrationSlots=rosterEditMode\?Math\.min\(6,Math\.max\(1,draftPlayers\.length\+\(draftPlayers\.length<6\?1:0\)\)\):6/);
+assert.match(html,/if\(rosterEditMode\)progressiveVisibleRegistrationCount=Math\.max\(draftPlayers\.length,Math\.min\(registrationSlots,progressiveVisibleRegistrationCount\|\|draftPlayers\.length\|\|1\)\)/);
 assert.match(html,/AGREGAR JUGADOR · \$\{draftPlayers\.length\}\/6/);
 assert.match(html,/JUGADOR NUEVO ENTRA DESDE HOYO \$\{rosterEditJoinHole\} · MÁXIMO 6/);
 
