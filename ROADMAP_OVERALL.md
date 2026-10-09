@@ -4515,3 +4515,5 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - `event-administration-ui.js`: las filas 48h se muestran como `ACCESO COMPARTIDO 48H`, indican si vienen de LAB o Producción y dejan visible el estado `SIN TARJETA LIVE AÚN` hasta que haya snapshot.
 - `release.json`, `index-grupal.html` y `service-worker.js`: identidad R237 y caché actualizada para distribuir la corrección.
 - `test-r237-cross-environment-48h-invitations.mjs`, `test-r229-organizer-guest48h-live-card.mjs` y `test-r231-live-card-readability.mjs`: regresiones para bloquear que LAB vuelva a ocultar invitaciones 48h de Producción o que exija tarjeta Live antes de listarlas.
+
+- R237-INVENTARIO: `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` queda sellado con 940 fuentes después de agregar el banco `test-r237-cross-environment-48h-invitations.mjs`.
