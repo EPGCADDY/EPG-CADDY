@@ -2142,3 +2142,4 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - `test-r223-negative-handicap-campeonato-a.mjs`: queda como candado de handicap plus para captura `+2`, display `+2`, neto inverso y distribución oficial en los índices altos.
 - `test-r244-live-shared-group-results.mjs` y `test-lab-live-mode-summary.mjs`: bloquean que Live duplique acumulados por jugador y validan rojo para `+` y verde para `-` en resultados por hoyo y acumulados del grupo.
 - R245-Sello: ROADMAPS e inventario se resellan juntos para que Vercel valide la publicación remota del mismo árbol.
+- R245-Sello-final: se reemiten los archivos de texto como UTF-8 y se conserva el cambio de ROADMAPS dentro del commit final de publicación.

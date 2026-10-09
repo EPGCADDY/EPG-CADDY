@@ -2042,3 +2042,4 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `test-r244-live-shared-group-results.mjs` | Agrega casos `-1` verde y `+1` rojo en `+/- POR HOYO` y en `RESULTADOS DEL GRUPO`, sin restaurar `RESULTADOS ACUMULADOS` por jugador. |
 | `test-lab-live-mode-summary.mjs` | Ajusta la regresión antigua para el nuevo resumen grupal al pie y evita que el build vuelva a exigir acumulados individuales eliminados. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Resellan juntos R245 para que ROADMAP gate e inventory gate validen el mismo árbol remoto en Vercel. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Sello final R245: conserva una modificación real de ROADMAPS en el mismo commit que reemite los blobs UTF-8 correctos para publicación. |
