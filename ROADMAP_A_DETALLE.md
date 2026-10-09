@@ -2445,7 +2445,7 @@ R143 · Orden solicitado IMG_5330: ATRÁS izquierda / VER MI TARJETA derecha; RO
 
 - `api/_lib/personal-access.js` ahora rechaza rol desconocido y fecha inválida; `test-personal-access.mjs` protege ambos casos.
 - `test-personal-access-postgres.mjs` ejecuta el esquema `sql/personal-access-lab.sql` con motor PostgreSQL PGlite local; `package.json` fija la dependencia de pruebas 0.5.8 y `scripts/build-manual-lab.mjs` incluye la prueba. PASS: teléfono incorrecto no consume, dos solicitudes compiten y una obtiene alta/sesión, invitación vencida rechazada y sesión revocada denegada. PGlite usa una conexión; no es certificación de concurrencia de múltiples conexiones Neon ni prueba de posesión telefónica.
-- `scores-ui.css` corrige ayuda de Ronda Particular de sticky dentro del panel a fixed al pie del viewport, detrás del detalle. `test-private-scores-browser.cjs` comprueba posición móvil y recorrido con API fixture aislada; proveedor/DB reales siguen pendientes.
+- `scores-ui.css` corrige ayuda de Ronda Particular de fijo dentro del panel a fixed al pie del viewport, detrás del detalle. `test-private-scores-browser.cjs` comprueba posición móvil y recorrido con API fixture aislada; proveedor/DB reales siguen pendientes.
 - Búsqueda adicional en Library confirma que la matriz v4 vigente mantiene pendiente seleccionar/configurar proveedor de verificación. No se encontró project_id Neon en los documentos consultados. No se crea una base ajena ni se simula prueba de identidad.
 - Sin commit de entrega ni despliegue; remoto LAB R143 y Producción permanecen intactos. La terminación integral requiere proveedor real configurado y acceso identificado a DB LAB para integrar y certificar la autorización de endpoints, invitaciones, ACCESOS y compartir LIVE sólo para inscritos.
 
@@ -4643,3 +4643,12 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `live.html` | Sube el cache de `live-view.js` a `20261008-R232` para publicar la tarjeta Live actualizada. |
 | `test-r230-owner-access-48h-only.mjs` | Bloquea que vuelva el texto EPG o el `\n` literal pegado al enlace. |
 | `release.json`, `index-grupal.html`, `service-worker.js` | Identidad R232 y caché PWA nueva para publicar la corrección. |
+
+## R233 · etiqueta +/- acumulado en Live · 8 octubre 2026
+
+| Archivo | Cambio |
+|---|---|
+| `live-view.js`, `event-administration-ui.js` | En `RESULTADOS ACUMULADOS`, el acumulado relativo dice `+/- ACUMULADO`; la fila de la tabla mantiene `+/- POR HOYO`. |
+| `live.html`, `release.json`, `index-grupal.html`, `service-worker.js` | Identidad R233 y cache actualizado. |
+| `event-administration.html` | El `X` del Organizador queda fijo, tocable y sin tapar la lista o tarjetas 48h; el Organizador y la tarjeta Live conservan scroll táctil. |
+| `test-r231-live-card-readability.mjs` | Regresión para exigir `+/- ACUMULADO` en Live/Organizador y el cierre fijo del Organizador. |

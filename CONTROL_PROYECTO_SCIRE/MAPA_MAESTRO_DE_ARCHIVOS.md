@@ -2904,3 +2904,11 @@ Base vigente 4a493a7; incorpora la corrección acreditada 27c8ae4. Las publicaci
 | `live.html` | Cache `live-view.js?v=20261008-R232`. | Publica la tarjeta Live actualizada. |
 | `test-r230-owner-access-48h-only.mjs` | Regresión del formato multilínea y apertura `wa.me` de Access. | Banco LAB obligatorio. |
 | `release.json`, `index-grupal.html`, `service-worker.js` | Sello R232 y caché nueva. | `scripts/release-matrix-gate.mjs`. |
+
+## R233 · etiqueta +/- acumulado en Live
+
+| Archivo | Rol actualizado | Control |
+|---|---|---|
+| `live-view.js`, `event-administration-ui.js` | Acumulados Live/Organizador muestran `+/- ACUMULADO`; la fila por hoyo conserva `+/- POR HOYO`. | `test-r231-live-card-readability.mjs`. |
+| `event-administration.html` | Cierre fijo del Organizador, zona táctil real y scroll táctil activo en la lista y tarjeta 48h. | `test-r231-live-card-readability.mjs`. |
+| `live.html`, `release.json`, `index-grupal.html`, `service-worker.js` | Sello R233 y cache nueva. | `scripts/release-matrix-gate.mjs`. |
