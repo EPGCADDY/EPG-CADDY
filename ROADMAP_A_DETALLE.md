@@ -2054,3 +2054,4 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `test-r246-live-48h-player-audio-summary.mjs` | Valida carga de voz compartida, resumen individual hasta el hoyo actual, clic único para hablar y segundo clic para parar. |
 | `scripts/build-manual-lab.mjs` | Integra R246 al banco obligatorio del laboratorio para evitar regresiones en futuras publicaciones. |
 | `release.json`, `service-worker.js`, `index-grupal.html`, `live.html` | Corrigen identidad visible y cache de publicación: Laboratorio y Producción dejan de anunciar R242/R233 y pasan a R246. |
+| `test-r231-live-card-readability.mjs` | Actualiza la aserción de cache Live para exigir `live-view.js?v=20261009-R246`, evitando que el build vuelva a bloquear la versión visible corregida. |

@@ -41,7 +41,7 @@ assert.doesNotMatch(organizerJs, /<small>HCP '\+escape\(player\.handicap/, 'even
 assert.doesNotMatch(organizerJs, /INVITACIÓN 48H|Jugadores:|Toca la ronda/, 'event-administration-ui.js: compact organizer guest card must show only name and open button');
 assert.match(organizerJs, /<h3>'\+escape\(guestGroupTitle\(group\)\)\+'<\/h3><p>'\+escape\(String\(group\.source\|\|''\)\.toUpperCase\(\)\)\+' · 48H'/, 'event-administration-ui.js: compact organizer guest card keeps title and 48h source metadata');
 assert.ok(Number(String(release.label||'').replace(/^R/,''))>=237,'Release label must be R237 or later for the cross-environment 48h access fix');
-assert.match(liveHtml, /live-view\.js\?v=20261008-R233/);
+assert.match(liveHtml, /live-view\.js\?v=20261009-R246/);
 assert.match(organizerHtml, /html body\.gsc-admin-page\{overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important\}html body\.gsc-admin-page main>a\[data-gsc-close\]\{position:fixed!important;.*pointer-events:auto!important\}/, 'event-administration.html: organizer close button must be fixed, tappable and not lock page scroll');
 assert.match(organizerHtml, /dialog:has\(\.guest-live-card\)\{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important\}/, 'event-administration.html: guest Live card dialog must keep vertical touch scroll');
 
