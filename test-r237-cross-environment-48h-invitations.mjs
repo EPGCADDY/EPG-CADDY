@@ -10,7 +10,8 @@ assert.match(adminApi,/has_snapshot:true/,'Organizer API returns only 48h rows t
 assert.match(adminApi,/peerGuestGroups=\(remote\.data\.guestGroups\|\|\[\]\)\.map\(group=>\(\{\.\.\.group,source:source==='lab'\?'production':'lab'\}\)\)/,'LAB and Production 48h rows must be merged across environments');
 assert.match(adminApi,/body\.action==='list-peer-guest48h'/,'Organizer API must expose a signed peer-only 48h inventory route');
 assert.match(adminApi,/Authorization:`Bearer \$\{secret\}`/,'Cross-environment 48h inventory must not depend on a LAB cookie being valid in Production');
-assert.match(adminApi,/ownerFeedbackForPeer\(sql,env\)/,'Peer 48h inventory must read active owner access grants directly from the owning environment');
+assert.match(adminApi,/ownerFeedbackForPeer\(sql,env,body\.ownerAccountId\)/,'Peer 48h inventory must read active owner access grants for the requesting owner account when LAB asks Production');
+assert.match(adminApi,/action:'list-peer-guest48h',ownerAccountId:account\.id/,'LAB must request Production 48h groups for the same owner account, not only from an environment fallback');
 assert.match(adminUi,/ACCESO COMPARTIDO 48H/,'Organizer UI keeps a fallback title but filters rows without registered Score Card players');
 assert.doesNotMatch(adminUi,/SIN TARJETA LIVE AÚN/,'Organizer UI must not show pending/empty 48h access cards in the owner list');
 assert.match(adminUi,/escape\(String\(group\.source\|\|''\)\.toUpperCase\(\)\)\+' · 48H'/,'Organizer UI must show whether the 48h access came from LAB or Production');

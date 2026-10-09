@@ -2055,3 +2055,13 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `scripts/build-manual-lab.mjs` | Integra R246 al banco obligatorio del laboratorio para evitar regresiones en futuras publicaciones. |
 | `release.json`, `service-worker.js`, `index-grupal.html`, `live.html` | Corrigen identidad visible y cache de publicación: Laboratorio y Producción dejan de anunciar R242/R233 y pasan a R246. |
 | `test-r231-live-card-readability.mjs` | Actualiza la aserción de cache Live para exigir `live-view.js?v=20261009-R246`, evitando que el build vuelva a bloquear la versión visible corregida. |
+
+## R247 · grupos 48h visibles en LAB y cierre de tarjeta Live · 9 octubre 2026
+
+| Archivo | Cambio |
+|---|---|
+| `api/event-administration.js` | `list-peer-guest48h` acepta `ownerAccountId`; LAB pide a Producción los grupos 48h del mismo propietario y no depende sólo de `EPG_OWNER_USER_ID`. |
+| `event-administration-ui.js` | Al abrir `TARJETA LIVE · INVITADO 48H`, aparece una `X` interna cuadrada con el mismo recuadro, tamaño y línea gráfica del cierre del recorrido; cierra el dialog del Score Card. |
+| `release.json`, `service-worker.js`, `index-grupal.html` | Identidad y cache pasan a R247 para que la pantalla visible confirme la corrección. |
+| `test-r237-cross-environment-48h-invitations.mjs` | Exige que el espejo LAB/Producción mande `ownerAccountId: account.id` y lea feedback de ese propietario. |
+| `test-r229-organizer-guest48h-live-card.mjs` | Exige la `X` interna cuadrada, de 54 px y recuadro verde, para la tarjeta Live 48h abierta desde Organizador. |

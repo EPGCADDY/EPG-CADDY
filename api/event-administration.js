@@ -43,8 +43,10 @@ function guestGroupRows(items=[],source='production'){
  return rows;
 }
 
-async function ownerFeedbackForPeer(sql,env){
+async function ownerFeedbackForPeer(sql,env,ownerAccountId=''){
  await ensureAccessTable(sql);
+ const requestedOwnerId=String(ownerAccountId||'').trim();
+ if(requestedOwnerId)return ownerFeedback({id:requestedOwnerId},sql);
  const ownerId=String(env.EPG_OWNER_USER_ID||'').trim();
  if(ownerId)return ownerFeedback({id:ownerId},sql);
  const owners=await sql`SELECT DISTINCT owner_user_id AS id FROM app_access_grants WHERE revoked_at IS NULL AND expires_at>now() AND created_at>now()-interval '48 hours' ORDER BY owner_user_id`;
@@ -64,7 +66,7 @@ export async function handleEventAdministration(req,res,database=getDatabase,own
  if(body.action==='list-peer-guest48h'){
   const expected=peerSecret(env),supplied=String(req.headers?.authorization||'');
   if(!expected||supplied!==`Bearer ${expected}`)throw accessError('EVENT_ADMIN_PEER_UNAUTHORIZED',401);
-  const guestGroups=guestGroupRows(await ownerFeedbackForPeer(sql,env),source);
+  const guestGroups=guestGroupRows(await ownerFeedbackForPeer(sql,env,body.ownerAccountId),source);
   return res.status(200).json({ok:true,source,guestGroups});
  }
  if(guestMode&&body.action!=="remote-share")throw accessError('EVENT_ADMIN_GUEST_FORBIDDEN',403);
@@ -97,7 +99,7 @@ export async function handleEventAdministration(req,res,database=getDatabase,own
  const guestGroups=owner?guestGroupRows(await ownerFeedback(account,sql),source):[];
  if(body.action==='list-local')return res.status(200).json({ok:true,owner,accountCode:account.id,source,events,receipts,guestGroups});
  let partial=false,peerEvents=[],peerGuestGroups=[];try{const remote=await relay('/api/event-administration',{action:'list-local'});if(remote.status===200&&remote.data?.ok){peerEvents=(remote.data.events||[]).map(event=>({...event,source:source==='lab'?'production':'lab'}));peerGuestGroups=(remote.data.guestGroups||[]).map(group=>({...group,source:source==='lab'?'production':'lab'}));}else partial=true}catch{partial=true}
- try{const remoteGuests=await relay('/api/event-administration',{action:'list-peer-guest48h'},{internal:true});if(remoteGuests.status===200&&remoteGuests.data?.ok){peerGuestGroups=(remoteGuests.data.guestGroups||[]).map(group=>({...group,source:source==='lab'?'production':'lab'}));}else partial=true}catch{partial=true}
+ try{const remoteGuests=await relay('/api/event-administration',{action:'list-peer-guest48h',ownerAccountId:account.id},{internal:true});if(remoteGuests.status===200&&remoteGuests.data?.ok){peerGuestGroups=(remoteGuests.data.guestGroups||[]).map(group=>({...group,source:source==='lab'?'production':'lab'}));}else partial=true}catch{partial=true}
  const merged=new Map();for(const item of events)merged.set(`${source}:${item.event_kind}:${item.id}`,item);for(const item of peerEvents)merged.set(`${item.source}:${item.event_kind}:${item.id}`,item);
  const mergedGuestGroups=new Map();for(const item of guestGroups)mergedGuestGroups.set(`${item.source}:${item.grantId}:${item.groupKey}:${item.id}`,item);for(const item of peerGuestGroups)mergedGuestGroups.set(`${item.source}:${item.grantId}:${item.groupKey}:${item.id}`,item);
  return res.status(200).json({ok:true,owner,accountCode:account.id,source,events:[...merged.values()],receipts,guestGroups:[...mergedGuestGroups.values()],partial});

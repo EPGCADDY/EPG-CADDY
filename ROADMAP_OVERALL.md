@@ -2152,3 +2152,10 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - `test-r246-live-48h-player-audio-summary.mjs` y `scripts/build-manual-lab.mjs`: nuevo candado para bloquear duplicación de audio, pérdida de voz compartida o regreso al detalle con un clic en Live 48h.
 - `release.json`, `service-worker.js`, `index-grupal.html` y `live.html`: identidad visible, cache fallback y query de Live pasan de R242/R233 a R246 para que Laboratorio y Producción muestren la versión correcta.
 - `test-r231-live-card-readability.mjs`: actualiza el candado heredado para exigir `live-view.js?v=20261009-R246` y no bloquear la identidad visible corregida.
+
+## R247 · grupos 48h visibles en LAB y cierre de tarjeta Live · 9 octubre 2026
+
+- `api/event-administration.js`: el espejo firmado `list-peer-guest48h` recibe `ownerAccountId` y lee los grupos 48h del mismo propietario en el ambiente par, para que LAB muestre los grupos registrados en Producción.
+- `event-administration-ui.js`: la tarjeta `TARJETA LIVE · INVITADO 48H` agrega una `X` interna cuadrada, con el mismo recuadro, tamaño y línea gráfica del cierre usado en el resto del recorrido.
+- `release.json`, `service-worker.js` e `index-grupal.html`: identidad visible pasa a R247 para confirmar la corrección en Laboratorio y Producción.
+- `test-r237-cross-environment-48h-invitations.mjs` y `test-r229-organizer-guest48h-live-card.mjs`: bloquean que LAB vuelva a depender sólo de variable de entorno para 48h o que la tarjeta Live invitada abra sin la `X` cuadrada de paridad gráfica.
