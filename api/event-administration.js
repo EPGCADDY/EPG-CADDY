@@ -9,6 +9,7 @@ import {ensureEventAdministration,eventAdminAuthority,issueEventAdmin,redeemEven
 import {refreshEventLifecycles} from './_lib/event-lifecycle.js';
 import {isAllowedAppOrigin,handleAppPreflight} from './_lib/cors.js';
 import {noStore,readJson} from './_lib/http.js';
+import {serviceErrorCode,serviceErrorStatus} from './_lib/service-errors.js';
 
 function guestGroupRows(items=[],source='production'){
  const rows=[];
@@ -106,6 +107,6 @@ export async function handleEventAdministration(req,res,database=getDatabase,own
  if(body.action==='grants')return res.status(200).json({ok:true,grants:await sql`SELECT id,recipient_account_id,recipient_name,expires_at,redeemed_at,revoked_at FROM gsc_event_admin_grants WHERE event_id=${event.eventId}::uuid AND event_kind=${event.eventKind} ORDER BY created_at DESC`});
  if(body.action==='revoke'){await sql`UPDATE gsc_event_admin_grants SET revoked_at=now() WHERE id=${body.grantId}::uuid AND event_id=${event.eventId}::uuid AND event_kind=${event.eventKind}`;return res.status(200).json({ok:true})}
  throw accessError('ADMIN_ACTION_INVALID',400);
- }catch(error){return res.status(error.status||400).json({ok:false,code:error.code||'ADMIN_UNAVAILABLE'})}
+ }catch(error){const code=serviceErrorCode(error,'ADMIN_UNAVAILABLE'),status=error.status||(code==='DATABASE_NOT_CONFIGURED'||code==='DATABASE_QUOTA_EXCEEDED'?serviceErrorStatus(error,code):400);return res.status(status).json({ok:false,code})}
 }
 export default function handler(req,res){return handleEventAdministration(req,res)}

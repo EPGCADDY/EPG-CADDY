@@ -1,3 +1,13 @@
+## R240 · Diagnóstico explícito de cuota Neon
+
+| Archivo | Rol actualizado | Gate / evidencia |
+| --- | --- | --- |
+| `api/_lib/service-errors.js` | Normaliza errores de proveedor, incluyendo Neon HTTP 402/cuota agotada, a códigos operativos estables. | `test-r240-database-quota-diagnostics.mjs` |
+| `api/tournament-score-directory.js` | Devuelve `DATABASE_QUOTA_EXCEEDED`/503 cuando el directorio global no puede consultar Neon por cuota. | `test-r240-database-quota-diagnostics.mjs` |
+| `api/event-administration.js` | Devuelve `DATABASE_QUOTA_EXCEEDED`/503 en Administración si la base está bloqueada por cuota. | `test-r240-database-quota-diagnostics.mjs` |
+| `event-administration-ui.js` | Muestra `BASE DE DATOS SIN CUOTA · NEON 402 · ACTUALIZA EL PLAN O LA CUOTA` en Organizador. | `test-r240-database-quota-diagnostics.mjs` |
+| `release.json`, `service-worker.js`, `index-grupal.html`, `scripts/build-manual-lab.mjs` | Identidad R240, caché PWA y banco obligatorio actualizado. | `scripts/release-matrix-gate.mjs` |
+
 ## R230 · Access propietario sólo 48 horas
 
 | Archivo | Rol actualizado | Gate / evidencia |

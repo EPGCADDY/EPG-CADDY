@@ -1,3 +1,11 @@
+## R240 · Diagnóstico explícito de cuota Neon · 9 de octubre de 2026
+
+- `api/_lib/service-errors.js`: clasifica errores de proveedor que llegan como HTTP 402/cuota agotada y los normaliza como `DATABASE_QUOTA_EXCEEDED`.
+- `api/tournament-score-directory.js` y `api/event-administration.js`: dejan de esconder el 402 de Neon detrás de `TOURNAMENT_DIRECTORY_UNAVAILABLE` o `ADMIN_UNAVAILABLE`; responden 503 con código explícito para diagnóstico operativo.
+- `event-administration-ui.js`: Organizador muestra `BASE DE DATOS SIN CUOTA · NEON 402 · ACTUALIZA EL PLAN O LA CUOTA` cuando el backend no puede leer la base por cuota.
+- `test-r240-database-quota-diagnostics.mjs` y `scripts/build-manual-lab.mjs`: agregan regresión obligatoria para impedir que el estado de cuota agotada vuelva a quedar como error genérico.
+- `release.json`, `index-grupal.html` y `service-worker.js`: identidad R240 y caché sincronizado.
+
 ## R239 · Organizador vuelve a listar torneos y rondas · 9 de octubre de 2026
 
 - `event-administration-ui.js`: se revierte el filtro que dejaba pasar sólo `tournament`; Administración vuelve a mostrar `tournament` y `private` de LAB/Producción bajo `TORNEOS Y RONDAS`, conservando Scores General/Categorías, compartir código, eliminar y la sección separada `GRUPOS INVITADOS 48H`.

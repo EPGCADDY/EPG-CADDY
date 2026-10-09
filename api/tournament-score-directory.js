@@ -2,6 +2,7 @@ import {getDatabase} from './_lib/database.js';
 import {ensurePersonalAccess,availableTournamentEntryCode,eventKind,eventScope} from './_lib/personal-event-access.js';
 import {ensureEventLifecycle,refreshEventLifecycles} from './_lib/event-lifecycle.js';
 import {noStore,readJson} from './_lib/http.js';
+import {serviceErrorCode,serviceErrorStatus} from './_lib/service-errors.js';
 
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const ALLOWED_SNAPSHOT=new Set(['schemaVersion','roundId','tournament','playedAt','course','courseHoles','players','mode','groupLabel','status','officiallyClosedAt','updatedAt','appVersion']);
@@ -53,6 +54,6 @@ export async function handleTournamentScoreDirectory(req,res,databaseGetter=getD
    const tournament=tournaments[0];return res.status(200).json({ok:true,kind,tournament:{...tournament,revision:Number(tournament.revision)},streams:rows.map(row=>{const safe=safeStream(row);return{id:safe.id,scope:safe.scope,groupLabel:safe.group_label,status:safe.status,revision:Number(safe.revision)||0,expiresAt:safe.expires_at,updatedAt:safe.updated_at,snapshot:safe.current_snapshot}})});
   }
   return res.status(400).json({ok:false,code:'LIVE_ACTION_UNSUPPORTED'});
- }catch(error){console.error('tournament-directory',error.code,error.message);return res.status(error.code==='DATABASE_NOT_CONFIGURED'?503:500).json({ok:false,code:error.code||'TOURNAMENT_DIRECTORY_UNAVAILABLE'})}
+ }catch(error){const code=serviceErrorCode(error,'TOURNAMENT_DIRECTORY_UNAVAILABLE');console.error('tournament-directory',code,error.message);return res.status(serviceErrorStatus(error,code)).json({ok:false,code})}
 }
 export default function handler(req,res){return handleTournamentScoreDirectory(req,res)}

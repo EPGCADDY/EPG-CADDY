@@ -1,3 +1,11 @@
+## RC-144 · Organizador ocultaba cuota agotada de Neon como directorio no disponible · 9 OCTUBRE 2026
+
+- Síntoma físico: Organizador mostraba `NO SE PUDO COMPLETAR · TOURNAMENT_DIRECTORY_UNAVAILABLE` y lista global incompleta aunque R239 estaba desplegado.
+- Causa raíz: LAB y Producción recibían de Neon `HTTP status 402 · account or project has exceeded the quota`; el catch del directorio y administración devolvía códigos genéricos que impedían distinguir cuota agotada de fallo funcional.
+- Punto de escape: las pruebas cubrían mezcla de torneos/rondas y errores parciales, pero no exigían preservar el diagnóstico de cuota del proveedor.
+- Control permanente: `test-r240-database-quota-diagnostics.mjs` fuerza que directorio y administración devuelvan `DATABASE_QUOTA_EXCEEDED` y que la UI muestre `BASE DE DATOS SIN CUOTA · NEON 402 · ACTUALIZA EL PLAN O LA CUOTA`.
+- Estado: corregido en R240 a nivel diagnóstico; la lista real depende de restaurar cuota/plan Neon.
+
 ## RC-143 · Organizador perdió listas de torneos y rondas · 9 OCTUBRE 2026
 
 - Síntoma físico: el propietario reportó que las listas de torneos y rondas desaparecieron en Organizador/Administrador después de los cambios de invitaciones 48h.

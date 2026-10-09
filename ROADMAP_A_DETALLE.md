@@ -1,3 +1,14 @@
+## R240 · Diagnóstico explícito de cuota Neon · 9 de octubre de 2026
+
+- Evidencia física: tras R239, Organizador abre `ADMINISTRAR TORNEOS Y GRUPOS`, pero muestra `NO SE PUDO COMPLETAR · TOURNAMENT_DIRECTORY_UNAVAILABLE · LISTA GLOBAL INCOMPLETA · REINTENTO AUTOMÁTICO`; el endpoint público `/api/tournament-score-directory` devuelve HTTP 500 en LAB y Producción.
+- Diagnóstico Vercel: logs de runtime en `dpl_3cBpwX4CgG5Thesn9m5siYWaQLHy` y `dpl_7AFcpA79CJ5iPQY9AUC9H5vH7bCq` muestran Neon HTTP 402: `Your account or project has exceeded the quota`.
+- `api/_lib/service-errors.js`: nuevo clasificador compartido para detectar cuota agotada por status/mensaje y emitir `DATABASE_QUOTA_EXCEEDED`.
+- `api/tournament-score-directory.js` y `api/event-administration.js`: el catch usa el clasificador y responde 503 con código operativo explícito en vez de error genérico.
+- `event-administration-ui.js`: agrega mensaje visible `BASE DE DATOS SIN CUOTA · NEON 402 · ACTUALIZA EL PLAN O LA CUOTA`.
+- `test-r240-database-quota-diagnostics.mjs`: valida ambos endpoints y el texto UI; `scripts/build-manual-lab.mjs` incorpora el test al banco obligatorio.
+- `release.json`, `index-grupal.html`, `service-worker.js`: sincronizan R240 para entrega por actualización.
+- Nota operativa: R240 no puede restaurar la lista mientras Neon rechace consultas por cuota; deja la causa real visible para intervención de cuenta/plan/cuota.
+
 ## R230 · Access propietario con única opción 48 horas · 8 de octubre de 2026
 
 - `access.html`: el texto del panel propietario se reduce a crear únicamente el enlace compartido válido por 48 horas; conserva la aclaración de que Registro no necesita credenciales.
