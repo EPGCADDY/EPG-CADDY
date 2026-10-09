@@ -4653,7 +4653,6 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `event-administration.html` | El `X` del Organizador queda fijo, tocable y sin tapar la lista o tarjetas 48h; el Organizador y la tarjeta Live conservan scroll táctil. |
 | `test-r231-live-card-readability.mjs` | Regresión para exigir `+/- ACUMULADO` en Live/Organizador y el cierre fijo del Organizador. |
 
-
 ## R237 · invitaciones 48h Producción/LAB en Organizador · 9 octubre 2026
 
 | Archivo | Cambio |
@@ -4663,5 +4662,14 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `release.json`, `index-grupal.html`, `service-worker.js` | Identidad R237 y cache sincronizado. |
 | `test-r237-cross-environment-48h-invitations.mjs` | Banco nuevo que exige invitaciones 48h cruzadas entre ambientes y filas visibles sin tarjeta Live registrada. |
 | `test-r229-organizer-guest48h-live-card.mjs`, `test-r231-live-card-readability.mjs` | Expectativas actualizadas para el nuevo estado pendiente y la línea de origen/vigencia. |
-
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello R237 regenerado con 940 fuentes después de añadir el banco de invitaciones 48h cruzadas. |
+
+## R238 · espejo firmado de accesos 48h Producción → LAB · 9 octubre 2026
+
+| Archivo | Cambio |
+|---|---|
+| `api/event-administration.js` | Agrega `list-peer-guest48h`, protegido por `EVENT_ADMIN_PEER_SECRET` o `CRON_SECRET`, para que LAB lea directamente los grants 48h activos del ambiente dueño sin depender de una cookie LAB válida en Producción. |
+| `api/event-administration.js` | `guestGroupRows()` pasa a helper compartido y `ownerFeedbackForPeer()` lista el propietario configurado o los propietarios activos recientes, conservando `current_snapshot` cuando exista y mostrando filas pendientes sin tarjeta Live. |
+| `test-r237-cross-environment-48h-invitations.mjs` | Amplía la regresión R237 para bloquear el fallo visto en iPhone: Producción mostraba muchos accesos, pero LAB instalado no los recibía por autenticación cruzada. |
+| `test-r227-guest48h-organizer-groups.mjs` | Actualiza expectativas rígidas de import/release para aceptar el helper nuevo sin debilitar el bloqueo de invitados al Organizador. |
+| `release.json`, `index-grupal.html`, `service-worker.js` | Identidad R238 y cache `r238-lab-signed-production-guest48h-mirror` para forzar entrega nueva. |

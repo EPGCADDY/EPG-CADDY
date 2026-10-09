@@ -1,3 +1,10 @@
+## R238 · LAB espejo firmado de accesos 48h de Producción · 9 de octubre de 2026
+
+- `api/event-administration.js`: LAB deja de depender de que la cookie local sirva en Producción para leer `GRUPOS INVITADOS 48H`; agrega la acción interna firmada `list-peer-guest48h` y usa `EVENT_ADMIN_PEER_SECRET` o `CRON_SECRET` para traer los accesos activos desde el ambiente dueño.
+- `test-r237-cross-environment-48h-invitations.mjs`: amplía el candado para exigir ruta peer firmada, encabezado `Authorization: Bearer` y lectura directa de grants 48h del ambiente propietario.
+- `test-r227-guest48h-organizer-groups.mjs`: actualiza el control heredado para aceptar imports extendidos y fechas de release R238 sin perder la verificación de grupos invitados.
+- `release.json`, `index-grupal.html` y `service-worker.js`: identidad R238 y caché sincronizado para forzar actualización visible en LAB instalado, alias LAB y Producción.
+
 ## R230 · Access propietario sólo comparte app 48 horas · 8 de octubre de 2026
 
 - `access.html`: el panel propietario queda reducido a una sola opción visible: `COMPARTIR APP 48 HORAS`; se retiran código para jugador, actividad anónima y textos de consulta.
@@ -4508,12 +4515,10 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - R233-CIERRE-ORGANIZADOR: corrección de cierre incluida antes de publicar.
 - `event-administration.html`: conserva scroll táctil del Organizador y de la tarjeta Live invitada con `touch-action` y `-webkit-overflow-scrolling`.
 
-
 ## R237 · invitaciones 48h visibles también en LAB · 9 octubre 2026
 
 - `api/event-administration.js`: el Organizador expone accesos 48h aunque todavía no exista snapshot/tarjeta Live del invitado; además conserva la mezcla cruzada LAB/Producción para que las invitaciones creadas en Producción aparezcan en laboratorio.
 - `event-administration-ui.js`: las filas 48h se muestran como `ACCESO COMPARTIDO 48H`, indican si vienen de LAB o Producción y dejan visible el estado `SIN TARJETA LIVE AÚN` hasta que haya snapshot.
 - `release.json`, `index-grupal.html` y `service-worker.js`: identidad R237 y caché actualizada para distribuir la corrección.
 - `test-r237-cross-environment-48h-invitations.mjs`, `test-r229-organizer-guest48h-live-card.mjs` y `test-r231-live-card-readability.mjs`: regresiones para bloquear que LAB vuelva a ocultar invitaciones 48h de Producción o que exija tarjeta Live antes de listarlas.
-
 - R237-INVENTARIO: `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` queda sellado con 940 fuentes después de agregar el banco `test-r237-cross-environment-48h-invitations.mjs`.

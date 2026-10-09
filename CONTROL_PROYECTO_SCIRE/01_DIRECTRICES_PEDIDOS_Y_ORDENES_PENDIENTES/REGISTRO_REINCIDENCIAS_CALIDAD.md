@@ -1,3 +1,11 @@
+## RC-142 · LAB instalado no mostraba los muchos accesos 48h visibles en Producción · 9 OCTUBRE 2026
+
+- Síntoma físico: Producción mostraba muchos `GRUPOS INVITADOS 48H`, pero el LAB instalado seguía mostrando vacío o no reflejaba la misma lista aunque ya estuviera en R237.
+- Causa raíz: R237 movió aliases y agregó filas visibles, pero la lectura cruzada LAB→Producción seguía usando la cookie local; esa cookie no garantiza autorización de owner en el dominio par, por lo que Producción podía devolver cero `guestGroups`.
+- Punto de escape: el candado R237 verificaba presencia de merge y UI, pero no exigía un canal server-to-server firmado independiente de cookie para el inventario 48h del ambiente dueño.
+- Control permanente: `test-r237-cross-environment-48h-invitations.mjs` exige `list-peer-guest48h`, encabezado `Authorization: Bearer` y lectura directa con `ownerFeedbackForPeer()`. `api/event-administration.js` usa `EVENT_ADMIN_PEER_SECRET` o `CRON_SECRET` para ese inventario.
+- Estado: corregido en R238; publicación LAB/Producción y verificación pública pendientes en este turno.
+
 ## RC-141 · Invitaciones 48h no aparecían como grupos individuales en Organizador · 8 OCTUBRE 2026
 
 - Síntoma operativo: el propietario necesitaba entrar a Organizador y ver cada grupo invitado 48h por separado, con sus jugadores y scores, mientras el invitado debía usar la Score Card normal sin acceso a funciones de organizador.
