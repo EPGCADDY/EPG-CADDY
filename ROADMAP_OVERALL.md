@@ -8,6 +8,7 @@ Total output lines: 4562
 - `test-round-information.mjs` y `test-v397-card-in-out-back-contract.mjs`: actualizan el contrato histórico de orden de columnas a `JUGADOR`, `HOYO`, `GROSS IN`, `GROSS OUT`, `GROSS TOTAL`.
 - `scripts/build-manual-lab.mjs`, `release.json`, `index-grupal.html` y `service-worker.js`: incorporan R251 al banco obligatorio, badge visible y caché sincronizado.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: resellado R251 para validación Vercel con 950 fuentes y tres PDFs de inventario.
+- Publicación: se reemite R251 con árbol UTF-8 limpio para que LAB/Producción validen `roadmap-gate`, `inventory-gate` y despliegue sin blobs truncados.
 
 ## R250 · Doble toque de jugador usa voz femenina y Live 48H aísla scroll · 9 de octubre de 2026
 

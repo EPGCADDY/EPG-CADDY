@@ -11,6 +11,7 @@ Total output lines: 4732
 - `test-round-information.mjs` y `test-v397-card-in-out-back-contract.mjs`: sincronizan el contrato histórico de títulos/IN/OUT con la nueva columna.
 - Release: `release.json`, `service-worker.js` e `index-grupal.html` sincronizan `20261009-R251`, etiqueta visible `R251` y versión técnica `R251-GUEST48H-ROUND-INFO-HOLE-COLUMN`.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: resellado R251 para validación Vercel con 950 fuentes y tres PDFs de inventario.
+- Publicación: se reemite R251 con árbol UTF-8 limpio para que LAB/Producción validen `roadmap-gate`, `inventory-gate` y despliegue sin blobs truncados.
 
 ## R250 · Voz femenina unificada y scroll Live 48H aislado · 9 de octubre de 2026
 
