@@ -42,7 +42,7 @@ export async function handleEventAdministration(req,res,database=getDatabase,own
  const guestGroupRows=(items=[])=>{
   const rows=[];
   for(const grant of items){
-   const groups=Array.isArray(grant.guest_groups)&&grant.guest_groups.length?grant.guest_groups:[grant.current_snapshot?{id:grant.id,grant_id:grant.id,group_key:'legacy',updated_at:grant.feedback_updated_at,modality:grant.modality,player_count:grant.max_players,holes_used:grant.holes_used,annotations_count:grant.annotations_count,current_snapshot:grant.current_snapshot}:null].filter(Boolean);
+   const groups=Array.isArray(grant.guest_groups)&&grant.guest_groups.length?grant.guest_groups:[{id:grant.id,grant_id:grant.id,group_key:'access',created_at:grant.created_at,updated_at:grant.feedback_updated_at||grant.last_used_at||grant.created_at,modality:grant.modality,player_count:grant.max_players,holes_used:grant.holes_used,annotations_count:grant.annotations_count,current_snapshot:grant.current_snapshot}];
    for(const group of groups){
     rows.push({
      id:String(group.id||`${grant.id}-${group.group_key||'legacy'}`),
@@ -61,6 +61,7 @@ export async function handleEventAdministration(req,res,database=getDatabase,own
      holes_used:group.holes_used||grant.holes_used||0,
      annotations_count:group.annotations_count||grant.annotations_count||0,
      current_snapshot:group.current_snapshot||grant.current_snapshot,
+     has_snapshot:Boolean(group.current_snapshot||grant.current_snapshot),
      canAdminister:false
     });
    }

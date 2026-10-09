@@ -28,7 +28,7 @@ function administrationCard(e){
 }
 function guestGroupTitle(group){
  const snapshot=group.current_snapshot||{},first=(snapshot.players||[]).map(player=>String(player?.name||'').trim()).filter(Boolean)[0];
- return first||'GRUPO INVITADO 48H';
+ return first||'ACCESO COMPARTIDO 48H';
 }
 function liveModeLabel(value){return({general:'SCORE CARD',match_play:'MATCH PLAY',four_ball:'FOUR BALL',stableford:'STABLEFORD',universales:'UNIVERSALES'})[value]||'SCORE CARD'}
 function guestRelation(value){const number=Number(value);if(!Number.isFinite(number))return'';return number===0?'E':number>0?'+'+number:String(number)}
@@ -47,7 +47,8 @@ function guestGroupLiveCard(group){
  return '<article class="group-card guest-live-card" data-guest-live-card="'+escape(group.id)+'"><header class="group-head"><div><div class="group-meta">'+escape(snapshot.course||'CAMPO')+(snapshot.tournament?' · '+escape(snapshot.tournament):'')+' · '+escape(date?format(date):'—')+'</div></div><span class="group-badge">'+escape(liveModeLabel(snapshot.mode))+' · RONDA EN CURSO</span></header>'+players.map((player,index)=>guestPlayerLiveCard(player,snapshot,index)).join('')+'</article>';
 }
 function guestGroupCard(group){
- return '<article data-guest-group="'+escape(group.id)+'" data-event-source="'+escape(group.source)+'"><h3>'+escape(guestGroupTitle(group))+'</h3><button type="button" data-guest-group-open="'+escape(group.id)+'">ABRIR TARJETA LIVE</button></article>';
+ const canOpen=!!group.current_snapshot;
+ return '<article data-guest-group="'+escape(group.id)+'" data-event-source="'+escape(group.source)+'"><h3>'+escape(guestGroupTitle(group))+'</h3><p>'+escape(String(group.source||'').toUpperCase())+' · 48H'+(group.expires_at?' · VENCE '+escape(format(group.expires_at)):'')+'</p>'+(canOpen?'<button type="button" data-guest-group-open="'+escape(group.id)+'">ABRIR TARJETA LIVE</button>':'<button type="button" disabled>SIN TARJETA LIVE AÚN</button>')+'</article>';
 }
 let refreshSequence=0,cachedLocal={ok:false},cachedDirectory={ok:false},cachedCodes={},lastRowsSignature='';
 async function refresh({automatic=false,signal}={}){

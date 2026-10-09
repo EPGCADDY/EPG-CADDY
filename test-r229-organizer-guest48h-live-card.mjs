@@ -9,7 +9,7 @@ assert.match(adminUi,/data-guest-group-open/,'Organizer guest 48h rows must open
 assert.match(adminUi,/function openGuestGroupLive\(group\)/,'Organizer must have a dedicated 48h guest Live-card opener');
 assert.match(adminUi,/function guestGroupLiveCard\(group\)/,'Organizer must render a complete Live-style card for each invited group');
 assert.match(adminUi,/function guestPlayerLiveCard\(player,snapshot,index=0\)/,'Organizer Live card must render player score tables');
-assert.match(adminUi,/return first\|\|'GRUPO INVITADO 48H'/,'Organizer compact card title must come from the first Score Card player, not the group label');
+assert.match(adminUi,/return first\|\|'ACCESO COMPARTIDO 48H'/,'Organizer compact card title must come from the first Score Card player when a snapshot exists, or from the pending 48h access label');
 assert.doesNotMatch(adminUi,/return snapshot\.groupLabel\|\|/,'Organizer compact card must not use the guest group label as title');
 assert.match(adminUi,/>ABRIR TARJETA LIVE</,'Guest group row must expose the explicit Live-card action');
 assert.match(adminUi,/RESULTADOS ACUMULADOS/,'Organizer Live card must include accumulated-results separator');
