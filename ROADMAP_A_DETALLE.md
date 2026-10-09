@@ -2053,3 +2053,4 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `scores-ui.js` | Si la fila trae `audioText`, un clic sobre el nombre reproduce sólo ese jugador y un segundo clic lo detiene; sin `audioText`, se conserva el flujo histórico de 18 scores. |
 | `test-r246-live-48h-player-audio-summary.mjs` | Valida carga de voz compartida, resumen individual hasta el hoyo actual, clic único para hablar y segundo clic para parar. |
 | `scripts/build-manual-lab.mjs` | Integra R246 al banco obligatorio del laboratorio para evitar regresiones en futuras publicaciones. |
+| `release.json`, `service-worker.js`, `index-grupal.html`, `live.html` | Corrigen identidad visible y cache de publicación: Laboratorio y Producción dejan de anunciar R242/R233 y pasan a R246. |

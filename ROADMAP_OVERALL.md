@@ -2150,3 +2150,4 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - `live-view.js`: cada nombre de jugador en Live 48h recibe un resumen hablado individual con acumulado hasta el hoyo actual: nombre, hoyo, gross, neto y relación contra par.
 - `scores-ui.js`: cuando una fila trae audio de Live, un solo clic en el nombre inicia el dictado individual y otro clic sobre el mismo nombre lo detiene; las pantallas sin audio conservan el detalle de 18 scores por doble clic.
 - `test-r246-live-48h-player-audio-summary.mjs` y `scripts/build-manual-lab.mjs`: nuevo candado para bloquear duplicación de audio, pérdida de voz compartida o regreso al detalle con un clic en Live 48h.
+- `release.json`, `service-worker.js`, `index-grupal.html` y `live.html`: identidad visible, cache fallback y query de Live pasan de R242/R233 a R246 para que Laboratorio y Producción muestren la versión correcta.
