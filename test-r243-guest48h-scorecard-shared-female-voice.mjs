@@ -15,7 +15,7 @@ assert.match(group,/guest-access\.js[\s\S]*device-closures\.js/,'Guest 48h acces
 assert.match(group,/window\.GSCDeviceClosures\.bindControls\(\)/,'Normal Score Card must bind result audio through the shared device closure path');
 assert.doesNotMatch(guest,/deviceClosure(?:Front|Back|Total|Status)|player-audio-button|data-audio-player/,'Guest 48h isolation must not remove or shadow Score Card audio result controls');
 assert.match(access,/device-closures\.js/,'48h invitation page must load the same device speech helper');
-assert.match(access,/GSCDeviceClosures\.speak\("Invitaci[oó]n de 48 horas creada\. Comparte el enlace de la Score Card por WhatsApp\."\)/,'48h invitation audio must use the same local speech path');
+assert.match(access,/const speaker=window\.GSCDeviceClosures[\s\S]*speaker\.speak\("Invitaci[oó]n de 48 horas creada\. Comparte el enlace de la Score Card por WhatsApp\."\)/,'48h invitation audio must use the same local speech path');
 
 const sandbox={
   speechSynthesis:{
