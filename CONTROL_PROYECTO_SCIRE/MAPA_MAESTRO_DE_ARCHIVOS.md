@@ -2,8 +2,8 @@
 
 | Archivo | Rol actualizado | Gate / evidencia |
 | --- | --- | --- |
-| `access.html` | Deja una sola opción propietaria: `COMPARTIR APP 48 HORAS`; retira código para jugador, actividad anónima y handlers asociados. | `test-r230-owner-access-48h-only.mjs` |
-| `test-r230-owner-access-48h-only.mjs` | Regresión de opción única 48h, texto exacto, ausencia de opciones retiradas y entrada libre. | Banco LAB obligatorio |
+| `access.html` | Deja una sola opción propietaria: `COMPARTIR APP 48 HORAS`; retira código para jugador, actividad anónima y handlers asociados; al crear o tocar el enlace abre WhatsApp con `wa.me` sin copiar/pegar. | `test-r230-owner-access-48h-only.mjs` |
+| `test-r230-owner-access-48h-only.mjs` | Regresión de opción única 48h, texto exacto, ausencia de opciones retiradas, entrada libre y apertura directa de WhatsApp para el enlace 48h. | Banco LAB obligatorio |
 | `release.json`, `service-worker.js`, `index-grupal.html`, `scripts/build-manual-lab.mjs` | Identidad R230, caché PWA y banco obligatorio actualizado. | `scripts/release-matrix-gate.mjs` |
 
 ## R229 · Organizador abre tarjeta Live de invitados 48h
@@ -2884,3 +2884,13 @@ Base vigente 4a493a7; incorpora la corrección acreditada 27c8ae4. Las publicaci
 | `test-event-administration.mjs` | Prueba confirmación API y borrado con identidad válida y sesión vencida. | Mantiene denegación a terceros y delegados. |
 | `test-lab-device-event-identity.mjs` | Comprueba que sesión válida de espectador no ceda ante identidad del dispositivo. | Mantiene código de invitado en solo lectura. |
 | `ROADMAP_A_DETALLE.md`, `ROADMAP_OVERALL.md`, `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `INVENTARIOS_V311.lock.json` | Historial, control de recurrencia y sello del candidato. | Un solo FAIL bloquea publicación. |
+
+## R231 · tarjeta Live invitado 48h legible y compacta
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `live.html` | Estilos públicos de la tarjeta Live compartida: números, acumulados, metadatos y `gross-mark` más visibles. | Cache `live-view.js?v=20261008-R231`. |
+| `live-view.js` | Render de jugadores en Live; muestra sólo nombre, tabla y resultados acumulados con nomenclatura de Score Card en GROSS. | Elimina HCP/marcas junto al nombre. |
+| `event-administration.html` | Estilos del diálogo Live usado por Organizador, incluyendo `gross-mark`. | Paridad visual con Live público. |
+| `event-administration-ui.js` | Tarjetas compactas de invitados 48h y diálogo Live. | Compacta a nombre + `ABRIR TARJETA LIVE`; sin metadatos ni HCP/marcas visibles; GROSS con círculos/cuadros de Score Card. |
+| `test-r231-live-card-readability.mjs` | Regresión de tamaño, color, limpieza de textos, tarjeta compacta y nomenclatura de golf. | Integrada en `scripts/build-manual-lab.mjs`. |

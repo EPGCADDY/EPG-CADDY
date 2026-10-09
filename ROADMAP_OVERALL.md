@@ -4482,3 +4482,11 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - `live-hub.html` retira el panel `global-live-directory`; `live-hub.js` deja de refrescar esa lista desde la pantalla de Scores. Se conservan los botones Scores General, Scores por Categoría, Buscar Jugador, Mis Favoritos, búsqueda, filtros y tablas.
 - `test-r216-live-hub-no-global-directory-panel.mjs` bloquea la reaparición de esos textos y confirma que las vistas de Scores siguen presentes.
 - Identidad de entrega sincronizada: `release.json`, `service-worker.js` e `index-grupal.html` pasan a R216.
+
+## R231 · Tarjeta Live invitado 48h más legible · 8 octubre 2026
+
+- `live.html` y `event-administration.html`: los dígitos de la tarjeta Live suben 25%, las etiquetas de resultados acumulados pasan a verde y los acumulados se muestran más grandes y saturados.
+- `live-view.js` y `event-administration-ui.js`: la tarjeta abierta muestra sólo el nombre del jugador sobre la tabla; se elimina el texto HCP/marcas que quedaba en blanco junto a cada jugador, todos los dígitos de la fila NETO y el acumulado NETO quedan en verde, y se aplica la misma nomenclatura de Score Card en GROSS: birdie/eagle/albatross con círculo y bogey/doble/triple bogey con cuadro.
+- `event-administration-ui.js`: las tarjetas compactas de `GRUPOS INVITADOS 48H` quedan únicamente con el nombre del primer jugador y el botón `ABRIR TARJETA LIVE`.
+- `access.html`: al crear o tocar el enlace de invitación 48h se abre WhatsApp mediante `wa.me` con el texto armado, sin seleccionar, copiar ni pegar manualmente.
+- `test-r230-owner-access-48h-only.mjs` y `test-r231-live-card-readability.mjs` quedan en el banco de laboratorio para bloquear el regreso de textos pequeños, HCP/marcas visibles, tarjetas compactas con metadatos sobrantes y el flujo manual de copiar/pegar en Access.

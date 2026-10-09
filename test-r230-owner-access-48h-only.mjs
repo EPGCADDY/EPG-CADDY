@@ -11,6 +11,9 @@ assert.doesNotMatch(access,/CREAR CÓDIGO PARA JUGADOR|createPlayerCode|create-c
 assert.doesNotMatch(access,/VER ACTIVIDAD ANÓNIMA|reportData|action=report|\$\("report"\)/,'Owner access panel must not expose anonymous activity report');
 assert.doesNotMatch(access,/emitir, consultar o revocar/,'Owner access copy must not advertise removed report/extra options');
 assert.match(access,/no necesitas credenciales/,'Owner access panel must still clarify normal app entry is free');
+assert.match(access,/openWhatsAppInviteLink\(data\.url\)/,'Owner access create action must open WhatsApp directly after generating the 48h invitation link');
+assert.match(access,/https:\/\/wa\.me\/\?text=/,'Owner access invitation sharing must route to WhatsApp without manual copy/paste');
+assert.match(access,/\$\("url"\)\.onclick=\(\)=>openWhatsAppInviteLink\(\$\("url"\)\.textContent\)/,'Owner access invitation link must be touchable to reopen WhatsApp sharing');
 const releaseNumber=Number(String(release.label||'').replace(/^R/,''));
 assert.ok(releaseNumber>=230,'Release label must be R230 or later for owner access 48h-only panel');
 

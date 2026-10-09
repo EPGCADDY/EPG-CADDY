@@ -4621,3 +4621,15 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 - `live-hub.js`: se retira el estado `activeGlobalDirectory`, el render del panel eliminado y el intervalo que consultaba `list_active_tournaments` sólo para llenar ese bloque visual. La lectura funcional de torneos y scores permanece en `refreshRegisteredDirectory`, `selectSavedTournament`, `refresh` y las vistas General/Categoría/Buscar/Favoritos.
 - `test-r216-live-hub-no-global-directory-panel.mjs`: regresión dirigida que exige ausencia de IDs/textos del panel retirado y presencia de los cuatro accesos de Scores.
 - `release.json`, `service-worker.js`, `index-grupal.html`: identidad visible y caché sincronizadas a `20261008-R216` / `R216`.
+
+## R231 · legibilidad y limpieza de Live invitado 48h · 8 octubre 2026
+
+| Archivo | Cambio |
+|---|---|
+| `live.html` | Aumenta números de la tabla a 13px, acumulados a 15px, etiquetas de acumulados en verde, pone NETO de fila y acumulado en verde, agrega CSS `gross-mark` idéntico al scorecard y cachea `live-view.js?v=20261008-R231`. |
+| `event-administration.html` | Replica la misma legibilidad y la misma nomenclatura de golf dentro del diálogo de Organizador para la tarjeta Live de invitados 48h. |
+| `live-view.js` | Elimina el texto blanco `HCP · marcas` bajo el nombre del jugador, pinta NETO en verde y renderiza GROSS con `gross-mark birdie/eagle/bogey/double-bogey` igual que la Score Card sin alterar Gross/HCP/Neto. |
+| `event-administration-ui.js` | El diálogo Live de Organizador elimina `HCP · marcas`, pinta NETO en verde, aplica `gross-mark` y la tarjeta compacta de cada grupo invitado muestra sólo nombre y `ABRIR TARJETA LIVE`. |
+| `access.html` | `COMPARTIR APP 48 HORAS` genera el enlace y abre WhatsApp por `wa.me`; tocar el recuadro del enlace vuelve a abrir WhatsApp sin copiar/pegar. |
+| `test-r231-live-card-readability.mjs` | Regresión para tamaño/color de textos, ausencia de HCP/marcas, tarjeta compacta sin metadatos y nomenclatura de golf de Score Card. |
+| `release.json`, `index-grupal.html`, `service-worker.js`, `scripts/build-manual-lab.mjs` | Identidad R231, caché renovada e inclusión del nuevo test en build completo. |
