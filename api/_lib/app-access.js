@@ -193,3 +193,9 @@ export async function revokeGrant(id,owner){
   const rows=await sql`UPDATE app_access_grants SET revoked_at=now() WHERE id=${String(id||"")}::uuid AND owner_user_id=${owner.id} AND revoked_at IS NULL RETURNING id`;
   return Boolean(rows[0]);
 }
+
+export async function deleteGrant(id,owner,database=getDatabase()){
+  const sql=await ensureAccessTable(database);
+  const rows=await sql`DELETE FROM app_access_grants WHERE id=${String(id||"")}::uuid AND owner_user_id=${owner.id} RETURNING id`;
+  return Boolean(rows[0]);
+}

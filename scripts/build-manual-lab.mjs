@@ -18,6 +18,7 @@ execFileSync(process.execPath,['test-r242-guest48h-only-live-groups.mjs'],{stdio
 execFileSync(process.execPath,['test-r242-live-scroll-layering.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['test-r243-guest48h-scorecard-shared-female-voice.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['test-r244-live-shared-group-results.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['test-r249-delete-guest48h-invitation.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['test-r230-owner-access-48h-only.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['test-r231-live-card-readability.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/manual-screen-parity-gate.mjs'],{stdio:'inherit'});

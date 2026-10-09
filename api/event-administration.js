@@ -1,7 +1,7 @@
 import {getDatabase} from './_lib/database.js';
 import {tournamentDirectoryEnvironment,tournamentDirectoryPeerUrl} from './tournament-score-directory.js';
 import {ensureTournamentOrganizers,issueTournamentOrganizer} from './_lib/tournament-organizers.js';
-import {requireOwner,ownerFeedback,ensureAccessTable} from './_lib/app-access.js';
+import {requireOwner,ownerFeedback,ensureAccessTable,deleteGrant} from './_lib/app-access.js';
 import {requireAccountSession} from './_lib/account-auth.js';
 import {resolveEventIdentity} from './personal-events.js';
 import {ensurePersonalAccess,accessError,eventKind,limitPersonalAccess} from './_lib/personal-event-access.js';
@@ -55,6 +55,13 @@ async function ownerFeedbackForPeer(sql,env,ownerAccountId=''){
  return chunks;
 }
 
+async function deleteGuest48hForPeer(sql,ownerAccountId,grantId){
+ await ensureAccessTable(sql);
+ const ownerId=String(ownerAccountId||'').trim();
+ if(!ownerId)throw accessError('OWNER_REQUIRED',403);
+ return deleteGrant(grantId,{id:ownerId},sql);
+}
+
 function peerSecret(env){return String(env.EVENT_ADMIN_PEER_SECRET||env.CRON_SECRET||'').trim()}
 
 export async function handleEventAdministration(req,res,database=getDatabase,ownerResolver=requireOwner,identityResolver=requireAccountSession,fetcher=globalThis.fetch,env=process.env){
@@ -69,10 +76,25 @@ export async function handleEventAdministration(req,res,database=getDatabase,own
   const guestGroups=guestGroupRows(await ownerFeedbackForPeer(sql,env,body.ownerAccountId),source);
   return res.status(200).json({ok:true,source,guestGroups});
  }
+ if(body.action==='delete-peer-guest48h'){
+  const expected=peerSecret(env),supplied=String(req.headers?.authorization||'');
+  if(!expected||supplied!==`Bearer ${expected}`)throw accessError('EVENT_ADMIN_PEER_UNAUTHORIZED',401);
+  const deleted=await deleteGuest48hForPeer(sql,body.ownerAccountId,body.grantId);
+  return res.status(deleted?200:404).json({ok:deleted,code:deleted?null:'GRANT_NOT_FOUND'});
+ }
  if(guestMode&&body.action!=="remote-share")throw accessError('EVENT_ADMIN_GUEST_FORBIDDEN',403);
  try{account=await ownerResolver(req);owner=true}catch(error){if(!['OWNER_REQUIRED','ACCOUNT_UNAUTHORIZED'].includes(error.code))throw error;account=await resolveEventIdentity(req,res,sql,'list',identityResolver)}
  await ensurePersonalAccess(sql);await ensureEventAdministration(sql);await refreshEventLifecycles(sql);await limitPersonalAccess(sql,account,'event-admin');
  const relay=async(path,payload,{internal=false}={})=>{const base=peerUrl.replace(/\/api\/tournament-score-directory\/?$/,'');const secret=peerSecret(env);const response=await fetcher(base+path,{method:'POST',headers:{'content-type':'application/json',...(internal&&secret?{Authorization:`Bearer ${secret}`}:{...(req.headers?.cookie?{Cookie:req.headers.cookie}:{})})},body:JSON.stringify(payload),signal:AbortSignal.timeout(8000)});let data;try{data=await response.json()}catch{data={ok:false,code:'PEER_RESPONSE_INVALID'}}return{status:response.status,data}};
+ if(body.action==='delete-guest48h'||body.action==='remote-delete-guest48h'){
+  if(body.action==='remote-delete-guest48h'){
+   if(!['lab','production'].includes(body.source)||body.source===source)throw accessError('EVENT_SOURCE_INVALID',400);
+   const result=await relay('/api/event-administration',{action:'delete-peer-guest48h',ownerAccountId:account.id,grantId:body.grantId},{internal:true});
+   return res.status(result.status).json(result.data);
+  }
+  const deleted=await deleteGrant(body.grantId,account,sql);
+  return res.status(deleted?200:404).json({ok:deleted,code:deleted?null:'GRANT_NOT_FOUND'});
+ }
  if(body.action==='delete-round'||body.action==='remote-delete-round'){
   if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(body.roundId||'')))throw accessError('ROUND_ID_INVALID',400);
   const kind=eventKind(body.eventKind);

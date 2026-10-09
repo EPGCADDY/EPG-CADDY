@@ -1,6 +1,15 @@
 Warning: truncated output (original token count: 161452)
 Total output lines: 4562
 
+## R249 · Eliminar invitación 48H bloquea Score Card y Live · 9 de octubre de 2026
+
+- `event-administration-ui.js`: cada tarjeta de `GRUPOS INVITADOS 48H` agrega botón rojo `ELIMINAR 48H`, con confirmación antes de borrar.
+- `api/_lib/app-access.js`: agrega `deleteGrant()` para eliminar definitivamente el grant 48H; las tarjetas Live invitadas se eliminan por cascada desde `app_access_guest_groups`.
+- `api/event-administration.js`: agrega acciones locales y remotas `delete-guest48h`, `remote-delete-guest48h` y `delete-peer-guest48h`; LAB y Producción pueden borrar invitaciones del ambiente dueño con firma interna.
+- Efecto operativo: al eliminar una invitación 48H, el link de WhatsApp deja de redimir, la Score Card invitada queda bloqueada y la tarjeta Live del organizador desaparece al refrescar.
+- `test-r249-delete-guest48h-invitation.mjs`: nuevo candado para UI, endpoint local/remoto, borrado físico del grant, cascada de grupos, bloqueo de redención y bloqueo de feedback posterior.
+- `scripts/build-manual-lab.mjs`, `release.json`, `index-grupal.html` y `service-worker.js`: incorporan R249 al banco obligatorio, badge visible y caché sincronizado.
+
 ## R242 · Organizador 48H muestra sólo tarjetas Live activas · 9 de octubre de 2026
 
 - `api/event-administration.js`: los accesos 48H sin Score Card real dejan de devolverse como tarjetas visibles; sólo pasan grupos con `current_snapshot.players` válido.

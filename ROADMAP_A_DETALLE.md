@@ -1,6 +1,17 @@
 Warning: truncated output (original token count: 168243)
 Total output lines: 4732
 
+## R249 · Botón rojo para eliminar invitaciones 48H · 9 de octubre de 2026
+
+- Pedido físico del propietario: en `GRUPOS INVITADOS 48H`, cada ronda compartida debe tener la misma posibilidad de eliminación que los torneos; al eliminarla no debe quedar rastro funcional en Score Card ni tarjeta Live.
+- `event-administration-ui.js`: `guestGroupCard()` agrega `data-guest-group-delete` con clase `danger` y texto `ELIMINAR 48H`; `refresh()` conecta el handler y `removeGuestGroup()` abre confirmación explícita con el aviso `BLOQUEA EL LINK 48H Y BORRA SUS TARJETAS LIVE`.
+- `api/_lib/app-access.js`: `deleteGrant(id, owner, database)` ejecuta `DELETE FROM app_access_grants ... RETURNING id`; como `app_access_guest_groups.grant_id` está ligado por `ON DELETE CASCADE`, se elimina el grupo invitado y su snapshot operativo.
+- `api/event-administration.js`: `delete-guest48h` borra invitaciones locales del propietario autenticado; `remote-delete-guest48h` manda el borrado al ambiente dueño; `delete-peer-guest48h` exige `Authorization: Bearer EVENT_ADMIN_PEER_SECRET/CRON_SECRET` para evitar borrado cruzado sin firma.
+- Bloqueo automático: al desaparecer el grant, `/invite/<token>` ya no encuentra invitación redimible, el feedback 48H no puede persistir y Organizador deja de listar la tarjeta Live.
+- Regresión: `test-r249-delete-guest48h-invitation.mjs` valida presencia visual del botón rojo, acciones local/remota/peer, borrado definitivo, cascada de `ownerFeedback()`, redención posterior nula y feedback posterior rechazado.
+- Banco: `scripts/build-manual-lab.mjs` ejecuta el candado R249 junto con los gates 48H previos para que no regrese una invitación borrada.
+- Release: `release.json`, `service-worker.js` e `index-grupal.html` sincronizan `20261009-R249`, etiqueta visible `R249` y versión técnica `R249-DELETE-GUEST48H-INVITATION`.
+
 ## R242 · Invitaciones 48H visibles sólo cuando tienen tarjeta Live · 9 de octubre de 2026
 
 - Defecto físico reportado: Producción mostraba muchas tarjetas `ACCESO COMPARTIDO 48H` con `SIN TARJETA LIVE AÚN`; el propietario indicó que sólo debe verse la ronda activa cuyo primer jugador en Score Card es `CHINITO`.
