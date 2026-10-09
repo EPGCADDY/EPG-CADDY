@@ -4663,3 +4663,5 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `release.json`, `index-grupal.html`, `service-worker.js` | Identidad R237 y cache sincronizado. |
 | `test-r237-cross-environment-48h-invitations.mjs` | Banco nuevo que exige invitaciones 48h cruzadas entre ambientes y filas visibles sin tarjeta Live registrada. |
 | `test-r229-organizer-guest48h-live-card.mjs`, `test-r231-live-card-readability.mjs` | Expectativas actualizadas para el nuevo estado pendiente y la línea de origen/vigencia. |
+
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Sello R237 regenerado con 940 fuentes después de añadir el banco de invitaciones 48h cruzadas. |
