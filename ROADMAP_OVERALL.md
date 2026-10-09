@@ -2126,3 +2126,5 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 ## R243 Guest 48h Score Card Voice
 - Se unifica la voz local femenina de resultados entre Score Card normal y Score Card invitado 48h mediante device-closures.js.
 - Regresion obligatoria: test-r243-guest48h-scorecard-shared-female-voice.mjs valida selector compartido, carga de invitado y conservacion de controles de audio.
+
+- R243 final: commit de despliegue mantiene ROADMAPS en la misma modificacion para gate Vercel; voz femenina compartida Score Card normal/invitado 48h validada.
