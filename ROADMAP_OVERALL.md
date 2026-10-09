@@ -1,3 +1,11 @@
+## R241 · Reintento automático moderado cuando Neon está sin cuota · 9 de octubre de 2026
+
+- `directory-auto-refresh.js`: el refresco automático de directorios administrativos pasa de 5 segundos a 60 segundos y agrega espera de 5 minutos cuando el backend devuelve `DATABASE_QUOTA_EXCEEDED`.
+- `event-administration-ui.js`: el Organizador propaga el código de cuota agotada al monitor automático y muestra `REINTENTO EN 5 MIN · BASE DE DATOS SIN CUOTA`.
+- `test-r172-directory-auto-refresh.mjs`: amplía el candado para exigir intervalo normal de 60 segundos y backoff de 300 segundos ante cuota agotada.
+- `release.json`, `index-grupal.html` y `service-worker.js`: identidad R241 y caché sincronizado.
+- Alcance: R241 reduce consumo/reintentos; no puede recuperar las listas hasta que Neon restaure cuota, plan o facturación del proyecto.
+
 ## R240 · Diagnóstico explícito de cuota Neon · 9 de octubre de 2026
 
 - `api/_lib/service-errors.js`: clasifica errores de proveedor que llegan como HTTP 402/cuota agotada y los normaliza como `DATABASE_QUOTA_EXCEEDED`.

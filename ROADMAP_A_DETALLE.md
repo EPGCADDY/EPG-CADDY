@@ -1,3 +1,14 @@
+## R241 · Backoff de directorio para no seguir quemando Neon · 9 de octubre de 2026
+
+- Diagnóstico operativo: el proyecto Neon `bold-block-51864691` está en plan `free_v3`, con periodo de cuota del 1 de octubre al 1 de noviembre de 2026; LAB y Producción son las ramas activas que acumularon consumo.
+- `directory-auto-refresh.js`: cambia el intervalo automático base de 5 s a 60 s y guarda `nextDelay`; si el resultado trae `DATABASE_QUOTA_EXCEEDED`, programa el siguiente intento a 300 s.
+- `directory-auto-refresh.js`: al recuperar conectividad normal, error de red genérico o resultado sin cuota agotada, vuelve al intervalo base de 60 s.
+- `event-administration-ui.js`: `refresh({automatic:true})` devuelve el código real de `event-administration` o `tournament-score-directory`, incluso si no repinta por firma idéntica o diálogo abierto.
+- `event-administration-ui.js`: el estado inferior `directorySync` diferencia la cuota agotada con `REINTENTO EN 5 MIN · BASE DE DATOS SIN CUOTA`; otros fallos conservan `REINTENTO AUTOMÁTICO · CONSERVANDO LA LISTA`.
+- `test-r172-directory-auto-refresh.mjs`: actualiza las aserciones históricas del temporizador a 60 s y agrega una prueba dedicada de backoff de 300 s ante `DATABASE_QUOTA_EXCEEDED`.
+- `release.json`, `index-grupal.html` y `service-worker.js`: sincronizan `20261009-R241`, badge visible `R241`, versión técnica `R241-NEON-QUOTA-BACKOFF`, caché PWA y query de `personal-events.js`.
+- Límite honesto: R241 no elimina el bloqueo ya activo de Neon HTTP 402; sólo evita que la UI administrativa siga generando llamadas frecuentes mientras la cuenta está sin cuota.
+
 ## R240 · Diagnóstico explícito de cuota Neon · 9 de octubre de 2026
 
 - Evidencia física: tras R239, Organizador abre `ADMINISTRAR TORNEOS Y GRUPOS`, pero muestra `NO SE PUDO COMPLETAR · TOURNAMENT_DIRECTORY_UNAVAILABLE · LISTA GLOBAL INCOMPLETA · REINTENTO AUTOMÁTICO`; el endpoint público `/api/tournament-score-directory` devuelve HTTP 500 en LAB y Producción.

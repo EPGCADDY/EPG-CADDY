@@ -9,13 +9,15 @@ const flush=async()=>{for(let n=0;n<12;n++)await Promise.resolve()};
 async function advance(ms){now+=ms;for(const [key,t]of [...timers])if(t.at<=now){timers.delete(key);t.f()}await flush()}
 let hang=false;
 const loop=root.GSCDirectoryAutoRefresh.create({refresh:async signal=>{calls++;if(hang)return new Promise(r=>resolvePending=r);return{ok:true}},onState:s=>states.push(s)});
-loop.start();await flush();assert.equal(calls,1);await advance(4999);assert.equal(calls,1);await advance(1);assert.equal(calls,2);
+loop.start();await flush();assert.equal(calls,1);await advance(59999);assert.equal(calls,1);await advance(1);assert.equal(calls,2);
 document.visibilityState='hidden';listeners.visibilitychange();await advance(10000);assert.equal(calls,2);
 document.visibilityState='visible';listeners.visibilitychange();await flush();assert.equal(calls,3);
-root.navigator.onLine=false;await advance(5000);assert.equal(calls,3);assert.equal(states.at(-1).ok,false);
+root.navigator.onLine=false;await advance(60000);assert.equal(calls,3);assert.equal(states.at(-1).ok,false);
 root.navigator.onLine=true;listeners.online();await flush();assert.equal(calls,4);
 hang=true;listeners.focus();await flush();listeners.focus();await flush();assert.equal(calls,5);hang=false;resolvePending({ok:true});await flush();assert.equal(calls,6,'resume during request runs once immediately');
-hang=true;await advance(5000);assert.equal(calls,7);await advance(8000);assert.equal(states.at(-1).ok,false,'hung request is bounded');hang=false;await advance(5000);assert.equal(calls,8);loop.stop();await advance(10000);assert.equal(calls,8);
+hang=true;await advance(60000);assert.equal(calls,7);await advance(8000);assert.equal(states.at(-1).ok,false,'hung request is bounded');hang=false;await advance(60000);assert.equal(calls,8);loop.stop();await advance(10000);assert.equal(calls,8);
+let quotaCalls=0;const quotaLoop=root.GSCDirectoryAutoRefresh.create({refresh:async()=>{quotaCalls++;return{ok:false,code:'DATABASE_QUOTA_EXCEEDED'}},onState:s=>states.push(s)});
+quotaLoop.start();await flush();assert.equal(quotaCalls,1);assert.equal(states.at(-1).code,'DATABASE_QUOTA_EXCEEDED');await advance(299999);assert.equal(quotaCalls,1);await advance(1);assert.equal(quotaCalls,2);quotaLoop.stop();
 const source=fs.readFileSync('live-hub.js','utf8'),begin=source.indexOf('  async function refreshRegisteredDirectory('),end=source.indexOf('  let scoresPageTitle',begin);let answer={ok:true,events:[{id:'a',source:'lab',name:'Family'}]},renders=0;
 const ctx={root:{fetch:async()=>({ok:true,json:async()=>answer})},renderTournamentShelf:()=>renders++};
 vm.createContext(ctx);vm.runInContext('let registeredDirectory=[],directoryPartial=false,tournamentPortalOpen=true;'+source.slice(begin,end)+';this.refresh=refreshRegisteredDirectory;this.rows=()=>registeredDirectory;',ctx);

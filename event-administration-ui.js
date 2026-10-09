@@ -63,7 +63,7 @@ async function refresh({automatic=false,signal}={}){
  const codes=cachedCodes,rows=administrationRows(cachedLocal,cachedDirectory),guestGroups=result.ok?result.guestGroups||[]:cachedLocal.guestGroups||[];showStatus(result.ok?result:directory);
  if(!result.ok&&cachedLocal.ok)$('status').textContent='SIN CONEXIÓN · CONSERVANDO LA ÚLTIMA LISTA';
  const signature=JSON.stringify([rows,guestGroups,codes]);
- if(automatic&&(signature===lastRowsSignature||document.querySelector('dialog[open],#gscWhatsAppInvitation,[data-gsc-dialog-backdrop]')))return{ok:directory.ok,partial:directory.partial};
+ if(automatic&&(signature===lastRowsSignature||document.querySelector('dialog[open],#gscWhatsAppInvitation,[data-gsc-dialog-backdrop]')))return{ok:directory.ok,partial:directory.partial,code:result.code||directory.code};
  lastRowsSignature=signature;
  if(!directory.ok||directory.partial)$('status').textContent+=' · LISTA GLOBAL INCOMPLETA · REINTENTO AUTOMÁTICO';else $('status').textContent='LISTA GLOBAL COMPLETA · LABORATORIO + PRODUCCIÓN';
  $('events').innerHTML='<h2>TORNEOS Y RONDAS</h2>'+rows.map(e=>administrationCard(e)).join('')+'<h2>GRUPOS INVITADOS 48H</h2>'+guestGroups.map(guestGroupCard).join('');
@@ -74,7 +74,7 @@ async function refresh({automatic=false,signal}={}){
  document.querySelectorAll('[data-share-event]').forEach(b=>b.onclick=()=>shareEvent(b,rows.find(e=>(e.canAdminister||e.joinCode)&&e.source+':'+e.event_kind+':'+e.id===b.dataset.shareEvent)));
  document.querySelectorAll('[data-guest-group-open]').forEach(b=>b.onclick=()=>openGuestGroupLive(guestGroups.find(group=>String(group.id)===String(b.dataset.guestGroupOpen))));
  const params=new URLSearchParams(location.search),requested=rows.find(e=>e.canAdminister&&e.id===params.get('eventId')&&e.event_kind===params.get('eventKind'));if(requested&&!requestedEventOpened&&!automatic){requestedEventOpened=true;remove(requested)}
- return{ok:directory.ok,partial:directory.partial};
+ return{ok:directory.ok,partial:directory.partial,code:result.code||directory.code};
 }
 function event(e){return{eventId:e.id,eventKind:e.event_kind}}
 function preserveReturnTarget(){const link=document.querySelector('[data-gsc-close]'),target=new URLSearchParams(location.search).get('returnTo');if(!link||!target)return;try{const destination=new URL(target,location.origin);if(destination.origin===location.origin&&destination.pathname==='/index-grupal.html')link.href=destination.pathname+destination.search+destination.hash}catch{}}
@@ -88,4 +88,4 @@ $('refresh').onclick=()=>refresh();
 await fetch('/api/personal-events',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'identity'})});await refresh();
 
 
-const automaticDirectory=window.GSCDirectoryAutoRefresh.create({refresh:signal=>refresh({automatic:true,signal}),onState:state=>{const label=$('directorySync');if(label)label.textContent=state.ok&&!state.partial?'TORNEOS ACTUALIZADOS · '+new Date(state.lastUpdated).toLocaleTimeString('es-GT',{timeZone:'America/Guatemala'}):'REINTENTO AUTOMÁTICO · CONSERVANDO LA LISTA'}});automaticDirectory.start({immediate:false});
+const automaticDirectory=window.GSCDirectoryAutoRefresh.create({refresh:signal=>refresh({automatic:true,signal}),onState:state=>{const label=$('directorySync');if(label)label.textContent=state.ok&&!state.partial?'TORNEOS ACTUALIZADOS · '+new Date(state.lastUpdated).toLocaleTimeString('es-GT',{timeZone:'America/Guatemala'}):state.code==='DATABASE_QUOTA_EXCEEDED'?'REINTENTO EN 5 MIN · BASE DE DATOS SIN CUOTA':'REINTENTO AUTOMÁTICO · CONSERVANDO LA LISTA'}});automaticDirectory.start({immediate:false});

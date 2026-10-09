@@ -1,7 +1,7 @@
 {
-  "release": "20261009-R240",
-  "label": "R240",
+  "release": "20261009-R241",
+  "label": "R241",
   "published": "2026-10-09",
-  "version": "R240-NEON-QUOTA-DIAGNOSTIC",
-  "generatedAt": "2026-10-09T15:09:00Z"
+  "version": "R241-NEON-QUOTA-BACKOFF",
+  "generatedAt": "2026-10-09T15:26:00Z"
 }

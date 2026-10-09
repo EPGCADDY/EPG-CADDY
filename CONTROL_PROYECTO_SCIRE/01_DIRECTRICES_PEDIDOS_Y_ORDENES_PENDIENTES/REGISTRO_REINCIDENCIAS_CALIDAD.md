@@ -1,3 +1,11 @@
+## RC-145 · Organizador reintentaba directorios con Neon ya sin cuota · 9 OCTUBRE 2026
+
+- Síntoma operativo: después de exponer `DATABASE_QUOTA_EXCEEDED`, Organizador seguía usando el ciclo automático heredado de 5 segundos para intentar leer directorios aunque Neon rechazara las consultas por HTTP 402.
+- Causa raíz: `directory-auto-refresh.js` tenía un intervalo fijo corto y no recibía ni interpretaba el código de cuota agotada devuelto por Administración/directorio.
+- Punto de escape: el gate R172 protegía que el refresco automático existiera y no se duplicara, pero no medía el costo operativo de reintentos bajo bloqueo de proveedor.
+- Control permanente: `test-r172-directory-auto-refresh.mjs` exige intervalo base de 60 segundos y backoff de 300 segundos cuando `refresh()` devuelve `DATABASE_QUOTA_EXCEEDED`.
+- Estado: corregido en R241 para reducir consumo/reintentos; las listas reales siguen bloqueadas hasta restaurar cuota, plan o facturación Neon.
+
 ## RC-144 · Organizador ocultaba cuota agotada de Neon como directorio no disponible · 9 OCTUBRE 2026
 
 - Síntoma físico: Organizador mostraba `NO SE PUDO COMPLETAR · TOURNAMENT_DIRECTORY_UNAVAILABLE` y lista global incompleta aunque R239 estaba desplegado.

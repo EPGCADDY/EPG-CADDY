@@ -1,3 +1,13 @@
+## R241 · Backoff de cuota Neon en Organizador
+
+| Archivo | Rol actualizado | Gate / evidencia |
+| --- | --- | --- |
+| `directory-auto-refresh.js` | Refresco automático base de 60 s y espera de 5 min cuando el proveedor reporta `DATABASE_QUOTA_EXCEEDED`. | `test-r172-directory-auto-refresh.mjs` |
+| `event-administration-ui.js` | Propaga el código de cuota agotada al ciclo automático y muestra `REINTENTO EN 5 MIN · BASE DE DATOS SIN CUOTA`. | `test-r172-directory-auto-refresh.mjs`, `test-r240-database-quota-diagnostics.mjs` |
+| `test-r172-directory-auto-refresh.mjs` | Regresión de intervalo normal, offline/focus/pending y backoff por cuota. | Banco LAB obligatorio |
+| `release.json`, `service-worker.js`, `index-grupal.html` | Identidad R241, caché PWA y asset query sincronizados. | `scripts/release-matrix-gate.mjs` |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `REGISTRO_REINCIDENCIAS_CALIDAD.md`, `INVENTARIOS_V311.lock.json` | Registro doble, reincidencia y sello de inventario de R241. | Gates documental, roadmap e inventario |
+
 ## R240 · Diagnóstico explícito de cuota Neon
 
 | Archivo | Rol actualizado | Gate / evidencia |
