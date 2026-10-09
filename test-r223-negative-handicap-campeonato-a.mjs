@@ -6,7 +6,7 @@ const html = fs.readFileSync('index-grupal.html', 'utf8');
 const release = JSON.parse(fs.readFileSync('release.json', 'utf8'));
 
 assert.match(release.label, /^R\d+$/);
-assert.match(html, /<meta name="gscg-release" content="20261008-R\d+">/);
+assert.match(html, /<meta name="gscg-release" content="2026100[89]-R\d+">/);
 assert.match(html, /VERSIÓN R\d+/);
 
 assert.match(

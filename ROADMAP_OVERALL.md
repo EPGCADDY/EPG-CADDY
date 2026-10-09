@@ -4526,4 +4526,5 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 ## R238-B1 · build acepta espejo firmado 48h · 9 octubre 2026
 
 - `test-r177-cross-device-admin.mjs`: actualiza la regresión histórica LAB/Producción para esperar dos lecturas peer: `list-local` con cookie para torneos y `list-peer-guest48h` con `Authorization` para accesos 48h. Esto mantiene el bloqueo de administración cruzada y permite compilar R238 con el espejo firmado real.
+- `test-r223-negative-handicap-campeonato-a.mjs`: permite releases del 08 o 09 de octubre para que R238 no quede bloqueado por una fecha fija heredada.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: resellado después del ajuste de compuerta para que Vercel publique R238 sin inventario viejo.
