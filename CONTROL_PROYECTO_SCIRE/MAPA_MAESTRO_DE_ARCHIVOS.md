@@ -2894,3 +2894,13 @@ Base vigente 4a493a7; incorpora la corrección acreditada 27c8ae4. Las publicaci
 | `event-administration.html` | Estilos del diálogo Live usado por Organizador, incluyendo `gross-mark`. | Paridad visual con Live público. |
 | `event-administration-ui.js` | Tarjetas compactas de invitados 48h y diálogo Live. | Compacta a nombre + `ABRIR TARJETA LIVE`; sin metadatos ni HCP/marcas visibles; GROSS con círculos/cuadros de Score Card. |
 | `test-r231-live-card-readability.mjs` | Regresión de tamaño, color, limpieza de textos, tarjeta compacta y nomenclatura de golf. | Integrada en `scripts/build-manual-lab.mjs`. |
+
+## R232 · enlace WhatsApp 48h clicable
+
+| Archivo | Función | Protección |
+|---|---|---|
+| `access.html` | Mensaje WhatsApp de invitación 48h sin EPG, con saltos reales y URL en línea propia. | Evita `\n` literal en el mensaje enviado y deja el enlace tocable. |
+| `live-view.js`, `event-administration-ui.js` | Acumulados Live/Organizador muestran `+/-` sin `POR HOYO`; la fila de tabla conserva `+/- POR HOYO`. | Alinea la tarjeta con la corrección visual solicitada en captura. |
+| `live.html` | Cache `live-view.js?v=20261008-R232`. | Publica la tarjeta Live actualizada. |
+| `test-r230-owner-access-48h-only.mjs` | Regresión del formato multilínea y apertura `wa.me` de Access. | Banco LAB obligatorio. |
+| `release.json`, `index-grupal.html`, `service-worker.js` | Sello R232 y caché nueva. | `scripts/release-matrix-gate.mjs`. |

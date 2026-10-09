@@ -4633,3 +4633,13 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `access.html` | `COMPARTIR APP 48 HORAS` genera el enlace y abre WhatsApp por `wa.me`; tocar el recuadro del enlace vuelve a abrir WhatsApp sin copiar/pegar. |
 | `test-r231-live-card-readability.mjs` | Regresión para tamaño/color de textos, ausencia de HCP/marcas, tarjeta compacta sin metadatos y nomenclatura de golf de Score Card. |
 | `release.json`, `index-grupal.html`, `service-worker.js`, `scripts/build-manual-lab.mjs` | Identidad R231, caché renovada e inclusión del nuevo test en build completo. |
+
+## R232 · enlace 48h clicable en WhatsApp · 8 octubre 2026
+
+| Archivo | Cambio |
+|---|---|
+| `access.html` | El mensaje de `COMPARTIR APP 48 HORAS` ya no dice EPG; se arma en varias líneas con `join("\n")` y deja la URL sola para que WhatsApp la muestre como enlace tocable. |
+| `live-view.js`, `event-administration-ui.js` | En `RESULTADOS ACUMULADOS`, el cuadro relativo dice sólo `+/-`; `+/- POR HOYO` se conserva sólo en la fila de hoyos. |
+| `live.html` | Sube el cache de `live-view.js` a `20261008-R232` para publicar la tarjeta Live actualizada. |
+| `test-r230-owner-access-48h-only.mjs` | Bloquea que vuelva el texto EPG o el `\n` literal pegado al enlace. |
+| `release.json`, `index-grupal.html`, `service-worker.js` | Identidad R232 y caché PWA nueva para publicar la corrección. |

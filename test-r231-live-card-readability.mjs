@@ -27,13 +27,17 @@ assert.match(liveJs, /<tr class="net-row"><td>NETO<\/td>\$\{numbers\.map\(hole=>
 assert.match(organizerJs, /<tr class="net-row"><td>NETO<\/td>'\+numbers\.map\(hole=>\{const item=holes\.get\(hole\);return '<td class="'\+guestCellClass\(item,'net'\)\+'">'\+guestScoreCell\(item,'net'\)\+'<\/td>'\}\)\.join\(''\)\+'<\/tr>/s, 'event-administration-ui.js: NETO row must remain calculated from item.net without visual handicap recalc');
 assert.match(liveJs, /<small>GROSS<\/small><b>\$\{escapeHtml\(totals\.gross\?\?0\)\}<\/b>.*<small>NETO<\/small><b class="net-total">\$\{escapeHtml\(totals\.net\?\?0\)\}<\/b>/s, 'live-view.js: accumulated gross/net totals must keep snapshot totals');
 assert.match(organizerJs, /<small>GROSS<\/small><b>'\+escape\(totals\.gross\?\?0\)\+'<\/b>.*<small>NETO<\/small><b class="net-total">'\+escape\(totals\.net\?\?0\)\+'<\/b>/s, 'event-administration-ui.js: accumulated gross/net totals must keep snapshot totals');
+assert.match(liveJs, /<small>\+\/-<\/small>/, 'live-view.js: accumulated relative result label must be +/- only');
+assert.match(organizerJs, /<small>\+\/-<\/small>/, 'event-administration-ui.js: accumulated relative result label must be +/- only');
+assert.doesNotMatch(liveJs, /<small>\+\/- POR<br>HOYO<\/small>/, 'live-view.js: accumulated relative result label must not include POR HOYO');
+assert.doesNotMatch(organizerJs, /<small>\+\/- POR<br>HOYO<\/small>/, 'event-administration-ui.js: accumulated relative result label must not include POR HOYO');
 assert.match(liveHtml, /\.score-live tr\.net-row td:not\(:first-child\),\.player-total b\.net-total\{color:var\(--lime\)/, 'live.html: NETO row and accumulated net digits must be green');
 assert.match(organizerHtml, /\.score-live tr\.net-row td:not\(:first-child\),\.player-total b\.net-total\{color:#31ff00/, 'event-administration.html: Organizer NETO row and accumulated net digits must be green');
 assert.doesNotMatch(liveJs, /<small>HCP \$\{escapeHtml\(player\.handicap\)\}/, 'live-view.js: player header must not show handicap/tee text');
 assert.doesNotMatch(organizerJs, /<small>HCP '\+escape\(player\.handicap/, 'event-administration-ui.js: organizer live card must not show handicap/tee text');
 assert.doesNotMatch(organizerJs, /INVITACIÓN 48H|Jugadores:|Toca la ronda/, 'event-administration-ui.js: compact organizer guest card must show only name and open button');
 assert.match(organizerJs, /<h3>'\+escape\(guestGroupTitle\(group\)\)\+'<\/h3><button type="button" data-guest-group-open="/, 'event-administration-ui.js: compact organizer guest card keeps title and ABRIR TARJETA LIVE');
-assert.equal(release.label, 'R231');
-assert.match(liveHtml, /live-view\.js\?v=20261008-R231/);
+assert.equal(release.label, 'R232');
+assert.match(liveHtml, /live-view\.js\?v=20261008-R232/);
 
 console.log('PASS R231: Live shared card readability, compact organizer cards and scorecard golf nomenclature are enforced.');

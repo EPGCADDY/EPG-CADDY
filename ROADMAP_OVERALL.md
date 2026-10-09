@@ -4490,3 +4490,11 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - `event-administration-ui.js`: las tarjetas compactas de `GRUPOS INVITADOS 48H` quedan únicamente con el nombre del primer jugador y el botón `ABRIR TARJETA LIVE`.
 - `access.html`: al crear o tocar el enlace de invitación 48h se abre WhatsApp mediante `wa.me` con el texto armado, sin seleccionar, copiar ni pegar manualmente.
 - `test-r230-owner-access-48h-only.mjs` y `test-r231-live-card-readability.mjs` quedan en el banco de laboratorio para bloquear el regreso de textos pequeños, HCP/marcas visibles, tarjetas compactas con metadatos sobrantes y el flujo manual de copiar/pegar en Access.
+
+## R232 · enlace 48h clicable en WhatsApp · 8 octubre 2026
+
+- `access.html`: el mensaje de WhatsApp para `COMPARTIR APP 48 HORAS` ya no dice EPG, deja de enviar `\n` como texto literal; arma el mensaje con saltos reales y deja la URL sola en su propia línea para que WhatsApp la muestre como enlace tocable.
+- `live-view.js` y `event-administration-ui.js`: en `RESULTADOS ACUMULADOS` la etiqueta del acumulado relativo vuelve a ser sólo `+/-`; `+/- POR HOYO` queda únicamente en la fila de la tabla por hoyo.
+- `live.html`: cachea `live-view.js?v=20261008-R232` para distribuir la tarjeta Live actualizada.
+- `test-r230-owner-access-48h-only.mjs`: agrega regresión contra el texto EPG y contra el `\n` literal pegado al enlace; exige el formato de líneas con `join("\n")`.
+- `release.json`, `index-grupal.html` y `service-worker.js`: identidad visible R232 y caché nueva para distribuir la corrección.
