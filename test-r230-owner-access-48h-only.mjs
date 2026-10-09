@@ -14,7 +14,7 @@ assert.match(access,/no necesitas credenciales/,'Owner access panel must still c
 assert.match(access,/openWhatsAppInviteLink\(data\.url\)/,'Owner access create action must open WhatsApp directly after generating the 48h invitation link');
 assert.match(access,/https:\/\/wa\.me\/\?text=/,'Owner access invitation sharing must route to WhatsApp without manual copy/paste');
 assert.match(access,/\$\("url"\)\.onclick=\(\)=>openWhatsAppInviteLink\(\$\("url"\)\.textContent\)/,'Owner access invitation link must be touchable to reopen WhatsApp sharing');
-assert.match(access,/whatsappInviteText\(url\)\{return \["INVITACIÓN 48 HORAS","","TOCA EL ENLACE PARA ABRIR LA SCORE CARD:",url\]\.join\("\\n"\)\}/,'Owner access WhatsApp message must omit EPG and put the URL alone on a clickable line');
+assert.match(access,/whatsappInviteText\(url\)\{return \[String\(url\|\|""\)\.trim\(\),"INVITACIÓN 48 HORAS · ABRE LA SCORE CARD"\]\.filter\(Boolean\)\.join\("\\n"\)\}/,'Owner access WhatsApp message must omit EPG and put the URL first as a one-click WhatsApp link');
 assert.doesNotMatch(access,/EPG CADDY|join\("\\\\n"\)|48 HORAS\\\\n"\+url/,'Owner access WhatsApp message must not include EPG or send a literal backslash-n before the URL');
 const releaseNumber=Number(String(release.label||'').replace(/^R/,''));
 assert.ok(releaseNumber>=230,'Release label must be R230 or later for owner access 48h-only panel');

@@ -36,10 +36,13 @@ assert.match(organizerHtml, /\.score-live tr\.net-row td:not\(:first-child\),\.p
 assert.doesNotMatch(liveJs, /<small>HCP \$\{escapeHtml\(player\.handicap\)\}/, 'live-view.js: player header must not show handicap/tee text');
 assert.doesNotMatch(organizerJs, /<small>HCP '\+escape\(player\.handicap/, 'event-administration-ui.js: organizer live card must not show handicap/tee text');
 assert.doesNotMatch(organizerJs, /INVITACIÓN 48H|Jugadores:|Toca la ronda/, 'event-administration-ui.js: compact organizer guest card must show only name and open button');
-assert.match(organizerJs, /<h3>'\+escape\(guestGroupTitle\(group\)\)\+'<\/h3><button type="button" data-guest-group-open="/, 'event-administration-ui.js: compact organizer guest card keeps title and ABRIR TARJETA LIVE');
-assert.equal(release.label, 'R233');
-assert.match(liveHtml, /live-view\.js\?v=20261008-R233/);
-assert.match(organizerHtml, /html body\.gsc-admin-page\{overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important\}html body\.gsc-admin-page main>a\[data-gsc-close\]\{position:fixed!important;.*pointer-events:auto!important\}/, 'event-administration.html: organizer close button must be fixed, tappable and not lock page scroll');
-assert.match(organizerHtml, /dialog:has\(\.guest-live-card\)\{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important\}/, 'event-administration.html: guest Live card dialog must keep vertical touch scroll');
+assert.match(organizerJs, /<h3>'\+escape\(guestGroupTitle\(group\)\)\+'<\/h3><button type="button" data-guest-group-open="/, 'event-administration-ui.js: compact organizer guest card keeps title and ABRIR SCORE CARD');
+assert.equal(release.label, 'R234');
+assert.match(liveHtml, /live-view\.js\?v=20261008-R234/);
+assert.match(organizerHtml, /body\.guest-live-modal-open\{overflow:hidden!important;position:fixed!important/, 'event-administration.html: opening guest Live card must lock the background page scroll');
+assert.match(organizerHtml, /dialog\[open\]\.guest-live-dialog\{position:fixed!important;.*overflow:hidden!important.*touch-action:none!important\}/, 'event-administration.html: guest Live dialog must own the viewport and block backdrop touch scroll');
+assert.match(organizerHtml, /\.guest-live-scroll\{[^}]*overflow-y:auto!important[^}]*overscroll-behavior:contain!important[^}]*touch-action:pan-y!important/, 'event-administration.html: guest Live card must scroll inside the modal, not the background');
+assert.match(organizerJs, /lockGuestLiveScroll\(\).*document\.body\.classList\.add\('guest-live-modal-open'\)/s, 'event-administration-ui.js: guest Live modal must lock the owner page scroll');
+assert.match(organizerJs, /data-guest-live-close.*TARJETA LIVE · INVITADO 48H.*guest-live-scroll/s, 'event-administration-ui.js: guest Live modal must include an internal close control and scroll container');
 
 console.log('PASS R231: Live shared card readability, compact organizer cards and scorecard golf nomenclature are enforced.');

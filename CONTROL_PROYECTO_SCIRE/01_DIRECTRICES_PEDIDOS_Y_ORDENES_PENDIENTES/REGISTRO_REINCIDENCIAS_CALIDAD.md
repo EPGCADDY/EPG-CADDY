@@ -1762,3 +1762,25 @@ Causa: el despacho del atajo `tournaments` enviaba a `live-hub.html?directory=1`
 - Corrección: `resolveEventIdentity()` permite crear una identidad de dispositivo segura también en `join-code` cuando no hay sesión de cuenta válida. La membresía sigue dependiendo de poseer el código, de la configuración campo/modalidad y de capacidad; sólo se consume el código dentro de la unión oficial.
 - Control permanente: `test-lab-device-event-identity.mjs` ahora reproduce inspección sin consumir y unión sin cookie previa; confirma cookie de dispositivo nueva, consumo de código de un solo uso y rechazo a terceros. `test-r191-cross-environment-tournament-entry.mjs` conserva el reintento Producción→LAB.
 - Estado: regresión dirigida PASS local; despliegue LAB y Producción R199 pendiente.
+
+## RC-142 · Modal Live invitado 48h sin cierre propio y scroll del fondo · 8 OCTUBRE 2026
+
+- Síntoma físico: al abrir `TARJETA LIVE · INVITADO 48H` desde Organizador, la X visible pertenecía a la pantalla de fondo, no a la tarjeta; al deslizar, a veces se movía el Organizador debajo del modal.
+- Causa raíz: `openGuestGroupLive()` reutilizaba el diálogo administrativo genérico sin modo modal propio, sin bloqueo del scroll del `body` y sin contenedor vertical interno dedicado para la tarjeta.
+- Punto de escape: R233 validó cierre fijo del Organizador y `touch-action`, pero no exigió cierre interno ni bloqueo real del fondo mientras el diálogo Live estaba abierto.
+- Control permanente: `test-r231-live-card-readability.mjs` exige `guest-live-dialog`, toolbar `× CERRAR`, `guest-live-modal-open`, `guest-live-scroll` con `overscroll-behavior:contain` y bloqueo del backdrop.
+- Estado: corregido en R234; publicación LAB/Producción pendiente en este turno.
+
+## RC-143 · ID DE TORNEOS movía el fondo en vez del panel · 8 OCTUBRE 2026
+
+- Síntoma físico: en `MENÚ → ORGANIZADOR → ID DE TORNEOS`, al intentar deslizar el panel se movía la pantalla del fondo; el panel visible no retenía el scroll.
+- Causa raíz: `personal-events.js` abría `#gscPersonalDialog` sin bloquear el `body`; `shortcuts-ui.js` tampoco bloqueaba el fondo al mostrar el overlay de menú.
+- Control permanente: `test-r157-uniform-navigation.mjs` exige `gsc-personal-dialog-open`, `gsc-shortcuts-overlay-open`, `overscroll-behavior:contain` y restauración de scroll al cerrar.
+- Estado: corregido en R234 antes de publicar; pendiente verificación navegador y despliegue.
+
+## RC-144 · Invitación 48h por WhatsApp no quedaba de un clic · 8 OCTUBRE 2026
+
+- Síntoma físico: el mensaje de WhatsApp podía llegar con texto antes del enlace o con formato que hacía dudar si el enlace era tocable directamente.
+- Causa raíz: el mensaje de `access.html` priorizaba texto descriptivo antes de la URL, aunque ya no usaba EPG.
+- Control permanente: `test-r230-owner-access-48h-only.mjs` exige que `whatsappInviteText()` ponga la URL como primera línea, use salto real con `join("\n")` y bloquee `EPG CADDY` o `\n` literal.
+- Estado: corregido en R234 antes de publicar; pendiente verificación navegador y despliegue.

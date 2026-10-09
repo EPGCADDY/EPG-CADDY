@@ -4507,3 +4507,15 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - `test-r231-live-card-readability.mjs`: bloquea que el acumulado relativo regrese a `+/-` o `+/- POR HOYO`, y valida el cierre fijo del Organizador.
 - R233-CIERRE-ORGANIZADOR: corrección de cierre incluida antes de publicar.
 - `event-administration.html`: conserva scroll táctil del Organizador y de la tarjeta Live invitada con `touch-action` y `-webkit-overflow-scrolling`.
+
+## R234 · cierre y scroll interno de tarjeta Live invitado 48h · 8 octubre 2026
+
+- `event-administration-ui.js`: la tarjeta `TARJETA LIVE · INVITADO 48H` se abre como modal especial con toolbar propia `× CERRAR` y `MENÚ`, sin depender de la X de la pantalla de fondo.
+- `event-administration-ui.js`: la tarjeta compacta del grupo invitado ahora muestra el primer jugador y el botón `ABRIR SCORE CARD`, para que el propietario abra directamente esa tarjeta desde Organizador.
+- `event-administration-ui.js`: al abrir la tarjeta Live invitada se bloquea el scroll del Organizador de fondo y se restaura exactamente al cerrar.
+- `event-administration.html`: el diálogo `guest-live-dialog` ocupa su viewport, bloquea el toque del backdrop y desplaza únicamente `.guest-live-scroll` dentro del modal.
+- `access.html`: el WhatsApp de `COMPARTIR APP 48 HORAS` pone la URL en la primera línea, sin EPG ni `\n` literal, para que el enlace llegue tocable de un clic.
+- `personal-events.js` y `shortcuts-ui.js`: los paneles `ID DE TORNEOS` y MENÚ bloquean el scroll de fondo y restauran la posición al cerrar; el scroll pertenece al overlay visible.
+- `test-r157-uniform-navigation.mjs`: agrega regresión para bloqueo de scroll en paneles generales del Organizador.
+- `test-r231-live-card-readability.mjs`: agrega regresión para cierre interno, bloqueo de scroll de fondo y scroll vertical propio del modal.
+- `live.html`, `release.json`, `index-grupal.html` y `service-worker.js`: identidad visible R234 y caché renovada para LAB y Producción idénticos.

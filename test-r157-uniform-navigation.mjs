@@ -26,5 +26,10 @@ const normalize=source.slice(source.indexOf('function normalizeCloseControls()')
 let closeCalls=0;const button={textContent:'X',label:null,onclick(){closeCalls++},hasAttribute(){return this.label!==null},setAttribute(_,v){this.label=v}};
 vm.runInNewContext(normalize+';normalizeCloseControls();normalizeCloseControls()',{root:{document:{querySelectorAll:()=>[button]}}});
 assert.equal(button.textContent,'×');assert.equal(button.label,'Cerrar');button.onclick();assert.equal(closeCalls,1);
+const personal=fs.readFileSync('personal-events.js','utf8');
+assert.match(personal,/function lockDialogScroll\(\).*gsc-personal-dialog-open/s,'personal dialog must lock background scroll');
+assert.match(personal,/function close\(\).*unlockDialogScroll\(\)/s,'personal dialog close must restore background scroll');
+assert.match(source,/gsc-shortcuts-overlay-open/,'shortcuts overlay must lock background scroll');
+assert.match(source,/overscroll-behavior:contain!important;touch-action:pan-y!important/,'shared overlays must own touch scroll');
 const admin=fs.readFileSync('event-administration.html','utf8');assert(admin.includes('/shortcuts-ui.js'));assert(admin.includes('data-gsc-menu'));assert(admin.includes('data-gsc-close'));
 console.log('PASS R157: Registro follows Manual once; all routes use existing non-destructive opening; close normalization is idempotent and retains action; Administration has shared navigation. Not a visual/browser PASS.');

@@ -4652,3 +4652,15 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `live.html`, `release.json`, `index-grupal.html`, `service-worker.js` | Identidad R233 y cache actualizado. |
 | `event-administration.html` | El `X` del Organizador queda fijo, tocable y sin tapar la lista o tarjetas 48h; el Organizador y la tarjeta Live conservan scroll táctil. |
 | `test-r231-live-card-readability.mjs` | Regresión para exigir `+/- ACUMULADO` en Live/Organizador y el cierre fijo del Organizador. |
+
+## R234 · cierre y scroll interno de tarjeta Live invitado 48h · 8 octubre 2026
+
+- `event-administration-ui.js`: la tarjeta `TARJETA LIVE · INVITADO 48H` se abre como modal especial con toolbar propia `× CERRAR` y `MENÚ`, sin depender de la X de la pantalla de fondo.
+- `event-administration-ui.js`: la tarjeta compacta de cada grupo invitado conserva sólo el primer jugador y cambia la acción a `ABRIR SCORE CARD`, conectada al mismo visor de tarjeta registrada.
+- `event-administration-ui.js`: al abrir la tarjeta Live invitada se bloquea el scroll del Organizador de fondo y se restaura exactamente al cerrar.
+- `event-administration.html`: el diálogo `guest-live-dialog` ocupa su viewport, bloquea el toque del backdrop y desplaza únicamente `.guest-live-scroll` dentro del modal.
+- `access.html`: el mensaje de WhatsApp de `COMPARTIR APP 48 HORAS` coloca la URL como primera línea y deja el texto descriptivo debajo, sin EPG ni salto literal, para maximizar el enlace de un clic.
+- `personal-events.js` y `shortcuts-ui.js`: los paneles `ID DE TORNEOS` y MENÚ bloquean el scroll de fondo y restauran la posición al cerrar; el scroll pertenece al overlay visible.
+- `test-r157-uniform-navigation.mjs`: agrega regresión para bloqueo de scroll en paneles generales del Organizador.
+- `test-r231-live-card-readability.mjs`: agrega regresión para cierre interno, bloqueo de scroll de fondo y scroll vertical propio del modal.
+- `live.html`, `release.json`, `index-grupal.html` y `service-worker.js`: identidad visible R234 y caché renovada para LAB y Producción idénticos.

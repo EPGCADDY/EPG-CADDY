@@ -11,7 +11,7 @@ assert.match(adminUi,/function guestGroupLiveCard\(group\)/,'Organizer must rend
 assert.match(adminUi,/function guestPlayerLiveCard\(player,snapshot,index=0\)/,'Organizer Live card must render player score tables');
 assert.match(adminUi,/return first\|\|'GRUPO INVITADO 48H'/,'Organizer compact card title must come from the first Score Card player, not the group label');
 assert.doesNotMatch(adminUi,/return snapshot\.groupLabel\|\|/,'Organizer compact card must not use the guest group label as title');
-assert.match(adminUi,/>ABRIR TARJETA LIVE</,'Guest group row must expose the explicit Live-card action');
+assert.match(adminUi,/>ABRIR SCORE CARD</,'Guest group row must expose the explicit Score Card action');
 assert.match(adminUi,/RESULTADOS ACUMULADOS/,'Organizer Live card must include accumulated-results separator');
 assert.match(adminUi,/\+\/- POR<br>HOYO/,'Organizer Live card must use +/- POR HOYO label');
 assert.doesNotMatch(adminUi,/players\.map\(guestGroupPlayerLine\)/,'Organizer must not render the old bullet-only player summary as the main view');
