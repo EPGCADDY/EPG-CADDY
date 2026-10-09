@@ -58,7 +58,8 @@ assert.doesNotMatch(rendered,/<h2>GRUPO CHINITO<\/h2>/,'Live 48h shared card mus
 assert.match(rendered,/EL PULTÉ GOLF/,'Course/date metadata remains visible after removing group title');
 assert.match(rendered,/CHINITO/,'Player name still renders in the Live shared card');
 assert.match(rendered,/\+\/- POR<br>HOYO/,'Hole relative result label must read +/- POR HOYO');
-assert.match(rendered,/player-total-title">RESULTADOS ACUMULADOS/,'Accumulated summary title must separate table from totals');
+assert.doesNotMatch(rendered,/player-total-title">RESULTADOS ACUMULADOS/,'Shared Live card must not duplicate accumulated results inside each player card');
+assert.match(rendered,/RESULTADOS DEL GRUPO/,'Shared Live card must show group cumulative results below individual cards');
 
 const page=fs.readFileSync('live.html','utf8');
 assert.match(page,/body class="gsc-navigation-unused"/,'Live shared card must opt out of generic dialog navigation that overlapped the header');

@@ -2128,3 +2128,9 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - Regresion obligatoria: test-r243-guest48h-scorecard-shared-female-voice.mjs valida selector compartido, carga de invitado y conservacion de controles de audio.
 
 - R243 final: commit de despliegue mantiene ROADMAPS en la misma modificacion para gate Vercel; voz femenina compartida Score Card normal/invitado 48h validada.
+
+## R244 · resultados acumulados del grupo en Live compartido · 9 octubre 2026
+
+- `live-view.js`: la tarjeta Live compartida agrega al pie `RESULTADOS DEL GRUPO` con `NOMBRE`, `HOYO`, `GROSS`, `NETO` y `+/-`, acumulando desde el primer hoyo capturado hasta el hoyo actual o final.
+- `event-administration-ui.js` y `live.html`: el Organizador 48h y la vista compartida usan el mismo resumen grupal y estilos compactos.
+- `test-r244-live-shared-group-results.mjs`: regresion obligatoria para bloquear que el resumen grupal desaparezca.

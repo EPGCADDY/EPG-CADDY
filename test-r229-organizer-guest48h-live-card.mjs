@@ -12,7 +12,8 @@ assert.match(adminUi,/function guestPlayerLiveCard\(player,snapshot,index=0\)/,'
 assert.match(adminUi,/return first\|\|'ACCESO COMPARTIDO 48H'/,'Organizer compact card title must come from the first Score Card player when a snapshot exists, or from the pending 48h access label');
 assert.doesNotMatch(adminUi,/return snapshot\.groupLabel\|\|/,'Organizer compact card must not use the guest group label as title');
 assert.match(adminUi,/>ABRIR TARJETA LIVE</,'Guest group row must expose the explicit Live-card action');
-assert.match(adminUi,/RESULTADOS ACUMULADOS/,'Organizer Live card must include accumulated-results separator');
+assert.doesNotMatch(adminUi,/RESULTADOS ACUMULADOS/,'Organizer Live card must not duplicate accumulated results inside each player card');
+assert.match(adminUi,/RESULTADOS DEL GRUPO/,'Organizer Live card must include the group cumulative results footer');
 assert.match(adminUi,/\+\/- POR<br>HOYO/,'Organizer Live card must use +/- POR HOYO label');
 assert.doesNotMatch(adminUi,/players\.map\(guestGroupPlayerLine\)/,'Organizer must not render the old bullet-only player summary as the main view');
 assert.match(adminHtml,/dialog:has\(\.guest-live-card\)/,'Organizer dialog must expand for Live-style guest cards on mobile');

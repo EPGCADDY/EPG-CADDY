@@ -2021,3 +2021,13 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 - Regresion obligatoria: test-r243-guest48h-scorecard-shared-female-voice.mjs valida selector compartido, carga de invitado y conservacion de controles de audio.
 
 - R243 final: commit de despliegue mantiene ROADMAPS en la misma modificacion para gate Vercel; voz femenina compartida Score Card normal/invitado 48h validada.
+
+## R244 · resultados acumulados del grupo en Live compartido · 9 octubre 2026
+
+| Archivo | Cambio |
+|---|---|
+| `live-view.js` | Agrega `RESULTADOS DEL GRUPO` al final de cada tarjeta Live compartida, con acumulado por jugador: nombre, hoyo actual, gross, neto y +/- desde el inicio de la ronda. |
+| `event-administration-ui.js` | Repite el mismo resumen grupal en la tarjeta Live de grupos invitados 48h del Organizador. |
+| `live.html` | Añade estilos del bloque grupal para lectura clara en móvil y escritorio. |
+| `test-r244-live-shared-group-results.mjs` | Nueva regresión que valida el bloque, columnas y acumulados por jugador. |
+| `scripts/build-manual-lab.mjs`, `test-r228-live-48h-shared-card-layout.mjs`, `test-r229-organizer-guest48h-live-card.mjs` | Integran R244 en el banco obligatorio y amplían los candados existentes de Live 48h. |
