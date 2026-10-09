@@ -2041,3 +2041,4 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `test-r223-negative-handicap-campeonato-a.mjs` | Actualiza el banco histórico para exigir captura `+2`, display `+2`, conversión interna a entrega de tiros al campo, neto inverso y círculo rojo en los HDCP más fáciles. |
 | `test-r244-live-shared-group-results.mjs` | Agrega casos `-1` verde y `+1` rojo en `+/- POR HOYO` y en `RESULTADOS DEL GRUPO`, sin restaurar `RESULTADOS ACUMULADOS` por jugador. |
 | `test-lab-live-mode-summary.mjs` | Ajusta la regresión antigua para el nuevo resumen grupal al pie y evita que el build vuelva a exigir acumulados individuales eliminados. |
+| `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md`, `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Resellan juntos R245 para que ROADMAP gate e inventory gate validen el mismo árbol remoto en Vercel. |
