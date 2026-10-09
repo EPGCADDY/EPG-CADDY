@@ -16,6 +16,7 @@ for(const test of ['scripts/release-matrix-gate.mjs','test-r191-cross-environmen
 execFileSync(process.execPath,['test-r229-organizer-guest48h-live-card.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['test-r230-owner-access-48h-only.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['test-r231-live-card-readability.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['test-r237-lab-private-guest-production-directory.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/manual-screen-parity-gate.mjs'],{stdio:'inherit'});
 console.log('PASS LAB manual technical profile; account + shortcuts + screen parity guards active; visual/device acceptance remains separate');
 
