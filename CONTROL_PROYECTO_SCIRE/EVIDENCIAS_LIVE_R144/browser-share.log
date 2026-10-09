@@ -1,1 +1,0 @@
-PASS browser/API/isolated PostgreSQL: sender generates code and WhatsApp URL; first recipient directly opens Scores; fragment cleared; personal session and favorites survive reload; second browser and reused code rejected; guest cannot share; no JS errors.
