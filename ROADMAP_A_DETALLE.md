@@ -4680,3 +4680,4 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 |---|---|
 | `test-r177-cross-device-admin.mjs` | La prueba conserva la lectura `list-local` con cookie para torneos y agrega la expectativa de `list-peer-guest48h` con `Authorization` para grupos invitados 48h. Evita que la compuerta antigua bloquee el build R238. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Registran el ajuste de compuerta en el mismo commit que desbloquea la publicación. |
+| `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Resella las fuentes activas después del ajuste de ROADMAP para que el inventario remoto no bloquee el build. |
