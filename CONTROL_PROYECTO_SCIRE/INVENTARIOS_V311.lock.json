@@ -1,8 +1,8 @@
 {
-  "version": "R236-LAB-RELEASE",
-  "generatedAt": "2026-10-09T02:43:23Z",
-  "sourceFileCount": 939,
-  "sourceDigest": "d4ec2c93026384d16a0cce082ca3ae1252f3628ada26fc40269224b0a6ccee03",
+  "version": "R237-LAB-PRIVATE-GUEST-PRODUCTION-DIRECTORY",
+  "generatedAt": "2026-10-09T04:00:00Z",
+  "sourceFileCount": 940,
+  "sourceDigest": "e92c1960705bae6c7b05d5b435e23ad12c3693e62e2771be5d738c3b40892b45",
   "outputs": [
     {
       "name": "Inventario_Golf_Score_Card_GT_OVERALL_V311.pdf",
