@@ -1,3 +1,10 @@
+## R242 · Organizador 48H muestra sólo tarjetas Live activas · 9 de octubre de 2026
+
+- `api/event-administration.js`: los accesos 48H sin Score Card real dejan de devolverse como tarjetas visibles; sólo pasan grupos con `current_snapshot.players` válido.
+- `event-administration-ui.js`: Administración filtra `GRUPOS INVITADOS 48H` antes de pintar, elimina `SIN TARJETA LIVE AÚN` y conserva el título por primer jugador registrado, por ejemplo `CHINITO`.
+- `test-r237-cross-environment-48h-invitations.mjs` y `test-r242-guest48h-only-live-groups.mjs`: actualizan el contrato para que LAB y Producción reflejen la misma tarjeta Live activa y no los accesos pendientes históricos.
+- `release.json`, `index-grupal.html` y `service-worker.js`: identidad R242 y caché sincronizado.
+
 ## R241 · Reintento automático moderado cuando Neon está sin cuota · 9 de octubre de 2026
 
 - `directory-auto-refresh.js`: el refresco automático de directorios administrativos pasa de 5 segundos a 60 segundos y agrega espera de 5 minutos cuando el backend devuelve `DATABASE_QUOTA_EXCEEDED`.
