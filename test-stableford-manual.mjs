@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';
+const h=fs.readFileSync('index-grupal.html','utf8');
+assert.match(h,/round-manual-cell/);
+assert.match(h,/function openRoundScoreKeypad\(playerOrId,hole\)/);
+assert.match(h,/data-score-key/);
+assert.match(h,/round-inline-score-key/);
+assert.match(h,/\[1,2,3\]/);
+assert.match(h,/data-score-key/);
+assert.doesNotMatch(h,/OK · SIGUIENTE/);
+assert.doesNotMatch(h,/window\.prompt\(`\$\{player\.name\} · HOYO \$\{hole\} · GROSS`/);
+assert.match(h,/function applyManualScoreEntries\(entries\)/);
+assert.match(h,/applyLiteralScores\(\{matched:true,ok:true,entries\},\{keepManualHole:true\}\)/);
+assert.doesNotMatch(h,/if\(result\.closure\)speakClosure\(result\.closure\)/);
+assert.match(h,/points:GSCStableford\.pointsFor\(v\.gross,PAR\[v\.hole-1\]\)/);
+assert.doesNotMatch(h,/stableford-manual-cell/);
+console.log('PASS manual General/Stableford -> teclado fijo 1-9 -> selección verde -> auto siguiente -> captura silenciosa -> cálculo/persist/render');

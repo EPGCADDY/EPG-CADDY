@@ -1,0 +1,22 @@
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+import vm from "node:vm";
+
+const html=readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
+const section=(start,end)=>html.slice(html.indexOf(start),html.indexOf(end,html.indexOf(start)));
+const old={ok:true,fieldKey:"pulte",temperatureC:20.7,observedAt:"2026-09-11T20:00:00",fetchedAt:"2026-09-11T20:00:00Z"};
+const fresh={ok:true,location:"El Pulté Golf, Guatemala",temperatureC:27,observedAt:"2026-09-13T11:30:00"};
+let fetches=0,persists=0,renders=0;
+const env={round:{id:"closed-round",configured:true,courseKey:"pulte",course:"El Pulté",officiallyClosedAt:"2026-09-11T20:30:00Z",weather:old},WEATHER_REFRESH_MS:300000,WEATHER_RETRY_MS:30000,weatherRefreshPromise:null,weatherRefreshRoundId:null,weatherRefreshTimer:null,activeCourseWeatherSnapshot:null,COURSE_CATALOG:{pulte:{name:"El Pulté",weatherLocation:"El Pulté Golf, Guatemala",weatherCoordinates:{latitude:14.6164777,longitude:-90.4210559}}},currentBrowserCoordinates:async()=>null,window:{gscgApiUrl:value=>value},fetch:async()=>{fetches++;return{ok:true,json:async()=>fresh}},persist(){persists++},renderCourseWeather(){renders++},console,setTimeout,clearTimeout,Date};
+vm.createContext(env);
+vm.runInContext(section("function currentCourseWeatherSnapshot()","function weatherNumber("),env);
+vm.runInContext(section("async function syncActiveCourseWeather(","function scheduleActiveCourseWeather("),env);
+const result=await env.syncActiveCourseWeather({force:true});
+assert.equal(fetches,1,"una ronda cerrada debe consultar clima vivo");
+assert.equal(result.temperatureC,27);
+assert.equal(env.activeCourseWeatherSnapshot.temperatureC,27);
+assert.equal(env.currentCourseWeatherSnapshot().temperatureC,27,"la franja debe usar el dato vivo");
+assert.equal(env.round.weather.temperatureC,20.7,"la tarjeta cerrada permanece inmutable");
+assert.equal(persists,0,"el refresco informativo no reescribe la ronda cerrada");
+assert.equal(renders,2,"muestra ACTUALIZANDO y luego el dato vivo");
+console.log("PASS ronda cerrada: clima vivo 27 reemplaza visualmente 20.7 sin alterar tarjeta ni scores");

@@ -1,0 +1,65 @@
+name: LAB manual page-by-page visual QA
+on:
+  push:
+    branches: [laboratorio]
+permissions:
+  contents: read
+jobs:
+  audit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: laboratorio
+      - name: Install Chromium
+        run: |
+          mkdir -p /tmp/manual-qa
+          cd /tmp/manual-qa
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 --no-audit --no-fund
+          npx playwright install chromium
+      - name: Audit manual physically
+        run: |
+          python3 -m http.server 8765 >/tmp/manual-qa-http.log 2>&1 &
+          sleep 2
+          mkdir -p manual-qa
+          cat > /tmp/manual-qa/audit.cjs <<'NODE'
+          const {chromium}=require('/tmp/manual-qa/node_modules/playwright');
+          const fs=require('fs');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const page=await browser.newPage({viewport:{width:430,height:932},deviceScaleFactor:2,isMobile:true,hasTouch:true});
+            await page.goto('http://127.0.0.1:8765/manual.html',{waitUntil:'networkidle'});
+            await page.waitForTimeout(300);
+            const report={viewport:{w:430,h:932},cover:null,sheets:[]};
+            const top=await page.locator('.top').boundingBox();
+            const cover=await page.locator('#portada').boundingBox();
+            const coverImg=await page.locator('#portada img').boundingBox();
+            report.cover={top,cover,coverImg,bodyScrollWidth:await page.evaluate(()=>document.documentElement.scrollWidth),bodyClientWidth:await page.evaluate(()=>document.documentElement.clientWidth)};
+            await page.locator('#portada').screenshot({path:'manual-qa/00-portada.png'});
+            const sheets=page.locator('.sheet');
+            const count=await sheets.count();
+            for(let i=0;i<count;i++){
+              const el=sheets.nth(i); await el.scrollIntoViewIfNeeded(); await page.waitForTimeout(15);
+              const m=await el.evaluate(e=>{
+                const r=e.getBoundingClientRect();
+                const imgs=[...e.querySelectorAll('img')].map(x=>{const b=x.getBoundingClientRect();return{src:x.getAttribute('src'),x:b.x,y:b.y,w:b.width,h:b.height,nw:x.naturalWidth,nh:x.naturalHeight,complete:x.complete}});
+                const heads=[...e.querySelectorAll('.sheet-head')].map(x=>{const b=x.getBoundingClientRect();return{x:b.x,y:b.y,w:b.width,h:b.height}});
+                const navs=[...e.querySelectorAll('.sheet-nav')].map(x=>{const b=x.getBoundingClientRect();return{x:b.x,y:b.y,w:b.width,h:b.height}});
+                return{id:e.id,x:r.x,y:r.y,w:r.width,h:r.height,sw:e.scrollWidth,cw:e.clientWidth,text:e.innerText.length,imgs,heads,navs};
+              });
+              report.sheets.push(m);
+              await el.screenshot({path:`manual-qa/${String(i+1).padStart(2,'0')}-${m.id}.png`});
+            }
+            fs.writeFileSync('manual-qa/report.json',JSON.stringify(report,null,2));
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+          node /tmp/manual-qa/audit.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: manual-page-by-page-visual-qa
+          path: manual-qa
+          retention-days: 2

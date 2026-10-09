@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+const source=fs.readFileSync('live-hub.js','utf8');
+const selectors=['.category-card-head','.category-ranking','.category-detail-title','.category-score'];
+const parts=Object.fromEntries(selectors.map(s=>[s,{innerHTML:s,writes:0}]));
+for(const part of Object.values(parts)){let value=part.innerHTML;Object.defineProperty(part,'innerHTML',{get:()=>value,set:v=>{value=v;part.writes++}})}
+const scroll={scrollLeft:2400,scrollTop:600};
+const target={querySelector:s=>s==='.category-score-wrap'?scroll:parts[s],set innerHTML(v){throw Error('Mounted scroll container replaced')}};
+let nextParts=Object.fromEntries(selectors.map(s=>[s,{innerHTML:s}]));
+const context={root:{document:{createElement:()=>({set innerHTML(v){},querySelector:s=>nextParts[s]})}}};
+vm.createContext(context);
+vm.runInContext(source.slice(source.indexOf('  function updateCategoryCardContent('),source.indexOf('  function renderCategoryCard(')),context);
+context.updateCategoryCardContent(target,'same');
+assert.equal(Object.values(parts).reduce((n,p)=>n+p.writes,0),0,'Unchanged polls must not rebuild any content');
+nextParts['.category-score'].innerHTML='updated scores';
+context.updateCategoryCardContent(target,'changed');
+assert.equal(parts['.category-score'].innerHTML,'updated scores');
+assert.equal(parts['.category-score'].writes,1);
+assert.equal(target.querySelector('.category-score-wrap'),scroll);
+assert.equal(scroll.scrollLeft,2400);assert.equal(scroll.scrollTop,600);
+console.log('PASS LIVE refresh: unchanged DOM untouched; changed scores update without replacing scroll containers');

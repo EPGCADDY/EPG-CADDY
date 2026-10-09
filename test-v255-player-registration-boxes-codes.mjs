@@ -1,0 +1,34 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+
+const html=fs.readFileSync(new URL("./index-grupal.html",import.meta.url),"utf8");
+assert.match(html,/V288-STABLEFORD-ONE-TOUCH-HOME-20260823/);
+assert.match(html,/const registrationSlots=6/);
+assert.match(html,/for\(let i=0;i<registrationSlots;i\+\+\)/);
+assert.match(html,/data-draft-name=/);
+assert.match(html,/data-draft-hcp=/);
+assert.match(html,/data-draft-tee=/);
+assert.match(html,/<option value="" \$\{staged\.category\?"":"selected"\}>CATEGORÍA<\/option>/);
+assert.match(html,/<option value="" \$\{staged\.tee\?"":"selected"\}>MARCAS<\/option>/);
+assert.doesNotMatch(html,/draft-empty-label">DISPONIBLE/);
+assert.match(html,/function syncDraftPlayersFromManualRows/);
+assert.match(html,/<div class="newbie-guide-title">DICTA ASÍ:<\/div>/);
+assert.match(html,/<div>JUGADOR NÚMERO UNO · MIGUEL · HANDICAP 14 · MARCAS BLANCAS<\/div>/);
+assert.match(html,/<div>JUGADOR NÚMERO DOS · NOMBRE \+ HANDICAP \+ MARCAS<\/div>/);
+assert.match(html,/<div class="newbie-guide-player">HASTA 6 JUGADORES<\/div>/);
+assert.match(html,/<div>LUEGO TOCA OK<\/div>/);
+assert.match(html,/id="setupMic" aria-label="Abrir Caddie universal o dictar jugadores"/);
+assert.match(html,/<div class="registration-method-title">2 · MANUAL OPCIONAL<\/div>/);
+assert.equal((html.match(/<div class="registration-method-fields">NOMBRE \+ CATEGORÍA \+ HDCP \+ MARCAS \+ WHATSAPP OPCIONAL<\/div>/g)||[]).length,1);
+assert.doesNotMatch(html,/data-draft-code=/);
+assert.match(html,/data-draft-whatsapp=/);
+assert.match(html,/data-draft-country-code=/);
+assert.match(html,/draft-whatsapp-flag[^>]*>\$\{flag\}/);
+assert.doesNotMatch(html,/id="openShareProject"/);
+assert.doesNotMatch(html,/id="shareProjectPanel"/);
+assert.doesNotMatch(html,/>CÓDIGO<\/span>/);
+assert.match(html,/WHATSAPP OPCIONAL/);
+assert.doesNotMatch(html,/NO SE RECONOCIÓ · DICTA NOMBRE, HDCP Y MARCAS/);
+assert.match(html,/target\.textContent="ERROR"/);
+
+console.log("PASS V407 R24 · registro con WhatsApp opcional, +502 editable y bandera de Guatemala");

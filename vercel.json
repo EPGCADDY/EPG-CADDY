@@ -1,0 +1,236 @@
+{
+  "installCommand": "npm install --include=dev --no-package-lock && python3 -m pip install --break-system-packages --disable-pip-version-check --no-cache-dir numpy pillow pypdf reportlab",
+  "buildCommand": "node scripts/project-quality-gate.mjs && node scripts/roadmap-gate.mjs && node scripts/inventory-gate.mjs && node test-global-public-entry-policy.mjs && node scripts/build-manual-lab.mjs",
+  "outputDirectory": ".",
+  "rewrites": [
+    {
+      "source": "/invite/:token",
+      "destination": "/access.html"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/app-access?action=cleanup",
+      "schedule": "0 * * * *"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/torneo/:nombre",
+      "destination": "/index-grupal.html?inicio=1&invitation=1",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "destination": "/index-grupal.html?inicio=1",
+      "permanent": false
+    },
+    {
+      "source": "/index.html",
+      "destination": "/index-grupal.html?inicio=1",
+      "permanent": false
+    },
+    {
+      "source": "/inicio",
+      "destination": "/index-grupal.html?inicio=1",
+      "permanent": false
+    },
+    {
+      "source": "/manual",
+      "destination": "/manual.html",
+      "permanent": false
+    },
+    {
+      "source": "/manual-scg",
+      "destination": "/manual.html",
+      "permanent": false
+    },
+    {
+      "source": "/manual.pdf",
+      "destination": "/manual.html",
+      "permanent": false
+    },
+    {
+      "source": "/stableford-torneo.html",
+      "destination": "/index-grupal.html",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/index-grupal.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/manual.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/live.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/live-hub.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/docs/manual/v311/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(player-registry|round-closure|card-artifacts|card-file-export|card-library|historical-analytics|match-play|four-ball|skins|wolf|vegas|dots|stableford|sync-queue|master-data-sync|account-backup|commerce|round-navigation|live-control|live-view|live-hub|private-rounds).js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/service-worker.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        },
+        {
+          "key": "Service-Worker-Allowed",
+          "value": "/"
+        }
+      ]
+    },
+    {
+      "source": "/manifest.webmanifest",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/manual.webmanifest",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/(assets/official-logos|docs/manual/v311)/(.*v345.*\\.png)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Permissions-Policy",
+          "value": "microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/device-closures.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/app-update.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/tests/fixtures/r14724-service-worker.js",
+      "headers": [
+        {
+          "key": "Service-Worker-Allowed",
+          "value": "/"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/tests/fixtures/r14724-preparation-worker.js",
+      "headers": [
+        {
+          "key": "Service-Worker-Allowed",
+          "value": "/"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    }
+  ],
+  "env": {
+    "GSC_PERSONAL_ACCESS_PRODUCTION_READY": "1"
+  }
+}

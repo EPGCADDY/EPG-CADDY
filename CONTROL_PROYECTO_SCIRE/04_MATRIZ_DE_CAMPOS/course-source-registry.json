@@ -1,0 +1,68 @@
+{
+  "reservoir": "/SCIRE CARD GUATEMALA/02 Tarjetas de Score originales de los diferentes campos",
+  "updatedAt": "2026-08-22",
+  "rules": {
+    "neverRequestReceivedSourceAgain": true,
+    "preserveOriginalBytes": true,
+    "separateScreenshotsAndGeneratedImages": true,
+    "recordDuplicatesWithoutReplacingMaster": true
+  },
+  "courses": [
+    {
+      "courseKey": "pulte",
+      "courseName": "El Pulté",
+      "masterLibraryFileId": "libfile_20089cec8c5c8191abb839753dacbe05",
+      "archivedOriginalCount": 3,
+      "productStatus": "operational",
+      "sourceStatus": "archived"
+    },
+    {
+      "courseKey": "country_club",
+      "courseName": "Guatemala Country Club",
+      "masterLibraryFileId": "libfile_bf77c0d4dc9c8191979232abff9bb866",
+      "archivedOriginalCount": 2,
+      "productStatus": "operational",
+      "sourceStatus": "archived"
+    },
+    {
+      "courseKey": "mayan_golf",
+      "courseName": "Mayan Golf",
+      "masterLibraryFileId": "libfile_347e7f3adbac8191a3978a9ce19387a8",
+      "archivedOriginalCount": 1,
+      "productStatus": "operational",
+      "sourceStatus": "archived"
+    },
+    {
+      "courseKey": "hacienda_nueva",
+      "courseName": "Hacienda Nueva",
+      "masterLibraryFileId": "libfile_e719a5a932ac8191bc1f40a23a2510d1",
+      "archivedOriginalCount": 3,
+      "productStatus": "pending-enable",
+      "sourceStatus": "archived"
+    },
+    {
+      "courseKey": "alta_vista",
+      "courseName": "Alta Vista",
+      "masterLibraryFileId": "libfile_6513c99f3aa08191aa1c35e6b628dbfd",
+      "archivedOriginalCount": 5,
+      "productStatus": "pending-load",
+      "sourceStatus": "archived"
+    },
+    {
+      "courseKey": "san_isidro",
+      "courseName": "San Isidro",
+      "masterLibraryFileId": "libfile_434117f248988191a026e84b1f995621",
+      "archivedOriginalCount": 6,
+      "productStatus": "pending-load",
+      "sourceStatus": "archived"
+    },
+    {
+      "courseKey": "la_reunion",
+      "courseName": "La Reunión",
+      "masterLibraryFileId": null,
+      "archivedOriginalCount": 0,
+      "productStatus": "not-enabled",
+      "sourceStatus": "internal-inventory-pending"
+    }
+  ]
+}

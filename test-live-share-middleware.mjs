@@ -1,0 +1,34 @@
+import assert from 'node:assert/strict';
+import accessGate from './middleware.js';
+const prior=globalThis.fetch;let calls=0;globalThis.fetch=async()=>{calls++;return new Response(JSON.stringify({ok:false,code:'ACCESS_REQUIRED'}),{status:401})};
+try{
+ for(const path of ['/index-grupal.html','/live-hub.html','/live-hub.js','/live-share.js','/scores-ui.js','/scores-ui.css','/gsc-design-system.css']){
+  const result=await accessGate(new Request('https://lab.example'+path));assert.equal(result.headers.get('x-middleware-next'),'1',path+' opens without an app login');
+ }
+ assert.equal(calls,0,'public app entry must not call app-access status');
+ const context=encodeURIComponent(JSON.stringify({eventId:'saved-event',eventKind:'tournament',accountId:'device:test'}));
+ globalThis.fetch=async()=>{calls++;return Response.json({ok:true,accountCode:'device:test',membership:{role:'viewer',players:[]},tournament:{status:'active'}})};
+ const home=await accessGate(new Request('https://lab.example/index-grupal.html?inicio=1',{headers:{cookie:'gsc_personal_context='+context}}));
+ assert.equal(home.headers.get('x-middleware-next'),'1','Explicit Inicio must not reopen a previously viewed tournament');
+ const installed=await accessGate(new Request('https://lab.example/index-grupal.html?source=pwa',{headers:{cookie:'gsc_personal_context='+context}}));assert.equal(installed.headers.get('x-middleware-next'),'1','Installed launch must not reopen the previous Scores monitor');
+ const restored=await accessGate(new Request('https://lab.example/index-grupal.html',{headers:{cookie:'gsc_personal_context='+context}}));
+ const cardReturn=await accessGate(new Request('https://lab.example/index-grupal.html?round_return=1',{headers:{cookie:'gsc_personal_context='+context}}));
+ assert.equal(cardReturn.headers.get('x-middleware-next'),'1','Explicit Score Card return must preserve the local round instead of a different saved membership');
+ const forbiddenReturn=await accessGate(new Request('https://lab.example/index-grupal.html?round_return=1&personalEvent=other-event&personalAccount=other-account',{headers:{cookie:'gsc_personal_context='+context}}));
+ assert.equal(forbiddenReturn.headers.get('x-middleware-next'),'1','A personal navigation mismatch loads the app shell instead of a raw 403; APIs still enforce event authorization');
+ assert.match(restored.headers.get('location'),/live-hub\.html\?personalEvent=saved-event/,'Implicit personal return keeps its authorized event');
+ globalThis.fetch=async()=>Response.json({ok:true,accountCode:'device:assigned',membership:{role:'player',players:[{id:'p1',name:'Jaime'}]},tournament:{status:'active'}});
+ const missingAccount=await accessGate(new Request('https://lab.example/index-grupal.html?personalEvent=assigned-event&personalKind=tournament'));
+ assert.equal(missingAccount.status,307,'Authorized personal event navigation without account is repaired instead of rejected');
+ assert.match(missingAccount.headers.get('location'),/personalAccount=device%3Aassigned/);
+ assert.match(missingAccount.headers.get('location'),/manual_action=personal-scorecard/);
+ globalThis.fetch=async()=>Response.json({ok:true,accountCode:'device:assigned',membership:{role:'viewer',players:[]},tournament:{status:'active'}});
+ const viewerCard=await accessGate(new Request('https://lab.example/index-grupal.html?personalEvent=viewer-event&personalKind=tournament'));
+ assert.match(viewerCard.headers.get('location'),/live-hub\.html\?personalEvent=viewer-event/,'Read-only code sessions go to monitor instead of raw forbidden page');
+ globalThis.fetch=async()=>new Response(JSON.stringify({ok:false,code:'ACCESS_REQUIRED'}),{status:401});
+ const api=await accessGate(new Request('https://lab.example/api/live-share',{method:'POST'}));assert.equal(api.headers.get('x-middleware-next'),'1');
+ const directory=await accessGate(new Request('https://lab.example/api/tournament-score-directory',{method:'POST'}));assert.equal(directory.headers.get('x-middleware-next'),'1','public Scores directory POST reaches its own read-only handler without app login');
+ const directoryGet=await accessGate(new Request('https://lab.example/api/tournament-score-directory',{method:'GET'}));assert.equal(directoryGet.status,401,'only the directory POST passes the gate');
+ const sync=await accessGate(new Request('https://lab.example/api/sync',{method:'POST'}));assert.equal(sync.status,401,'protected sync API remains behind its own account/event checks');
+ console.log('PASS middleware: Registration and Scores open without owner sign-in; private APIs remain protected');
+}finally{globalThis.fetch=prior}

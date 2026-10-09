@@ -1,0 +1,31 @@
+name: Analyze GSC Voice Timing
+on:
+  push:
+    branches: [laboratorio]
+    paths:
+      - ".github/workflows/analyze-gsc-voice.yml"
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      - name: Download voice blocks
+        run: |
+          set -euo pipefail
+          curl -L --fail "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/96f30144-d6d6-458f-8817-d4c72a6d3eec.mp3" -o a1.mp3
+          curl -L --fail "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/6587e2ff-b95c-49d4-82c8-42519c7b1652.mp3" -o a2.mp3
+          curl -L --fail "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/cac17bfe-d27d-4941-8285-2e6dfea23565.mp3" -o a3.mp3
+          curl -L --fail "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/94a74103-a677-43fe-a917-ed4a743697ae.mp3" -o a4.mp3
+          curl -L --fail "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/5a213c74-a119-4c68-87ca-49e363049b34.mp3" -o a5.mp3
+          curl -L --fail "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/75b43b99-3551-4444-a909-0c9e265e179b.mp3" -o a6.mp3
+      - name: Report timing
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6; do
+            echo "=== BLOCK $i ==="
+            ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 a$i.mp3
+            ffmpeg -i a$i.mp3 -af silencedetect=noise=-36dB:d=0.22 -f null - 2>&1 | grep -E "silence_(start|end)" || true
+          done

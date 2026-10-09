@@ -1,0 +1,135 @@
+{
+  "recordedAt": "2026-09-13T16:53:44.123112+00:00",
+  "acceptance": "FAIL",
+  "productionChangedByThisWork": false,
+  "engine": {
+    "deployment": "dpl_CRCiEJbPPkZz6gLwU8cFFWg8uHdG",
+    "commit": "15fb33f7637c7c558a25f9d4800bd92fc224bc25",
+    "count": 100,
+    "httpPassed": 100,
+    "maxMs": 17879,
+    "minMs": 890,
+    "p50Ms": 3327,
+    "p90Ms": 6652,
+    "p95Ms": 8148,
+    "totalMs": 378923,
+    "method": "100 sequential direct handler requests; real AI provider; separate conversational histories",
+    "evidence": "ENGINE_R34_COMPLETE_100.json",
+    "microphone": false,
+    "ASR": false,
+    "TTS": false,
+    "playback": false
+  },
+  "audioServiceIntegration": {
+    "deployment": "dpl_FYzgKxKgQvg4c6RPfkMnu5GS2pLL",
+    "commit": "757d4e77409864d476ae17f292f5f48622ecefe9",
+    "total": 100,
+    "transportPassed": 100,
+    "transportFailed": 0,
+    "observedLog": "16:29:43 UNIVERSAL_100_COMPLETE {\"total\":100,\"transportPassed\":100,\"transportFailed\":0,\"errorCounts\":{\"NONE\":100}}",
+    "method": "Synthetic TTS input → Gateway Whisper ASR → app AI handler → output TTS bytes. Four workers; individual chains sequential.",
+    "limitations": [
+      "spoken field checks bytes >1000, not actual playback",
+      "recognition threshold is word recall >=0.6, not exact transcription",
+      "individual artifact access returned 302; authorized browser URL returned ERR_BLOCKED_BY_CLIENT",
+      "not Safari native recognition",
+      "not 100 consecutive turns in one browser"
+    ]
+  },
+  "asrPreviousFailure": {
+    "deployment": "dpl_CjFfGqLdWhD1eC58PXicXA4MHJ92",
+    "errorCounts": {
+      "TRANSCRIPTION_401": 100
+    },
+    "correctedStage": "Test harness transcription switched from direct API authentication to configured Gateway. This does not identify physical iPhone failure cause."
+  },
+  "browserPersistence": {
+    "status": "PASS",
+    "dateUTC": "2026-09-13T16:42:00Z",
+    "origin": "https://golf-sc-gt-lab.vercel.app",
+    "version": "R34",
+    "syntheticRound": true,
+    "tablesBefore": 5,
+    "tablesAfter": 5,
+    "tableTextIdentical": true,
+    "method": "Visible DOM tables compared before/after same-origin navigation; no localStorage mutation",
+    "limits": "Not an application version transition"
+  },
+  "iosAlternative": {
+    "provider": "TestMu AI",
+    "source": "https://www.testmuai.com/support/docs/audio-injection/",
+    "supportedExample": {
+      "deviceName": "iPhone 16",
+      "platformVersion": "18",
+      "platformName": "iOS"
+    },
+    "requiredPlan": "RealDevicePlus Automation Cloud",
+    "requiredCapability": "enableAudioInjection:true",
+    "formats": [
+      "MP3",
+      "WAV"
+    ],
+    "hooks": [
+      "lambda-audio-injection=<media_url>",
+      "lambda-audio-start",
+      "lambda-audio-stop"
+    ],
+    "accountConfigured": false,
+    "deviceProvisioned": false,
+    "reason": "No connected service tool or account credentials available; not a hardware test",
+    "ownerActionRequested": false
+  },
+  "targetedTest": {
+    "initialDeployment": "dpl_85jbFjzxuqqCtix6DHGTc3sXAua6",
+    "initialError": "buildCommand should NOT be longer than 256 characters",
+    "correction": "Preserved original build gates inside scripts/run-r36-build.mjs",
+    "retryDeployment": "dpl_F8qYzJ2rphQN71fK5FgQpUrg3qVA",
+    "retryCommit": "21ab614fbedbb51bdb5c654fc0bfc06b5bffcfd6",
+    "status": "BUILDING",
+    "intermediateFailures": [
+      "V337 course alias discarded existing coordinates: corrected and directed test PASS",
+      "Roadmaps not changed with alias correction: documented in next commit",
+      "V356 relative time interpreted as place: corrected and directed test PASS"
+    ]
+  },
+  "outstanding": [
+    "Exact second-question failure in iPhone/browser recognition not reproduced",
+    "100 consecutive browser audio turns not executed",
+    "Independent full-flow qualitative acceptance not certified",
+    "Same-flow paired R34/candidate latency <=40% not demonstrated",
+    "Version transition and final recovery tests not complete",
+    "Final integral regression reserved for completed candidate"
+  ],
+  "followupCorrection": {
+    "status": "PASS_CONTROLLED_EVENTS",
+    "negativeR34": "Speech ended must open next listening turn: actual 0 expected 1",
+    "positive": "100 answer -> speech-ended -> next-listening transitions, no duplicate opens",
+    "tests": [
+      "test-r36-followup-events.mjs",
+      "test-r34-audio-response.mjs",
+      "test-r36-capture-release.mjs"
+    ],
+    "stopCancelsRestart": true,
+    "nativeRecognition": false,
+    "physicalIphone": false,
+    "provenance": "Followup and playback cleanup integrated from 757d4e77409864d476ae17f292f5f48622ecefe9; retained local capture abort correction",
+    "lockSha256": "46665022535df378cac0c918cd17a8fd4ae09e9c51be3d671d3b158e9bb83850"
+  },
+  "weatherDirectedTests": {
+    "status": "PASS",
+    "cases": [
+      "El Pulté course coordinates",
+      "Colima México overrides course",
+      "Madrid followup",
+      "Ciudad de México preserved",
+      "relative 30 minutes not a place",
+      "relative time plus Colima",
+      "unknown place not replaced by Guatemala"
+    ],
+    "commands": [
+      "node test-v337-universal-weather.mjs",
+      "node test-v356-traffic-weather-accuracy.mjs",
+      "node test-r35-weather-location.mjs"
+    ]
+  }
+}

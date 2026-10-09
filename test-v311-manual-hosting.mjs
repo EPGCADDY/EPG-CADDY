@@ -1,0 +1,66 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+
+const html=fs.readFileSync("manual.html","utf8");
+const vercel=JSON.parse(fs.readFileSync("vercel.json","utf8"));
+const manualDir="docs/manual/v311";
+const pdf=`${manualDir}/Manual_Golf_Score_Card_GT_COMPLETO.pdf`;
+const manifest=JSON.parse(fs.readFileSync("manual.webmanifest","utf8"));
+
+assert.match(html,/Manual de Funciones/);
+assert.match(html,/MATCH PLAY/);
+assert.match(html,/FOUR BALL/);
+assert.match(html,/INFORMACIÓN DE CAMPOS/i);
+assert.match(html,/BUSCAR UNA FUNCIÓN, PANTALLA O DUDA/);
+assert.match(html,/ÍNDICE RÁPIDO/);
+assert.match(html,/manual-search\.js/);
+assert.match(html,/Cómo corrijo un bogey que fue par/);
+assert.match(html,/apple-mobile-web-app-title" content="MANUAL SCG"/);
+assert.match(html,/apple-touch-icon" sizes="180x180" href="\/docs\/manual\/v311\/manual-scg-apple-touch-v345-180\.png"/);
+assert.match(html,/page-\$\{item\.number\}\.png/);
+assert.match(html,/\.manual-page img\{[^}]*aspect-ratio:1 \/ 2/,"Las páginas deben reservar su altura 2160×4320 antes de cargar para que el enlace exacto no salte");
+assert.match(html,/\.manual-page\{[^}]*aspect-ratio:1 \/ 2/,"La sección completa debe reservar la geometría 1:2 y no depender de la descarga de la imagen");
+assert.match(html,/\.manual-page img\{[^}]*height:100%[^}]*object-fit:contain/,"La imagen debe ocupar la geometría estable de su sección");
+assert.ok(html.indexOf('<main class="manual" id="manual">')<html.indexOf('<section class="intro">'),"La portada visual debe aparecer antes del compendio");
+assert.match(html,/activePageLabel\.hidden=current===0/,"La portada no debe mostrar la etiqueta PORTADA");
+assert.match(html,/title\.textContent=current===0\?"":/,"La portada no debe mostrar un título superpuesto");
+assert.match(html,/counter\.textContent=current===0\?"":/,"La portada no debe mostrar PORTADA en el pie");
+assert.doesNotMatch(html,/<strong id="pageTitle">[^<]*PORTADA/i);
+assert.doesNotMatch(html,/<strong id="pageCounter">[^<]*PORTADA/i);
+assert.doesNotMatch(html,/indexLinks\[[^\]]+\]\?\.scrollIntoView/,"El índice horizontal nunca debe desplazar la página completa");
+assert.match(html,/pageIndex\.scrollTo\(\{left:Math\.max\(0,left\),behavior:"smooth"\}\)/,"El índice activo sólo debe centrarse horizontalmente");
+assert.match(html,/history\.replaceState\(null,"",`#\$\{pageId\(destination\)\}`\)/,"Cada destino debe quedar fijado por su ancla");
+assert.match(html,/searchInput\.blur\(\);[\s\S]*?requestAnimationFrame\(\(\)=>go\(destination\)\)/,"El buscador debe soltar el teclado antes de navegar");
+assert.match(html,/initialMatch=location\.hash\.match\(\/\^#pagina-\(\\d\{2\}\)\$\//,"Un enlace directo debe abrir la página indicada");
+assert.equal((html.match(/class="manual-page"/g)||[]).length,1,"Safari debe montar una sola gráfica del manual para evitar parpadeos y corrupción por memoria");
+assert.match(html,/function showPageImage\(page\)/,"El visor debe sustituir únicamente la gráfica activa");
+assert.match(html,/const preload=new Image\(\)/,"La nueva gráfica debe cargarse antes de sustituir la actual");
+assert.doesNotMatch(html,/IntersectionObserver/,"El desplazamiento no debe cambiar de página automáticamente");
+assert.match(html,/id="returnToRound"[^>]*>← REGRESAR A MI RONDA<\/button>/,"El Manual debe mostrar un regreso infantil y explícito a la ronda");
+assert.match(html,/sameApp&&history\.length>1\)\{history\.back\(\);return\}/,"El regreso debe volver exactamente a la Score Card anterior");
+assert.match(html,/location\.replace\("\/index-grupal\.html\?source=manual-return"\)/,"Sin historial debe recuperar la ronda persistida desde la aplicación");
+assert.ok(fs.statSync(pdf).size>100000,"El PDF completo debe estar alojado en el proyecto");
+assert.match(fs.readFileSync(pdf,"latin1"),/\/Count\s+74\b/,"El PDF debe contener portada más 73 páginas funcionales");
+assert.match(fs.readFileSync(pdf,"latin1"),/\/Outlines\b/,"El PDF debe contener navegación interna por páginas");
+
+for(let page=0;page<=73;page+=1){
+  const number=String(page).padStart(2,"0");
+  const image=`${manualDir}/page-${number}.png`;
+  assert.ok(fs.statSync(image).size>50000,`Falta la página visual ${number}`);
+  const png=fs.readFileSync(image);
+  assert.equal(png.toString("ascii",1,4),"PNG",`La página ${number} debe ser PNG`);
+  assert.equal(png.readUInt32BE(16),2160,`La página ${number} debe tener ancho 4K de 2160 px`);
+  assert.equal(png.readUInt32BE(20),4320,`La página ${number} debe tener alto 4K de 4320 px`);
+}
+
+assert.ok(vercel.redirects.some(item=>item.source==="/manual"&&item.destination==="/manual.html"));
+assert.ok(vercel.redirects.some(item=>item.source==="/manual-scg"&&item.destination==="/manual.html"));
+assert.ok(vercel.redirects.some(item=>item.source==="/manual.pdf"&&item.destination.endsWith("Manual_Golf_Score_Card_GT_COMPLETO.pdf")));
+assert.ok(vercel.headers.some(item=>item.source==="/manual.html"&&item.headers.some(header=>header.value.includes("no-store"))));
+assert.equal(manifest.start_url,"/manual-scg");
+assert.equal(manifest.display,"standalone");
+assert.equal(manifest.id,"/manual-scg");
+assert.ok(manifest.icons.some(icon=>icon.src==="/docs/manual/v311/manual-scg-pwa-v345-192.png"&&icon.sizes==="192x192"));
+assert.ok(manifest.icons.some(icon=>icon.src==="/docs/manual/v311/manual-scg-pwa-v345-512.png"&&icon.sizes==="512x512"));
+
+console.log("PASS V334 · manual web directo, anclas estables, PDF, portada y 73 páginas alojadas");

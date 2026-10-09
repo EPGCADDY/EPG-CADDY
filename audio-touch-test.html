@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>EPG Caddy · Prueba Audio iPhone</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#000;color:#fff;font-family:Arial,sans-serif;padding:24px}
+main{width:min(560px,100%);display:grid;gap:18px;text-align:center}
+h1{margin:0;color:#31ff00;font-size:26px}
+p{margin:0;color:#bbb;line-height:1.45}
+button{width:100%;min-height:180px;border:4px solid #31ff00;border-radius:24px;background:#050505;color:#fff;font-size:32px;font-weight:900;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button.first{background:#ffbf00;color:#000;border-color:#ffbf00}
+button.second{background:#31ff00;color:#000;border-color:#31ff00}
+#status{min-height:56px;border:1px solid #555;border-radius:12px;padding:14px;font-weight:900;line-height:1.35}
+small{color:#888}
+</style>
+</head>
+<body>
+<main>
+<h1>PRUEBA AISLADA · AUDIO IPHONE</h1>
+<p>No usa la Score Card. Sirve únicamente para separar gesto y voz.</p>
+<button id="test" type="button">TOCA DOS VECES AQUÍ</button>
+<div id="status">ESPERANDO PRIMER TOQUE</div>
+<small>Primer toque = amarillo · segundo toque ≤ 1 s = verde + voz</small>
+</main>
+<script>
+"use strict";
+const button=document.getElementById("test"),status=document.getElementById("status");
+let last=0;
+function localVoice(text){
+  const synth=window.speechSynthesis;
+  if(!synth||!window.SpeechSynthesisUtterance){status.textContent="FALLA: ESTE NAVEGADOR NO EXPONE VOZ LOCAL";return}
+  synth.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  const voices=synth.getVoices().filter(v=>v.localService===true&&/^es(?:-|_)/i.test(v.lang));
+  const voice=voices.find(v=>/^es[-_](MX|GT|US|CO|AR|CL|PE)/i.test(v.lang))||voices[0]||null;
+  if(voice){u.voice=voice;u.lang=voice.lang}else u.lang="es";
+  u.rate=1;u.volume=1;
+  u.onstart=()=>status.textContent="VOZ INICIÓ · PRUEBA CORRECTA";
+  u.onend=()=>status.textContent="VOZ TERMINÓ · PRUEBA CORRECTA";
+  u.onerror=e=>status.textContent="ERROR DE VOZ: "+String(e.error||"desconocido").toUpperCase();
+  synth.speak(u);
+}
+button.addEventListener("click",()=>{
+  const now=Date.now();
+  if(now-last<=1000){
+    last=0;
+    button.className="second";
+    status.textContent="SEGUNDO TOQUE DETECTADO · LLAMANDO VOZ LOCAL";
+    localVoice("Prueba de audio correcta. Jaime, el iPhone está reproduciendo la voz local.");
+    setTimeout(()=>button.className="",900);
+    return;
+  }
+  last=now;
+  button.className="first";
+  status.textContent="PRIMER TOQUE DETECTADO · TOCA OTRA VEZ";
+  setTimeout(()=>{if(last&&Date.now()-last>1000){last=0;button.className="";status.textContent="TIEMPO VENCIDO · EMPIEZA DE NUEVO"}},1100);
+});
+</script>
+</body>
+</html>

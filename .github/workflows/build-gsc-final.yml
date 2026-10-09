@@ -1,0 +1,53 @@
+name: Build GSC V3 Exact Sync
+
+on:
+  push:
+    branches: [laboratorio]
+    paths:
+      - ".github/workflows/build-gsc-final.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Download exact-sync visual and approved Clear voice blocks
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3 "https://cdn.creativeclaw.co/u/9cfd647d/videos/c4776729-61f3-4326-bb42-b2718e1bf8c9.mp4" -o visual.mp4
+          curl -L --fail --retry 3 "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/96f30144-d6d6-458f-8817-d4c72a6d3eec.mp3" -o a1.mp3
+          curl -L --fail --retry 3 "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/6587e2ff-b95c-49d4-82c8-42519c7b1652.mp3" -o a2.mp3
+          curl -L --fail --retry 3 "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/cac17bfe-d27d-4941-8285-2e6dfea23565.mp3" -o a3.mp3
+          curl -L --fail --retry 3 "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/94a74103-a677-43fe-a917-ed4a743697ae.mp3" -o a4.mp3
+          curl -L --fail --retry 3 "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/5a213c74-a119-4c68-87ca-49e363049b34.mp3" -o a5.mp3
+          curl -L --fail --retry 3 "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/75b43b99-3551-4444-a909-0c9e265e179b.mp3" -o a6.mp3
+
+      - name: Concatenate approved narration blocks
+        run: |
+          set -euo pipefail
+          printf "file 'a1.mp3'\nfile 'a2.mp3'\nfile 'a3.mp3'\nfile 'a4.mp3'\nfile 'a5.mp3'\nfile 'a6.mp3'\n" > audio.txt
+          ffmpeg -y -f concat -safe 0 -i audio.txt -c:a aac -b:a 192k -ar 48000 voice.m4a
+
+      - name: Mux visual and exact approved narration
+        run: |
+          set -euo pipefail
+          ffmpeg -y -i visual.mp4 -i voice.m4a -map 0:v:0 -map 1:a:0 -c:v copy -c:a copy -shortest -movflags +faststart GSC_GT_V3_SINCRONIA_EXACTA.mp4
+
+      - name: Triple technical QA
+        run: |
+          set -euo pipefail
+          test -s GSC_GT_V3_SINCRONIA_EXACTA.mp4
+          ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height,duration -of default=nw=1 GSC_GT_V3_SINCRONIA_EXACTA.mp4
+          ffprobe -v error -select_streams a:0 -show_entries stream=codec_name,sample_rate,channels,duration -of default=nw=1 GSC_GT_V3_SINCRONIA_EXACTA.mp4
+          ffmpeg -v error -i GSC_GT_V3_SINCRONIA_EXACTA.mp4 -f null -
+
+      - name: Upload exact-sync MP4
+        uses: actions/upload-artifact@v4
+        with:
+          name: GSC_GT_V3_SINCRONIA_EXACTA
+          path: GSC_GT_V3_SINCRONIA_EXACTA.mp4
+          if-no-files-found: error

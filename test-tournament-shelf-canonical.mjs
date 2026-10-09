@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import fs from 'node:fs';
+import {webcrypto,createHash} from 'node:crypto';
+const store=new Map(),raw='A'.repeat(43),id='11111111-1111-4111-8111-111111111111';
+let removed=false;
+const context={crypto:webcrypto,TextEncoder,localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},document:{addEventListener(){}},fetch:async(_,options)=>({ok:true,status:200,json:async()=>JSON.parse(options.body).action==='identity'?{personalCode:'owner'}:{accountCode:'owner',events:removed?[]:[{eventId:id,eventKind:'tournament',name:'SHELF',players:[]}],aliases:[{eventId:id,eventKind:'tournament',hash:createHash('sha256').update(raw).digest('hex'),removed}]}})};
+vm.runInNewContext(fs.readFileSync('personal-events.js','utf8'),context);
+const api=context.GSCPersonalEvents;await api.sync();
+let shelf=await api.reconcile([{token:raw,label:'SHELF'},{token:'personal_'+id,label:'SHELF'},{token:'B'.repeat(43),label:'OTHER'}]);
+assert.equal(shelf.length,2);assert.equal(shelf[0].token,'personal_'+id);
+api.hide('personal_'+id);await api.sync();assert.equal((await api.reconcile(shelf)).length,1,'Removal persists across synchronization');
+store.clear();removed=true;await api.sync();assert.equal((await api.reconcile([{token:raw,label:'OLD'},{token:'personal_'+id,label:'OLD'}])).length,0,'Both representations of a revoked event disappear');
+assert.equal(await api.canonicalToken('B'.repeat(43)),'B'.repeat(43),'Unrelated tournament remains untouched');
+console.log('PASS shelf migration: duplicate aliases collapse; removal survives sync; revoked aliases removed; unrelated events preserved.');
+
+const {createRequire}=await import('node:module');const hub=createRequire(import.meta.url)('./live-hub.js');
+assert.equal(hub.roundCreationStoragePrefix({accountCode:'owner',returnTo:'/index-grupal.html?personalAccount=owner&round_return=1'},'https://fixture.example'),'gscg-personal:owner:');
+assert.equal(hub.roundCreationStoragePrefix({accountCode:'owner',returnTo:'/index-grupal.html?round_return=1'},'https://fixture.example'),'');
+assert.throws(()=>hub.roundCreationStoragePrefix({accountCode:'owner',returnTo:'/index-grupal.html?personalAccount=other'},'https://fixture.example'));
+assert.throws(()=>hub.roundCreationStoragePrefix({accountCode:'owner',returnTo:'https://other.example/index-grupal.html'},'https://fixture.example'));
+console.log('PASS existing personal card stores the new tournament in the same account namespace; unrelated account and origin rejected.');

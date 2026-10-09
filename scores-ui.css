@@ -1,0 +1,255 @@
+/* Fixed labels retain their approved typography and interactive actions. */
+:is(h1,h2,h3,h4,h5,h6,th,caption,legend,label,[role="columnheader"],.summary-title,.device-closure-title,.scores-event,.scores-meta,.scores-help,.subtitle,.sub-title,#entryLead){-webkit-user-select:none;user-select:none}
+:is(input,textarea,[contenteditable="true"]){-webkit-user-select:text;user-select:text}
+.scores-heading{color:#fff;font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0 0 18px;text-transform:uppercase}
+.scores-heading-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.scores-heading .scores-heading-top h2{font-size:20.25px!important;line-height:1.2;margin:0;color:#31ff00}
+.scores-heading img{width:145px;height:auto;object-fit:contain;flex-shrink:0}
+.scores-event,.scores-meta{font-size:16px;line-height:1.4;margin-top:9px;overflow-wrap:anywhere}
+.scores-event{font-weight:900}.scores-meta{color:#c9cecc}
+.scores-help{position:fixed;z-index:100;bottom:0;left:0;right:0;padding:12px 10px calc(12px + env(safe-area-inset-bottom));background:#050706;border-top:1px solid #31ff00;color:#c9cecc;text-align:center;font:700 11px/1.6 Arial,sans-serif}
+.scores-help[hidden]{display:none!important}.scores-detail-backdrop{position:fixed;inset:0;z-index:11000;display:grid;place-items:center;background:rgba(0,0,0,.86);padding:12px}
+.scores-detail{box-sizing:border-box;position:relative;width:min(560px,100%);max-height:calc(100dvh - 24px);overflow:auto;border:1px solid #31ff00;border-radius:18px;background:#050706;color:white;padding:48px 12px 18px;font-family:Arial,sans-serif}
+.scores-detail [data-scores-close],.scores-detail [data-close-share]{position:absolute;top:8px;right:8px;width:38px;height:38px;background:#111;color:white;border:1px solid #555;border-radius:50%;font-size:18px;cursor:pointer}
+.scores-detail h3{font-size:20px;color:#31ff00;text-transform:uppercase;margin:24px 0 12px}.scores-detail p{font-size:12px;color:#b8c0bc}
+.scores-nine{table-layout:fixed;border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;margin:18px 0;color:#31ff00;font-size:clamp(10px,2.7vw,14px)}
+.scores-nine th,.scores-nine td{text-align:center;padding:10px 0;border:1px solid #303831;white-space:nowrap}.scores-nine th:first-child{width:36px;color:#c6ceca;font-size:10px}.scores-nine thead th{color:#dfe5e1}.scores-nine td{font-weight:900}
+[data-score-player]{cursor:pointer;touch-action:manipulation}[data-score-player]:focus-visible{outline:2px solid #31ff00;outline-offset:-2px}
+body.hub-scores-view:not(.public-display) .hub{padding-bottom:calc(100px + env(safe-area-inset-bottom))}
+body.hub-scores-view:not(.public-display) .head{grid-template-columns:minmax(0,1fr) 145px;gap:6px 12px;padding:16px}
+body.hub-scores-view:not(.public-display) .head>img{grid-column:2;grid-row:1;width:145px;height:auto}
+body.hub-scores-view:not(.public-display) .head>div:first-of-type{grid-column:1;grid-row:1}
+body.hub-scores-view:not(.public-display) .head h1{font-size:20.25px}
+body.hub-scores-view:not(.public-display) #hubEventName,body.hub-scores-view:not(.public-display) #hubEventMeta{grid-column:1 / -1;font-size:16px;line-height:1.4}
+body:not(.hub-scores-view) #hubEventName,body:not(.hub-scores-view) #hubEventMeta{display:none}
+body.hub-scores-view:not(.public-display) .monitor-switch{grid-template-columns:repeat(2,minmax(0,1fr))}
+body.hub-scores-view:not(.public-display) #hubSummary,body.hub-scores-view:not(.public-display) #hubPanelTitle,body.hub-scores-view:not(.public-display) #hubCategoryCardToggle{display:none!important}
+body.hub-scores-view:not(.public-display) #hubGeneralPanel>.search{display:grid!important}
+body.hub-scores-view:not(.public-display) .leader-wrap{overflow:visible}
+.scores-compact{width:100%;table-layout:fixed;border-collapse:collapse;font:700 13px Arial,sans-serif;font-variant-numeric:tabular-nums}
+.scores-compact th{font-size:10px;color:#bcc4bf;height:36px;text-align:center}.scores-compact th:first-child{width:40%;text-align:left}.scores-compact th:last-child{width:38px}
+.scores-compact td{padding:12px 2px;text-align:center;border-bottom:1px solid #303733}.scores-compact td:first-child{text-align:left;overflow-wrap:anywhere}.scores-compact td:nth-child(4){color:#31ff00}.scores-compact strong{font-size:13px;text-transform:uppercase}.scores-compact small{display:block;font-size:10px;color:#bac2bd;margin-top:4px}
+.scores-compact button,.scores-favorite button{width:36px;min-height:44px;padding:0;color:#31ff00;background:#070909;border:1px solid #354038;border-radius:8px;font-size:22px}
+.scores-favorite{padding:16px 8px;border:1px solid #354038;border-radius:12px;background:#050706}.scores-favorite header{display:flex;justify-content:space-between;align-items:center;gap:12px}.scores-favorite h3{color:#fff;font-size:16px;margin:0;text-transform:uppercase}.scores-favorite small,.scores-favorite p{color:#bcc4bf;font-size:11px}
+.private-score-panel{padding-bottom:75px!important}.private-score-panel>.scores-heading{padding-right:34px}.private-score-panel .scores-heading img{width:145px}.private-score-panel .scores-help{position:fixed;bottom:0;left:0;right:0;margin:0;z-index:10001}
+.one-use-code{display:block;overflow-wrap:anywhere;color:#31ff00;font:700 18px/1.5 monospace;padding:12px;border:1px solid #354038;border-radius:8px}
+.one-use-send,#gscOneUseShare [data-native-share],#gscOneUseShare [data-copy-share]{display:block;box-sizing:border-box;width:100%;margin-top:12px;min-height:44px;padding:12px;text-align:center;text-decoration:none;background:#31ff00;color:black;border:1px solid #31ff00;border-radius:8px;font:700 14px Arial,sans-serif}
+body.shared-view #hubCreateRound,body.shared-view #hubPrivateRounds,body.shared-view #hubRegisteredTournaments,body.shared-view #gscShortcutsButton{display:none!important}
+
+body.private-live-view .monitor-switch,body.private-live-view #hubCategory{display:none!important}
+
+body.private-live-view .scores-compact td:nth-child(4){color:inherit}body.private-live-view .scores-compact td:nth-child(5){color:#31ff00}
+
+#gscPersonalDialog [data-close]{position:absolute;top:8px;right:8px;width:44px;height:44px;background:#111;color:#fff;border:1px solid #555;border-radius:50%;font-size:18px}
+#gscPersonalDialog label{display:block;margin:12px 0 6px;font-size:13px;color:#c9cecc}
+#gscPersonalDialog input:not([type=checkbox]),#gscPersonalDialog select{box-sizing:border-box;width:100%;min-height:44px;padding:10px;background:#080b09;color:#fff;border:1px solid #454b47;border-radius:8px}
+#gscPersonalDialog button:not([data-close]){box-sizing:border-box;min-height:44px;margin:10px 4px 0 0;padding:10px 14px;background:#080b09;color:#31ff00;border:1px solid #31ff00;border-radius:8px;font-weight:700}
+#gscPersonalDialog button.primary{background:#31ff00;color:#000}
+#gscPersonalDialog output{display:block;overflow-wrap:anywhere;padding:12px;color:#31ff00}
+#gscWhatsAppInvitation label{display:block;margin:12px 0 6px;font-size:13px;color:#c9cecc}
+#gscWhatsAppInvitation input{box-sizing:border-box;width:100%;min-height:44px;padding:10px;background:#080b09;color:#fff;border:1px solid #454b47;border-radius:8px;font:16px Arial,sans-serif}
+#gscWhatsAppInvitation button:not([data-gsc-close]){display:block;box-sizing:border-box;width:100%;min-height:44px;margin:12px 0 0;padding:10px 14px;background:#080b09;color:#31ff00;border:1px solid #31ff00;border-radius:8px;font:700 14px Arial,sans-serif}
+#gscWhatsAppInvitation button[hidden]{display:none!important}
+#gscWhatsAppInvitation button.primary{background:#31ff00;color:#000}
+#gscWhatsAppInvitation button:disabled{opacity:.4}
+#gscWhatsAppInvitation output{display:block;overflow-wrap:anywhere;padding:16px 0 2px;color:#31ff00;font:700 18px Arial,sans-serif}
+#gscWhatsAppInvitation [data-invitation-preview]{white-space:pre-line;line-height:1.5}
+#gscPersonalDialog fieldset{margin:12px 0;border:1px solid #454b47;border-radius:8px}
+#gscPersonalDialog legend,#gscPersonalDialog summary{font-size:13px;color:#31ff00}
+
+body .hub [hidden]{display:none!important}
+
+/* R146: owner correction, 30 September: large original logo and equal header text. */
+body:not(.public-display) .head{grid-template-columns:minmax(0,1fr)!important;justify-items:start;gap:10px}
+body:not(.public-display) .head>img{grid-column:1!important;grid-row:1!important;width:min(320px,100%)!important;height:auto!important;justify-self:center}
+body:not(.public-display) .head>div:first-of-type{grid-column:1!important;grid-row:2!important}
+body:not(.public-display) .head h1,body:not(.public-display) #hubEventName,body:not(.public-display) #hubEventMeta,body:not(.public-display) #hubBack{font-size:16px!important;line-height:1.4}
+body:not(.public-display) #hubBack{display:block!important;grid-column:1 / -1;min-height:44px;padding:10px 16px;border:1px solid #31ff00;border-radius:10px;background:#050706;color:#31ff00;font-weight:700}
+
+.scores-heading-top{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.scores-heading img{grid-row:1;width:min(320px,100%);justify-self:center}
+.scores-heading .scores-heading-top h2{grid-row:2;font-size:16px!important}
+.scores-detail h3{font-size:16px}
+
+.scores-nine th:first-child small{display:block;margin-top:3px;font-size:7px;line-height:1.25;font-weight:400;color:#c9cecc}
+
+/* Tournament position uses the existing compact Scores table; private round keeps its columns. */
+body.hub-scores-view:not(.private-live-view) .scores-compact th:first-child{width:8%;text-align:center}
+body.hub-scores-view:not(.private-live-view) .scores-compact th:nth-child(2){width:32%;text-align:left}
+body.hub-scores-view:not(.private-live-view) .scores-compact td:first-child{text-align:center}
+body.hub-scores-view:not(.private-live-view) .scores-compact td:nth-child(2){text-align:left;overflow-wrap:anywhere}
+body.hub-scores-view:not(.private-live-view) .scores-compact td:nth-child(4){color:inherit}
+body.hub-scores-view:not(.private-live-view) .scores-compact td:nth-child(5){color:#31ff00}
+
+/* R147.2: one Scores design for tournament, private round and player detail. */
+.scores-heading-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.scores-heading img{width:140px;max-width:45%;height:auto}
+.scores-heading .scores-heading-top h2{font-size:22px!important;font-weight:900}
+body.hub-scores-view:not(.public-display) .head{grid-template-columns:minmax(0,1fr) 140px!important}
+body.hub-scores-view:not(.public-display) .head>img{grid-column:2!important;grid-row:1!important;width:140px!important}
+body.hub-scores-view:not(.public-display) .head>div:first-of-type{grid-column:1!important;grid-row:1!important}
+body.hub-scores-view:not(.public-display) .head h1{font-size:22px!important;color:#31ff00}
+.scores-compact{font-size:clamp(15px,4vw,18px);font-weight:800}
+.scores-compact strong{font-size:inherit;font-weight:900}
+.scores-compact th{font-size:clamp(13px,3.4vw,15px);font-weight:800;height:44px}
+.scores-compact small,.scores-favorite small,.scores-favorite p,.scores-detail p{font-size:13px}
+.scores-favorite h3,.scores-detail h3{font-size:18px;font-weight:900}
+.scores-nine{font-size:clamp(12px,3.2vw,14px)}
+.scores-help{font-size:12px}
+body.hub-scores-view .monitor-switch button{font:700 16px Arial,sans-serif;min-height:48px}
+body.hub-scores-view .scores-compact td{height:54px;padding:8px 2px}
+body.hub-scores-view:not(.private-live-view) .scores-compact th:first-child{width:5%}
+body.hub-scores-view:not(.private-live-view) .scores-compact th:nth-child(2){width:30%}
+.scores-compact th:last-child{width:30px}
+.scores-compact button{width:28px;min-height:44px}
+
+/* R147.2.4.1: tournament Scores reference approved 30 September, five columns. */
+body.hub-scores-view:not(.private-live-view):not(.public-display) .hub{box-sizing:border-box;width:min(780px,calc(100% - 24px));margin:90px auto 24px;padding:16px 12px;border:1px solid #31ff00;border-radius:20px;background:#070b09}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .head{padding:0 0 14px;border:0;border-bottom:1px solid #303733;border-radius:0;background:transparent}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubBack{display:none!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubTournamentHome{margin:0 0 14px;width:auto;min-height:44px;padding:8px 0;border:0;background:transparent;color:#31ff00;font-size:16px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubState:not(.warning):not(.error){display:none}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch{position:static;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch button{min-height:56px;border-radius:12px;font-size:clamp(12px,3.3vw,17px);color:#31ff00;background:transparent}
+
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubGeneralPanel{padding:0;border:0;background:transparent;display:flex;flex-direction:column;gap:12px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubGeneralPanel>.search{grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:8px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubSearchButton,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubSearchResults{display:none!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .search input{height:56px;font-size:16px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubShareGeneral{width:100%;margin:0;min-width:0;min-height:56px;border:1px solid #31ff00;border-radius:12px;background:transparent;color:#31ff00;font-size:14px;white-space:normal}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .category-filter{margin:0;grid-template-columns:1fr}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubCategory{height:48px;color:#31ff00;font-size:16px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubCourse{display:none}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .viewer-tools{order:5;margin:0}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .leader-wrap{border:1px solid #303733;border-radius:14px;overflow:hidden;margin:0}
+body.hub-scores-view:not(.private-live-view) .scores-compact th:first-child{width:44%;text-align:left;padding-left:6px}
+body.hub-scores-view:not(.private-live-view) .scores-compact th:nth-child(2){width:13%;text-align:center}
+body.hub-scores-view:not(.private-live-view) .scores-compact th:last-child{width:15%}
+body.hub-scores-view:not(.private-live-view) .scores-compact td:first-child{text-align:left}
+body.hub-scores-view:not(.private-live-view) .scores-compact td:nth-child(2){text-align:center}
+body.hub-scores-view:not(.private-live-view) .scores-compact td:nth-child(4){color:#31ff00}
+body.hub-scores-view:not(.private-live-view) .scores-compact td.over{color:#ff443d}
+body.hub-scores-view:not(.private-live-view) .scores-compact td.under{color:#31ff00}
+.scores-name{display:flex;align-items:center;gap:4px}.scores-name span{min-width:0}.scores-name button{flex:0 0 28px;border:0;background:transparent}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-help{position:static;padding:12px 0 0;border:0;background:transparent;text-align:left;font-size:12px;line-height:1.7}
+
+/* Approved 2—Categoría composition, normalized from the original 1227px reference. */
+body.hub-scores-view:not(.private-live-view):not(.public-display) .hub{position:relative;width:min(780px,88.7%);margin:100px auto 24px;padding:10px 9px 12px;border-radius:16px;background:#080d0b;font-family:Arial,sans-serif}
+.scores-return{display:none}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-return{display:block;position:absolute;top:-36px;left:0;padding:0;min-height:28px;border:0;background:transparent;color:#31ff00;font:400 15px Arial,sans-serif;text-align:left}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .head{margin:0 0 10px;gap:6px 12px;padding-bottom:10px;grid-template-columns:minmax(0,1fr) 38%!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .head>img{width:100%!important;max-width:none;justify-self:end;object-fit:contain}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .head h1{font:900 19px/1.2 Arial,sans-serif!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubEventName{font:900 15px/1.3 Arial,sans-serif!important;text-transform:uppercase;margin-top:5px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubEventMeta{font:400 14px/1.4 Arial,sans-serif!important;text-transform:uppercase;margin:0;color:#b5bcba}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch{display:grid!important;margin:0 0 10px;gap:5px;grid-template-columns:repeat(3,minmax(0,1fr))}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch button{font:400 14px/1.3 Arial,sans-serif;min-height:50px;padding:5px 3px;border-radius:9px;border-color:#303b35;background:transparent}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch button.active{border-color:#31ff00}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubGeneralPanel{display:flex!important;gap:10px;padding:0;margin:0}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubGeneralPanel>.search{display:grid!important;gap:7px;margin:0;grid-template-columns:minmax(0,2.15fr) minmax(0,1fr)}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .search input{height:46px;min-width:0;border:1px solid #303b35;border-radius:9px;background:#070b09;color:#fff;padding:0 9px;font:400 14px Arial,sans-serif}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .search input::placeholder{color:#b5bcba;opacity:1}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubShareGeneral{display:block;min-height:46px;height:auto;padding:4px 2px;font:400 14px/1.25 Arial,sans-serif;border-radius:9px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubShareGeneral:disabled{opacity:1;cursor:default}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .category-filter{display:grid!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubCategory{height:36px;padding:0 9px;border:1px solid #303b35;border-radius:9px;background:#080d0b;font:400 14px Arial,sans-serif}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .leader-wrap{border-radius:10px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact{font:900 14px Arial,sans-serif}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th{height:36px;font:400 14px Arial,sans-serif;color:#b5bcba;background:#0d1411;white-space:nowrap}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact td{height:48px;padding:5px 2px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:first-child{width:38%;padding-left:4px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:nth-child(2){width:14%}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:nth-child(3){width:18%}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:nth-child(4){width:15%}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th:last-child{width:15%}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact small{font:400 11px/1.3 Arial,sans-serif;margin-top:4px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-name{gap:5px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-name button{flex-basis:32px;width:32px;color:#31ff00;font-size:20px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-help{padding:0;font:400 10.5px/1.9 Arial,sans-serif;color:#b5bcba}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-help span{display:block;font-size:14px;margin-top:5px}
+body.hub-scores-view:not(.private-live-view):not(.public-display) #hubTournamentHome,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubIndividualPanel,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubCategoryCard,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubMyPosition{display:none!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .viewer-tools,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubPersonalOrganization,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubPersonalScoreCard{display:none!important}
+
+@media(min-width:600px){body.hub-scores-view:not(.private-live-view):not(.public-display) .hub{container-type:inline-size;padding:22px 21px;border-radius:36px}body.hub-scores-view:not(.private-live-view):not(.public-display) .head h1{font-size:5.8cqw!important}body.hub-scores-view:not(.private-live-view):not(.public-display) #hubEventName{font-size:4.6cqw!important}body.hub-scores-view:not(.private-live-view):not(.public-display) #hubEventMeta{font-size:4.3cqw!important}body.hub-scores-view:not(.private-live-view):not(.public-display) .head{gap:12px 26px;padding-bottom:22px;margin-bottom:22px}body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch{gap:12px;margin-bottom:22px}body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch button{font-size:4.3cqw;min-height:15cqw;border-radius:20px}body.hub-scores-view:not(.private-live-view):not(.public-display) #hubGeneralPanel{gap:22px}body.hub-scores-view:not(.private-live-view):not(.public-display) .search input,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubShareGeneral{font-size:4.3cqw;height:14cqw;border-radius:20px}body.hub-scores-view:not(.private-live-view):not(.public-display) #hubCategory{font-size:4.3cqw;height:11cqw;border-radius:20px}body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact,body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th{font-size:4.3cqw}body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact th{height:11cqw}body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact td{height:15cqw}body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-compact small{font-size:3.4cqw}body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-name{gap:12px}body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-name button{flex-basis:9cqw;width:9cqw;font-size:6cqw}body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-help{font-size:3.2cqw}body.hub-scores-view:not(.private-live-view):not(.public-display) .scores-help span{font-size:4.3cqw}}
+
+/* Shared Scores typography: equivalent labels and values match in every view. */
+:root{--scores-font:Arial,sans-serif;--scores-text-size:14px;--scores-title-size:19px;--scores-caption-size:11px}
+.scores-heading,.scores-detail,.scores-compact,.private-score-panel,.private-score-table{font-family:var(--scores-font)!important}
+.scores-heading .scores-heading-top h2,body.hub-scores-view:not(.private-live-view):not(.public-display) .head h1{font-size:var(--scores-title-size)!important}
+.scores-event,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubEventName{font-size:15px!important}
+.scores-meta,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubEventMeta,.scores-compact,.scores-compact th,.scores-compact strong,.private-score-table,.private-score-table th,.scores-nine,.scores-nine th,.scores-detail h3{font-size:var(--scores-text-size)!important}
+.scores-compact small,.scores-detail p,.scores-help,.scores-nine th:first-child small{font-size:var(--scores-caption-size)!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .monitor-switch button,body.hub-scores-view:not(.private-live-view):not(.public-display) .search input,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubShareGeneral,body.hub-scores-view:not(.private-live-view):not(.public-display) #hubCategory{font:400 var(--scores-text-size)/1.3 var(--scores-font)!important}
+
+/* Owner correction: logos 25% larger across Scores, with original proportions. */
+.scores-heading-top{display:grid;grid-template-columns:minmax(0,1fr) 47.5%;align-items:center;gap:12px}
+.scores-heading .scores-heading-top h2{grid-column:1;grid-row:1}
+.scores-heading img,.private-score-panel .scores-heading img{grid-column:2;grid-row:1;width:100%;max-width:none;height:auto;justify-self:end}
+body.hub-scores-view:not(.public-display) .head{grid-template-columns:minmax(0,1fr) 175px!important}
+body.hub-scores-view:not(.public-display) .head>img{width:175px!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .head{grid-template-columns:minmax(0,1fr) 47.5%!important}
+body.hub-scores-view:not(.private-live-view):not(.public-display) .head>img{width:100%!important}
+
+/* Fixed titles, subtitles and score names; editable fields keep normal selection. */
+:is(#hubEventName,#hubEventMeta,#hubPanelTitle,#hubScoresHelp,.scores-heading,.scores-event,.scores-meta,.scores-help,[data-score-player]){-webkit-user-select:none;user-select:none}
+
+/* Display titles remain fixed even when rendered as div/span rather than headings. */
+:is([class$="-title"],[class$="-subtitle"],[class*="-title "],[class*="-subtitle "]):not(input):not(textarea):not([contenteditable="true"]){-webkit-user-select:none;user-select:none}
+
+/* Reserve space for the Gross/Net label at phone width. */
+.scores-nine th:first-child{width:48px}
+
+/* Shared typography and 25% logo increase in the private read-only LIVE viewer. */
+.live-app .live-head h1{font-size:var(--scores-title-size)}
+.live-app .live-head{grid-template-columns:115px 1fr}
+.live-app .live-head img{width:115px;height:auto}
+.live-app .group-meta,.live-app .live-head p{-webkit-user-select:none;user-select:none}
+.live-app .player-title strong,.live-app .score-live th,.live-app .score-live td{font-family:var(--scores-font);font-size:var(--scores-text-size)}
+@media(max-width:640px){.live-app .live-head{grid-template-columns:80px 1fr}.live-app .live-head img{width:80px}}
+
+/* Search uses the same compact score rows and official totals as General. */
+body.hub-scores-view.hub-search-mode:not(.public-display) #hubLeaderWrap{display:block!important}
+
+/* R23 canonical Scores header: same frame, padding, logo and title baseline. */
+:root{--scores-header-logo:47.5%;--scores-panel-padding:10px 9px 12px}
+body.hub-scores-view:not(.public-display) .hub,.scores-detail,.private-score-panel{padding:var(--scores-panel-padding)!important;border-radius:16px!important;background:#080d0b!important;font-family:Arial,sans-serif!important}
+.scores-heading{margin:0 0 10px!important;padding:0 0 10px!important;border-bottom:1px solid #303733}
+.scores-heading-top,body.hub-scores-view:not(.public-display) .head{display:grid!important;grid-template-columns:minmax(0,1fr) var(--scores-header-logo)!important;align-items:center!important;gap:6px 12px!important}
+.scores-heading-top h2,body.hub-scores-view:not(.public-display) .head>div:first-of-type{grid-column:1!important;grid-row:1!important;margin:0!important}
+.scores-heading img,body.hub-scores-view:not(.public-display) .head>img{grid-column:2!important;grid-row:1!important;width:100%!important;max-width:none!important;height:auto!important;aspect-ratio:auto;object-fit:contain!important;justify-self:end!important}
+.scores-event,body.hub-scores-view:not(.public-display) #hubEventName{margin:5px 0 0!important;line-height:1.3!important}
+.scores-meta,body.hub-scores-view:not(.public-display) #hubEventMeta{margin:0!important;line-height:1.4!important}
+.private-score-panel>.scores-heading{padding-right:0!important}
+body.hub-scores-view:not(.public-display) :is(#hubPersonalOrganization,#hubPersonalScoreCard){display:block!important;width:100%;margin:8px 0;min-height:44px;color:#31ff00}
+body.hub-scores-view:not(.public-display) :is(#hubPersonalOrganization,#hubPersonalScoreCard)[hidden]{display:none!important}
+
+/* R24-B9: fixed text throughout Scores/tournament navigation, including iOS callouts. */
+body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+body :is(h1,h2,h3,h4,header,button,a,.scores-heading,.scores-detail,.tournament-card,.card-library-round),body :is(header,button,a,.scores-heading,.scores-detail,.tournament-card,.card-library-round) *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+body :is(input,textarea,[contenteditable="true"]){-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
+.tournament-event-entry{display:grid;gap:6px}.tournament-event-entry .event-delete{color:#ff4b4b;border-color:#ff4b4b;min-height:44px;background:#100606}
+
+#hubDeleteEvent[hidden]{display:none!important}#hubDeleteEvent:not([hidden]){display:block!important;width:100%;color:#ff4b4b;border-color:#ff4b4b}
+
+/* R158: approved continuous group table, without tournament dashboard tools. */
+.private-score-panel{background:#050505!important;padding:20px!important;box-shadow:none!important}
+.group-scores-heading h2{color:#31ff00;font:900 22px/1.25 Arial,sans-serif!important;margin:12px 0 20px!important}
+.group-scores-heading p{font:400 16px/1.4 Arial,sans-serif;color:#fff;margin:0 0 12px}
+.private-score-panel [data-scores]{border:0!important;border-radius:0!important;overflow:visible!important;margin-top:0!important}
+.private-score-table th,.private-score-table td{background:transparent!important;border:0!important;font-weight:400!important;height:50px!important;padding:8px 2px!important}
+.private-score-table th{font-weight:900!important;color:#fff!important;font-size:clamp(11px,2.85vw,14px)!important}
+.private-score-table th:first-child,.private-score-table td:first-child{width:26%;padding-left:0!important}
+.group-scores-help{position:static!important;font:400 16px/1.4 Arial,sans-serif;color:#fff;margin:20px 0 12px!important}
+body.hub-scores-view.private-live-view:not(.public-display) .hub{width:min(780px,88.7%)!important;border:1px solid #31ff00!important;border-radius:18px!important;padding:20px!important;background:#050505!important}
+body.hub-scores-view.private-live-view:not(.public-display) .head{display:block!important;padding:0!important;border:0!important;background:none!important}
+body.hub-scores-view.private-live-view:not(.public-display) .head>img,body.hub-scores-view.private-live-view:not(.public-display) #hubEventName,body.hub-scores-view.private-live-view:not(.public-display) #hubBack,body.hub-scores-view.private-live-view:not(.public-display) .monitor-switch,body.hub-scores-view.private-live-view:not(.public-display) .viewer-tools,body.hub-scores-view.private-live-view:not(.public-display) #hubState:not(.warning):not(.error),body.hub-scores-view.private-live-view:not(.public-display) #hubMyPosition,body.hub-scores-view.private-live-view:not(.public-display) #hubPersonalOrganization,body.hub-scores-view.private-live-view:not(.public-display) #hubPersonalScoreCard,body.hub-scores-view.private-live-view:not(.public-display) #hubGeneralPanel>.search,body.hub-scores-view.private-live-view:not(.public-display) .category-filter{display:none!important}
+body.hub-scores-view.private-live-view:not(.public-display) .head h1{font:900 22px/1.25 Arial,sans-serif!important;margin:12px 0 20px!important}
+body.hub-scores-view.private-live-view:not(.public-display) #hubEventMeta{font:400 16px/1.4 Arial,sans-serif!important;margin:0 0 12px!important}
+body.hub-scores-view.private-live-view:not(.public-display) .scores-compact th:first-child{width:26%!important}
+body.hub-scores-view.private-live-view:not(.public-display) .scores-compact td{border:0!important;height:50px!important;font-weight:400!important}
+body.hub-scores-view.private-live-view:not(.public-display) .scores-compact th{color:#fff!important;font-weight:900!important}
+body.hub-scores-view.private-live-view:not(.public-display) .scores-help{position:static!important;font:400 16px/1.4 Arial,sans-serif!important;color:#fff;margin:20px 0 12px!important;padding:0!important;border:0!important}
+body.hub-scores-view.private-live-view:not(.public-display) #hubGeneralPanel{margin:0!important;padding:0!important}
+body.hub-scores-view.private-live-view:not(.public-display) .leader-wrap{border:0!important;background:none!important}
+
+.private-score-table{width:100%;table-layout:fixed;border-collapse:collapse;font:400 clamp(15px,4vw,18px) Arial,sans-serif;font-variant-numeric:tabular-nums;color:#fff}.private-score-table th,.private-score-table td{text-align:center}.private-score-table th:first-child,.private-score-table td:first-child{text-align:left;overflow-wrap:anywhere}.private-score-table td:nth-child(5),.private-score-table .private-score-under{color:#31ff00}.private-score-table .private-score-over{color:#ff4545}.private-score-panel [data-status]:empty{display:none}

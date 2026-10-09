@@ -1,0 +1,6 @@
+test-project-quality-gate.mjs: FAIL de infraestructura. spawnSync /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node EPERM; stdout vacío.
+Revisión automática: escalación rechazada por ejecución a través de /opt/codex y evasión del sandbox. No reintentar por rutas indirectas.
+Gate directo: PASS controls=11 inputs=7 gates=11 baseline=0dc1ba7a62b6 production=89c64f348b6c.
+Negativo directo missing-control: exit 1, CONTROL_INEXISTENTE_DE_PRUEBA rechazado.
+Negativo directo repositorio distinto: exit 1, OTRO/REPOSITORIO rechazado.
+Banco completo NO certificado. No despliegue nuevo.

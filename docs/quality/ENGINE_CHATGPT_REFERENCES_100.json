@@ -1,0 +1,505 @@
+{
+  "scope": "References observed in ChatGPT public web; batching used, model unspecified; correctness separately reviewed",
+  "references": [
+    {
+      "answer": "Los años bisiestos existen porque el año solar real dura aproximadamente 365,2422 días, no exactamente 365. Si no se añadiera un día extra cada cierto tiempo, las estaciones se desplazarían poco a poco respecto al calendario. La regla general del calendario gregoriano es que un año es bisiesto si es divisible entre 4. La excepción son los años terminados en 00: aunque sean divisibles entre 4, no son bisiestos salvo que también sean divisibles entre 400. Por ejemplo, 1900 no fue bisiesto, pero 2000 sí lo fue.",
+      "id": "001",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "Inglaterra, Gran Bretaña y el Reino Unido no significan lo mismo. Inglaterra es uno de los cuatro países que forman el Reino Unido. Gran Bretaña es la isla donde se encuentran Inglaterra, Escocia y Gales. El Reino Unido, cuyo nombre completo es Reino Unido de Gran Bretaña e Irlanda del Norte, incluye Inglaterra, Escocia, Gales e Irlanda del Norte. Por eso Inglaterra es una parte del Reino Unido, no un sinónimo de todo el país.",
+      "id": "002",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "El cielo suele verse azul porque la luz del Sol contiene muchos colores y la atmósfera dispersa más fácilmente las ondas de luz de menor longitud de onda, especialmente las azules y violetas. Este fenómeno se llama dispersión de Rayleigh. Aunque la luz violeta se dispersa incluso más, nuestros ojos son más sensibles al azul y además parte de la radiación violeta es absorbida, por lo que percibimos principalmente un cielo azul.",
+      "id": "003",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "Un aumento del 15% sobre 240 dólares significa multiplicar por 1,15. 240 × 1,15 = 276. El nuevo precio es de 276 dólares.",
+      "id": "004",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "Un birdie en golf significa completar un hoyo con un golpe menos que el par establecido para ese hoyo. Por ejemplo, si un hoyo es par 4 y un jugador lo termina en 3 golpes, hizo un birdie. El par representa la cantidad de golpes que se espera que necesite un jugador experto; hacer menos golpes que el par suele considerarse un buen resultado.",
+      "id": "005",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "Para elegir una laptop para una persona que estudia ingeniería con presupuesto limitado conviene priorizar rendimiento útil antes que características llamativas. Primero hay que identificar los programas que usará: no es lo mismo tomar apuntes y programar que ejecutar CAD, simulaciones o cálculos pesados. Como método general: 1) fijar un presupuesto máximo; 2) elegir un procesador moderno de gama media o superior; 3) buscar al menos 16 GB de RAM si es posible; 4) preferir almacenamiento SSD; 5) revisar la compatibilidad con software de ingeniería; 6) considerar peso, batería y durabilidad. En un presupuesto ajustado suele ser mejor comprar una laptop equilibrada con buen procesador y posibilidad de ampliar RAM o almacenamiento que pagar por una pantalla premium o una tarjeta gráfica innecesaria.",
+      "id": "006",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "La velocidad combinada de los trenes es 90 + 120 = 210 km/h, porque se acercan uno al otro. El tiempo para encontrarse es distancia dividida entre velocidad relativa: 420 ÷ 210 = 2 horas. Se encuentran después de 2 horas de viaje.",
+      "id": "007",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "No se puede saber quién será el presidente de Estados Unidos en 2032 desde septiembre de 2026. La elección de 2032 dependerá de candidatos, elecciones primarias, resultados electorales, acontecimientos políticos y otros factores que todavía no existen. Lo correcto es tratarlo como una incertidumbre y no afirmar un nombre concreto.",
+      "id": "008",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "La afirmación es incorrecta. La capital de Australia es Canberra, no Sídney. Sídney es una de las ciudades más grandes y conocidas del país, pero Canberra fue elegida como capital para establecer una sede de gobierno separada de las principales ciudades rivales, especialmente Sídney y Melbourne.",
+      "id": "009",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "La imprenta de Gutenberg, desarrollada en Europa en el siglo XV, fue importante porque permitió producir libros de manera mucho más rápida y barata que la copia manual. Facilitó la difusión del conocimiento, aumentó la alfabetización, impulsó la ciencia y la educación, y tuvo influencia en movimientos históricos como la Reforma protestante y la expansión de nuevas ideas políticas y culturales.",
+      "id": "010",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "Comparando la laptop de ingeniería con una tablet, la laptop suele ser la opción principal para un estudiante de ingeniería porque ofrece mayor compatibilidad con programas profesionales como CAD, simulación, programación avanzada y herramientas de cálculo. Una tablet puede ser excelente como complemento para tomar apuntes, leer documentos, revisar planos o hacer tareas ligeras, pero normalmente tiene limitaciones de potencia, sistema operativo y compatibilidad con software especializado. Si el presupuesto permite solo un dispositivo, una laptop equilibrada suele ser la elección más práctica.",
+      "id": "011",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "Para un estudiante de ingeniería que usa CAD, recomendaría como mínimo una laptop con: procesador Intel Core i5/i7 moderno o AMD Ryzen 5/7 equivalente; 16 GB de RAM (8 GB puede funcionar para proyectos básicos, pero queda limitado); SSD de 512 GB como base; tarjeta gráfica dedicada de entrada o media compatible con las necesidades del software, especialmente para modelos 3D; pantalla de buena resolución; y buena refrigeración. Para proyectos más exigentes, 32 GB de RAM y una GPU más potente serían preferibles.",
+      "id": "012",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "Si el presupuesto bajara a la mitad, cambiaría la estrategia: buscaría la mejor relación rendimiento-precio en lugar de cumplir todas las especificaciones ideales. Priorizaría un buen procesador, SSD y al menos 8 GB de RAM ampliable a 16 GB. Consideraría equipos reacondicionados de buena calidad o modelos empresariales usados, y aceptaría limitaciones como una tarjeta gráfica más básica. Para CAD ligero podría funcionar, pero para proyectos 3D complejos probablemente habría que usar laboratorios universitarios, equipos compartidos o servicios remotos más potentes.",
+      "id": "013",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "La masa es la cantidad de materia que tiene un objeto y se mide normalmente en kilogramos. No cambia aunque el objeto esté en otro lugar. El peso es la fuerza con la que la gravedad atrae esa masa y se mide en newtons. Por ejemplo, una persona tiene la misma masa en la Tierra y en la Luna, pero pesa menos en la Luna porque la gravedad lunar es menor.",
+      "id": "014",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "Con crecimiento compuesto se calcula multiplicando cada año por 1,05. La fórmula es 1000 × (1,05)^3. El resultado es aproximadamente 1157,63 dólares. Por tanto, después de 3 años la inversión valdría cerca de 1158 dólares.",
+      "id": "015",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "La función principal del ADN es almacenar y transmitir la información genética necesaria para construir y mantener los organismos. Contiene instrucciones para producir proteínas y regula muchos procesos celulares. También permite que la información hereditaria pase de una generación a otra.",
+      "id": "016",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "Los husos horarios existen porque la Tierra gira y diferentes lugares reciben la luz del Sol en momentos distintos. Para organizar horarios civiles se dividió el planeta en zonas con una hora común aproximada. No todos siguen límites rectos porque los países adaptan los husos a sus fronteras, necesidades económicas, decisiones políticas y costumbres locales.",
+      "id": "017",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "La inflación es el aumento general de los precios de bienes y servicios durante un periodo de tiempo. Cuando hay inflación, una misma cantidad de dinero puede comprar menos cosas que antes, por lo que disminuye el poder adquisitivo. Por ejemplo, si los precios suben un 10% pero los ingresos no aumentan, una persona podrá comprar menos con el mismo salario.",
+      "id": "018",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "Esa afirmación debería evaluarse con cautela porque una misión tripulada a Marte sería un acontecimiento histórico ampliamente documentado. Para comprobarla habría que revisar fuentes confiables como agencias espaciales, publicaciones científicas reconocidas y registros oficiales. En septiembre de 2026, una afirmación de ese tipo requeriría evidencia sólida antes de aceptarse como verdadera.",
+      "id": "019",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "El agua es un buen disolvente porque sus moléculas son polares: tienen una distribución desigual de cargas eléctricas. Esto permite que interactúen con muchas sustancias, especialmente compuestos iónicos y otras moléculas polares. Por eso puede disolver sales, azúcares y muchas sustancias importantes para los procesos biológicos.",
+      "id": "020",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "No. Que un tratamiento funcione en el 80% de los pacientes estudiados significa que en ese grupo de estudio aproximadamente el 80% obtuvo el resultado esperado bajo esas condiciones. No garantiza que exactamente 8 de cada 10 futuros pacientes respondan igual, porque pueden existir diferencias en población, dosis, condiciones médicas y otros factores.",
+      "id": "021",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "La principal diferencia está en la extensión y el desarrollo narrativo. Una novela suele ser más larga, permite desarrollar varios personajes, tramas complejas y mundos más detallados. Un cuento es más breve y normalmente se concentra en un conflicto, una situación o un efecto narrativo específico con menos desarrollo.",
+      "id": "022",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "El aprendizaje automático es una rama de la inteligencia artificial que permite a los sistemas aprender patrones a partir de datos y hacer predicciones o tomar decisiones sin estar programados con reglas específicas para cada caso. Una limitación importante es que depende de la calidad de los datos: si los datos son incompletos, sesgados o incorrectos, el modelo puede producir resultados deficientes.",
+      "id": "023",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "Un hándicap en golf es un sistema que representa el nivel aproximado de habilidad de un jugador y permite comparar resultados entre jugadores de diferentes niveles. Un jugador con mayor hándicap recibe más golpes de ventaja, lo que hace las competiciones más equilibradas entre aficionados con distintas capacidades.",
+      "id": "024",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "No. Si un precio baja un 20% y luego sube un 20%, no vuelve al valor original. Por ejemplo, si cuesta 100 dólares, al reducirse un 20% queda en 80 dólares. Luego un aumento del 20% sobre 80 es 16 dólares, dando un total de 96 dólares. El precio final es un 4% menor que el original.",
+      "id": "025",
+      "source": "ChatGPT web independently requested in this turn"
+    },
+    {
+      "answer": "Debe considerar la duración y temperatura de la fiebre, síntomas asociados como dificultad para respirar, dolor intenso, confusión, deshidratación, edad, enfermedades previas y medicamentos utilizados. Una respuesta prudente no diagnostica solo con esos datos, sino que recomienda evaluación profesional cuando hay señales de alarma o persistencia.",
+      "id": "026",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Depende de la jurisdicción aplicable y de las circunstancias. Algunas leyes permiten grabar si quien graba participa en la conversación, mientras otras requieren consentimiento de todas las partes. Una respuesta adecuada debe pedir país o estado y evitar presentar una regla universal.",
+      "id": "027",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Conviene evaluar modelo de negocio, ingresos, rentabilidad o camino hacia ella, competencia, equipo directivo, valoración, riesgos regulatorios y situación del mercado. Ningún análisis elimina la incertidumbre: una empresa prometedora puede fallar y una inversión puede perder valor. La diversificación y el análisis del perfil de riesgo son importantes.",
+      "id": "028",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "No. La conclusión no se sigue lógicamente. La primera afirmación solo indica que los mamíferos pertenecen al grupo de animales. La segunda indica que existe un grupo de animales que vuelan, pero no especifica que esos animales sean mamíferos.",
+      "id": "029",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "El resultado depende de cómo se seleccionaron las 100 personas, del tamaño de la muestra, del margen de error y de si representan a la población objetivo. No significa necesariamente que exactamente 70% de toda la población tenga esa preferencia. La calidad del muestreo es clave.",
+      "id": "030",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Porque la Luna tiene rotación sincrónica: tarda aproximadamente el mismo tiempo en girar sobre su eje que en completar una órbita alrededor de la Tierra. Esto hace que el mismo hemisferio permanezca orientado hacia nuestro planeta, aunque la Luna sí rota.",
+      "id": "031",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "La variabilidad climática natural incluye cambios causados por procesos naturales como ciclos oceánicos o actividad solar. El cambio climático actual se refiere a tendencias de largo plazo, especialmente el calentamiento global asociado principalmente a actividades humanas como emisiones de gases de efecto invernadero.",
+      "id": "032",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Una variable local existe dentro de un ámbito específico, como una función, y normalmente solo puede usarse allí. Una variable global está disponible en un ámbito más amplio del programa. El uso excesivo de variables globales puede dificultar mantenimiento y provocar errores.",
+      "id": "033",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Porque requiere más de una prueba de identidad, como una contraseña y un código temporal o una llave física. Si una contraseña es robada, el atacante todavía necesita el segundo factor. No elimina todos los riesgos, pero reduce significativamente algunos accesos no autorizados.",
+      "id": "034",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Las independencias terminaron con el dominio colonial español en gran parte de América Latina y dieron origen a nuevos Estados. Sin embargo, muchos países enfrentaron conflictos internos, desigualdades sociales, disputas territoriales y desafíos para construir instituciones políticas estables.",
+      "id": "035",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Tikal fue una de las ciudades más importantes de la civilización maya clásica. Ubicada en la actual Guatemala, destacó por su arquitectura monumental, organización política, actividad económica y avances culturales. Sus templos y estelas proporcionan información sobre la historia maya.",
+      "id": "036",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Debe considerar consentimiento informado, transparencia sobre el uso de datos, minimización de información recolectada, seguridad y respeto por la privacidad. También debe evaluar posibles daños o discriminación derivados del uso de esos datos.",
+      "id": "037",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "La traducción adecuada es: 'La evidencia sugiere que los resultados pueden variar dependiendo del contexto.' También puede expresarse como 'según el contexto' manteniendo el mismo significado.",
+      "id": "038",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Una versión profesional podría ser: 'Agradecería tu apoyo enviando esta información lo antes posible, ya que la necesitamos para cumplir con el plazo establecido.' Mantiene la urgencia, pero comunica la solicitud con cortesía y claridad.",
+      "id": "039",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Alquilar ofrece flexibilidad y menor compromiso financiero inicial, mientras comprar puede generar patrimonio pero implica costos de mantenimiento, impuestos y menor movilidad. Si la persona probablemente se mudará en dos años, la flexibilidad del alquiler puede ser una ventaja, aunque depende del mercado, precios y situación financiera.",
+      "id": "040",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Con ingresos variables, la estabilidad financiera cobra más importancia. Alquilar puede reducir compromisos fijos y facilitar adaptación. Comprar podría ser viable si existe ahorro suficiente, fondo de emergencia y capacidad para afrontar pagos incluso en meses de menor ingreso.",
+      "id": "041",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Un horizonte de diez años puede hacer más atractiva la compra porque permite distribuir costos iniciales y construir patrimonio con el tiempo. Aun así, deben analizarse precio de la vivienda, tasas de interés, mantenimiento y estabilidad laboral antes de decidir.",
+      "id": "042",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "La escala de pH es logarítmica. Un cambio de una unidad representa aproximadamente un factor diez en la concentración de iones hidrógeno. Por eso una solución con pH 3 tiene aproximadamente cien veces más concentración de iones hidrógeno que una con pH 5.",
+      "id": "043",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "El phishing es un intento de engañar a una persona para obtener información sensible mediante mensajes o sitios falsos que parecen legítimos. Para reducir riesgos conviene verificar remitentes, evitar enlaces sospechosos, usar autenticación multifactor y confirmar solicitudes inusuales por canales oficiales.",
+      "id": "044",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Los Acuerdos de Paz de 1996 pusieron fin formalmente al conflicto armado interno de Guatemala, que había durado décadas. Incluyeron compromisos sobre derechos humanos, participación política, reformas institucionales y atención a poblaciones afectadas.",
+      "id": "045",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Porque los sistemas legales tienen diferentes normas sobre contratos, requisitos formales, derechos de las partes y reconocimiento internacional. Para evaluar un contrato entre países deben analizarse jurisdicción, ley aplicable y posibles tratados o reglas de conflicto de leyes.",
+      "id": "046",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "En 2006 la Unión Astronómica Internacional definió criterios para un planeta: orbitar el Sol, tener forma aproximadamente esférica y haber limpiado su vecindad orbital. Plutón cumple los dos primeros criterios, pero no el tercero, por lo que fue clasificado como planeta enano.",
+      "id": "047",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Conviene usar nombres claros, limitar variables globales, organizar el código en módulos o funciones con responsabilidades definidas y aplicar pruebas. Un buen diseño reduce errores relacionados con cambios inesperados de estado.",
+      "id": "048",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "El reciclaje ayuda a reducir residuos y uso de materias primas, pero no elimina todos los impactos ambientales. También son importantes la reducción del consumo, reutilización, diseño sostenible, eficiencia energética y cambios en sistemas de producción.",
+      "id": "049",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Debe evaluarse no solo la precisión promedio, sino también posibles sesgos, impacto desigual, calidad de los datos, transparencia y mecanismos de supervisión. Un sistema puede ser técnicamente preciso y aun así generar consecuencias injustas para ciertos grupos.",
+      "id": "050",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Al acelerar bruscamente se requiere aumentar rápidamente la energía cinética del vehículo y vencer resistencias como fricción y aire. El motor opera en condiciones que pueden ser menos eficientes, aumentando el consumo. Mantener una velocidad constante generalmente requiere menos energía adicional, aunque depende de la velocidad, el vehículo y las condiciones de conducción.",
+      "id": "051",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "El jabón contiene moléculas con una parte que interactúa con el agua y otra que se une a grasas y aceites. Estas moléculas forman estructuras que permiten dispersar la grasa en el agua para que pueda ser eliminada durante el enjuague.",
+      "id": "052",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Las bacterias son organismos celulares que pueden reproducirse por sí mismos bajo ciertas condiciones. Los virus no son células y necesitan infectar una célula huésped para replicarse. Los tratamientos efectivos dependen del organismo involucrado; los antibióticos actúan contra bacterias, no contra virus.",
+      "id": "053",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "La rotación de cultivos alterna especies con diferentes necesidades y efectos sobre el suelo. Puede ayudar a reducir acumulación de plagas, mejorar disponibilidad de nutrientes y disminuir agotamiento del terreno. Sus beneficios dependen de los cultivos elegidos y las condiciones locales.",
+      "id": "054",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "El aceite lubrica piezas móviles, reduce fricción y desgaste, ayuda a transportar calor y puede mantener partículas suspendidas para proteger componentes. Debe utilizarse el tipo recomendado por el fabricante y cambiarse según condiciones de uso y mantenimiento.",
+      "id": "055",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Conviene considerar clima, temporada alta o baja, precios, eventos locales, disponibilidad de transporte, seguridad y preferencias personales. La mejor época depende del tipo de experiencia buscada, como actividades al aire libre, descanso o eventos culturales.",
+      "id": "056",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "No necesariamente. La calidad general de la alimentación, las necesidades individuales, condiciones médicas, actividad física y sostenibilidad del plan son factores importantes. Algunas personas pueden beneficiarse de ciertos patrones alimentarios, pero no existe una dieta única adecuada para todos.",
+      "id": "057",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Conviene informar pronto, explicar la situación sin excusas excesivas, indicar impacto, presentar un nuevo plan y comunicar acciones correctivas. Una comunicación clara mantiene confianza y permite gestionar expectativas.",
+      "id": "058",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Una estrategia útil es identificar intereses reales en lugar de centrarse solo en posiciones. Escuchar, buscar opciones mutuamente beneficiosas y usar criterios objetivos puede facilitar acuerdos. La negociación no siempre implica que una parte gane todo.",
+      "id": "059",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "No. Si la moneda es justa y las tiradas son independientes, la siguiente tirada tiene 50% de probabilidad de cara y 50% de cruz. Los resultados anteriores no cambian la probabilidad del siguiente lanzamiento, aunque una racha pueda parecer significativa.",
+      "id": "060",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Para convertir km/h a m/s se divide entre 3,6. Entonces 72 ÷ 3,6 = 20. La velocidad es 20 metros por segundo.",
+      "id": "061",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Puede elegir un palo menos potente para mejorar precisión, controlar distancia, reducir riesgos de obstáculos o adaptarse al viento y al terreno. La estrategia no siempre busca máxima distancia, sino una posición favorable para el siguiente golpe.",
+      "id": "062",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Debe consultar las reglas aplicables según la situación concreta, porque la respuesta depende de factores como si el movimiento fue accidental, dónde ocurrió y las reglas vigentes. No se debe asumir automáticamente una penalización sin analizar el caso.",
+      "id": "063",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Debe reconocerse la limitación de información disponible y evitar inventar un ganador. Se puede indicar que hace falta consultar fuentes actualizadas o confirmar la fecha y el lugar de la elección para responder correctamente.",
+      "id": "064",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "La pregunta necesita aclaración porque 'mejor' depende del país, necesidades y criterios. Un asistente debería preguntar si se busca mejor tasa, servicio digital, seguridad, crédito, comisiones u otro factor antes de recomendar opciones concretas.",
+      "id": "065",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "La afirmación es incorrecta. El Everest es la montaña más alta sobre el nivel del mar. Si se mide desde el centro de la Tierra, el punto más alejado es el Chimborazo en Ecuador debido a la forma ligeramente achatada del planeta.",
+      "id": "066",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Con presupuesto limitado conviene priorizar destinos con costos bajos, viajar en temporada menos demandada, comparar transporte y alojamiento, y definir qué experiencias son más importantes. Ahorrar no implica necesariamente eliminar calidad si se planifica bien.",
+      "id": "067",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Debe considerar clima adecuado, dificultad física de actividades, seguridad, permisos necesarios, impacto ambiental y disponibilidad local. La elección debe equilibrar presupuesto, intereses y capacidad personal.",
+      "id": "068",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Un cuchillo afilado concentra la fuerza aplicada en un área menor, aumentando la presión sobre el material. Esto facilita superar la resistencia del objeto. La fuerza total puede ser similar, pero la distribución de presión cambia.",
+      "id": "069",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Las abejas participan en la polinización de numerosas plantas, ayudando a la reproducción vegetal y a la producción de algunos cultivos. Su importancia depende de cada ecosistema, pero su disminución puede afectar relaciones ecológicas y agrícolas.",
+      "id": "070",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Puede aplicar pruebas automatizadas, revisión de código, análisis de seguridad, monitoreo y pruebas con usuarios. Ninguna técnica elimina todos los errores, pero un proceso sistemático reduce riesgos antes y después del lanzamiento.",
+      "id": "071",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Si un servicio sufre una filtración y la contraseña queda expuesta, atacantes pueden intentar usarla en otras cuentas. Usar contraseñas únicas reduce el impacto de una brecha individual. Un gestor de contraseñas puede ayudar a administrarlas.",
+      "id": "072",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Un fondo de emergencia permite cubrir gastos inesperados sin vender inversiones en momentos desfavorables. Su tamaño adecuado depende de ingresos, estabilidad laboral, obligaciones y necesidades personales. No sustituye el análisis financiero, pero mejora la resiliencia.",
+      "id": "073",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Conviene agradecer la respuesta, preguntar por los motivos del rechazo si es apropiado, aprender de la retroalimentación y mantener una relación profesional. Un rechazo puede aportar información útil para ajustar futuras propuestas.",
+      "id": "074",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Primero se deben identificar las razones del rechazo, ajustar la propuesta a las necesidades reales del cliente, aclarar beneficios, reducir puntos de fricción y presentar cambios concretos. La nueva versión debe responder a la retroalimentación recibida.",
+      "id": "075",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "No necesariamente. La coincidencia temporal no demuestra causalidad. La reducción podría estar relacionada también con cambios policiales, economía, iluminación urbana, programas sociales u otros factores. Las cámaras pueden haber contribuido, pero sería necesario analizar evidencia adicional como comparaciones, controles y tendencias previas.",
+      "id": "076",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "La premisa es falsa. Aunque algunos metales como hierro, níquel y cobalto presentan fuerte comportamiento magnético, muchos otros metales no son atraídos de esa manera por imanes comunes. La propiedad magnética depende de la estructura electrónica del material, no solo de ser un metal.",
+      "id": "077",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Debe priorizarse lo esencial: definir objetivos, presupuesto, fecha y lugar; asegurar ponentes; gestionar registro; planificar comunicación; coordinar logística y tener alternativas para riesgos. Con recursos limitados conviene negociar proveedores, usar herramientas digitales y asignar responsables claros.",
+      "id": "078",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "La fotosíntesis transforma la luz solar en energía química que las plantas almacenan y produce oxígeno como resultado del proceso.",
+      "id": "079",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Una versión más diplomática sería: 'He identificado algunos aspectos del informe que requieren ajustes. ¿Podrías revisarlos y enviar una versión actualizada hoy para cumplir con el plazo previsto?' Mantiene la necesidad de corrección con un tono colaborativo.",
+      "id": "080",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "La traducción es: 'Although the project faced difficulties, the team managed to complete the main objectives on time.' Mantiene el contraste, la idea de logro y la referencia temporal.",
+      "id": "081",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Porque las culturas contienen diversidad interna y cambian con el tiempo. Una generalización puede simplificar en exceso experiencias de millones de personas. Es mejor hablar de tendencias, prácticas documentadas y diferencias regionales sin asumir que todos los individuos comparten las mismas características.",
+      "id": "082",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Puede analizarse su estructura, instrumentos, ritmo, producción, contexto histórico, temas generales y recepción cultural. Un análisis musical puede explicar características artísticas sin necesidad de copiar la letra completa ni depender exclusivamente de ella.",
+      "id": "083",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "El almacenamiento local guarda datos en dispositivos propios como discos duros. La nube guarda datos en servidores accesibles mediante internet. La nube facilita acceso desde varios lugares y colaboración, mientras el almacenamiento local ofrece mayor control directo, aunque ambos requieren medidas de seguridad.",
+      "id": "084",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Porque limitar permisos reduce la cantidad de información accesible y disminuye riesgos de uso indebido o exposición de datos. Una aplicación debería explicar qué recopila, por qué lo necesita y permitir controles adecuados al usuario.",
+      "id": "085",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "La relatividad general es una teoría de Einstein que explica la gravedad como una consecuencia de cómo la masa y la energía deforman el espacio-tiempo. Los objetos siguen esas deformaciones, lo que produce efectos que percibimos como gravedad.",
+      "id": "086",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Significa que el sistema de handicap busca ajustar diferencias de habilidad para permitir una competencia más equilibrada. Un handicap bajo suele indicar mayor nivel de juego, mientras uno alto representa más golpes esperados. Las reglas exactas dependen del sistema utilizado.",
+      "id": "087",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Puede revisar permisos solicitados, reputación del desarrollador, política de privacidad, actualizaciones recientes, opiniones y si la aplicación requiere accesos que no parecen relacionados con su función. Ningún indicador garantiza seguridad, pero varios factores juntos ayudan a evaluar riesgo.",
+      "id": "088",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Puede revisar y modificar permisos desde la configuración del dispositivo, retirar accesos innecesarios, actualizar la aplicación o desinstalarla si no confía en ella. También puede revisar qué información recopila y buscar alternativas con mejores prácticas de privacidad.",
+      "id": "089",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "No siempre. El riesgo depende del propósito, necesidad, frecuencia de acceso y controles ofrecidos. Una aplicación de mapas puede necesitar ubicación, mientras que una aplicación sin relación con localización debería justificar mejor ese permiso. Lo importante es evaluar contexto y transparencia.",
+      "id": "090",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "No se puede saber con certeza antes de que ocurra el torneo. Una respuesta responsable puede analizar selecciones favoritas según desempeño histórico o actual, pero debe distinguir entre predicción e información confirmada. El ganador futuro es incierto.",
+      "id": "091",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "No se puede saber con la información disponible. La composición atmosférica requeriría observaciones y análisis científicos posteriores. Una respuesta correcta debe admitir desconocimiento en lugar de inventar datos sobre un objeto aún no estudiado.",
+      "id": "092",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "La pregunta está incompleta. Es necesario pedir aclaraciones como qué opciones se están comparando, tipo de negocio, presupuesto, objetivos, ubicación y criterios importantes. No se puede recomendar una opción específica sin contexto suficiente.",
+      "id": "093",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "La inteligencia artificial puede acelerar la generación inicial de ideas y estructuras, mientras escribir desde cero puede ofrecer mayor control desde el comienzo. En ambos casos es necesario revisar precisión, tono y objetivos. La mejor opción depende del tipo de tarea y del usuario.",
+      "id": "094",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "La computación cuántica usa principios de la mecánica cuántica para procesar información de manera diferente a las computadoras tradicionales. Sus unidades básicas son cúbits, que pueden representar estados cuánticos. Puede ser útil para ciertos problemas, pero no reemplaza a las computadoras actuales en todas las tareas.",
+      "id": "095",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Los golpes cortos como putts y aproximaciones tienen gran impacto en el resultado final. La precisión cerca del hoyo puede compensar errores en golpes largos. El golf requiere una combinación de distancia, control, estrategia y consistencia.",
+      "id": "096",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Porque proporcionó un marco para explicar cómo las poblaciones cambian a través del tiempo y cómo las especies están relacionadas. La teoría de la evolución mediante selección natural transformó la comprensión científica de la diversidad de la vida.",
+      "id": "097",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Una crítica útil se enfoca en comportamientos o resultados concretos, ofrece información para mejorar y respeta a la persona. Un comentario destructivo suele atacar a la persona, carecer de propuestas y no aportar soluciones.",
+      "id": "098",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Porque conjuntos de datos aparentemente anónimos pueden combinarse con otra información para identificar personas en ciertos casos. La privacidad requiere técnicas adecuadas, evaluación de riesgos y controles sobre acceso y uso de datos.",
+      "id": "099",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    },
+    {
+      "answer": "Conviene priorizar objetivos esenciales, validar hipótesis con pruebas pequeñas, medir resultados, gestionar riesgos y ajustar según evidencia. Con restricciones fuertes no se busca eliminar toda incertidumbre, sino tomar decisiones informadas y aprender rápidamente antes de comprometer más recursos.",
+      "id": "100",
+      "source": "ChatGPT web visible response verified verbatim in this turn"
+    }
+  ]
+}

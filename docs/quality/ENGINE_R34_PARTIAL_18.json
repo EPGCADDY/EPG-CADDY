@@ -1,0 +1,365 @@
+{
+  "status": "IN_PROGRESS_NOT_ACCEPTED",
+  "deployment": "dpl_CRCiEJbPPkZz6gLwU8cFFWg8uHdG",
+  "commit": "15fb33f7637c7c558a25f9d4800bd92fc224bc25",
+  "scope": "real engine only; no ASR or spoken playback",
+  "results": [
+    {
+      "answer": "Los años bisiestos existen porque la Tierra tarda aproximadamente 365 días y 6 horas en dar una vuelta al Sol. Para compensar ese tiempo extra, se agrega el 29 de febrero cada cuatro años.\n\nLa excepción es: si el año termina en 00, solo es bisiesto cuando también es divisible entre 400. Por ejemplo, 2000 fue bisiesto, pero 1900 y 2100 no lo son.",
+      "conversationId": null,
+      "elapsedMs": 2396,
+      "error": null,
+      "id": "001",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "¿Por qué existen los años bisiestos y cuál es la regla de excepción para años terminados en 00?",
+      "referenceAnswer": "Los años bisiestos corrigen la diferencia entre el año calendario de 365 días y el año solar de aproximadamente 365,2422 días. Se añade un día cada cuatro años, pero los años de siglo no son bisiestos salvo que sean divisibles entre 400. Así, 2000 fue bisiesto, mientras que 1900 y 2100 no lo son.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [],
+      "status": 200
+    },
+    {
+      "answer": "Inglaterra es uno de los cuatro países del Reino Unido. Gran Bretaña es la isla donde están Inglaterra, Escocia y Gales. El Reino Unido es el Estado soberano completo: Inglaterra, Escocia, Gales e Irlanda del Norte.",
+      "conversationId": null,
+      "elapsedMs": 3505,
+      "error": null,
+      "id": "002",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "Explica la diferencia entre el Reino Unido, Gran Bretaña e Inglaterra.",
+      "referenceAnswer": "Inglaterra es uno de los cuatro países que forman el Reino Unido. Gran Bretaña es la isla que contiene Inglaterra, Escocia y Gales. El Reino Unido es el Estado soberano formado por Inglaterra, Escocia, Gales e Irlanda del Norte. Confundir estos términos puede generar errores al hablar de geografía o política británica.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [],
+      "status": 200
+    },
+    {
+      "answer": "Porque la luz del Sol contiene muchos colores y, al atravesar la atmósfera, las moléculas del aire dispersan más las ondas cortas, especialmente las azules. Esa luz azul se reparte por todo el cielo y llega a nuestros ojos desde muchas direcciones, por eso lo vemos azul durante el día.",
+      "conversationId": null,
+      "elapsedMs": 3150,
+      "error": null,
+      "id": "003",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "¿Por qué el cielo suele verse azul durante el día?",
+      "referenceAnswer": "El cielo se ve azul porque la atmósfera dispersa la luz solar. Las moléculas del aire dispersan con mayor eficacia las longitudes de onda cortas, como el azul y el violeta, mediante la dispersión de Rayleigh. Aunque el violeta se dispersa mucho, la sensibilidad del ojo humano y la distribución de la luz hacen que percibamos principalmente azul.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [],
+      "status": 200
+    },
+    {
+      "answer": "El nuevo precio es 276 dólares. El aumento del 15% equivale a 36 dólares.",
+      "conversationId": null,
+      "elapsedMs": 1360,
+      "error": null,
+      "id": "004",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "Un producto cuesta 240 dólares y aumenta un 15%. ¿Cuál es el nuevo precio?",
+      "referenceAnswer": "El aumento es 240 × 0,15 = 36 dólares. Sumando el incremento al precio original: 240 + 36 = 276 dólares. El nuevo precio es 276 dólares.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [],
+      "status": 200
+    },
+    {
+      "answer": "Hacer un birdie significa completar un hoyo con un golpe menos que el par establecido. Por ejemplo, en un hoyo par 4, haces birdie si terminas en 3 golpes.",
+      "conversationId": null,
+      "elapsedMs": 1750,
+      "error": null,
+      "id": "005",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "¿Qué significa hacer un birdie en golf y cómo se relaciona con el par?",
+      "referenceAnswer": "Un birdie significa completar un hoyo con un golpe menos que el par establecido. Por ejemplo, hacer 3 golpes en un hoyo par 4 es un birdie. Es un resultado favorable y suele requerir precisión, estrategia y buen control de distancia.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [],
+      "status": 200
+    },
+    {
+      "answer": "Usa este método: primero haz una lista de los programas obligatorios de la carrera y revisa sus requisitos oficiales; después fija un presupuesto máximo, reservando cerca del 10 % para mochila, adaptadores o garantía. Como punto de partida, busca Windows 11, procesador moderno de gama media, 16 GB de RAM y SSD de 512 GB; MATLAB recomienda 16 GB y SSD, mientras que programas de diseño como AutoCAD pueden exigir más memoria y tarjeta gráfica dedicada.\n\nPrioriza procesador, memoria ampliable y garantía sobre pantalla táctil, resolución 4K o acabados premium; paga por una tarjeta gráfica dedicada solamente si utilizará modelado 3D, simulación o renderizado. Finalmente, compara tres opciones nuevas y tres reacondicionadas con garantía, revisando batería, peso, puertos y posibilidad de ampliar RAM o almacenamiento; elige la más económica que cumpla los requisitos recomendados, no apenas los mínimos.",
+      "conversationId": "chainA",
+      "elapsedMs": 8341,
+      "error": null,
+      "id": "006",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "Recomienda un método para elegir una laptop para una persona que estudia ingeniería, considerando presupuesto limitado.",
+      "referenceAnswer": "Conviene priorizar procesador moderno, al menos 16 GB de RAM si se usarán simulaciones o programación, almacenamiento SSD y buena batería. La tarjeta gráfica dedicada puede ser necesaria para modelado 3D o aprendizaje automático. También hay que revisar compatibilidad con el software específico del programa de estudios antes de comprar.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [
+        {
+          "title": "Fuente web",
+          "url": "https://www.mathworks.com/support/requirements/matlab-system-requirements.html"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.autodesk.com/es/support/technical/article/caas/sfdcarticles/sfdcarticles/ESP/System-requirements-for-AutoCAD-2026-including-Specialized-Toolsets.html"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-AutoCAD-2026-including-Specialized-Toolsets.html?msockid=2c87a6729e3e6df602a2b0dd9f2d6cc1"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.autodesk.com/es/support/technical/article/caas/sfdcarticles/sfdcarticles/DEU/System-requirements-for-AutoCAD-2026-including-Specialized-Toolsets.html"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.mathworks.com/support/requirements/matlab-linux.html"
+        }
+      ],
+      "status": 200
+    },
+    {
+      "answer": "Se encuentran en 2 horas. Al acercarse, sus velocidades se suman: 90 + 120 = 210 km/h; entonces, 420 ÷ 210 = 2 horas.",
+      "conversationId": null,
+      "elapsedMs": 1639,
+      "error": null,
+      "id": "007",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "Un tren sale a 90 km/h y otro a 120 km/h desde ciudades separadas por 420 km, avanzando uno hacia el otro. ¿Cuándo se encuentran?",
+      "referenceAnswer": "La velocidad relativa es 90 + 120 = 210 km/h. El tiempo para encontrarse es distancia dividida entre velocidad relativa: 420 ÷ 210 = 2 horas. Por lo tanto, se encuentran después de 2 horas.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [],
+      "status": 200
+    },
+    {
+      "answer": "No se puede saber todavía. Al 13 de septiembre de 2026, falta la elección de 2028, cuyo ganador gobernaría durante casi todo 2032; después, la elección de noviembre de 2032 determinaría quién asumirá el 20 de enero de 2033. Cualquier nombre ahora sería pura especulación.",
+      "conversationId": null,
+      "elapsedMs": 5667,
+      "error": null,
+      "id": "008",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "¿Quién será el presidente de Estados Unidos en 2032? Responde considerando la fecha actual y la incertidumbre.",
+      "referenceAnswer": "No se puede saber con certeza quién será presidente de Estados Unidos en 2032 porque depende de futuras elecciones, candidatos y circunstancias políticas. Una respuesta responsable debe indicar la incertidumbre y no afirmar un ganador inexistente. La información disponible hasta septiembre de 2026 no permite determinarlo.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [
+        {
+          "title": "Fuente web",
+          "url": "https://www.archives.gov/files/electoral-college/state-officials/presidential-election-brochure.pdf"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.archives.gov/founding-docs/amendments-11-27"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.whitehouse.gov/"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://visit.archives.gov/whats-on/explore-exhibits/20th-amendment-new-inauguration-day"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://visit.archives.gov/whats-on/explore-exhibits/constitution-day-full-us-constitution-virtual-exhibit"
+        }
+      ],
+      "status": 200
+    },
+    {
+      "answer": "La afirmación es incorrecta: la capital de Australia es Canberra, no Sídney. Sídney es la ciudad más poblada y conocida del país, pero Canberra fue elegida como capital como solución intermedia entre Sídney y Melbourne.",
+      "conversationId": null,
+      "elapsedMs": 1775,
+      "error": null,
+      "id": "009",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "Usuario: 'La capital de Australia es Sídney'. Corrige la afirmación y explica.",
+      "referenceAnswer": "La afirmación es incorrecta. La capital de Australia es Canberra, no Sídney. Sídney es una de las ciudades más grandes y conocidas del país, pero Canberra fue elegida como capital para establecer una sede gubernamental entre las dos grandes ciudades rivales, Sídney y Melbourne.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [],
+      "status": 200
+    },
+    {
+      "answer": "La imprenta de Gutenberg, desarrollada hacia 1450, permitió producir libros en grandes cantidades, con mayor rapidez y menor costo. Esto facilitó el acceso al conocimiento, aumentó la alfabetización y aceleró la difusión de ideas científicas, religiosas y políticas. Fue clave para el Renacimiento, la Reforma protestante y el desarrollo de la educación y la ciencia moderna.",
+      "conversationId": null,
+      "elapsedMs": 3276,
+      "error": null,
+      "id": "010",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "¿Cuál fue la importancia de la imprenta de Gutenberg?",
+      "referenceAnswer": "La imprenta de tipos móviles de Gutenberg en Europa permitió producir libros mucho más rápido y barato que los manuscritos copiados a mano. Favoreció la difusión del conocimiento, la alfabetización, la ciencia y los movimientos religiosos y políticos. No inventó toda forma de impresión, pero transformó su escala e impacto en Europa.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [],
+      "status": 200
+    },
+    {
+      "answer": "Para ingeniería y presupuesto limitado, elegiría la laptop como equipo principal: permite instalar programas completos, programar, conectar periféricos y manejar archivos con menos restricciones. A septiembre de 2026, MATLAB recomienda 16 GB de RAM y SSD, mientras que SOLIDWORKS requiere Windows de 64 bits, 16 GB como mínimo y recomienda 32 GB; una tablet iPad o Android no cubre bien esas necesidades, y MATLAB Online ni Simulink Online admiten oficialmente tablets. La tablet gana en batería, peso, lectura y apuntes con lápiz, pero sus versiones móviles de programas como AutoCAD son distintas del programa completo de escritorio. Si el dinero alcanza para un solo dispositivo, compra la laptop de 16 GB y 512 GB; considera una tablet únicamente como complemento o una computadora dos-en-uno con Windows si escribir a mano es indispensable.",
+      "conversationId": "chainA",
+      "elapsedMs": 10745,
+      "error": null,
+      "id": "011",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "Continúa el análisis anterior: ahora compara esa laptop con una tablet para ingeniería.",
+      "referenceAnswer": "La laptop suele ser superior para ingeniería porque ofrece más potencia, compatibilidad con software especializado y mejores opciones de programación. Una tablet puede ser útil para tomar notas, leer planos o revisar documentos, pero generalmente no reemplaza una computadora completa para simulaciones o herramientas profesionales.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [
+        {
+          "title": "Fuente web",
+          "url": "https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-AutoCAD-mobile.html"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.mathworks.com/support/requirements/matlab-system-requirements.html"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.autodesk.com/es/support/technical/article/caas/sfdcarticles/sfdcarticles/ESP/System-requirements-for-AutoCAD-mobile.html"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.solidworks.com/support/system-requirements"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.solidworks.com/es/support/system-requirements"
+        }
+      ],
+      "status": 200
+    },
+    {
+      "answer": "Para CAD, recomendaría como mínimo práctico Windows 11 de 64 bits, Intel Core i5 o Ryzen 5 reciente, 16 GB de RAM ampliables, SSD de 512 GB y pantalla Full HD de 15 pulgadas. Si trabajará con modelado 3D o SolidWorks, conviene una tarjeta gráfica dedicada con al menos 4 GB de memoria; para proyectos grandes, subiría a 32 GB de RAM y una GPU de 8 GB. Los requisitos oficiales actuales indican 16 GB para SolidWorks, mientras AutoCAD considera 16 GB adecuados para 2D y 32 GB para 3D.\n\nCon presupuesto limitado, priorizaría RAM ampliable, buen procesador y tarjeta gráfica antes que pantalla táctil, resolución 4K o acabados premium; evitaría equipos con 8 GB soldados y sin posibilidad de ampliación.",
+      "conversationId": "chainA",
+      "elapsedMs": 6652,
+      "error": null,
+      "id": "012",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "Continúa la conversación: ¿qué especificaciones mínimas recomendarías para esa laptop si el estudiante usa CAD?",
+      "referenceAnswer": "Para CAD conviene una laptop con procesador moderno de varios núcleos, 16 GB de RAM como base, SSD rápido y una GPU dedicada compatible cuando el modelado sea exigente. La recomendación exacta depende del nivel de complejidad de los proyectos y del programa CAD utilizado.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [
+        {
+          "title": "Fuente web",
+          "url": "https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-AutoCAD-2026-including-Specialized-Toolsets.html?msockid=2c87a6729e3e6df602a2b0dd9f2d6cc1"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.autodesk.com/es/support/technical/article/caas/sfdcarticles/sfdcarticles/DEU/System-requirements-for-AutoCAD-2026-including-Specialized-Toolsets.html"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.autodesk.com/es/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-Autodesk-Fusion-360.html"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-Autodesk-Fusion-360.html?msockid=3a954255d1336f6e336054e7d0896ea7"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.solidworks.com/es/support/system-requirements"
+        }
+      ],
+      "status": 200
+    },
+    {
+      "answer": "Si el presupuesto baja a la mitad, mantendría 16 GB de RAM y SSD de 512 GB, pero buscaría una laptop usada o reacondicionada con garantía, procesador Core i5 o Ryzen 5 de generaciones anteriores y memoria ampliable. Para CAD 2D puede funcionar con gráficos integrados; Autodesk considera 16 GB una cantidad adecuada, aunque sus requisitos recomendados actuales son mayores.\n\nPara CAD 3D, no reduciría a 8 GB de RAM: buscaría una workstation usada con gráfica dedicada de 4 GB, aceptando más peso y menor batería. Si el presupuesto no alcanza, la opción más sensata es comprar una laptop básica para clases y usar los laboratorios de la universidad para modelos complejos, antes que adquirir una tablet o una laptop nueva demasiado limitada.",
+      "conversationId": "chainA",
+      "elapsedMs": 8498,
+      "error": null,
+      "id": "013",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "Continúa la cadena: ¿cómo cambiaría la recomendación si el presupuesto bajara a la mitad?",
+      "referenceAnswer": "Con menor presupuesto habría que priorizar procesador, RAM suficiente y SSD, aceptando posibles sacrificios como una GPU menos potente o una pantalla más sencilla. También conviene considerar equipos reacondicionados de buena calidad y verificar que puedan actualizarse.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [
+        {
+          "title": "Fuente web",
+          "url": "https://www.autodesk.com/es/support/technical/article/caas/sfdcarticles/sfdcarticles/ESP/System-requirements-for-AutoCAD-2026-including-Specialized-Toolsets.html"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-AutoCAD-2026-including-Specialized-Toolsets.html?msockid=2c87a6729e3e6df602a2b0dd9f2d6cc1"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.autodesk.com/es/support/technical/article/caas/sfdcarticles/sfdcarticles/DEU/System-requirements-for-AutoCAD-2026-including-Specialized-Toolsets.html"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.autodesk.com/es/support/technical/article/caas/sfdcarticles/sfdcarticles/ESP/System-requirements-for-AutoCAD-2027-including-Specialized-Toolsets.html"
+        },
+        {
+          "title": "Fuente web",
+          "url": "https://www.autodesk.com/es/support/technical/article/caas/sfdcarticles/sfdcarticles/ESP/Which-hardware-components-are-significant-for-the-use-of-AutoCAD.html"
+        }
+      ],
+      "status": 200
+    },
+    {
+      "answer": "La masa es la cantidad de materia de un objeto y se mide en kilogramos; prácticamente no cambia aunque estés en otro planeta. El peso es la fuerza con que la gravedad atrae esa masa, se mide en newtons y sí cambia según la gravedad: en la Luna tendrías la misma masa, pero pesarías mucho menos.",
+      "conversationId": null,
+      "elapsedMs": 3344,
+      "error": null,
+      "id": "014",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "Explica la diferencia entre masa y peso.",
+      "referenceAnswer": "La masa mide la cantidad de materia de un objeto y se mantiene constante. El peso es una fuerza causada por la gravedad sobre esa masa y cambia según el campo gravitatorio. Por ejemplo, una persona tiene la misma masa en la Tierra y la Luna, pero pesa menos en la Luna.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [],
+      "status": 200
+    },
+    {
+      "answer": "El valor aproximado sería 1,157.63 dólares: 1,000 × 1.05³.",
+      "conversationId": null,
+      "elapsedMs": 2100,
+      "error": null,
+      "id": "015",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "Si una inversión crece 5% anual compuesto durante 3 años desde 1000 dólares, ¿cuál es el valor aproximado?",
+      "referenceAnswer": "El cálculo es 1000 × 1,05³. Primero 1,05² = 1,1025 y luego 1,1025 × 1,05 = 1,157625. El valor final aproximado es 1157,63 dólares.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [],
+      "status": 200
+    },
+    {
+      "answer": "La función principal del ADN es almacenar y transmitir la información genética que guía el desarrollo, funcionamiento y reproducción de los seres vivos. También contiene las instrucciones para fabricar proteínas y se copia para pasar esa información a nuevas células y a la descendencia.",
+      "conversationId": null,
+      "elapsedMs": 1848,
+      "error": null,
+      "id": "016",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "¿Cuál es la función principal del ADN?",
+      "referenceAnswer": "El ADN almacena la información genética necesaria para construir y mantener organismos vivos. Contiene instrucciones que influyen en la producción de proteínas y en la herencia de características entre generaciones.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [],
+      "status": 200
+    },
+    {
+      "answer": "Los husos horarios existen porque la Tierra gira: mientras en una región es mediodía, en otra puede ser de noche. En teoría, se dividiría en 24 franjas rectas de unos 15 grados de longitud, una por cada hora. Pero sus límites reales suelen adaptarse a fronteras de países, estados y ciudades para evitar que una misma comunidad tenga horarios distintos; también influyen decisiones políticas, económicas y comerciales. Por eso algunos husos tienen formas irregulares e incluso diferencias de media hora o 45 minutos.",
+      "conversationId": null,
+      "elapsedMs": 3718,
+      "error": null,
+      "id": "017",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "¿Por qué los husos horarios existen y por qué no todos siguen límites rectos?",
+      "referenceAnswer": "Los husos horarios permiten ajustar la hora local al movimiento aparente del Sol debido a la rotación terrestre. Aunque se basan aproximadamente en divisiones longitudinales, sus límites se modifican por fronteras políticas, económicas y sociales para mantener regiones conectadas con la misma hora oficial.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [],
+      "status": 200
+    },
+    {
+      "answer": "La inflación es el aumento general y sostenido de los precios de bienes y servicios. Reduce el poder adquisitivo porque, si tus ingresos no suben al mismo ritmo, con la misma cantidad de dinero puedes comprar menos; por ejemplo, si los precios aumentan 10% y tu sueldo no cambia, tu dinero rinde aproximadamente 10% menos.",
+      "conversationId": null,
+      "elapsedMs": 2405,
+      "error": null,
+      "id": "018",
+      "passedTransport": true,
+      "qualityPass": null,
+      "question": "Explica qué es la inflación y por qué puede reducir el poder adquisitivo.",
+      "referenceAnswer": "La inflación es el aumento generalizado de precios de bienes y servicios durante un periodo. Si los ingresos no aumentan al mismo ritmo, una persona puede comprar menos con la misma cantidad de dinero. No todos los precios suben igual ni toda inflación tiene las mismas causas.",
+      "referenceProvenance": "Imported ChatGPT-web bank; independent review pending",
+      "sources": [],
+      "status": 200
+    }
+  ]
+}

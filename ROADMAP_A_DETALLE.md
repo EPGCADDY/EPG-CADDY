@@ -4652,34 +4652,3 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `live.html`, `release.json`, `index-grupal.html`, `service-worker.js` | Identidad R233 y cache actualizado. |
 | `event-administration.html` | El `X` del Organizador queda fijo, tocable y sin tapar la lista o tarjetas 48h; el Organizador y la tarjeta Live conservan scroll táctil. |
 | `test-r231-live-card-readability.mjs` | Regresión para exigir `+/- ACUMULADO` en Live/Organizador y el cierre fijo del Organizador. |
-
-## R234 · cierre y scroll interno de tarjeta Live invitado 48h · 8 octubre 2026
-
-- `event-administration-ui.js`: la tarjeta `TARJETA LIVE · INVITADO 48H` se abre como modal especial con toolbar propia `× CERRAR` y `MENÚ`, sin depender de la X de la pantalla de fondo.
-- `event-administration-ui.js`: la tarjeta compacta de cada grupo invitado conserva sólo el primer jugador y cambia la acción a `ABRIR SCORE CARD`, conectada al mismo visor de tarjeta registrada.
-- `event-administration-ui.js`: al abrir la tarjeta Live invitada se bloquea el scroll del Organizador de fondo y se restaura exactamente al cerrar.
-- `event-administration.html`: el diálogo `guest-live-dialog` ocupa su viewport, bloquea el toque del backdrop y desplaza únicamente `.guest-live-scroll` dentro del modal.
-- `access.html`: el mensaje de WhatsApp de `COMPARTIR APP 48 HORAS` coloca la URL como primera línea y deja el texto descriptivo debajo, sin EPG ni salto literal, para maximizar el enlace de un clic.
-- `personal-events.js` y `shortcuts-ui.js`: los paneles `ID DE TORNEOS` y MENÚ bloquean el scroll de fondo y restauran la posición al cerrar; el scroll pertenece al overlay visible.
-- `test-r157-uniform-navigation.mjs`: agrega regresión para bloqueo de scroll en paneles generales del Organizador.
-- `test-r231-live-card-readability.mjs`: agrega regresión para cierre interno, bloqueo de scroll de fondo y scroll vertical propio del modal.
-- `live.html`, `release.json`, `index-grupal.html` y `service-worker.js`: identidad visible R234 y caché renovada para LAB y Producción idénticos.
-
-## R236 · MENÚ recupera acción móvil y alta de jugador activo · 8 octubre 2026
-
-- `shortcuts-ui.js`: `open()` ya no llama `lockShortcutScroll()` y `close()` ya no llama `unlockShortcutScroll()`; esto evita que el `body` fijo intercepte o congele taps en el botón MENÚ de LAB y Producción. El overlay conserva `position:fixed`, `overflow:auto` y cierre propio.
-- `index-grupal.html`: `renderDraft()` en `rosterEditMode` respeta `progressiveVisibleRegistrationCount`; al presionar `AGREGAR JUGADOR` la fila nueva queda visible hasta 6 jugadores y entra desde `rosterEditJoinHole`, preservando los scores existentes.
-- `test-r157-uniform-navigation.mjs`: cambia el candado para exigir que MENÚ no vuelva a aplicar body-lock y mantenga scroll interno.
-- `test-r224-registration-add-active-player.mjs` y `test-v263-compact-players-back-button.mjs`: confirman que el alta posterior hasta seis no borra la ronda ni los scores.
-- `release.json`, `service-worker.js`, `index-grupal.html`, `live.html` y `test-r231-live-card-readability.mjs`: sincronizan release `20261008-R236`, etiqueta visible `R236`, `personal-events.js?v=20261008-R236`, `live-view.js?v=20261008-R236` y cache `v408-r236-menu-tap-restore`.
-
-
-## R237 · LAB lista y abre rondas privadas invitado 48h creadas en Producción · 9 octubre 2026
-
-| Archivo | Cambio |
-|---|---|
-| `personal-events.js` | Agrega `eventDirectory(eventKind)`: para grupos privados consulta LAB y Producción, deduplica por `source:id`, muestra la etiqueta `LABORATORIO`/`PRODUCCIÓN` y conserva `data-event-source` en cada opción. |
-| `personal-events.js` | Al presionar `ENTRAR`, `join-code` viaja al `selectedSource`; la ronda invitada de Producción ya no se intenta unir contra la base de LAB. |
-| `personal-events.js` | El flujo `invitation=1&kind=private` incluye fallback de `view-code` al ambiente par y lee la ronda desde `invitationSource`, preservando el enlace de invitado 48h cruzado. |
-| `index-grupal.html`, `release.json`, `service-worker.js` | Actualizan identidad `20261009-R237`, etiqueta `R237`, query `personal-events.js?v=20261009-R237` y cache `r237-lab-private-guest-production-directory`. |
-| `test-r237-lab-private-guest-production-directory.mjs`, `scripts/build-manual-lab.mjs` | Nuevo test enfocado para bloquear regresión de directorio cruzado, source routing, enlaces privados cruzados y cache bust. |

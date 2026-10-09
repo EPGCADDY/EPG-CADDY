@@ -1,0 +1,25 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Golf Score Card GT</title></head><body style="margin:0;background:#000;color:#31ff00;font-family:Arial;display:grid;place-items:center;min-height:100vh;font-weight:900">ABRIENDO…<script>
+// This network entry is already used by installed R147.2.4 apps. Prepare the
+// delivery worker before entering their approved cached card; do not approve
+// a new app release, clear storage, or send an existing round to registration.
+(function(){
+  let opened=false;
+  function openCard(){if(opened)return;opened=true;clearTimeout(deadline);location.replace('/index-grupal.html?source=pwa&launch='+Date.now())}
+  const deadline=setTimeout(openCard,8000);
+  if(!('serviceWorker' in navigator)){openCard();return}
+  (async()=>{
+    const registration=await navigator.serviceWorker.register('/service-worker.js',{scope:'/',updateViaCache:'none'});
+    await registration.update();
+    const pending=registration.installing||registration.waiting;
+    if(pending&&pending.state!=='activated')await new Promise(resolve=>{
+      const changed=()=>{if(pending.state==='activated'||pending.state==='redundant'){pending.removeEventListener('statechange',changed);resolve()}};
+      pending.addEventListener('statechange',changed);changed();
+    });
+    if(pending)await new Promise(resolve=>{
+      const changed=()=>{navigator.serviceWorker.removeEventListener('controllerchange',changed);clearTimeout(fallback);resolve()};
+      const fallback=setTimeout(changed,250);
+      navigator.serviceWorker.addEventListener('controllerchange',changed);
+    });
+  })().catch(()=>{}).finally(openCard);
+})();
+</script></body></html>

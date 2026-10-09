@@ -1,0 +1,39 @@
+{
+  "appId": "com.epgcaddy.app",
+  "appName": "Golf Score Card GT",
+  "webDir": "mobile-www",
+  "backgroundColor": "#000000",
+  "loggingBehavior": "none",
+  "appendUserAgent": " GolfScoreCardGT/1.0",
+  "ios": {
+    "path": "native/ios",
+    "scheme": "App",
+    "backgroundColor": "#000000",
+    "contentInset": "never",
+    "preferredContentMode": "mobile",
+    "allowsLinkPreview": false
+  },
+  "android": {
+    "path": "native/android",
+    "backgroundColor": "#000000",
+    "allowMixedContent": false,
+    "webContentsDebuggingEnabled": false
+  },
+  "server": {
+    "hostname": "localhost",
+    "androidScheme": "https",
+    "iosScheme": "capacitor"
+  },
+  "plugins": {
+    "CapacitorCookies": {
+      "enabled": true
+    },
+    "CapacitorHttp": {
+      "enabled": true
+    },
+    "SystemBars": {
+      "insetsHandling": "css",
+      "style": "LIGHT"
+    }
+  }
+}

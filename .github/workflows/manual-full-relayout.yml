@@ -1,0 +1,112 @@
+name: LAB manual full re-layout
+on:
+  push:
+    branches: [laboratorio]
+permissions:
+  contents: write
+jobs:
+  relayout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: laboratorio
+      - name: Crop active manual pages to content
+        run: |
+          python3 -m pip install --user pillow numpy
+          python3 - <<'PY'
+          from PIL import Image, ImageChops
+          from pathlib import Path
+          src=Path("docs/manual/v311")
+          dst=Path("docs/manual/layout")
+          dst.mkdir(parents=True,exist_ok=True)
+          active=list(range(0,46))+[68,69,70,71,72,73]
+          for n in active:
+              p=src/f"page-{n:02d}.png"
+              if not p.exists(): continue
+              im=Image.open(p).convert("RGB")
+              # detect non-white/non-near-white content
+              bg=Image.new("RGB",im.size,(255,255,255))
+              diff=ImageChops.difference(im,bg).convert("L")
+              # ignore tiny antialiasing differences from white
+              mask=diff.point(lambda x: 255 if x>12 else 0)
+              box=mask.getbbox()
+              if not box:
+                  crop=im
+              else:
+                  l,t,r,b=box
+                  pad=max(24,round(min(im.size)*0.025))
+                  l=max(0,l-pad); t=max(0,t-pad); r=min(im.width,r+pad); b=min(im.height,b+pad)
+                  crop=im.crop((l,t,r,b))
+
+              # Compress excessive internal white horizontal bands while preserving content.
+              import numpy as np
+              arr=np.asarray(crop)
+              ink=(arr.min(axis=2) < 242)
+              rows=ink.mean(axis=1)
+
+              # White rows are rows with less than 0.8% visible ink.
+              white=(rows < 0.008).tolist()
+              runs=[]
+              s=None
+              for y,isw in enumerate(white+[False]):
+                  if isw and s is None:
+                      s=y
+                  elif not isw and s is not None:
+                      runs.append((s,y))
+                      s=None
+
+              pieces=[]
+              cursor=0
+              max_blank=max(26, round(crop.height*0.025))
+              for a,b in runs:
+                  if a>cursor:
+                      pieces.append(crop.crop((0,cursor,crop.width,a)))
+                  run_h=b-a
+                  keep=min(run_h,max_blank)
+                  if keep>0:
+                      mid=(a+b)//2
+                      y0=max(a,mid-keep//2)
+                      y1=min(b,y0+keep)
+                      pieces.append(crop.crop((0,y0,crop.width,y1)))
+                  cursor=b
+              if cursor<crop.height:
+                  pieces.append(crop.crop((0,cursor,crop.width,crop.height)))
+
+              pieces=[p for p in pieces if p.height>0]
+              if pieces:
+                  out_h=sum(p.height for p in pieces)
+                  compact=Image.new("RGB",(crop.width,out_h),(255,255,255))
+                  yy=0
+                  for p in pieces:
+                      compact.paste(p,(0,yy)); yy+=p.height
+              else:
+                  compact=crop
+
+              # Manual explanatory graphics: convert green accents to neutral gray.
+              import numpy as np
+              arr=np.asarray(compact).copy()
+              r=arr[:,:,0].astype(int); g=arr[:,:,1].astype(int); b=arr[:,:,2].astype(int)
+              mx=np.maximum(np.maximum(r,g),b); mn=np.minimum(np.minimum(r,g),b)
+              # Detect saturated and pastel green accents, including pale green boxes.
+              green=(g>r+5)&(g>b+5)&((mx-mn)>8)&(g>70)
+              if green.any():
+                  lum=(0.299*r+0.587*g+0.114*b).astype(np.uint8)
+                  neutral=np.clip((lum.astype(int)*0.68)+58,78,190).astype(np.uint8)
+                  arr[green,0]=neutral[green]
+                  arr[green,1]=neutral[green]
+                  arr[green,2]=neutral[green]
+              compact=Image.fromarray(arr,"RGB")
+              compact.save(dst/f"page-{n:02d}.png",optimize=True)
+          PY
+      - name: Commit layout pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/manual/layout
+          if ! git diff --cached --quiet; then
+            git commit -m "LAB manual: crop active pages for unified mobile layout"
+            git pull --rebase origin laboratorio
+            git push origin HEAD:laboratorio
+          fi

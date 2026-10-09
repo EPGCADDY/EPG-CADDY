@@ -1,0 +1,885 @@
+{
+  "version": "R35",
+  "status": "NOT_EXECUTED",
+  "acceptance": {
+    "minimumPass": 90,
+    "total": 100,
+    "requiredFlow": [
+      "microphone_input",
+      "speech_recognition",
+      "ai_answer",
+      "written_answer",
+      "spoken_answer"
+    ],
+    "criteria": [
+      "comprehension",
+      "accuracy",
+      "relevance",
+      "depth",
+      "clarity",
+      "context",
+      "uncertainty",
+      "latency",
+      "consecutive_operation"
+    ]
+  },
+  "questions": [
+    {
+      "id": "Q001",
+      "category": "conocimiento_general",
+      "question": "¿Por qué los años bisiestos existen y cuál es la excepción de los años terminados en 00?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "Los años bisiestos existen porque el calendario debe ajustarse al tiempo real que tarda la Tierra en dar una vuelta alrededor del Sol.\n\nUn año solar (el tiempo que tarda la Tierra en completar su órbita) no dura exactamente 365 días, sino aproximadamente:\n\n365 días, 5 horas, 48 minutos y 46 segundos\n\nSi usáramos siempre años de 365 días, esas casi 6 horas sobrantes se acumularían. En unos 4 años sumarían aproximadamente un día completo, y por eso se añade un día extra al calendario: el 29 de febrero. Ese año de 366 días se llama año bisiesto.\n\nLa regla de los años bisiestos\n\nEn el calendario gregoriano (el usado actualmente), un año es bisiesto si:\n\nEs divisible entre 4 → normalmente es bisiesto.\n\nEjemplo: 2024 ÷ 4 = 506 → bisiesto.\n\nPero hay una excepción: si termina en 00 (es un año de siglo), no es bisiesto, aunque sea divisible entre 4.\n\nEjemplo: 1900 y 1800 no fueron bisiestos.\n\nLa excepción a la excepción: si el año terminado en 00 es divisible entre 400, sí es bisiesto.\n\nEjemplo: 2000 ÷ 400 = 5 → sí fue bisiesto.\n\n1600 también fue bisiesto.\n\nEsto se hace porque añadir un día cada 4 años (como en una regla simple) agrega un poco más de tiempo del necesario. La regla de los siglos corrige ese exceso y mantiene el calendario alineado con las estaciones durante miles de años.\n\nEn resumen:\n\n2024: bisiesto ✅\n\n1900: no bisiesto ❌\n\n2000: bisiesto ✅\n\n2100: no bisiesto ❌\n\nLa regla corta es: “Divisible entre 4, excepto los siglos; los siglos solo cuentan si son divisibles entre 400.”"
+    },
+    {
+      "id": "Q002",
+      "category": "conocimiento_general",
+      "question": "Explícame de manera sencilla cómo se forma un arcoíris.",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "Un arcoíris se forma cuando la luz del Sol atraviesa gotas de agua en el aire, como las que quedan después de la lluvia o las de una cascada.\n\nEl proceso ocurre así:\n\nLa luz del Sol entra en una gota de agua\nLa luz parece blanca, pero en realidad está formada por muchos colores mezclados.\n\nLa gota desvía la luz\nAl pasar del aire al agua, la luz cambia un poco de dirección. Esto se llama refracción.\n\nLa luz se separa en colores\nDentro de la gota, los distintos colores de la luz se separan porque cada uno se desvía de manera diferente. Por eso aparecen colores como rojo, naranja, amarillo, verde, azul, añil y violeta.\n\nLa luz rebota dentro de la gota\nLa luz se refleja en la parte posterior de la gota y vuelve hacia nuestros ojos.\n\nMuchas gotas hacen el arco completo\nCada gota envía luz de un color hacia una dirección concreta. Cuando millones de gotas hacen esto al mismo tiempo, nuestros ojos ven una banda de colores formando un arco.\n\nUn detalle curioso: el arcoíris no está realmente en un lugar fijo del cielo; depende de la posición del Sol, las gotas de agua y la persona que lo observa. Por eso dos personas pueden ver arcoíris ligeramente distintos desde lugares diferentes."
+    },
+    {
+      "id": "Q003",
+      "category": "conocimiento_general",
+      "question": "¿Qué diferencia hay entre una república y una monarquía constitucional?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "La diferencia principal está en quién es el jefe de Estado y cómo llega al cargo.\n\nRepública\n\nEn una república, el jefe de Estado es una persona elegida (directa o indirectamente) por los ciudadanos o por sus representantes. Normalmente se llama presidente.\n\nEl cargo suele tener una duración limitada (por ejemplo, un mandato de 4 o 5 años).\n\nLa persona que ocupa la jefatura del Estado no la recibe por herencia.\n\nLas leyes y la constitución establecen sus poderes y límites.\n\nEjemplo: México es una república; su jefe de Estado es el presidente.\n\nMonarquía constitucional\n\nEn una monarquía constitucional, el jefe de Estado es un monarca (rey o reina) que normalmente llega al cargo por sucesión hereditaria.\n\nEl monarca suele tener poderes limitados por una constitución y por el parlamento.\n\nEl gobierno cotidiano suele estar en manos de un primer ministro y un parlamento elegidos.\n\nLa función del monarca puede ser principalmente simbólica o representativa.\n\nEjemplo: España es una monarquía constitucional; tiene un rey como jefe de Estado y un gobierno dirigido por un presidente del Gobierno.\n\nComparación rápida\nCaracterística\tRepública\tMonarquía constitucional\nJefe de Estado\tPresidente u otro cargo similar\tRey o reina\nCómo llega al cargo\tElección o designación\tHerencia (normalmente)\nDuración\tLimitada por mandato o reglas legales\tGeneralmente de por vida\nPoderes\tDependen de la constitución\tLimitados por la constitución\nEjemplo de modelo\tFrancia, México, Italia\tEspaña, Reino Unido, Japón\n\nEn la práctica, algunas repúblicas y monarquías constitucionales pueden funcionar de manera muy parecida: la diferencia clave es el origen del jefe de Estado, no necesariamente cuánta democracia existe en el país."
+    },
+    {
+      "id": "Q004",
+      "category": "conocimiento_general",
+      "question": "¿Por qué los aviones comerciales vuelan normalmente a gran altura?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "Los aviones comerciales vuelan a gran altura (normalmente entre 9 y 12 kilómetros sobre el suelo) por varias razones:\n\nAhorran combustible\nA mayor altura, el aire es más delgado, es decir, hay menos resistencia contra el avión. Al tener menos “rozamiento” con el aire, los motores necesitan menos esfuerzo para mantener la velocidad.\n\nVuelan más rápido y de forma más eficiente\nLos aviones están diseñados para funcionar muy bien en esas condiciones: el aire es lo bastante denso para que las alas generen sustentación, pero lo bastante ligero para reducir la resistencia.\n\nEvitan gran parte del mal tiempo\nMuchas nubes, tormentas y fenómenos meteorológicos ocurren en capas más bajas de la atmósfera. Volar por encima de ellas suele hacer el viaje más tranquilo y seguro.\n\nAprovechan corrientes de aire favorables\nEn esas alturas existen corrientes de viento, como las corrientes en chorro, que pueden ayudar a reducir el tiempo de vuelo y el consumo de combustible cuando van en la dirección adecuada.\n\nHay menos tráfico aéreo\nVolar a esas alturas permite organizar mejor las rutas y mantener separados los aviones de otros tipos de tráfico, como avionetas o helicópteros, que suelen operar más bajo.\n\nUna comparación sencilla: es como andar en bicicleta con viento fuerte en contra frente a andar en una zona donde el aire ofrece menos resistencia. A gran altura, el avión “empuja” menos aire y puede avanzar de manera más eficiente.\n\nEso sí, los aviones no vuelan demasiado alto porque el aire termina siendo tan poco denso que las alas ya no podrían generar suficiente sustentación y los motores perderían rendimiento. Por eso existe una “altura ideal” de operación."
+    },
+    {
+      "id": "Q005",
+      "category": "conocimiento_general",
+      "question": "¿Qué fue la Ruta de la Seda y por qué fue importante?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "La Ruta de la Seda fue una red de caminos comerciales que conectó Asia, Europa y África durante siglos. Permitió el intercambio de seda, especias, metales, ideas, tecnologías y culturas entre distintos pueblos. Fue importante porque impulsó la economía, facilitó contactos entre civilizaciones y ayudó a difundir conocimientos como la escritura, la religión y avances científicos."
+    },
+    {
+      "id": "Q006",
+      "category": "conocimiento_general",
+      "question": "¿Cómo funciona un código QR sin conectarse por sí mismo a Internet?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "Un código QR funciona almacenando información en un patrón de cuadros blancos y negros. La cámara de un dispositivo captura la imagen y un programa interpreta esos datos. El código QR no necesita Internet para ser leído; solo requiere conexión si la información que contiene es un enlace o un servicio que depende de la red."
+    },
+    {
+      "id": "Q007",
+      "category": "conocimiento_general",
+      "question": "¿Cuál es la diferencia entre masa y peso?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "La masa es la cantidad de materia que tiene un objeto y se mide normalmente en kilogramos. El peso es la fuerza con la que la gravedad atrae esa masa y se mide en newtons. La masa permanece igual en cualquier lugar, mientras que el peso cambia según la gravedad del planeta o la ubicación."
+    },
+    {
+      "id": "Q008",
+      "category": "conocimiento_general",
+      "question": "¿Por qué algunos países manejan por la izquierda?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "Algunos países manejan por la izquierda debido a tradiciones históricas relacionadas con caballos, carruajes y normas de circulación antiguas. El Imperio británico extendió esta práctica a varios territorios. Con el tiempo, muchos países conservaron la costumbre, mientras otros cambiaron al lado derecho por razones de comercio, transporte o influencia internacional."
+    },
+    {
+      "id": "Q009",
+      "category": "conocimiento_general",
+      "question": "¿Qué significa que una obra esté en dominio público?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "Que una obra esté en dominio público significa que sus derechos de autor han expirado o no aplican, por lo que puede usarse, copiarse o modificarse libremente, respetando las leyes correspondientes. Esto permite que libros, músicas, imágenes y otras creaciones formen parte del patrimonio cultural accesible para todos."
+    },
+    {
+      "id": "Q010",
+      "category": "conocimiento_general",
+      "question": "¿Cómo se determina la edad aproximada de un árbol?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "La edad aproximada de un árbol se determina contando sus anillos de crecimiento en el tronco. Cada anillo suele representar un año de vida. Si no se corta el árbol, se pueden usar métodos como extraer una pequeña muestra con una barrena, medir el diámetro del tronco o comparar con especies similares."
+    },
+    {
+      "id": "Q011",
+      "category": "geografia",
+      "question": "¿Cuál es la capital de Australia y por qué no es Sídney?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "La capital de Australia es Canberra. No es Sídney porque se eligió una ubicación intermedia entre Sídney y Melbourne para evitar favorecer a una de las dos ciudades más grandes. Canberra fue diseñada como capital política y comenzó a desarrollarse como ciudad planificada a principios del siglo XX."
+    },
+    {
+      "id": "Q012",
+      "category": "geografia",
+      "question": "¿Qué países comparten frontera terrestre con Guatemala?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "Guatemala comparte frontera terrestre con cuatro países: México al norte y oeste, Belice al noreste, Honduras al este y El Salvador al sureste. Estas fronteras influyen en el comercio, la migración, la cultura y las relaciones regionales de Guatemala con sus países vecinos.",
+      "referenceReview": {
+        "status": "PASS",
+        "reason": "ChatGPT corrigió el conteo a cuatro países tras detectar la contradicción."
+      }
+    },
+    {
+      "id": "Q013",
+      "category": "geografia",
+      "question": "¿Cuál es la diferencia entre Inglaterra, Gran Bretaña y Reino Unido?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "Inglaterra es uno de los países que forman el Reino Unido. Gran Bretaña es la isla que incluye Inglaterra, Escocia y Gales. El Reino Unido es el Estado formado por Inglaterra, Escocia, Gales e Irlanda del Norte. Son términos relacionados, pero no significan exactamente lo mismo."
+    },
+    {
+      "id": "Q014",
+      "category": "geografia",
+      "question": "¿Por qué el canal de Panamá es importante para el comercio mundial?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "El canal de Panamá es importante porque conecta los océanos Atlántico y Pacífico, permitiendo que los barcos eviten rodear Sudamérica. Reduce tiempo, distancia y costos de transporte marítimo. Es una ruta clave para el comercio mundial, especialmente para mercancías entre América, Asia y Europa."
+    },
+    {
+      "id": "Q015",
+      "category": "geografia",
+      "question": "¿En qué continente está Turquía y cómo se explica su ubicación?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "Turquía está principalmente en Asia, pero una pequeña parte de su territorio está en Europa. Su ubicación entre ambos continentes se explica por su posición geográfica en la península de Anatolia y la región de Tracia, separadas por estrechos como el Bósforo. Esta ubicación la ha convertido históricamente en un puente entre culturas de Europa y Asia."
+    },
+    {
+      "id": "Q016",
+      "category": "geografia",
+      "question": "¿Cuál es el río más largo de Sudamérica?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "El río más largo de Sudamérica es el Amazonas. Atraviesa varios países y recorre principalmente Brasil, aunque su cuenca incluye territorios de Perú, Colombia, Bolivia, Ecuador, Venezuela y otros. Es uno de los ríos con mayor caudal del mundo y desempeña un papel esencial en el ecosistema amazónico."
+    },
+    {
+      "id": "Q017",
+      "category": "geografia",
+      "question": "¿Qué diferencia horaria hay normalmente entre Guatemala y Madrid?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "Normalmente, Guatemala está entre 7 y 8 horas detrás de Madrid. La diferencia suele ser de 7 horas cuando España está en horario de verano y de 8 horas cuando España usa horario estándar. Guatemala mantiene la misma hora durante todo el año, mientras Madrid cambia según la temporada.",
+      "referenceReview": {
+        "status": "FAIL",
+        "reason": "La referencia original invierte las estaciones: Madrid lleva 7 horas en invierno y 8 en verano. Se conserva el texto original para auditoría.",
+        "evidence": [
+          {
+            "date": "2026-01-15T12:00:00+00:00",
+            "guatemalaUTCOffsetHours": -6.0,
+            "madridUTCOffsetHours": 1.0,
+            "differenceHours": 7.0
+          },
+          {
+            "date": "2026-07-15T12:00:00+00:00",
+            "guatemalaUTCOffsetHours": -6.0,
+            "madridUTCOffsetHours": 2.0,
+            "differenceHours": 8.0
+          }
+        ],
+        "correctedFactualAnswer": "Madrid lleva 7 horas de adelanto respecto a Guatemala en invierno y 8 horas durante el horario de verano español. Guatemala permanece en UTC−6.",
+        "correctionSource": "Python zoneinfo: America/Guatemala, Europe/Madrid; fechas enero/julio de 2026"
+      }
+    },
+    {
+      "id": "Q018",
+      "category": "geografia",
+      "question": "¿Dónde está Colima, México, y qué caracteriza su geografía?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "Colima es un estado ubicado en la costa del Pacífico de México, en la región occidental del país. Su geografía combina llanuras costeras, montañas y zonas volcánicas. Destaca por el Volcán de Colima, sus playas, su clima cálido y su actividad agrícola y portuaria."
+    },
+    {
+      "id": "Q019",
+      "category": "geografia",
+      "question": "¿Por qué Chile tiene una forma tan larga y estrecha?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "Chile tiene una forma larga y estrecha debido a su ubicación entre la cordillera de los Andes al este y el océano Pacífico al oeste. Su territorio se extendió principalmente de norte a sur por procesos históricos y geográficos, creando una gran variedad de climas y paisajes a lo largo de su longitud."
+    },
+    {
+      "id": "Q020",
+      "category": "geografia",
+      "question": "¿Qué países no tienen salida al mar en Centroamérica?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "Ningún país de Centroamérica está completamente sin salida al mar. Los siete países de la región tienen costa marítima: Guatemala, Belice, Honduras, El Salvador, Nicaragua, Costa Rica y Panamá cuentan con acceso al océano Pacífico, al mar Caribe o a ambos.",
+      "referenceReview": {
+        "status": "PASS",
+        "reason": "ChatGPT regeneró una respuesta directa, coherente y con los siete países costeros."
+      }
+    },
+    {
+      "id": "Q021",
+      "category": "ciencia",
+      "question": "¿Por qué el cielo se ve azul durante el día y rojizo al atardecer?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "El cielo se ve azul durante el día porque la atmósfera dispersa más fácilmente la luz azul del Sol que otros colores. Al atardecer, la luz atraviesa una mayor cantidad de atmósfera, lo que dispersa más los tonos azules y permite que predominen colores rojizos y anaranjados."
+    },
+    {
+      "id": "Q022",
+      "category": "ciencia",
+      "question": "¿Qué diferencia hay entre un virus y una bacteria?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false,
+      "chatgptReference": "Los virus y las bacterias son microorganismos diferentes. Las bacterias son seres vivos unicelulares que pueden reproducirse por sí mismas. Los virus necesitan infectar células de otros organismos para multiplicarse. Algunos antibióticos funcionan contra bacterias, pero no contra virus, por lo que las infecciones virales requieren otros tratamientos o prevención."
+    },
+    {
+      "id": "Q023",
+      "category": "ciencia",
+      "question": "¿Cómo produce electricidad un panel solar?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q024",
+      "category": "ciencia",
+      "question": "¿Por qué el hielo flota en el agua?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q025",
+      "category": "ciencia",
+      "question": "¿Qué es el ADN y qué información contiene?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q026",
+      "category": "ciencia",
+      "question": "¿Cómo funcionan las vacunas sin causar la enfermedad que previenen?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q027",
+      "category": "ciencia",
+      "question": "¿Por qué sentimos presión en los oídos al despegar en un avión?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q028",
+      "category": "ciencia",
+      "question": "¿Qué causa las mareas y por qué no son iguales en todas las costas?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q029",
+      "category": "ciencia",
+      "question": "¿Qué es un agujero negro explicado sin fórmulas?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q030",
+      "category": "ciencia",
+      "question": "¿Por qué una cuchara de metal se siente más fría que una de madera en la misma habitación?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q031",
+      "category": "calculos",
+      "question": "Si algo cuesta 850 quetzales y tiene 15 por ciento de descuento, ¿cuál es el precio final?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q032",
+      "category": "calculos",
+      "question": "Un automóvil recorre 240 kilómetros con 20 litros. ¿Cuántos kilómetros por litro rinde?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q033",
+      "category": "calculos",
+      "question": "Si invierto 10,000 quetzales al 5 por ciento anual simple durante tres años, ¿cuánto gano?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q034",
+      "category": "calculos",
+      "question": "¿Cuánto es 17 por ciento de 3,480? Muéstrame la cuenta.",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q035",
+      "category": "calculos",
+      "question": "Una receta para cuatro personas usa 300 gramos de harina. ¿Cuánto necesito para diez personas?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q036",
+      "category": "calculos",
+      "question": "Si un vuelo sale a las 22:30 y dura 7 horas 45 minutos, ¿a qué hora llega sin considerar zonas horarias?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q037",
+      "category": "calculos",
+      "question": "Un terreno mide 23 por 45 metros. ¿Cuál es su área y su perímetro?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q038",
+      "category": "calculos",
+      "question": "Si bajo de 103 a 93 kilos, ¿cuántas libras he bajado usando 2.2046226218 libras por kilo?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q039",
+      "category": "calculos",
+      "question": "Una cuenta de 1,250 quetzales incluye 12 por ciento de propina. ¿Cuánto corresponde antes de la propina?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q040",
+      "category": "calculos",
+      "question": "Si una moneda justa cae cara cinco veces, ¿cambia la probabilidad de la sexta tirada?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q041",
+      "category": "golf",
+      "question": "¿Qué diferencia hay entre hándicap índice y hándicap de campo en golf?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q042",
+      "category": "golf",
+      "question": "¿Cuándo conviene usar un wedge de 60 grados alrededor del green?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q043",
+      "category": "golf",
+      "question": "¿Qué significa jugar una bola provisional y cuándo debe anunciarse?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q044",
+      "category": "golf",
+      "question": "¿Cómo afecta un viento fuerte de frente a la selección del palo?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q045",
+      "category": "golf",
+      "question": "¿Cuál es la diferencia entre match play y stroke play?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q046",
+      "category": "golf",
+      "question": "¿Qué ocurre si mi bola entra en un área de penalización roja?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q047",
+      "category": "golf",
+      "question": "Explícame qué es el slope rating con un ejemplo sencillo.",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q048",
+      "category": "golf",
+      "question": "¿Por qué un golpe de golf puede hacer slice aunque la cara parezca apuntar al objetivo?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q049",
+      "category": "golf",
+      "question": "¿Qué rutina breve recomiendas antes de un putt de dos metros?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q050",
+      "category": "golf",
+      "question": "¿Qué datos necesito para calcular el score neto de un hoyo?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q051",
+      "category": "recomendaciones",
+      "question": "¿Cómo puedo hidratar un cincho de cuero que empieza a rajarse?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q052",
+      "category": "recomendaciones",
+      "question": "¿Cada cuánto suelen volver a florecer las orquídeas Phalaenopsis en maceta?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q053",
+      "category": "recomendaciones",
+      "question": "¿Qué debo revisar al comprar una batería externa para el iPhone?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q054",
+      "category": "recomendaciones",
+      "question": "¿Cómo organizar una maleta de mano para un viaje de cinco días?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q055",
+      "category": "recomendaciones",
+      "question": "¿Qué método sencillo sirve para reducir el desperdicio de comida en casa?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q056",
+      "category": "recomendaciones",
+      "question": "¿Cómo elegir zapatos cómodos para caminar varias horas?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q057",
+      "category": "recomendaciones",
+      "question": "¿Qué pasos básicos ayudan a proteger una cuenta de correo electrónico?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q058",
+      "category": "recomendaciones",
+      "question": "¿Cómo puedo limpiar una pantalla de televisión sin dañarla?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q059",
+      "category": "recomendaciones",
+      "question": "¿Qué debo comparar antes de contratar un plan de Internet residencial?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q060",
+      "category": "recomendaciones",
+      "question": "¿Cómo conservar mejor granos de café abiertos?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q061",
+      "category": "salud_cotidiana",
+      "question": "¿Qué tan efectivo es el retinol en una crema facial y cómo se empieza a usar?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q062",
+      "category": "salud_cotidiana",
+      "question": "¿Qué señales de alarma acompañando un dolor de espalda requieren atención médica urgente?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q063",
+      "category": "salud_cotidiana",
+      "question": "¿Qué diferencia hay entre protector solar mineral y químico?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q064",
+      "category": "salud_cotidiana",
+      "question": "¿Por qué dormir poco puede aumentar el hambre al día siguiente?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q065",
+      "category": "salud_cotidiana",
+      "question": "¿Qué medidas generales ayudan con una torcedura leve de tobillo durante las primeras 24 horas?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q066",
+      "category": "salud_cotidiana",
+      "question": "¿Cuándo una fiebre en un adulto merece valoración médica?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q067",
+      "category": "salud_cotidiana",
+      "question": "¿Qué diferencia hay entre intolerancia a la lactosa y alergia a la leche?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q068",
+      "category": "salud_cotidiana",
+      "question": "¿Cómo se mide correctamente la presión arterial en casa?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q069",
+      "category": "salud_cotidiana",
+      "question": "¿Qué riesgos tiene mezclar alcohol con medicamentos para dormir?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q070",
+      "category": "salud_cotidiana",
+      "question": "¿Qué información debo llevar a una consulta por dolor muscular persistente?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q071",
+      "category": "actualidad_y_fuentes",
+      "question": "¿Quién es actualmente el presidente de México? Verifica la fecha y cita una fuente.",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": true
+    },
+    {
+      "id": "Q072",
+      "category": "actualidad_y_fuentes",
+      "question": "¿Cómo está el clima ahora en la ciudad de Colima, México?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": true
+    },
+    {
+      "id": "Q073",
+      "category": "actualidad_y_fuentes",
+      "question": "¿Cuál es el precio aproximado actual de una onza de oro? Indica moneda, hora y fuente.",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": true
+    },
+    {
+      "id": "Q074",
+      "category": "actualidad_y_fuentes",
+      "question": "¿Qué partido importante de fútbol se juega hoy? Pregunta por mi liga si falta contexto.",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": true
+    },
+    {
+      "id": "Q075",
+      "category": "actualidad_y_fuentes",
+      "question": "¿Cuál es el tipo de cambio actual entre dólar estadounidense y quetzal?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": true
+    },
+    {
+      "id": "Q076",
+      "category": "actualidad_y_fuentes",
+      "question": "¿Qué noticia científica relevante ocurrió esta semana? Distingue fecha de publicación y del hecho.",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": true
+    },
+    {
+      "id": "Q077",
+      "category": "actualidad_y_fuentes",
+      "question": "¿Cuál es la versión vigente de iOS y qué modelos admite? Usa fuente oficial.",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": true
+    },
+    {
+      "id": "Q078",
+      "category": "actualidad_y_fuentes",
+      "question": "¿Hay alertas meteorológicas vigentes para Colima, México?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": true
+    },
+    {
+      "id": "Q079",
+      "category": "actualidad_y_fuentes",
+      "question": "¿Qué vuelos directos existen actualmente entre Ciudad de Guatemala y Madrid?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": true
+    },
+    {
+      "id": "Q080",
+      "category": "actualidad_y_fuentes",
+      "question": "¿Cuál es la población más reciente estimada de Guatemala y de qué año es el dato?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": true
+    },
+    {
+      "id": "Q081",
+      "category": "razonamiento_complejo",
+      "question": "Tres cajas están etiquetadas manzanas, naranjas y mezcla, pero todas las etiquetas están equivocadas. ¿Cómo identifico cada caja sacando una sola fruta?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q082",
+      "category": "razonamiento_complejo",
+      "question": "Un precio baja 20 por ciento y después sube 20 por ciento. ¿Vuelve al precio inicial? Explica por qué.",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q083",
+      "category": "razonamiento_complejo",
+      "question": "Si todos los bloops son razzies y ningún razzie es verde, ¿puede algún bloop ser verde?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q084",
+      "category": "razonamiento_complejo",
+      "question": "Compara comprar o alquilar una vivienda indicando qué datos faltan antes de recomendar.",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q085",
+      "category": "razonamiento_complejo",
+      "question": "¿Cómo decidirías entre dos tratamientos si uno funciona más pero tiene mayores efectos secundarios?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q086",
+      "category": "razonamiento_complejo",
+      "question": "Si una prueba médica tiene 99 por ciento de precisión, ¿un resultado positivo significa 99 por ciento de probabilidad de enfermedad?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q087",
+      "category": "razonamiento_complejo",
+      "question": "Una empresa aumenta ventas pero reduce ganancias. Dame cinco explicaciones posibles y cómo comprobarlas.",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q088",
+      "category": "razonamiento_complejo",
+      "question": "¿Qué supuestos revisarías antes de afirmar que trabajar desde casa aumenta la productividad?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q089",
+      "category": "razonamiento_complejo",
+      "question": "Si dos fuentes confiables discrepan sobre un dato, ¿cómo decides cuál usar?",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q090",
+      "category": "razonamiento_complejo",
+      "question": "Diseña una manera justa de desempatar un torneo sin cambiar reglas después de conocer los resultados.",
+      "conversationGroup": null,
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q091",
+      "category": "contexto_y_correccion",
+      "question": "Quiero viajar a Antigua Guatemala este fin de semana. Dame tres factores para decidir el mejor día.",
+      "conversationGroup": "antigua",
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q092",
+      "category": "contexto_y_correccion",
+      "question": "¿Y si mi prioridad principal es evitar lluvia?",
+      "conversationGroup": "antigua",
+      "previousId": "Q091",
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q093",
+      "category": "contexto_y_correccion",
+      "question": "Corrijo: me refería a Antigua, la isla del Caribe, no Antigua Guatemala. Replantea la respuesta.",
+      "conversationGroup": "antigua",
+      "previousId": "Q092",
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q094",
+      "category": "contexto_y_correccion",
+      "question": "Recuérdame cuál fue mi prioridad y aplícala a la nueva ubicación.",
+      "conversationGroup": "antigua",
+      "previousId": "Q093",
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q095",
+      "category": "contexto_y_correccion",
+      "question": "Necesito comprar un BMW clásico de 1975. ¿Qué debo revisar primero?",
+      "conversationGroup": "bmw",
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q096",
+      "category": "contexto_y_correccion",
+      "question": "Es específicamente un BMW 2002 tii de agencia y en buen estado. Ajusta la evaluación.",
+      "conversationGroup": "bmw",
+      "previousId": "Q095",
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q097",
+      "category": "contexto_y_correccion",
+      "question": "Antes dijiste que revisara óxido. ¿En qué zonas concretas de ese modelo?",
+      "conversationGroup": "bmw",
+      "previousId": "Q096",
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q098",
+      "category": "contexto_y_correccion",
+      "question": "No conozco el kilometraje. ¿Puedes dar un rango de precio responsable sin inventarlo?",
+      "conversationGroup": "bmw",
+      "previousId": "Q097",
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q099",
+      "category": "contexto_y_correccion",
+      "question": "Cambia de tema: explícame cómo reiniciar un iPhone 11.",
+      "conversationGroup": "iphone",
+      "previousId": null,
+      "requiresCurrentSource": false
+    },
+    {
+      "id": "Q100",
+      "category": "contexto_y_correccion",
+      "question": "Si el reinicio normal no responde, ¿cuál es la secuencia de reinicio forzado?",
+      "conversationGroup": "iphone",
+      "previousId": "Q099",
+      "requiresCurrentSource": false
+    }
+  ],
+  "validationStatus": {
+    "fullFlowApproved": 0,
+    "totalRequired": 100,
+    "releaseAllowed": false,
+    "blocker": "El navegador de pruebas informó que no hay micrófono disponible. No se dispone de evidencia de 100 recorridos completos con entrada real de micrófono.",
+    "referencesAreNotApplicationTests": true
+  }
+}

@@ -1,0 +1,31 @@
+(function(root,factory){const api=factory();if(typeof module==="object"&&module.exports)module.exports=api;if(root)root.GSCCardLibrary=api})(typeof globalThis!=="undefined"?globalThis:this,function(){
+  "use strict";
+  const text=value=>String(value??"").trim();
+  const normalized=value=>text(value).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toUpperCase();
+  const courseName=snapshot=>typeof snapshot?.course==="object"?text(snapshot.course.displayName||snapshot.course.name||snapshot.courseKey||"CAMPO"):text(snapshot?.course||snapshot?.courseKey||"CAMPO");
+  const tournamentName=snapshot=>text(snapshot?.tournament?.name||snapshot?.tournament||"SIN TORNEO");
+  const timestamp=value=>{const parsed=new Date(value||0).getTime();return Number.isFinite(parsed)?parsed:0};
+  const dateTerms=value=>{const date=new Date(value||0);if(!Number.isFinite(date.getTime()))return"";const day=String(date.getUTCDate()).padStart(2,"0"),year=date.getUTCFullYear(),monthLong=new Intl.DateTimeFormat("es-GT",{month:"long",timeZone:"UTC"}).format(date),monthShort=new Intl.DateTimeFormat("es-GT",{month:"short",timeZone:"UTC"}).format(date).replace(".","");return[date.toISOString().slice(0,10),`${day}/${String(date.getUTCMonth()+1).padStart(2,"0")}/${year}`,`${day} ${monthShort} ${year}`,`${day} ${monthLong} ${year}`].join(" ")};
+  function entry(round){
+    const snapshot=round?.officialSnapshot;
+    if(!round?.id||!snapshot?.sha256||!["officially_closed","corrected"].includes(snapshot.status)||!Array.isArray(snapshot.players)||!snapshot.players.length)return null;
+    const players=snapshot.players.map(player=>({id:text(player.id),name:text(player.name)})).filter(player=>player.id&&player.name);
+    if(!players.length)return null;
+    const mode=snapshot.mode==="stableford"?"stableford":snapshot.mode==="match_play"?"match_play":snapshot.mode==="four_ball"?"four_ball":snapshot.mode==="universales"?"universales":"general";
+    const sideGames=snapshot.sideGames&&typeof snapshot.sideGames==="object"?snapshot.sideGames:{};
+    return Object.freeze({roundId:text(round.id),mode,course:courseName(snapshot),courseKey:text(snapshot.courseKey||round.courseKey),tournament:tournamentName(snapshot),playedAt:snapshot.playedAt||round.createdAt||snapshot.officiallyClosedAt,closedAt:snapshot.officiallyClosedAt||round.officiallyClosedAt,version:Number(snapshot.version)||1,sha256:text(snapshot.sha256),players:Object.freeze(players),sideGames,snapshot});
+  }
+  function entries(archive){return (Array.isArray(archive)?archive:[]).map(entry).filter(Boolean).sort((a,b)=>timestamp(b.playedAt)-timestamp(a.playedAt)||b.version-a.version||a.roundId.localeCompare(b.roundId))}
+  function filter(list,{mode="all",course="all",query=""}={}){
+    const wantedMode=["stableford","match_play","four_ball","universales","general"].includes(mode)?mode:"all",wantedCourse=normalized(course),needle=normalized(query);
+    return (Array.isArray(list)?list:[]).filter(item=>{
+      if(wantedMode!=="all"&&item.mode!==wantedMode)return false;
+      if(wantedCourse&&wantedCourse!=="ALL"&&normalized(item.course)!==wantedCourse&&normalized(item.courseKey)!==wantedCourse)return false;
+      if(!needle)return true;
+      const games=Object.entries(item.sideGames||{}).filter(([,value])=>value?.enabled===true).map(([key])=>key);
+      const haystack=normalized([item.course,item.courseKey,item.tournament,item.mode,item.playedAt,dateTerms(item.playedAt),...games,...item.players.map(player=>player.name)].join(" "));
+      return haystack.includes(needle);
+    });
+  }
+  return Object.freeze({entry,entries,filter,normalized});
+});

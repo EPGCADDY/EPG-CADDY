@@ -1,0 +1,30 @@
+name: Build GSC Preview 01
+on:
+  push:
+    branches: [laboratorio]
+    paths:
+      - ".github/workflows/build-gsc-preview01.yml"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      - name: Download media
+        run: |
+          curl -L --fail "https://cdn.creativeclaw.co/u/9cfd647d/videos/505a3698-1880-4c67-9b7d-724336e4c4c0.mp4" -o visual.mp4
+          curl -L --fail "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/f4b1d047-1aee-4192-93d0-7c721e485e56.mp3" -o voice.mp3
+      - name: Mux
+        run: |
+          ffmpeg -y -i visual.mp4 -i voice.mp3 -filter_complex "[1:a]apad[a]" -map 0:v:0 -map "[a]" -c:v copy -c:a aac -b:a 192k -ar 48000 -t 22 -movflags +faststart GSC_PREVIEW_01_CONFIGURACION.mp4
+      - name: QA
+        run: |
+          test -s GSC_PREVIEW_01_CONFIGURACION.mp4
+          ffprobe -v error -show_entries format=duration:stream=codec_type,codec_name,width,height,sample_rate,channels -of json GSC_PREVIEW_01_CONFIGURACION.mp4
+          ffmpeg -v error -i GSC_PREVIEW_01_CONFIGURACION.mp4 -f null -
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GSC_PREVIEW_01_CONFIGURACION
+          path: GSC_PREVIEW_01_CONFIGURACION.mp4

@@ -1,0 +1,19 @@
+$ node test-project-quality-gate.mjs
+PASS project quality gate: local, Vercel separado y pruebas negativas.
+EXIT 0
+
+$ node scripts/project-quality-gate.mjs
+PROJECT_QUALITY_GATE PASS controls=11 inputs=7 gates=11 baseline=0dc1ba7a62b6 production=89c64f348b6c
+EXIT 0
+
+$ node test-project-control-matrix.mjs
+PASS control de proyecto · fuentes originales, cola y política de no reiteración
+EXIT 0
+
+$ node test-lab-continuity-master.mjs
+PASS continuidad maestra LAB: MAIN congelada, LAB canónico y relevo entre conversaciones blindados.
+EXIT 0
+
+$ git diff --check
+EXIT 0
+PASS ROADMAP GATE: 46 modificaciones registradas en ambos ROADMAPS.

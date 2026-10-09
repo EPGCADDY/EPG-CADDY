@@ -1,0 +1,1167 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#09233b"><title>Manual de Funciones · Golf Score Card GT · R128.20</title>
+<style>
+:root{--navy:#09233b;--green:#666d75;--gold:#d6aa3f;--paper:#f5f2e9;--ink:#122436}
+*{box-sizing:border-box}html{scroll-behavior:smooth}html,body{margin:0;background:#dfe7e9;color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+body{min-height:100vh}.top{position:relative;z-index:50;background:rgba(9,35,59,.97);color:#fff;padding:calc(env(safe-area-inset-top,0px) + 10px) max(14px,env(safe-area-inset-right,0px)) 10px max(14px,env(safe-area-inset-left,0px));min-height:calc(62px + env(safe-area-inset-top,0px));border-bottom:3px solid var(--gold);display:flex;align-items:flex-end;justify-content:space-between;gap:10px}.top strong{font-size:15px}.top a{color:#fff;text-decoration:none;border:1px solid #8fb6c7;border-radius:9px;padding:9px 11px;font-weight:800;font-size:12px}
+main{max-width:960px;margin:auto;padding:18px max(12px,env(safe-area-inset-right,0px)) max(50px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}.cover,.index,.sheet{scroll-margin-top:16px;background:#fff;border-radius:18px;margin:0 0 22px;overflow:hidden;box-shadow:0 12px 34px #1732442b}
+.cover img{display:block;width:100%;height:auto;object-fit:contain;object-position:center top}.cover-note{padding:14px 18px;background:var(--navy);color:#fff;font-weight:800;text-align:center}.cover-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px}.cover-actions a{padding:14px;border-radius:12px;text-align:center;text-decoration:none;font-weight:900;border:1px solid #cad6d9;color:var(--navy)}.cover-actions a:last-child{background:var(--navy);color:#fff}
+.index{padding:20px}.index h1{margin:0 0 4px;font-size:27px}.index p{margin:0 0 16px;color:#5c707b}.toc{display:grid;gap:8px}.toc a{display:grid;grid-template-columns:45px 1fr;gap:8px;align-items:center;padding:12px;border:1px solid #d5dedf;border-radius:12px;text-decoration:none;color:var(--ink);background:#fff}.toc b{color:var(--green);font-size:17px}.toc span{font-weight:800}.toc-divider{margin:18px 0 8px;padding-top:16px;border-top:3px solid var(--gold);font-weight:900;color:var(--green)}
+.sheet-head{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;background:var(--navy);color:#fff;padding:13px 15px}.sheet-head strong{color:#c5c9cd}.sheet-head h2{margin:0;font-size:17px}.sheet-head a{color:#fff;text-decoration:none;font-size:11px;font-weight:900;border:1px solid #7192a2;border-radius:8px;padding:7px 8px}.sheet>img{display:block;width:100%;height:auto;background:#fff}.sheet-nav{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;padding:13px 15px 16px;background:#f6f8f8}.sheet-nav a{text-align:center;text-decoration:none;border:1px solid #cbd7db;border-radius:10px;padding:11px 8px;font-weight:850;color:var(--navy)}.sheet-nav a:last-child{background:var(--navy);color:#fff}
+.notice{padding:14px 18px;margin:0 0 20px;border-radius:14px;background:#fff7dc;border:1px solid #e3c86c;color:#5e4b0b;font-weight:700;line-height:1.45}
+@media(min-width:760px){main{padding:28px}.toc{grid-template-columns:1fr 1fr}.sheet>img{max-height:82vh;object-fit:contain}}
+@media print{.top,.index,.sheet-head,.sheet-nav,.cover-actions,.notice{display:none!important}main{max-width:none;padding:0}.cover,.sheet{box-shadow:none;border-radius:0;break-after:page;margin:0}.sheet>img,.cover img{width:100%;max-height:none}}
+/* TUTORIAL TORNEOS R4 */
+.tutorial-page{--tut-h1:44px;--tut-sub:18px;--tut-side:28px;--tut-gap:18px;padding:var(--tut-side)!important;background:#f7f6f1!important;color:#091416!important;border-color:#d6dbd7!important}.tutorial-page *{font-family:var(--font-ui)!important}.tutorial-page .kicker{color:#164d40!important;font-size:12px!important;letter-spacing:2.2px!important}.tutorial-page h1{font-size:var(--tut-h1)!important;line-height:1.06!important;font-weight:700!important;letter-spacing:-1.2px!important;margin:18px 0 8px!important;color:#091416!important}.tutorial-page>p{font-size:var(--tut-sub)!important;line-height:1.42!important;color:#66707a!important;margin:0 0 22px!important}.tut-index{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:24px}.tut-index button{min-height:72px;text-align:left;padding:14px 16px;border:1px solid #cbd2cd;border-radius:12px;background:#fff;color:#091416;font-weight:800;font-size:15px}.tut-index button span{display:block;color:#6d777f;font-size:11px;font-weight:600;margin-top:4px}.tut-phones{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:stretch;margin:22px 0}.tut-phones.three{grid-template-columns:repeat(3,minmax(0,1fr))}.tut-phone{border:7px solid #0b0e0f;border-radius:28px;background:#07100d;color:#fff;padding:15px 12px 18px;box-shadow:0 12px 30px rgba(0,0,0,.16);min-height:560px}.tut-phone .bar{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #30413b;padding:4px 4px 12px;margin-bottom:12px}.tut-phone .bar strong{font-size:15px;letter-spacing:.3px}.tut-phone .hero{border:1px solid #29483c;border-radius:12px;padding:14px;margin-bottom:10px;background:linear-gradient(145deg,#0d211a,#07100d)}.tut-phone .hero strong{display:block;font-size:18px}.tut-phone .hero small{color:#bdc6c1}.tut-row{position:relative;min-height:58px;border:1px solid #44524d;border-radius:10px;background:#111716;padding:10px 12px;margin:8px 0;display:flex;align-items:center;justify-content:space-between;gap:10px}.tut-row strong{font-size:13px}.tut-row small{display:block;color:#aeb8b3;font-size:10px;margin-top:3px}.tut-row.active{border-color:#8f969d;box-shadow:inset 0 0 0 1px #8f969d}.tut-row.callout{border-color:#ff3a35;box-shadow:inset 0 0 0 1px #ff3a35}.tut-row .go{color:#8f969d;font-weight:900}.tut-arrow{color:#ff3a35;font-size:28px;font-weight:900;line-height:1}.tut-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}.tut-tabs span{border:1px solid #44524d;border-radius:8px;padding:8px 4px;text-align:center;font-size:10px}.tut-tabs .on{border-color:#8f969d;color:#8f969d}.tut-list{border-top:1px solid #31413b;margin-top:10px}.tut-list div{display:grid;grid-template-columns:28px 1fr 48px;gap:8px;padding:10px 4px;border-bottom:1px solid #31413b;font-size:11px}.tut-list .red{color:#ff5752}.tut-steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:20px;padding-top:18px;border-top:1px solid #aeb8b3}.tut-step{padding-right:14px}.tut-step+.tut-step{border-left:1px solid #c8cfcb;padding-left:18px}.tut-step b{display:block;color:#164d40;font-size:11px;letter-spacing:2px;margin-bottom:8px}.tut-step strong{display:block;font-size:22px;line-height:1.15;color:#091416;margin-bottom:6px}.tut-step span{font-size:14px;line-height:1.45;color:#68727a}.tech-matrix{margin-top:22px;padding-top:14px;border-top:1px solid #9eaaa4}.tech-matrix>strong{display:block;font-size:11px;letter-spacing:2px;color:#425a50;margin-bottom:10px}.tech-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.tech-grid span{font-size:10px;color:#425a50}.tech-grid span:before{content:'✓';display:inline-grid;place-items:center;width:18px;height:18px;margin-right:6px;border-radius:50%;background:#2fad56;color:#fff;font-weight:900}.tech-cert{margin-top:10px;display:inline-block;padding:8px 12px;border-radius:9px;background:#e3f3e6;color:#176732;font-size:11px;font-weight:900}.tutorial-page .tut-foot{margin-top:18px;padding-top:10px;border-top:1px solid #aeb8b3;display:flex;justify-content:space-between;color:#65716b;font-size:9px;letter-spacing:1.6px}.tut-search{border:1px solid #44524d;border-radius:10px;padding:10px 12px;color:#cbd3cf;margin:8px 0}.tut-fav{color:#ffdf54}.tut-danger{color:#ff5752!important}.tut-note{margin-top:12px;padding:10px;border:1px solid #44524d;border-radius:10px;color:#aeb8b3;font-size:10px}.tut-mini{font-size:10px;color:#aeb8b3;margin:5px 0}.tut-navrow{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:14px;border-top:1px solid #30413b;padding-top:10px}.tut-navrow span{text-align:center;font-size:9px;color:#aeb8b3}.tut-navrow .on{color:#8f969d}@media(max-width:640px){.tutorial-page{--tut-h1:34px;--tut-sub:16px;--tut-side:18px}.tut-phones,.tut-phones.three,.tut-index,.tut-steps,.tech-grid{grid-template-columns:1fr}.tut-step+.tut-step{border-left:0;border-top:1px solid #c8cfcb;padding-left:0;padding-top:14px}.tut-phone{min-height:500px}}
+.tutorial-page .tut-phone{position:relative;padding-bottom:92px!important}.tutorial-page .tut-phone::after{content:"MENÚ";position:absolute;right:10px;bottom:10px;width:86px;height:68px;padding-top:46px;box-sizing:border-box;border:1px solid #8f969d;border-radius:13px;background:#050705 url("/assets/official-logos/golf-score-card-gt-horizontal-original.webp") center 7px/74px 36px no-repeat;color:#8f969d;text-align:center;font:900 9px/1 Arial;letter-spacing:.7px;box-shadow:0 5px 16px rgba(0,0,0,.45)}.universal-route{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}.universal-route div{background:#fff;border:1px solid #cbd2cd;border-radius:12px;padding:15px;color:#091416}.universal-route b{display:block;color:#164d40;font-size:12px;letter-spacing:1.2px;margin-bottom:6px}.universal-route span{font-size:13px;line-height:1.4;color:#68727a}@media(max-width:640px){.universal-route{grid-template-columns:1fr}}.real-screen{margin:22px auto;max-width:430px;padding:10px;border:1px solid #424a46;border-radius:28px;background:#050707;box-shadow:0 14px 34px rgba(0,0,0,.34)}.real-screen img{display:block;width:100%;height:auto;border-radius:20px;background:#000}.real-screen-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start;margin:22px 0}.real-screen-caption{padding:10px 6px 2px;color:#cfd5d1;font-size:12px;line-height:1.4;text-align:center}.real-badge{display:inline-block;margin-bottom:8px;padding:6px 9px;border:1px solid #8f969d;border-radius:999px;color:#8f969d;font-size:10px;font-weight:900;letter-spacing:.8px}@media(max-width:640px){.real-screen-grid{grid-template-columns:1fr}.real-screen{max-width:390px}}.current-evidence{max-width:360px}.current-evidence img{border:1px solid #222}.atajos-note{border-color:#8f969d!important}.atajos-note .sr-section-title{letter-spacing:.6px}
+.tournament-sheet{padding:28px!important}.tournament-sheet .sheet-nav{margin:22px -28px -28px}.tournament-sheet img{max-width:100%}@media(max-width:640px){.tournament-sheet{padding:18px!important}.tournament-sheet .sheet-nav{margin:18px -18px -18px}}
+
+@media(max-width:640px){
+  .top{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:8px;padding-top:calc(env(safe-area-inset-top,0px) + 8px)}
+  .top strong{font-size:13px;line-height:1.15}
+  .top a{min-width:88px;text-align:center;padding:10px 9px;font-size:11px}
+  main{padding-top:12px}
+  .cover,.index,.sheet{border-radius:14px;margin-bottom:18px}
+  .cover img{width:100%;max-height:none;object-fit:contain;object-position:center top}
+  .cover-note{padding:12px 14px;font-size:13px;line-height:1.25}
+  .cover-actions{grid-template-columns:1fr 1fr;padding:12px;gap:8px}
+  .cover-actions a{padding:12px 8px;font-size:12px}
+  .sheet-head{grid-template-columns:36px minmax(0,1fr) auto;gap:7px;padding:10px 11px}
+  .sheet-head h2{font-size:14px;line-height:1.2}
+  .sheet-head a{font-size:9px;padding:7px 7px}
+  .sheet-nav{padding:10px 11px 12px;gap:6px}
+  .sheet-nav a{padding:10px 6px;font-size:10px}
+}
+
+.current-screen-sheet{min-height:calc(100dvh - 92px - env(safe-area-inset-top,0px));display:flex;flex-direction:column}
+.current-screen-sheet .screen-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:14px;background:#fff;min-height:0}
+.current-screen-sheet .screen-stage img{display:block;max-width:100%;max-height:calc(100dvh - 250px - env(safe-area-inset-top,0px));width:auto;height:auto;object-fit:contain;object-position:center}
+.current-screen-sheet .screen-note{padding:12px 16px;background:#fff;color:#122436;text-align:center;font-size:13px;line-height:1.4;border-top:1px solid #d6dedc}
+.current-screen-sheet .sheet-nav{margin-top:auto}
+@media(max-width:640px){
+ .current-screen-sheet .screen-stage{padding:10px 8px}
+ .current-screen-sheet .screen-stage img{max-height:calc(100dvh - 235px - env(safe-area-inset-top,0px))}
+ .current-screen-sheet .screen-note{font-size:12px;padding:10px 12px}
+}
+
+.current-function-sheet{background:#fff}
+.current-function-sheet .screen-stage{display:flex;align-items:center;justify-content:center;padding:14px;background:#fff}
+.current-function-sheet .screen-stage img{display:block;max-width:100%;max-height:calc(100dvh - 260px);width:auto;height:auto;object-fit:contain;object-position:center}
+.current-copy{margin:0 16px 12px;padding:14px 16px;border:1px solid #d5dedf;border-radius:12px;background:#fff;color:#122436}
+.current-copy h3{margin:0 0 7px;color:#666d75;font-size:15px;letter-spacing:.4px}
+.current-copy p{margin:0;font-size:14px;line-height:1.45}
+@media(max-width:640px){
+ .current-function-sheet .screen-stage{padding:10px 8px}
+ .current-function-sheet .screen-stage img{max-height:calc(100dvh - 245px)}
+ .current-copy{margin:0 10px 10px;padding:12px}
+ .current-copy h3{font-size:14px}.current-copy p{font-size:13px}
+}
+
+.current-function-sheet .screen-stage.focus-app{
+  height:min(640px,62dvh);overflow:hidden;border-bottom:1px solid #d5dedf;
+}
+.current-function-sheet .screen-stage.focus-app img{
+  width:100%;height:100%;max-height:none;object-fit:cover;object-position:center 42%;
+}
+@media(max-width:640px){
+ .current-function-sheet .screen-stage.focus-app{height:min(610px,60dvh)}
+}
+
+.tournament-clean{background:#fff!important;color:#122436!important;padding:0!important}
+.tournament-clean .sheet-head{display:grid!important}
+.tournament-clean .screen-stage{margin:0!important}
+.tournament-clean .sheet-nav{margin:0!important}
+
+:root{
+ --manual-page-max:760px;
+ --manual-side:14px;
+ --manual-radius:14px;
+ --manual-head-h:54px;
+ --manual-font:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+.master-sheet{
+ width:min(100%,var(--manual-page-max));
+ margin:0 auto 18px!important;
+ border-radius:var(--manual-radius)!important;
+ background:#fff!important;
+ color:#122436!important;
+ box-shadow:0 10px 28px rgba(18,36,54,.14)!important;
+ overflow:hidden!important;
+ scroll-margin-top:16px!important;
+}
+.master-sheet>.sheet-head{
+ min-height:var(--manual-head-h)!important;
+ display:grid!important;
+ grid-template-columns:42px minmax(0,1fr) auto!important;
+ align-items:center!important;
+ gap:8px!important;
+ padding:10px 12px!important;
+ background:#09233b!important;
+ color:#fff!important;
+ border:0!important;
+}
+.master-sheet>.sheet-head strong{
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ min-height:32px!important;padding:0 6px!important;
+ border-radius:8px!important;background:#0d3f57!important;color:#c5c9cd!important;
+ font:900 12px/1 var(--manual-font)!important;
+}
+.master-sheet>.sheet-head h2{
+ margin:0!important;
+ color:#fff!important;
+ font:900 15px/1.2 var(--manual-font)!important;
+ letter-spacing:.2px!important;
+}
+.master-sheet>.sheet-head a{
+ min-width:62px!important;
+ text-align:center!important;
+ padding:8px 7px!important;
+ border:1px solid #7192a2!important;
+ border-radius:8px!important;
+ color:#fff!important;
+ text-decoration:none!important;
+ font:900 10px/1 var(--manual-font)!important;
+}
+.master-sheet>img{
+ display:block!important;
+ width:100%!important;
+ height:auto!important;
+ max-height:none!important;
+ object-fit:contain!important;
+ object-position:center!important;
+ background:#fff!important;
+ margin:0!important;
+}
+.master-sheet>.screen-stage{
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+ width:100%!important;
+ min-height:0!important;
+ padding:12px!important;
+ background:#fff!important;
+}
+.master-sheet>.screen-stage img{
+ display:block!important;
+ max-width:100%!important;
+ max-height:620px!important;
+ width:auto!important;
+ height:auto!important;
+ object-fit:contain!important;
+ object-position:center!important;
+ margin:auto!important;
+}
+.master-sheet .current-copy,
+.master-sheet .notice{
+ margin:10px 12px!important;
+ padding:12px 14px!important;
+ border:1px solid #d5dedf!important;
+ border-radius:10px!important;
+ background:#fff!important;
+ color:#122436!important;
+ font-family:var(--manual-font)!important;
+}
+.master-sheet .current-copy h3,
+.master-sheet .notice strong{
+ margin:0 0 6px!important;
+ color:#666d75!important;
+ font:900 14px/1.2 var(--manual-font)!important;
+}
+.master-sheet .current-copy p,
+.master-sheet .notice{
+ font-size:13px!important;
+ line-height:1.45!important;
+}
+.master-sheet>.sheet-nav{
+ display:grid!important;
+ grid-template-columns:1fr auto 1fr!important;
+ gap:6px!important;
+ margin:0!important;
+ padding:10px 12px 12px!important;
+ background:#f6f8f8!important;
+ border-top:1px solid #dde5e7!important;
+}
+.master-sheet>.sheet-nav a{
+ min-height:42px!important;
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+ padding:8px 6px!important;
+ border:1px solid #cbd7db!important;
+ border-radius:9px!important;
+ background:#fff!important;
+ color:#09233b!important;
+ text-decoration:none!important;
+ text-align:center!important;
+ font:900 10px/1.15 var(--manual-font)!important;
+}
+.master-sheet>.sheet-nav a:last-child{
+ background:#09233b!important;color:#fff!important;
+}
+.index{
+ width:min(100%,var(--manual-page-max))!important;
+ margin:0 auto 18px!important;
+ border-radius:var(--manual-radius)!important;
+}
+.cover{
+ width:min(100%,var(--manual-page-max))!important;
+ margin:0 auto 18px!important;
+ border-radius:var(--manual-radius)!important;
+}
+@media(max-width:640px){
+ :root{--manual-side:10px;--manual-radius:12px;--manual-head-h:50px}
+ main{padding-left:var(--manual-side)!important;padding-right:var(--manual-side)!important}
+ .master-sheet{width:100%!important}
+ .master-sheet>.sheet-head{grid-template-columns:36px minmax(0,1fr) 58px!important;padding:9px 10px!important}
+ .master-sheet>.sheet-head h2{font-size:13px!important}
+ .master-sheet>.sheet-head a{min-width:58px!important;font-size:9px!important;padding:7px 5px!important}
+ .master-sheet>.screen-stage{padding:8px!important}
+ .master-sheet>.screen-stage img{max-height:560px!important}
+ .master-sheet .current-copy,.master-sheet .notice{margin:8px 10px!important;padding:11px 12px!important}
+ .master-sheet .current-copy h3,.master-sheet .notice strong{font-size:13px!important}
+ .master-sheet .current-copy p,.master-sheet .notice{font-size:12.5px!important}
+ .master-sheet>.sheet-nav{padding:9px 10px 10px!important}
+ .master-sheet>.sheet-nav a{min-height:40px!important;font-size:9.5px!important}
+}
+
+.master-sheet .screen-stage.category-focus{
+  height:min(600px,60dvh)!important;
+  padding:8px!important;
+  overflow:hidden!important;
+}
+.master-sheet .screen-stage.category-focus img{
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:cover!important;
+  object-position:center top!important;
+}
+@media(max-width:640px){
+ .master-sheet .screen-stage.category-focus{height:min(560px,58dvh)!important}
+}
+
+/* Evidencia física actual: llenar el ancho útil, no miniaturizar pantallas verticales */
+.master-sheet.current-screen-sheet>.screen-stage{
+  display:block!important;
+  width:100%!important;
+  padding:0!important;
+  background:#000!important;
+  overflow:hidden!important;
+}
+.master-sheet.current-screen-sheet>.screen-stage img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center top!important;
+  margin:0!important;
+}
+#zona-operativa>.screen-stage{
+  display:block!important;
+  width:100%!important;
+  padding:0!important;
+  background:#000!important;
+}
+#zona-operativa>.screen-stage img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  margin:0!important;
+}
+
+body{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}
+.manual-global-nav{
+ position:fixed;left:0;right:0;bottom:0;z-index:2147483001;
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;
+ padding:8px max(10px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px));
+ background:rgba(9,35,59,.98);border-top:1px solid #33566b;
+ box-shadow:0 -8px 24px rgba(0,0,0,.22)
+}
+.manual-global-nav a,.manual-global-nav button{
+ min-width:0;min-height:44px;padding:8px 4px;border:1px solid #7192a2;border-radius:9px;
+ background:#0b2237;color:#fff;text-decoration:none;text-align:center;
+ display:flex;align-items:center;justify-content:center;
+ font:900 10px/1.1 Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+}
+.manual-global-nav .primary{border-color:#8f969d;color:#8f969d}
+@media(max-width:390px){.manual-global-nav a,.manual-global-nav button{font-size:9px}}
+@media print{.manual-global-nav{display:none!important}body{padding-bottom:0!important}}
+
+.master-sheet>.screen-stage.mode-real{display:block!important;width:100%!important;padding:0!important;background:#000!important;overflow:hidden!important}
+.master-sheet>.screen-stage.mode-real img{display:block!important;width:100%!important;height:auto!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:center top!important;margin:0!important}
+
+/* PREMIUM EDITORIAL GRID · SCREEN / NARRATIVE / NAVIGATION */
+.master-sheet{padding:0!important}
+.master-sheet>img{
+  width:auto!important;
+  max-width:calc(100% - 48px)!important;
+  margin:24px auto!important;
+  display:block!important;
+}
+.master-sheet.current-screen-sheet{display:flex!important;flex-direction:column!important;align-items:stretch!important}
+.master-sheet.current-screen-sheet>.screen-stage{
+  width:calc(100% - 48px)!important;
+  margin:24px auto 18px!important;
+  padding:18px!important;
+  background:#fff!important;
+  border:1px solid #e0e6e8!important;
+  border-radius:14px!important;
+  overflow:hidden!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.master-sheet.current-screen-sheet>.screen-stage img{
+  width:auto!important;
+  max-width:100%!important;
+  max-height:680px!important;
+  height:auto!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  margin:auto!important;
+}
+.master-sheet.current-screen-sheet>.screen-note{
+  width:calc(100% - 48px)!important;
+  max-width:680px!important;
+  margin:0 auto 22px!important;
+  padding:14px 18px!important;
+  border:1px solid #d5dedf!important;
+  border-radius:12px!important;
+  background:#f8faf9!important;
+  text-align:center!important;
+  line-height:1.5!important;
+}
+.master-sheet.current-function-sheet{
+  display:grid!important;
+  grid-template-columns:minmax(300px,44%) minmax(320px,1fr)!important;
+  column-gap:28px!important;
+  row-gap:12px!important;
+  align-items:start!important;
+  padding:0 24px 0!important;
+}
+.master-sheet.current-function-sheet>.sheet-head{
+  grid-column:1/-1!important;
+  margin:0 -24px!important;
+}
+.master-sheet.current-function-sheet>.screen-stage{
+  grid-column:1!important;
+  grid-row:2 / span 20!important;
+  align-self:center!important;
+  justify-self:center!important;
+  width:100%!important;
+  min-height:360px!important;
+  margin:24px 0!important;
+  padding:18px!important;
+  border:1px solid #dfe5e7!important;
+  border-radius:14px!important;
+  background:#fff!important;
+  overflow:hidden!important;
+}
+.master-sheet.current-function-sheet>.screen-stage img{
+  display:block!important;
+  width:auto!important;
+  max-width:100%!important;
+  max-height:620px!important;
+  height:auto!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  margin:auto!important;
+}
+.master-sheet.current-function-sheet>.screen-stage.focus-app{
+  height:auto!important;
+  min-height:420px!important;
+}
+.master-sheet.current-function-sheet>.screen-stage.focus-app img{
+  width:auto!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:620px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+}
+.master-sheet.current-function-sheet>.current-copy,
+.master-sheet.current-function-sheet>.notice{
+  grid-column:2!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:0!important;
+  padding:16px 18px!important;
+  align-self:start!important;
+}
+.master-sheet.current-function-sheet>.current-copy:first-of-type,
+.master-sheet.current-function-sheet>.notice:first-of-type{margin-top:24px!important}
+.master-sheet.current-function-sheet>.sheet-nav{
+  grid-column:1/-1!important;
+  grid-row:99!important;
+  margin:10px -24px 0!important;
+}
+.master-sheet.current-function-sheet .current-copy p{font-size:13px!important;line-height:1.55!important}
+.master-sheet.current-function-sheet .current-copy h3{font-size:14px!important;line-height:1.2!important}
+@media(max-width:700px){
+  .master-sheet>img{max-width:calc(100% - 24px)!important;margin:14px auto!important}
+  .master-sheet.current-screen-sheet>.screen-stage{width:calc(100% - 24px)!important;margin:14px auto 12px!important;padding:10px!important}
+  .master-sheet.current-screen-sheet>.screen-stage img{max-height:560px!important}
+  .master-sheet.current-screen-sheet>.screen-note{width:calc(100% - 24px)!important;margin:0 auto 14px!important;padding:12px 14px!important}
+  .master-sheet.current-function-sheet{display:block!important;padding:0!important}
+  .master-sheet.current-function-sheet>.sheet-head{margin:0!important}
+  .master-sheet.current-function-sheet>.screen-stage{width:calc(100% - 24px)!important;min-height:0!important;margin:14px auto!important;padding:10px!important;border-radius:12px!important}
+  .master-sheet.current-function-sheet>.screen-stage.focus-app{min-height:0!important}
+  .master-sheet.current-function-sheet>.screen-stage img,
+  .master-sheet.current-function-sheet>.screen-stage.focus-app img{max-height:560px!important}
+  .master-sheet.current-function-sheet>.current-copy,
+  .master-sheet.current-function-sheet>.notice{width:calc(100% - 24px)!important;margin:10px auto!important;padding:13px 14px!important}
+  .master-sheet.current-function-sheet>.current-copy:first-of-type,
+  .master-sheet.current-function-sheet>.notice:first-of-type{margin-top:18px!important;border-top:3px solid #d6aa3f!important}
+  .master-sheet.current-function-sheet>.sheet-nav{margin:16px 0 0!important}
+}
+
+
+/* 2026-09-21 · BALANCE FÍSICO HOJA-POR-HOJA
+   El salto desde ÍNDICE debe dejar aire visible arriba y abajo, y márgenes
+   laterales simétricos incluso con las barras del navegador y MENÚ fijo. */
+:root{
+  --manual-viewport-top-gap:24px;
+  --manual-viewport-bottom-gap:96px;
+  --manual-mobile-gutter:14px;
+}
+.cover,.index,.sheet,.master-sheet{
+  scroll-margin-top:calc(var(--manual-viewport-top-gap) + env(safe-area-inset-top,0px))!important;
+  scroll-margin-bottom:calc(var(--manual-viewport-bottom-gap) + env(safe-area-inset-bottom,0px))!important;
+}
+@media(max-width:700px){
+  main{
+    width:100%!important;
+    max-width:none!important;
+    padding-top:18px!important;
+    padding-right:max(var(--manual-mobile-gutter),env(safe-area-inset-right,0px))!important;
+    padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))!important;
+    padding-left:max(var(--manual-mobile-gutter),env(safe-area-inset-left,0px))!important;
+  }
+  .cover,.index,.sheet,.master-sheet{
+    width:100%!important;
+    max-width:100%!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    margin-top:0!important;
+    margin-bottom:28px!important;
+    border-radius:14px!important;
+  }
+  .master-sheet>.sheet-head{
+    margin:0!important;
+  }
+  .master-sheet>.sheet-nav{
+    margin-left:0!important;
+    margin-right:0!important;
+    margin-bottom:0!important;
+  }
+  .master-sheet.current-screen-sheet>.screen-stage,
+  .master-sheet.current-function-sheet>.screen-stage{
+    width:calc(100% - 28px)!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+  .master-sheet.current-screen-sheet>.screen-note,
+  .master-sheet.current-function-sheet>.current-copy,
+  .master-sheet.current-function-sheet>.notice{
+    width:calc(100% - 28px)!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+}
+
+
+/* HOTSPOTS REALES SOBRE LAS GRÁFICAS DEL MANUAL */
+.screen-stage{position:relative!important}
+.manual-hotspot-layer{position:absolute;z-index:8;pointer-events:none}
+.manual-hotspot{
+ position:absolute;display:block;pointer-events:auto;cursor:pointer;
+ background:transparent;border:0;border-radius:10px;text-indent:-9999px;overflow:hidden;
+ -webkit-tap-highlight-color:rgba(49,255,0,.20)
+}
+.manual-hotspot:focus-visible{outline:3px solid #31ff00;outline-offset:1px;background:rgba(49,255,0,.08)}
+@media(hover:hover) and (pointer:fine){.manual-hotspot:hover{box-shadow:inset 0 0 0 2px rgba(49,255,0,.55);background:rgba(49,255,0,.05)}}
+</style></head><body>
+<header class="top"><strong>GOLF SCORE CARD GT · MANUAL DE FUNCIONES</strong><a href="#indice">ÍNDICE</a></header>
+<main>
+<section class="cover" id="portada"><img src="/assets/official-logos/golf-score-card-gt-official-master-1254.jpeg" alt="Logo oficial cuadrado Golf Score Card GT · cromado 3D con pelota, green y ondas verde neón"><div class="cover-note">GOLF SCORE CARD GT · MANUAL DE USUARIO · R128.20</div><div class="cover-actions"><a href="#indice">VER ÍNDICE</a><a href="#inicio">COMENZAR RECORRIDO</a></div></section>
+<section class="index" id="indice"><h1>Índice general</h1><p>Toca cualquier tema para saltar directamente a esa hoja. También puedes recorrer todo el manual haciendo scroll.</p><div class="toc"><a href="#inicio"><b>01</b><span>Inicio general</span></a><a href="#registro"><b>02</b><span>Registro de jugadores</span></a><a href="#confirmacion"><b>03</b><span>Confirmación general</span></a><a href="#stableford-registro"><b>04</b><span>Registro Stableford</span></a><a href="#ronda"><b>06</b><span>Ronda general</span></a><a href="#control-manual"><b>07</b><span>Control manual</span></a><a href="#match-play"><b>08</b><span>Match Play</span></a><a href="#four-ball"><b>09</b><span>Four Ball</span></a><a href="#campo-1"><b>10</b><span>Información de campos I</span></a><a href="#campo-2"><b>11</b><span>Información de campos II</span></a><a href="#campo-3"><b>12</b><span>Información de campos III</span></a><a href="#campo-4"><b>13</b><span>Información de campos IV</span></a><a href="#campo-5"><b>14</b><span>Información de campos V</span></a><a href="#campo-6"><b>15</b><span>Información de campos VI</span></a><a href="#campo-7"><b>16</b><span>Información de campos VII</span></a><a href="#ronda-completa"><b>17</b><span>La ronda completa</span></a><a href="#antes-jugar"><b>18</b><span>Antes de jugar</span></a><a href="#registro-2"><b>19</b><span>Registro de jugadores</span></a><a href="#control-x"><b>20</b><span>Control Manual y X</span></a><a href="#calculos"><b>21</b><span>Cálculos fáciles</span></a><a href="#lectura"><b>22</b><span>Lectura de la tarjeta</span></a><a href="#consultas"><b>23</b><span>Consultas de ronda</span></a><a href="#tiempo"><b>24</b><span>Tiempo y navegación</span></a><a href="#zona-operativa"><b>24A</b><span>Zona operativa inferior · audio, resumen y acciones</span></a><a href="#continuidad"><b>25</b><span>Continuidad</span></a><a href="#reinicios"><b>26</b><span>Reinicios seguros</span></a><a href="#jugadores-ronda"><b>27</b><span>Jugadores durante la ronda</span></a><a href="#tarjeta-digital"><b>28</b><span>Tarjeta Digital</span></a><a href="#cierre"><b>29</b><span>Cierre automático y Tarjeta Digital Final</span></a><a href="#archivos"><b>30</b><span>Archivos y compartir</span></a><a href="#tarjetas-digitales-capitulo"><b>30A</b><span>Tarjetas Digitales</span></a><a href="#correccion"><b>31</b><span>Corrección oficial</span></a><a href="#historial"><b>32</b><span>Historial local</span></a><a href="#estadisticas"><b>33</b><span>Estadísticas</span></a><a href="#cuenta"><b>34</b><span>Cuenta y respaldo</span></a><a href="#instalacion"><b>35</b><span>Instalación y conexión</span></a><a href="#stableford-objetivo"><b>36</b><span>Stableford - objetivo</span></a><a href="#stableford-operacion"><b>37</b><span>Stableford - operación</span></a><a href="#match-play-2"><b>38</b><span>Match Play</span></a><a href="#four-ball-2"><b>39</b><span>Four Ball</span></a><a href="#juegos"><b>41</b><span>Universales - operación</span></a><a href="#skins-1"><b>42</b><span>Skins - preparación</span></a><a href="#skins-2"><b>43</b><span>Skins - acumulados</span></a><a href="#skins-3"><b>44</b><span>Skins - cierre</span></a><a href="#reglas"><b>45</b><span>Reglas de Golf</span></a><a href="#ayuda"><b>46</b><span>Ayuda y navegación</span></a><a href="#offline"><b>47</b><span>Sin conexión y caché</span></a><a href="#privacidad"><b>48</b><span>Privacidad y seguridad</span></a><a href="#ruta"><b>49</b><span>Ruta completa de uso</span></a><a href="#soporte"><b>50</b><span>Soporte y verificación</span></a><div class="toc-divider">TORNEOS</div><a href="#torneos"><b>T01–T10</b><span>Torneos · recorrido integrado en este manual</span></a></div></section>
+
+<section class="sheet master-sheet current-function-sheet" id="inicio">
+<div class="sheet-head"><strong>01</strong><h2>Preparar una nueva ronda</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage"><img src="/docs/manual/current/APP_SETUP_CURRENT.png" alt="Pantalla oficial para seleccionar campo, modalidad y preparar la ronda" loading="lazy"></div>
+<div class="current-copy"><h3>OBJETIVO DE ESTA PANTALLA</h3><p>Esta es la puerta de entrada para preparar una ronda. Aquí decides <b>dónde vas a jugar</b>, <b>qué modalidad usarás</b> y si entrarás a una Score Card o consultar Torneos. Nada se registra todavía como ronda activa hasta completar la revisión final y tocar INICIAR RONDA.</p></div>
+<div class="current-copy"><h3>1 · SELECCIONA CAMPO</h3><p>Toca el campo donde vas a jugar. La selección determina par, yardajes, handicap por hoyo y demás datos oficiales que utilizará la Score Card. Si eliges un campo equivocado, corrígelo aquí antes de iniciar; una vez comenzada la ronda no conviene cambiar la base del campo.</p></div>
+<div class="current-copy"><h3>2 · ELIGE MODALIDAD</h3><p>Los botones visibles son <b>N · MEDAL PLAY NORMAL</b>, <b>M · MATCH PLAY</b>, <b>4 · FOUR BALL</b>, <b>$ · SKINS</b>, <b>U · UNIVERSALES</b> y <b>S · STABLEFORD</b>. Cada modalidad cambia la forma en que la aplicación calcula o presenta resultados. Crear torneo y Crear ronda Particular están en MENÚ. Torneos existentes se consultan mediante su código.</p></div>
+<div class="current-copy"><h3>CENTRO DE TORNEOS</h3><p>Desde la preparación de ronda puedes abrir directamente <b>CENTRO DE TORNEOS</b>. La personalización manual de nombre/registro de torneo ya no forma parte de esta pantalla.</p></div>
+<div class="current-copy"><h3>QUÉ PASA DESPUÉS</h3><p>Después de elegir campo y modalidad, completa los jugadores. Luego toca REVISAR DATOS. La aplicación abre una pantalla de confirmación para verificar todo antes de iniciar.</p></div>
+<div class="current-copy"><h3>SI TE EQUIVOCAS</h3><p>Mientras no hayas iniciado la ronda, puedes regresar, cambiar campo, modalidad o jugadores. No necesitas borrar toda la aplicación ni perder rondas guardadas.</p></div>
+<div class="sheet-nav"><a href="#indice">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#registro">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="registro">
+<div class="sheet-head"><strong>02</strong><h2>Registrar jugadores</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage"><img src="/docs/manual/current/APP_SETUP_CURRENT.png" alt="Pantalla oficial de preparación y registro de jugadores" loading="lazy"></div>
+<div class="current-copy"><h3>OBJETIVO DE ESTA PANTALLA</h3><p>Registrar correctamente a cada persona que jugará la ronda. La aplicación necesita los datos de cada jugador para calcular handicap, golpes recibidos, netos, equipos o enfrentamientos según la modalidad seleccionada.</p></div>
+<div class="current-copy"><h3>1 · NOMBRE</h3><p>Escribe el nombre del jugador tal como quieres que aparezca en la Score Card, tarjeta final, historial y resultados. Evita apodos ambiguos si después necesitarás buscar esa ronda en el historial.</p></div>
+<div class="current-copy"><h3>2 · CATEGORÍA</h3><p>Selecciona la categoría oficial correspondiente. La categoría sirve para clasificación y, cuando aplica, para asociar las marcas oficiales configuradas. CAMPEONATO, A, B, C, D, SENIOR, SUPER SENIOR y FEMENINA son las categorías visibles vigentes.</p></div>
+<div class="current-copy"><h3>3 · HDCP</h3><p>Ingresa el handicap que debe usar ese jugador para la ronda. Este dato participa en el cálculo de neto y golpes recibidos. Revisa que sea correcto antes de iniciar porque un HDCP equivocado altera todos los resultados netos.</p></div>
+<div class="current-copy"><h3>4 · MARCAS</h3><p>Confirma las marcas o tees desde donde jugará cada persona. Las marcas determinan los yardajes y pueden variar por categoría. No asumas que todos los jugadores deben usar las mismas.</p></div>
+<div class="current-copy"><h3>5 · WHATSAPP OPCIONAL</h3><p>El número de WhatsApp es opcional. Verifica el <b>Código de país WhatsApp jugador 1</b> y, cuando haya más participantes, los códigos de país de los jugadores 2, 3, 4, 5 y 6. Luego escribe el número. Dejarlo vacío no impide jugar ni calcular la ronda.</p></div><div class="current-copy"><h3>CORREGIR / IGNORAR DATO FALTANTE</h3><p>Si la aplicación detecta información incompleta, <b>CORREGIR</b> vuelve al dato que falta. <b>IGNORAR</b> continúa únicamente cuando ese dato es opcional o el flujo permite omitirlo; no ignores HDCP, nombre, campo o información necesaria para el cálculo.</p></div>
+<div class="current-copy"><h3>BORRAR JUGADORES REGISTRADOS</h3><p>Elimina la lista de jugadores que estás preparando en esta nueva ronda. Úsalo sólo cuando quieras volver a comenzar el registro; no equivale a borrar las rondas guardadas del historial.</p></div>
+<div class="current-copy"><h3>REVISAR DATOS</h3><p>Cuando campo, modalidad y jugadores estén correctos, toca REVISAR DATOS. Este botón no inicia todavía la ronda: abre la pantalla de confirmación final.</p></div>
+<div class="current-copy"><h3>VER RONDAS GUARDADAS / RESPALDAR</h3><p>VER RONDAS GUARDADAS consulta rondas anteriores. RESPALDAR / RECUPERAR DATOS abre la cuenta opcional para guardar o recuperar jugadores, rondas y tarjetas. Ninguna de estas dos acciones cambia los datos que ya escribiste en el registro actual salvo que expresamente recuperes un respaldo.</p></div>
+<div class="sheet-nav"><a href="#inicio">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#confirmacion">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="confirmacion">
+<div class="sheet-head"><strong>03</strong><h2>Revisar antes de iniciar</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_SETUP_CURRENT.png" alt="Pantalla oficial de revisión previa a iniciar la ronda" loading="lazy"></div>
+<div class="current-copy"><h3>OBJETIVO DE ESTA PANTALLA</h3><p>Es la última verificación antes de convertir la configuración en una ronda activa. Aquí debes comprobar que el campo, modalidad, torneo opcional y cada jugador sean correctos.</p></div>
+<div class="current-copy"><h3>REVISA CAMPO Y MODALIDAD</h3><p>Confirma que estás en el campo correcto y que la modalidad coincide con lo que van a jugar. Si algo está mal, toca ATRÁS y corrígelo. No inicies una ronda con una modalidad equivocada esperando corregirla después.</p></div>
+<div class="current-copy"><h3>REVISA CADA JUGADOR</h3><p>Verifica nombre, categoría, HDCP y marcas. Una diferencia aquí puede cambiar golpes recibidos, netos, equipos, comparaciones Match Play o clasificación.</p></div>
+<div class="current-copy"><h3>INICIAR RONDA</h3><p>Toca INICIAR RONDA únicamente cuando todo esté correcto. En ese momento la aplicación crea la ronda activa, registra la hora de inicio y abre la Score Card correspondiente a la modalidad seleccionada.</p></div>
+<div class="current-copy"><h3>ATRÁS</h3><p>Regresa a la preparación para corregir datos. Volver atrás en esta etapa no elimina rondas anteriores ni el historial.</p></div>
+<div class="current-copy"><h3>RESULTADO ESPERADO</h3><p>Después de INICIAR RONDA debes ver la Score Card activa con jugadores, hoyos, gross/neto y controles operativos. Desde allí comienza el ingreso de resultados.</p></div>
+<div class="sheet-nav"><a href="#registro">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#stableford-registro">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="stableford-registro">
+<div class="sheet-head"><strong>04</strong><h2>Preparar una ronda Stableford</h2><a href="#indice">ÍNDICE</a></div><img src="/docs/manual/current/APP_SETUP_CURRENT.png" alt="Captura real LAB de la aplicación">
+<div class="screen-stage mode-real"></div>
+<div class="current-copy"><h3>OBJETIVO</h3><p>Configurar una ronda Stableford antes de empezar. Stableford tiene su propio flujo porque el resultado se expresa en puntos y la aplicación necesita conocer campo, categoría y jugadores antes de crear la tarjeta.</p></div>
+<div class="current-copy"><h3>1 · CAMPO</h3><p>Selecciona uno de los seis campos disponibles: <b>EL PULTÉ</b>, <b>COUNTRY CLUB</b>, <b>SAN ISIDRO</b>, <b>MAYAN GOLF</b>, <b>HACIENDA NUEVA</b> o <b>ALTA VISTA</b>. La selección carga la información oficial del campo que utilizará la ronda.</p></div>
+<div class="current-copy"><h3>2 · CATEGORÍA Y MARCAS</h3><p>Las opciones visibles incluyen <b>CAMPEONATO · NEGRAS</b>, <b>A · AZULES</b>, <b>B · BLANCAS</b>, <b>C · BLANCAS</b>, <b>D · BLANCAS</b>, <b>SENIOR · BLANCAS</b>, <b>SUPER SENIOR · AMARILLAS</b> y <b>FEMENINA · ROJAS</b>. Selecciona la combinación correcta antes de continuar.</p></div>
+<div class="current-copy"><h3>3 · JUGADORES</h3><p>Puedes registrar de 1 a 6 jugadores. Escribe el nombre de cada uno. WhatsApp es opcional; si lo completas, revisa el código de país y el número.</p></div>
+<div class="current-copy"><h3>INICIAR RONDA</h3><p>Crea la ronda Stableford activa con la configuración seleccionada. Después de tocarlo, la tarjeta ya queda en juego y los resultados se calculan conforme ingresas los scores.</p></div>
+<div class="current-copy"><h3>VER RONDA ANTERIOR / RONDAS GUARDADAS</h3><p>VER RONDA ANTERIOR abre la ronda previa cuando existe. VER RONDAS GUARDADAS abre el historial completo. Ninguna de las dos opciones debe alterar la configuración que estás preparando mientras no confirmes otra acción.</p></div>
+<div class="current-copy"><h3>ATRÁS A LA RONDA</h3><p>Sale de la preparación Stableford y vuelve a la ronda activa cuando corresponda. Úsalo si entraste por error o decides no comenzar una nueva ronda.</p></div>
+<div class="sheet-nav"><a href="#confirmacion">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#ronda">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="ronda">
+<div class="sheet-head"><strong>06</strong><h2>Usar la Score Card durante la ronda</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage"><img src="/docs/manual/current/APP_SCORECARD_ATAJOS.png" alt="Pantalla oficial de Score Card durante una ronda" loading="lazy"></div>
+<div class="current-copy"><h3>OBJETIVO DE ESTA PANTALLA</h3><p>Es el centro operativo de la ronda. Aquí ves jugadores, hoyos, gross, netos, handicap por hoyo, acumulados y el estado general de la partida mientras juegas.</p></div>
+<div class="current-copy"><h3>INGRESO DE RESULTADOS</h3><p>Selecciona el hoyo y registra el GROSS de cada jugador mediante el control manual disponible. La aplicación calcula automáticamente NETO, relación contra par y acumulados según la modalidad.</p></div>
+<div class="current-copy"><h3>RESUMEN</h3><p>El resumen inferior concentra los resultados acumulados de cada jugador. Úsalo para comprobar rápidamente cómo va la ronda sin revisar hoyo por hoyo.</p></div><div class="current-copy"><h3>ESCUCHAR TU ESTADO ACTUAL · DOBLE TOQUE EN TU NOMBRE</h3><p>Durante una ronda, da <strong>dos toques sobre tu nombre</strong> en la Score Card. El primer toque se ilumina <strong>amarillo</strong>; el segundo se ilumina <strong>verde</strong> y el iPhone lee tu estado individual. La lectura comienza siempre por el nombre del jugador y usa la misma fórmula sin importar si estás jugando IN u OUT. Ejemplo: <strong>“Jaime, hasta el hoyo 5: Gross…, Neto…, resultado…”</strong>. Si ya existe una mitad anterior jugada, agrega después <strong>“Acumulado total: Gross…, Neto…, resultado…”</strong>. Ejemplo: salida por hoyo 1 y jugando el 13 → “Jaime, hasta el hoyo 13…” + “Acumulado total…”. Si la salida fue por hoyo 10 y luego vas por el hoyo 4 → “Jaime, hasta el hoyo 4…” + “Acumulado total…”.</p><p><strong>Mientras estás en la primera vuelta que juegas</strong> —sin importar si comenzaste por el hoyo 1 o por el hoyo 10— escucharás el acumulado de esa vuelta hasta el hoyo actual: Gross, Neto y resultado neto contra par con tu handicap aplicado.</p><p><strong>Cuando ya estás en la segunda vuelta de la ronda</strong>, la lectura da dos bloques: primero, el acumulado de la vuelta actual hasta el hoyo que vas jugando; después, el <strong>acumulado total de toda la ronda</strong> hasta ese mismo hoyo.</p><p>Ejemplo: si comenzaste por el hoyo 10, terminaste 10–18 y ahora vas por el hoyo 4, escucharás primero el resultado de <strong>1–4</strong> y después el acumulado total de <strong>10–18 + 1–4</strong>.</p></div>
+<div class="current-copy"><h3>TIEMPO DE RONDA</h3><p>La pantalla muestra INICIO, FINAL, TIMER y CRONÓMETRO cuando corresponde. Estos controles sirven para seguimiento del tiempo y no cambian el score deportivo.</p></div>
+<div class="current-copy"><h3>MENÚ</h3><p>MENÚ es la navegación universal. Desde aquí puedes ir a Mis Torneos, Monitor del Torneo en Vivo, Tablero de Mis Favoritos u otras áreas sin tener que retroceder pantalla por pantalla.</p></div>
+<div class="current-copy"><h3>ACCIONES DE RONDA</h3><p>VER MI TARJETA abre la tarjeta digital; VER RONDAS GUARDADAS consulta historial; EMPEZAR NUEVA RONDA inicia otro proceso; COMPARTIR MI RONDA EN VIVO publica una vista Live cuando está disponible.</p></div>
+<div class="current-copy"><h3>BORRAR RESULTADOS / BORRAR RONDA Y JUGADORES</h3><p>BORRAR RESULTADOS DE ESTA RONDA elimina los scores anotados manteniendo la estructura de la ronda. BORRAR RONDA Y JUGADORES es una acción más drástica: reinicia la ronda y el registro. Úsalas sólo cuando realmente quieras perder esos datos.</p></div>
+<div class="sheet-nav"><a href="#ronda">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#control-manual">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="control-manual">
+<div class="sheet-head"><strong>07</strong><h2>Ingresar scores con Control Manual</h2><a href="#indice">ÍNDICE</a></div><img src="/docs/manual/current/APP_SCORECARD_ATAJOS.png" alt="Captura real LAB de la aplicación">
+<div class="screen-stage"></div>
+<div class="current-copy"><h3>OBJETIVO</h3><p>Registrar correctamente el resultado de cada jugador hoyo por hoyo. El Control Manual es el método operativo para ingresar scores cuando no se utiliza otra forma de captura.</p></div>
+<div class="current-copy"><h3>1 · SELECCIONA HOYO</h3><p>Elige el número de hoyo que vas a registrar. Confirma que el hoyo seleccionado coincide con el que acabas de jugar antes de ingresar cualquier gross.</p></div>
+<div class="current-copy"><h3>2 · GROSS POR JUGADOR</h3><p>Toca la casilla GROSS del jugador que vas a registrar y utiliza el teclado numérico. La casilla activa queda identificada visualmente; después de confirmar, el flujo continúa con el siguiente jugador.</p></div><div class="current-copy"><h3>TECLADO NUMÉRICO · 1 A 9</h3><p>El teclado incluye obligatoriamente <strong>1, 2, 3, 4, 5, 6, 7, 8 y 9</strong>. El número <strong>1 nunca puede omitirse</strong>: es necesario para registrar correctamente un <strong>Hole in One</strong>, cuando el jugador completa el hoyo con un solo golpe. Si la modalidad admite X, utilízala únicamente cuando corresponda.</p></div>
+<div class="current-copy"><h3>3 · ENTER / CONFIRMAR</h3><p>Confirma los datos del hoyo. La aplicación guarda el gross, calcula neto y actualiza acumulados. Después puedes avanzar al siguiente hoyo.</p></div>
+<div class="current-copy"><h3>QUÉ CALCULA AUTOMÁTICAMENTE</h3><p>La app aplica handicap por hoyo, obtiene NETO, relación +/− y totales acumulados. En modalidades especiales también actualiza el resultado propio de Match Play, Four Ball, Stableford, Skins o Universales.</p></div>
+<div class="current-copy"><h3>SI TE EQUIVOCAS</h3><p>Vuelve al hoyo correspondiente y corrige el gross antes de que la ronda complete sus condiciones y se cierre automáticamente. Si la ronda ya fue cerrada, utiliza CORRECCIÓN OFICIAL en lugar de alterar silenciosamente el resultado final.</p></div>
+<div class="sheet-nav"><a href="#ronda">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#match-play">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="match-play">
+<div class="sheet-head"><strong>08</strong><h2>Jugar Match Play</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage mode-real"><img src="/docs/manual/current/APP_MODE_MATCH_PLAY.png" alt="Pantalla oficial Match Play" loading="lazy"></div>
+<div class="current-copy"><h3>PARA QUÉ SIRVE</h3><p>Match Play compara jugadores o parejas hoyo por hoyo. El objetivo no es únicamente sumar golpes totales, sino determinar quién gana cada hoyo y cómo queda el match acumulado.</p></div>
+<div class="current-copy"><h3>JUGADORES / PAREJAS</h3><p>La aplicación admite 2, 4 o 6 jugadores, organizados como una, dos o tres parejas independientes. Revisa que la configuración de los enfrentamientos sea correcta antes de iniciar.</p></div>
+<div class="current-copy"><h3>RESULTADO DEL HOYO</h3><p>Después de registrar los scores, la app compara el <b>NETO</b> correspondiente. En la tarjeta digital cada hoyo debe mostrar <b>↑ verde = ganó</b>, <b>↓ rojo = perdió</b> y <b>= = empate</b>. El estado acumulado del match continúa indicando AS, UP o DOWN según corresponda.</p></div>
+<div class="current-copy"><h3>CIERRE DEL MATCH</h3><p>Cada pareja puede terminar en un hoyo distinto. La pantalla debe mostrar cuándo un match ya está definido matemáticamente aunque otros enfrentamientos continúen.</p></div>
+<div class="current-copy"><h3>ERROR DE SCORE</h3><p>Corrige el hoyo equivocado mientras el match siga activo. Como el estado UP/DOWN depende de cada hoyo, una corrección puede cambiar también el resultado acumulado del match.</p></div>
+<div class="sheet-nav"><a href="#control-manual">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#four-ball">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="four-ball">
+<div class="sheet-head"><strong>09</strong><h2>Jugar Four Ball</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage mode-real"><img src="/docs/manual/current/APP_MODE_FOUR_BALL.png" alt="Pantalla oficial Four Ball" loading="lazy"></div>
+<div class="current-copy"><h3>PARA QUÉ SIRVE</h3><p>Four Ball organiza jugadores en TEAMS de dos. Cada integrante juega su propia bola y la aplicación utiliza el mejor NETO del equipo en cada hoyo para el resultado del TEAM.</p></div>
+<div class="current-copy"><h3>FORMACIÓN DE TEAMS</h3><p>Puedes registrar 1, 2 o 3 TEAMS de dos jugadores. Confirma las parejas antes de iniciar porque cambiar integrantes después altera la lectura competitiva de la ronda.</p></div>
+<div class="current-copy"><h3>MEJOR NETO</h3><p>En cada hoyo la aplicación compara los netos de los dos integrantes y toma el mejor como NETO TEAM. La tarjeta conserva también los resultados individuales.</p></div>
+<div class="current-copy"><h3>RESULTADO ACUMULADO</h3><p>El estado del encuentro se actualiza hoyo por hoyo a partir del mejor neto de cada TEAM. Revisa que ambos jugadores tengan su gross registrado antes de dar el hoyo por completo. La Tarjeta Digital de Four Ball se mantiene identificada y separada de Match Play durante la preparación y el envío.</p></div>
+<div class="current-copy"><h3>CORRECCIONES</h3><p>Si corriges el score de cualquiera de los integrantes, el mejor neto del TEAM puede cambiar automáticamente. Comprueba el resultado del hoyo después de cualquier corrección.</p></div>
+<div class="sheet-nav"><a href="#match-play">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#campo-1">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet" id="campo-1">
+<div class="sheet-head"><strong>10</strong><h2>Información de campos I</h2><a href="#indice">ÍNDICE</a></div><div class="current-copy"><h3>CAPTURA REAL PENDIENTE</h3><p>Esta hoja no mostrará una pantalla hasta disponer de una captura física real de LAB correspondiente a esta función. No se utilizarán simulaciones, SVG ni láminas diseñadas.</p></div>
+
+<div class="sheet-nav"><a href="#four-ball">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#campo-2">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet" id="campo-2">
+<div class="sheet-head"><strong>11</strong><h2>Información de campos II</h2><a href="#indice">ÍNDICE</a></div><div class="current-copy"><h3>CAPTURA REAL PENDIENTE</h3><p>Esta hoja no mostrará una pantalla hasta disponer de una captura física real de LAB correspondiente a esta función. No se utilizarán simulaciones, SVG ni láminas diseñadas.</p></div>
+
+<div class="sheet-nav"><a href="#campo-1">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#campo-3">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet" id="campo-3">
+<div class="sheet-head"><strong>12</strong><h2>Información de campos III</h2><a href="#indice">ÍNDICE</a></div><div class="current-copy"><h3>CAPTURA REAL PENDIENTE</h3><p>Esta hoja no mostrará una pantalla hasta disponer de una captura física real de LAB correspondiente a esta función. No se utilizarán simulaciones, SVG ni láminas diseñadas.</p></div>
+
+<div class="sheet-nav"><a href="#campo-2">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#campo-4">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet" id="campo-4">
+<div class="sheet-head"><strong>13</strong><h2>Información de campos IV</h2><a href="#indice">ÍNDICE</a></div><div class="current-copy"><h3>CAPTURA REAL PENDIENTE</h3><p>Esta hoja no mostrará una pantalla hasta disponer de una captura física real de LAB correspondiente a esta función. No se utilizarán simulaciones, SVG ni láminas diseñadas.</p></div>
+
+<div class="sheet-nav"><a href="#campo-3">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#campo-5">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet" id="campo-5">
+<div class="sheet-head"><strong>14</strong><h2>Información de campos V</h2><a href="#indice">ÍNDICE</a></div><div class="current-copy"><h3>CAPTURA REAL PENDIENTE</h3><p>Esta hoja no mostrará una pantalla hasta disponer de una captura física real de LAB correspondiente a esta función. No se utilizarán simulaciones, SVG ni láminas diseñadas.</p></div>
+
+<div class="sheet-nav"><a href="#campo-4">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#campo-6">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet" id="campo-6">
+<div class="sheet-head"><strong>15</strong><h2>Información de campos VI</h2><a href="#indice">ÍNDICE</a></div><div class="current-copy"><h3>CAPTURA REAL PENDIENTE</h3><p>Esta hoja no mostrará una pantalla hasta disponer de una captura física real de LAB correspondiente a esta función. No se utilizarán simulaciones, SVG ni láminas diseñadas.</p></div>
+
+<div class="sheet-nav"><a href="#campo-5">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#campo-7">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet" id="campo-7">
+<div class="sheet-head"><strong>16</strong><h2>Información de campos VII</h2><a href="#indice">ÍNDICE</a></div><div class="current-copy"><h3>CAPTURA REAL PENDIENTE</h3><p>Esta hoja no mostrará una pantalla hasta disponer de una captura física real de LAB correspondiente a esta función. No se utilizarán simulaciones, SVG ni láminas diseñadas.</p></div>
+
+<div class="sheet-nav"><a href="#campo-6">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#ronda-completa">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="ronda-completa">
+<div class="sheet-head"><strong>17</strong><h2>La ronda completa</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_SCORECARD_ATAJOS.png" alt="La ronda completa" loading="lazy"></div>
+<div class="current-copy"><h3>Ronda activa</h3><p>La Score Card reúne scores, Netos, resumen, cronómetro, Audio de Resultados y MENÚ.</p></div><div class="current-copy"><h3>Navegación</h3><p>Usa los controles visibles de hoyo y las acciones inferiores para completar la ronda.</p></div>
+<div class="sheet-nav"><a href="#campo-7">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#antes-jugar">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="antes-jugar">
+<div class="sheet-head"><strong>18</strong><h2>Antes de jugar</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_SETUP_CURRENT.png" alt="Selección actual de campo y modalidad" loading="lazy"></div><div class="current-copy"><h3>1 · CAMPO</h3><p>Selecciona el campo donde jugarás.</p></div><div class="current-copy"><h3>2 · MODALIDAD</h3><p>Elige únicamente una modalidad vigente antes de registrar jugadores.</p></div><div class="current-copy"><h3>3 · REGISTRO</h3><p>Continúa al registro manual, revisa jugadores, HDCP, categoría y marcas antes de iniciar la ronda.</p></div>
+<div class="sheet-nav"><a href="#ronda-completa">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#registro-2">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="registro-2">
+<div class="sheet-head"><strong>19</strong><h2>Registro de jugadores · detalle operativo</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_SETUP_CURRENT.png" alt="Pantalla oficial limpia de preparación y registro" loading="lazy"></div>
+<div class="current-copy"><h3>QUÉ REVISA ESTA HOJA</h3><p>Esta hoja complementa el registro inicial y detalla qué debe verificarse antes de continuar: nombre, categoría, HDCP, marcas y WhatsApp opcional.</p></div>
+<div class="current-copy"><h3>NOMBRE</h3><p>Debe identificar claramente al jugador para que luego aparezca correctamente en Score Card, tarjeta final e historial.</p></div>
+<div class="current-copy"><h3>CATEGORÍA + MARCAS</h3><p>Verifica la combinación correspondiente antes de iniciar. Una categoría o marcas equivocadas pueden producir una lectura incorrecta del resultado o clasificación.</p></div>
+<div class="current-copy"><h3>HDCP</h3><p>Confirma el handicap antes de iniciar. Este dato afecta netos y golpes recibidos.</p></div>
+<div class="current-copy"><h3>DATOS OPCIONALES</h3><p>WhatsApp y descripción de torneo son auxiliares. No deben bloquear la ronda si la función permite omitirlos.</p></div>
+<div class="current-copy"><h3>REVISAR DATOS</h3><p>Usa REVISAR DATOS para pasar a la confirmación final. Si la app detecta un faltante, utiliza CORREGIR o IGNORAR según corresponda.</p></div>
+<div class="sheet-nav"><a href="#antes-jugar">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#control-x">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="control-x">
+<div class="sheet-head"><strong>20</strong><h2>Control Manual y marca X</h2><a href="#indice">ÍNDICE</a></div><img src="/docs/manual/current/APP_SCORECARD_ATAJOS.png" alt="Captura real LAB de la aplicación">
+<div class="screen-stage focus-app"></div>
+<div class="current-copy"><h3>SELECCIONA JUGADOR Y HOYO</h3><p>Antes de escribir un resultado, confirma que estás trabajando sobre el jugador y hoyo correctos.</p></div>
+<div class="current-copy"><h3>REGISTRA GROSS</h3><p>Ingresa los golpes reales. La aplicación calcula neto y acumulados automáticamente.</p></div>
+<div class="current-copy"><h3>MARCA X</h3><p>Cuando la modalidad y la operación permitan una X, úsala para registrar explícitamente ese estado. No sustituyas una X por un número inventado.</p></div>
+<div class="current-copy"><h3>ENTER / CONFIRMAR</h3><p>Confirma el hoyo para guardar el dato y actualizar la tarjeta.</p></div>
+<div class="current-copy"><h3>CORREGIR UN HOYO</h3><p>Si detectas un error mientras la ronda sigue activa, vuelve al hoyo específico y corrige sólo ese dato. Si la ronda ya fue cerrada automáticamente, utiliza CORRECCIÓN OFICIAL.</p></div>
+<div class="current-copy"><h3>QUÉ NO DEBES HACER</h3><p>No borres toda la ronda para corregir una sola celda. Usa la corrección puntual disponible.</p></div>
+<div class="sheet-nav"><a href="#registro-2">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#calculos">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="calculos">
+<div class="sheet-head"><strong>21</strong><h2>Cálculos</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_SCORECARD_ATAJOS.png" alt="Cálculos" loading="lazy"></div>
+<div class="current-copy"><h3>Automático</h3><p>La app calcula Gross, Neto, acumulados y +/- con los datos de ronda vigentes.</p></div><div class="current-copy"><h3>No duplicar</h3><p>No introduzcas manualmente resultados que la app ya calcula.</p></div>
+<div class="sheet-nav"><a href="#control-x">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#lectura">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="lectura">
+<div class="sheet-head"><strong>22</strong><h2>Lectura de la tarjeta</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_SCORECARD_ATAJOS.png" alt="Lectura de la tarjeta" loading="lazy"></div>
+<div class="current-copy"><h3>Lectura</h3><p>Consulta hoyos, Gross, HDCP, Neto y acumulados en la Score Card vigente.</p></div><div class="current-copy"><h3>Deslizar</h3><p>Usa el desplazamiento horizontal cuando sea necesario para ver todos los hoyos.</p></div>
+<div class="sheet-nav"><a href="#calculos">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#consultas">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="consultas">
+<div class="sheet-head"><strong>23</strong><h2>Consultas de ronda</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_SCORECARD_ATAJOS.png" alt="Consultas de ronda" loading="lazy"></div>
+<div class="current-copy"><h3>Consulta</h3><p>La Score Card y el resumen inferior muestran el estado actual de la ronda.</p></div><div class="current-copy"><h3>Rondas guardadas</h3><p>Para consultar rondas anteriores usa VER RONDAS GUARDADAS.</p></div>
+<div class="sheet-nav"><a href="#lectura">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#tiempo">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="tiempo">
+<div class="sheet-head"><strong>24</strong><h2>Monitor de Tiempo</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage"><img src="/docs/manual/current/MONITOR_TIEMPO_REAL_LAB.png" alt="Monitor de Tiempo actual: Inicio Final Timer Reset" loading="lazy"></div>
+<div class="current-copy"><h3>INICIO / FINAL</h3><p>INICIO muestra la hora de comienzo de la ronda. FINAL muestra la hora de cierre cuando la ronda termina.</p></div>
+<div class="current-copy"><h3>TIMER</h3><p>Muestra HH:MM:SS. Toca TIMER para pausar; tócalo otra vez para reanudar. El tiempo pausado no se suma.</p></div>
+<div class="current-copy"><h3>RESET</h3><p>Pide confirmación y reinicia el monitor a 00:00:00 sin borrar jugadores ni scores.</p></div>
+<div class="sheet-nav"><a href="#consultas">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#zona-operativa">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="zona-operativa">
+<div class="sheet-head"><strong>24A</strong><h2>Zona operativa inferior</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage"><img src="/docs/manual/current/OPERACION_RONDA_INFERIOR_REAL_LAB.png" alt="Zona operativa inferior actual de la ronda" loading="lazy"></div>
+<div class="current-copy"><h3>AUDIO DE RESULTADOS</h3><p><strong>FRONT · 1 - 9</strong>, <strong>BACK · 10 - 18</strong> y <strong>TOTAL · 1 - 18</strong> sirven para repetir los segmentos completos cuando corresponda. Al tocar un resultado comienza la lectura; al tocar de nuevo el mismo botón, el audio se detiene. Si eliges otro resultado mientras uno está sonando, el audio anterior se cancela y comienza el nuevo. La cola interna evita que dos resultados se reproduzcan montados.</p><p>Para conocer tu situación personal mientras la ronda sigue en curso, da dos toques sobre tu nombre. En la <strong>primera vuelta que estés jugando</strong> escucharás únicamente esa vuelta hasta el hoyo actual. Al pasar a la <strong>segunda vuelta de tu recorrido</strong>, escucharás primero esa vuelta parcial y después el acumulado total de toda la ronda. Esto funciona igual si la salida fue por el hoyo 1 o por el hoyo 10.</p></div>
+<div class="current-copy"><h3>INFORMACIÓN DE RONDA</h3><p>Muestra GROSS IN, GROSS OUT, GROSS TOTAL, HCP, NETO TOTAL y +/- NETO.</p></div>
+<div class="current-copy"><h3>ACCIONES</h3><p>VER MI TARJETA, VER RONDAS GUARDADAS, VER RONDA ANTERIOR cuando aplica, EMPEZAR NUEVA RONDA, ATRÁS, BORRAR RESULTADOS DE ESTA RONDA y BORRAR RONDA Y JUGADORES. + JUGADOR aparece sólo cuando corresponde.</p></div>
+<div class="sheet-nav"><a href="#tiempo">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#continuidad">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="continuidad">
+<div class="sheet-head"><strong>25</strong><h2>Continuidad de la ronda</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_SCORECARD_ATAJOS.png" alt="Continuidad de la ronda" loading="lazy"></div>
+<div class="current-copy"><h3>Conserva la ronda</h3><p>La ronda activa mantiene scores y configuración mientras continúas el flujo normal.</p></div><div class="current-copy"><h3>Volver</h3><p>Usa MI RONDA o MENÚ para regresar directamente a la Score Card.</p></div>
+<div class="sheet-nav"><a href="#zona-operativa">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#reinicios">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="reinicios">
+<div class="sheet-head"><strong>26</strong><h2>Reinicios seguros</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/OPERACION_RONDA_INFERIOR_REAL_LAB.png" alt="Reinicios seguros" loading="lazy"></div>
+<div class="current-copy"><h3>RESET</h3><p>RESET reinicia únicamente el cronómetro después de confirmar.</p></div><div class="current-copy"><h3>BORRAR RESULTADOS DE ESTA RONDA</h3><p>Elimina únicamente los resultados anotados de la ronda.</p></div><div class="current-copy"><h3>BORRAR RONDA Y JUGADORES</h3><p>Usa esta acción sólo cuando quieras eliminar la ronda y sus jugadores para empezar completamente de nuevo.</p></div>
+<div class="sheet-nav"><a href="#continuidad">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#jugadores-ronda">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="jugadores-ronda">
+<div class="sheet-head"><strong>27</strong><h2>Gestionar jugadores durante la ronda</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_SCORECARD_ATAJOS.png" alt="Pantalla oficial limpia de Score Card con jugadores" loading="lazy"></div>
+<div class="current-copy"><h3>CUÁNDO PUEDE CAMBIAR UN JUGADOR</h3><p>Durante una ronda sólo usa los controles visibles que la modalidad permita. No todas las modalidades aceptan agregar o modificar jugadores una vez iniciadas.</p></div>
+<div class="current-copy"><h3>AGREGAR JUGADOR</h3><p>Si aparece + JUGADOR, la app permite incorporar otro participante. Completa nombre, categoría, HDCP y marcas antes de continuar.</p></div>
+<div class="current-copy"><h3>CORREGIR DATOS</h3><p>Si el flujo permite editar jugador, revisa cuidadosamente HDCP, categoría y marcas porque estos cambios pueden alterar netos y resultados derivados.</p></div>
+<div class="current-copy"><h3>MODALIDADES POR EQUIPOS</h3><p>En Match Play y Four Ball, cambiar jugadores puede afectar parejas o TEAMS. Comprueba la estructura del enfrentamiento después de cualquier ajuste.</p></div>
+<div class="current-copy"><h3>SEGURIDAD</h3><p>Evita modificar participantes después de que existan scores si no es indispensable. Si ya hay resultados, revisa también los cálculos derivados tras el cambio.</p></div>
+<div class="sheet-nav"><a href="#reinicios">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#tarjeta-digital">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="tarjeta-digital">
+<div class="sheet-head"><strong>28</strong><h2>Tarjeta Digital</h2><a href="#indice">ÍNDICE</a></div><img src="/docs/manual/current/APP_TARJETA_FINAL_ATAJOS.png" alt="Captura real LAB de la aplicación">
+<div class="screen-stage focus-app"></div>
+<div class="current-copy"><h3>VISTA FINAL</h3><p>Revisa la Tarjeta Digital Global y las personales desde el resultado oficial. La tarjeta compartida conserva la modalidad activa y debe salir ajustada al contenido real, sin un lienzo negro excesivo alrededor.</p></div>
+<div class="current-copy"><h3>CONSISTENCIA DE MODALIDAD</h3><p>Antes de compartir, la aplicación valida que la tarjeta preparada corresponda a la modalidad actual. Si detecta una tarjeta preparada de otra modalidad, la descarta y genera nuevamente la correcta.</p></div>
+<div class="current-copy"><h3>LEGIBILIDAD</h3><p>La imagen PNG debe conservar todos los datos visibles con tamaño suficiente para lectura en teléfono. La exportación recorta espacio vacío y mantiene el contenido completo.</p></div>
+<div class="current-copy"><h3>CONSISTENCIA DE RESULTADOS</h3><p>Antes de completar el último resultado requerido, comprueba que los totales y el resultado correspondan con la ronda; al cumplirse la condición de finalización, el cierre es automático.</p></div>
+<div class="sheet-nav"><a href="#jugadores-ronda">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#cierre">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="cierre">
+<div class="sheet-head"><strong>29</strong><h2>Cierre automático y Tarjeta Digital Final</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_TARJETA_FINAL_ATAJOS.png" alt="Pantalla oficial de tarjeta final y cierre de ronda" loading="lazy"></div>
+<div class="current-copy"><h3>CIERRE AUTOMÁTICO</h3><p>Cuando la modalidad cumple su condición real de finalización y todos los resultados requeridos están completos, la aplicación cierra la ronda automáticamente y abre directamente la Tarjeta Digital Final. No existe un paso intermedio para finalizar manualmente la ronda.</p></div>
+      <div class="current-copy"><h3>DESPUÉS DEL CIERRE</h3><p>La tarjeta pasa a modo de consulta y ya no debe editarse como una ronda en curso. Si aparece un error después del cierre, la vía correcta es CORRECCIÓN OFICIAL.</p></div>
+<div class="current-copy"><h3>TARJETA FINAL</h3><p>La tarjeta final presenta el resultado consolidado de la ronda. Verifica nombres, gross, netos, totales y versión antes de compartirla.</p></div>
+<div class="current-copy"><h3>COMPARTIR MI RONDA EN VIVO</h3><p>Cuando está disponible, permite compartir la vista Live de la ronda. No equivale a cerrar la ronda ni a modificar resultados.</p></div>
+<div class="current-copy"><h3>ATRÁS</h3><p>Regresa a la vista anterior. Si la ronda ya está oficialmente cerrada, volver atrás no la reabre automáticamente.</p></div>
+<div class="sheet-nav"><a href="#tarjeta-digital">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#archivos">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="archivos">
+<div class="sheet-head"><strong>30</strong><h2>Abrir, exportar y compartir tarjetas</h2><a href="#indice">ÍNDICE</a></div><img src="/docs/manual/current/APP_TARJETA_FINAL_ATAJOS.png" alt="Captura real LAB de la aplicación">
+<div class="screen-stage focus-app"></div>
+<div class="current-copy"><h3>GLOBAL</h3><p><b>ABRIR GLOBAL</b> muestra la tarjeta general de la ronda. <b>ABRIR ORIGINAL</b> vuelve a la versión original cuando existe una corrección posterior. IMAGEN GLOBAL genera una imagen; PDF GLOBAL crea un PDF; CORREO / WHATSAPP GLOBAL prepara el envío del resultado global.</p></div>
+<div class="current-copy"><h3>PERSONAL</h3><p>En <b>Jugador de tarjeta personal</b> selecciona la persona correspondiente. Luego usa ABRIR PERSONAL, IMAGEN PERSONAL, PDF PERSONAL o CORREO / WHATSAPP PERSONAL para generar una tarjeta enfocada en ese jugador.</p></div>
+<div class="current-copy"><h3>PDF TODAS</h3><p>Cuando está disponible, genera un paquete con todas las tarjetas aplicables. Úsalo cuando necesitas entregar el conjunto completo y no una sola tarjeta.</p></div>
+<div class="current-copy"><h3>COMPARTIR TARJETA</h3><p>El botón <b>COMPARTIR TARJETA</b> abre las opciones disponibles del dispositivo para enviar la tarjeta preparada. Antes de abrir el envío, la aplicación comprueba que título, contenido y modalidad correspondan con la ronda activa.</p></div>
+<div class="current-copy"><h3>IMAGEN PNG</h3><p>La imagen se genera ajustada al contenido real para evitar márgenes negros excesivos. Si una imagen tarda demasiado en prepararse, la operación utiliza límites de tiempo y una ruta alternativa de renderizado en lugar de quedar indefinidamente en PREPARANDO IMAGEN PARA ENVIAR.</p></div>
+<div class="current-copy"><h3>QUÉ NO CAMBIA</h3><p>Crear imagen, PDF o compartir no modifica scores, handicap ni cierre oficial. Son funciones de salida y distribución.</p></div>
+<div class="sheet-nav"><a href="#cierre">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#tarjetas-digitales-capitulo">SIGUIENTE →</a></div>
+</section>
+<section class="sheet master-sheet current-function-sheet" id="tarjetas-digitales-capitulo">
+<div class="sheet-head"><strong>30A</strong><h2>Tarjetas Digitales</h2><a href="#indice">ÍNDICE</a></div><img src="/docs/manual/current/APP_TARJETA_FINAL_ATAJOS.png" alt="Captura real LAB de la aplicación">
+<div class="current-copy"><h3>AL COMPLETARSE LA RONDA</h3><p>Cuando la modalidad cumple su condición real de finalización, la aplicación cierra automáticamente la ronda y abre la <b>Tarjeta Digital Final</b>. Desde esa vista se prepara la imagen PNG limpia para compartir, con el logo oficial, el nombre de la modalidad y los resultados de la ronda.</p></div>
+<div class="current-copy"><h3>COMPARTIR TARJETA</h3><p>El botón <b>COMPARTIR TARJETA</b> abre las opciones de compartir del teléfono. Desde allí puedes enviarla por <b>WhatsApp</b> o por cualquier otra aplicación compatible que aparezca en el dispositivo.</p></div>
+<div class="current-copy"><h3>ENVIAR A JUGADORES</h3><p>El botón <b>ENVIAR A JUGADORES</b> se habilita únicamente cuando existen jugadores con número de WhatsApp registrado desde el registro inicial. La aplicación prepara la misma Tarjeta Digital Final para esos destinatarios y abre el flujo de WhatsApp/compartir. Los jugadores con WhatsApp registrado son los destinatarios previstos del envío.</p></div>
+<div class="current-copy"><h3>CÓMO LA RECIBIRÁN</h3><p>Las siguientes son las presentaciones limpias de cada Tarjeta Digital. La modalidad impresa en la tarjeta debe coincidir exactamente con la modalidad jugada; una tarjeta de Match Play nunca debe aparecer como Four Ball, Stableford o Medal Play.</p></div>
+<div class="screen-stage"></div>
+<div class="screen-note"><b>MEDAL PLAY NORMAL</b> · Así se recibe la tarjeta digital de Medal Play.</div>
+<div class="screen-stage"></div>
+<div class="screen-note"><b>STABLEFORD</b> · Así se recibe la tarjeta digital Stableford.</div>
+<div class="screen-stage"></div>
+<div class="screen-note"><b>MATCH PLAY</b> · Así se recibe la tarjeta digital Match Play. La lectura por hoyo conserva los indicadores de ganado, perdido o empatado.</div>
+<div class="screen-stage"></div>
+<div class="screen-note"><b>FOUR BALL</b> · Así se recibe la tarjeta digital Four Ball.</div>
+
+<div class="screen-stage"></div>
+<div class="screen-note"><b>SKINS</b> · Así se recibe la tarjeta digital con el resultado de Skins.</div>
+<div class="screen-stage"></div>
+<div class="screen-note"><b>UNIVERSALES</b> · Así se recibe la tarjeta digital de Universales.</div>
+<div class="current-copy"><h3>REGLA DE LECTURA</h3><p>Quien recibe la tarjeta no necesita entrar a la aplicación para interpretarla. La imagen debe contener el logo, modalidad, jugadores y resultado correspondiente, con tamaño legible y sin márgenes negros innecesarios.</p></div>
+<div class="sheet-nav"><a href="#archivos">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#correccion">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="correccion">
+<div class="sheet-head"><strong>31</strong><h2>Corregir una ronda ya cerrada</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_CORRECCION_ATAJOS.png" alt="Pantalla oficial de corrección de ronda" loading="lazy"></div>
+<div class="current-copy"><h3>CUÁNDO USARLA</h3><p>Toca <b>CORREGIR RONDA</b> para abrir CORRECCIÓN OFICIAL cuando la ronda ya fue cerrada y detectas un dato incorrecto. No rehagas la ronda completa ni cambies silenciosamente el historial.</p></div>
+<div class="current-copy"><h3>1 · JUGADOR</h3><p>Selecciona exactamente al jugador cuyo resultado debe corregirse.</p></div>
+<div class="current-copy"><h3>2 · HOYO</h3><p>El selector permite elegir <b>1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 o 18</b>. Verifica el número antes de continuar porque la corrección se aplica a ese hoyo específico.</p></div>
+<div class="current-copy"><h3>3 · NUEVO GROSS</h3><p>Ingresa el valor correcto. La aplicación debe recalcular neto, totales y cualquier resultado dependiente de ese score.</p></div>
+<div class="current-copy"><h3>4 · MOTIVO Y RESPONSABLE</h3><p>Escribe la razón de la corrección y completa <b>NOMBRE DEL RESPONSABLE</b>. Esto deja trazabilidad de quién autorizó el cambio y por qué se modificó una tarjeta ya oficial.</p></div>
+<div class="current-copy"><h3>GUARDAR CORRECCIÓN</h3><p>Aplica el cambio y genera una nueva versión de la tarjeta oficial cuando corresponda. Después revisa la tarjeta corregida antes de volver a compartirla.</p></div>
+<div class="sheet-nav"><a href="#tarjetas-digitales-capitulo">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#historial">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="historial">
+<div class="sheet-head"><strong>32</strong><h2>Consultar Mis Rondas Guardadas</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_HISTORIAL_ATAJOS.png" alt="Pantalla oficial de Mis Rondas Guardadas" loading="lazy"></div>
+<div class="current-copy"><h3>PARA QUÉ SIRVE</h3><p>Reúne las rondas conservadas en el historial para volver a consultarlas sin alterar la ronda activa.</p></div>
+<div class="current-copy"><h3>FILTRAR POR MODALIDAD</h3><p>El selector visible contiene <b>TODAS LAS MODALIDADES · GENERAL · STABLEFORD</b>. Elige una opción para reducir los resultados mostrados.</p></div>
+<div class="current-copy"><h3>FILTRAR POR CAMPO</h3><p>Selecciona TODOS LOS CAMPOS o un campo concreto cuando quieras localizar una ronda específica.</p></div>
+<div class="current-copy"><h3>BUSCAR JUGADOR / TORNEO / FECHA</h3><p>Escribe parte del nombre del jugador, torneo o fecha. La búsqueda sirve para encontrar una ronda sin recorrer toda la lista.</p></div>
+<div class="current-copy"><h3>ABRIR UNA RONDA</h3><p>Toca la ronda correspondiente para verla. Consultar una ronda guardada no debe sobrescribir la ronda activa salvo que la aplicación muestre una acción explícita de recuperación o continuación.</p></div>
+<div class="current-copy"><h3>ELIMINAR RONDA</h3><p>Si eliges eliminar, la aplicación pide confirmación. CANCELAR conserva la ronda; confirmar la eliminación la retira del historial. Esta acción no debe usarse como forma de corregir scores.</p></div>
+<div class="sheet-nav"><a href="#correccion">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#estadisticas">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="estadisticas">
+<div class="sheet-head"><strong>33</strong><h2>Analizar estadísticas de Mis Rondas</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_HISTORIAL_ATAJOS.png" alt="Pantalla oficial de estadísticas de rondas guardadas" loading="lazy"></div>
+<div class="current-copy"><h3>CONSULTA HISTÓRICA</h3><p>Escribe una pregunta o criterio como “PROMEDIO ÚLTIMO MES HOYO 18”. La herramienta analiza la información disponible en tu historial.</p></div>
+<div class="current-copy"><h3>MEJOR / PEOR</h3><p>Permite identificar resultados destacados o bajos dentro del conjunto consultado. Interpreta siempre el resultado según el periodo y modalidad seleccionados.</p></div>
+<div class="current-copy"><h3>PROMEDIOS Y TENDENCIA</h3><p>Sirven para observar comportamiento acumulado, no para modificar scores. Son métricas de consulta construidas con las rondas guardadas disponibles.</p></div>
+<div class="current-copy"><h3>PUNTOS STABLEFORD</h3><p>Cuando la consulta incluye Stableford, la aplicación puede mostrar puntos acumulados o comparaciones relacionadas con esa modalidad.</p></div>
+<div class="current-copy"><h3>SI FALTAN DATOS</h3><p>Una estadística sólo puede utilizar las rondas disponibles en el historial. Si una ronda fue eliminada o nunca se guardó, no formará parte del análisis.</p></div>
+<div class="sheet-nav"><a href="#historial">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#cuenta">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="cuenta">
+<div class="sheet-head"><strong>34</strong><h2>Respaldar y recuperar datos</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_ACCESS.png" alt="Pantalla oficial de cuenta, respaldo y recuperación" loading="lazy"></div>
+<div class="current-copy"><h3>CUENTA OPCIONAL</h3><p>Puedes jugar localmente sin crear una cuenta. La cuenta se utiliza para respaldar y recuperar jugadores, rondas y tarjetas cuando quieres conservarlos fuera del almacenamiento local del dispositivo.</p></div>
+<div class="current-copy"><h3>CREAR CUENTA</h3><p>Completa nombre, correo y <b>CONTRASEÑA · MÍNIMO 8 CARACTERES</b>. Revisa el correo porque identifica la cuenta que luego usarás para recuperar información.</p></div>
+<div class="current-copy"><h3>INICIAR SESIÓN</h3><p>Accede con tus credenciales existentes. MOSTRAR CONTRASEÑA sólo cambia la visibilidad del campo; RECORDAR CORREO Y MANTENER SESIÓN conserva el acceso según la configuración del dispositivo.</p></div>
+<div class="current-copy"><h3>RESPALDAR AHORA</h3><p>Envía el estado disponible de jugadores, rondas y tarjetas al respaldo asociado con la cuenta. Úsalo después de cambios importantes o cuando quieras asegurar la información antes de cambiar de dispositivo.</p></div>
+<div class="current-copy"><h3>RECUPERAR RESPALDO</h3><p>Restaura la información disponible en el respaldo. Revisa cuidadosamente el estado resultante porque una recuperación puede sustituir o reincorporar datos locales según la lógica vigente de la aplicación.</p></div>
+<div class="current-copy"><h3>CERRAR SESIÓN</h3><p>Desconecta la cuenta del dispositivo. Cerrar sesión no equivale a borrar la ronda activa ni las rondas locales.</p></div>
+<div class="current-copy"><h3>INVITAR · 24 H</h3><p>Cuando esta función está disponible, genera un acceso temporal para invitado. La invitación no crea una cuenta permanente y debe considerarse de duración limitada.</p></div>
+<div class="sheet-nav"><a href="#estadisticas">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#instalacion">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="instalacion">
+<div class="sheet-head"><strong>35</strong><h2>Instalar la aplicación y mantener acceso</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_ACCESS.png" alt="Pantalla oficial de acceso e instalación" loading="lazy"></div>
+<div class="current-copy"><h3>INSTALAR APP</h3><p>Abre el asistente de instalación para colocar Golf Score Card GT como acceso directo o aplicación instalada en el dispositivo cuando el navegador lo permite.</p></div>
+<div class="current-copy"><h3>INSTALAR</h3><p>Confirma la instalación. Después podrás abrir la aplicación desde su icono, sin tener que buscar nuevamente el enlace en el navegador.</p></div>
+<div class="current-copy"><h3>CONSERVAR LA RONDA</h3><p>La aplicación está preparada para mantener la ronda local ante interrupciones de conexión dentro de las capacidades disponibles. No cierres o borres datos manualmente si sólo perdiste señal.</p></div>
+<div class="current-copy"><h3>VERIFICAR ACTUALIZACIÓN</h3><p>Cuando aparezca el control de actualización, úsalo para cargar la versión vigente sin borrar intencionalmente la sesión. Si indica ACTUALIZADO, no necesitas repetir la acción.</p></div>
+<div class="current-copy"><h3>VOLVER A LA APP</h3><p>Desde el manual utiliza MI RONDA o MENÚ para regresar a la aplicación operativa.</p></div>
+<div class="sheet-nav"><a href="#cuenta">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#stableford-objetivo">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="stableford-objetivo">
+<div class="sheet-head"><strong>36</strong><h2>Stableford · cómo funciona el resultado</h2><a href="#indice">ÍNDICE</a></div><img src="/docs/manual/current/APP_SETUP_CURRENT.png" alt="Captura real LAB de la aplicación">
+<div class="screen-stage mode-real"></div>
+<div class="current-copy"><h3>QUÉ CAMBIA EN STABLEFORD</h3><p>En Stableford el objetivo principal es acumular puntos por hoyo, no únicamente comparar el total de golpes. La aplicación toma el GROSS registrado y calcula los puntos correspondientes según la configuración de la ronda.</p></div>
+<div class="current-copy"><h3>GROSS</h3><p>Registra los golpes reales del jugador en cada hoyo. Ese dato es la base del cálculo. Si el gross está equivocado, también estarán equivocados los puntos.</p></div>
+<div class="current-copy"><h3>PUNTOS</h3><p>La app calcula y acumula los puntos de cada hoyo. Revisa el total después de cada ingreso y especialmente al terminar 9 y 18 hoyos.</p></div>
+<div class="current-copy"><h3>CATEGORÍA Y MARCAS</h3><p>La ronda utiliza la categoría y marcas seleccionadas durante la preparación. Antes de iniciar confirma que cada jugador está dentro de la categoría correcta.</p></div>
+<div class="current-copy"><h3>QUÉ NO DEBES HACER</h3><p>No ingreses puntos manualmente como sustituto del gross cuando la ronda está operando normalmente. La aplicación debe producir los puntos a partir del resultado registrado.</p></div>
+<div class="sheet-nav"><a href="#instalacion">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#stableford-operacion">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="stableford-operacion">
+<div class="sheet-head"><strong>37</strong><h2>Stableford · operar y cerrar la ronda</h2><a href="#indice">ÍNDICE</a></div><img src="/docs/manual/current/APP_SCORECARD_ATAJOS.png" alt="Captura real LAB de la aplicación">
+<div class="screen-stage mode-real"></div>
+<div class="current-copy"><h3>CAMPO ACTIVO</h3><p>La ronda puede operar en EL PULTÉ, COUNTRY CLUB, SAN ISIDRO, MAYAN GOLF, HACIENDA NUEVA o ALTA VISTA. Confirma el campo antes de ingresar el primer score.</p></div>
+<div class="current-copy"><h3>1 · SELECCIONA HOYO</h3><p>Confirma el hoyo que vas a registrar antes de ingresar scores.</p></div>
+<div class="current-copy"><h3>2 · INGRESA GROSS</h3><p>Registra el gross de cada jugador. La aplicación actualiza puntos y acumulados automáticamente.</p></div>
+<div class="current-copy"><h3>3 · REVISA ACUMULADOS</h3><p>Comprueba que el total de puntos evolucione de forma coherente conforme avanzan los hoyos. Si un jugador no tiene score en un hoyo, revisa ese faltante antes de completar el último resultado requerido.</p></div>
+<div class="current-copy"><h3>AGREGAR RESULTADO OFICIAL</h3><p>Esta función sirve para registrar un resultado Stableford oficial cuando la pantalla correspondiente lo solicita. Debes completar jugador, categoría, fecha, campo, puntos y gross opcional antes de GUARDAR RESULTADO.</p></div>
+<div class="current-copy"><h3>GUARDAR RESULTADO</h3><p>Confirma el resultado oficial ingresado. Antes de guardar revisa FECHA 1, FECHA 2, FECHA 3 o FECHA 4, el campo y los puntos para evitar mezclar jornadas.</p></div>
+<div class="current-copy"><h3>CIERRE AUTOMÁTICO</h3><p>Comprueba los 18 hoyos, puntos y jugadores. Cuando Stableford queda completo, la aplicación realiza el cierre automáticamente y abre la Tarjeta Digital Final. Después del cierre, cualquier corrección debe pasar por el flujo oficial.</p></div>
+<div class="sheet-nav"><a href="#stableford-objetivo">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#match-play-2">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="match-play-2">
+<div class="sheet-head"><strong>38</strong><h2>Match Play · operación</h2><a href="#indice">ÍNDICE</a></div><img src="/docs/manual/current/APP_MODE_MATCH_PLAY.png" alt="Captura real LAB de la aplicación">
+<div class="screen-stage mode-real"></div>
+<div class="current-copy"><h3>TARJETA REAL</h3><p>Match Play conserva Gross, HDCP y Neto. En la tarjeta digital compartida cada hoyo se interpreta con el NETO correspondiente.</p></div>
+<div class="current-copy"><h3>INDICADORES POR HOYO</h3><p><b>↑ verde = ganó</b>, <b>↓ roja = perdió</b> y <b>= blanco = empató</b>. El símbolo aparece junto al resultado del hoyo para que la tarjeta pueda interpretarse sin hacer el cálculo mental.</p></div>
+<div class="current-copy"><h3>RESULTADO ACUMULADO</h3><p>El resultado general del match aparece separado de los símbolos por hoyo. Cada pareja puede cerrar en un hoyo diferente.</p></div>
+<div class="sheet-nav"><a href="#stableford-operacion">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#four-ball-2">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="four-ball-2">
+<div class="sheet-head"><strong>39</strong><h2>Four Ball · operación</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage mode-real"><img src="/docs/manual/current/APP_MODE_FOUR_BALL.png" alt="Four Ball · operación" loading="lazy"></div>
+<div class="current-copy"><h3>Rotulación</h3><p>La pantalla usa TEAM · NOMBRES, sin numeración de TEAM.</p></div><div class="current-copy"><h3>Resultado</h3><p>Cada jugador conserva HCP individual y el resultado del TEAM se mantiene separado. Al abrir, exportar o compartir, la tarjeta debe conservar la identidad FOUR BALL y no reutilizar una tarjeta preparada de otra modalidad.</p></div>
+<div class="sheet-nav"><a href="#match-play-2">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#juegos">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="juegos">
+<div class="sheet-head"><strong>41</strong><h2>Universales · operación del juego</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage mode-real"><img src="/docs/manual/current/APP_MODE_UNIVERSALES.png" alt="Pantalla oficial Universales" loading="lazy"></div>
+<div class="current-copy"><h3>PARA QUÉ SIRVE</h3><p>UNIVERSALES es una modalidad adicional que conserva la Score Card principal y añade su propio cálculo de puntos. Debes seleccionar UNIVERSALES antes de iniciar la ronda para que la tarjeta utilice las reglas correspondientes.</p></div>
+<div class="current-copy"><h3>INGRESO DE SCORES</h3><p>Registra el gross de cada jugador como en la Score Card normal. La aplicación calcula neto y los puntos Universales aplicables sin que tengas que rehacer el score.</p></div>
+<div class="current-copy"><h3>PUNTOS</h3><p>Los puntos Universales aparecen como un resultado adicional de la modalidad. Revisa que el hoyo tenga todos los scores necesarios antes de interpretar el total acumulado.</p></div>
+<div class="current-copy"><h3>CORRECCIÓN</h3><p>Si corriges un gross, vuelve a revisar los puntos Universales porque el cambio puede modificar el resultado de ese hoyo y el acumulado.</p></div>
+<div class="current-copy"><h3>CIERRE AUTOMÁTICO</h3><p>Verifica Score Card y puntos de la modalidad. Cuando UNIVERSALES cumple las condiciones requeridas de finalización, la aplicación realiza el cierre automáticamente y abre la Tarjeta Digital Final.</p></div>
+<div class="sheet-nav"><a href="#juegos">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#skins-1">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="skins-1">
+<div class="sheet-head"><strong>42</strong><h2>Skins · configurar antes de jugar</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage mode-real"><img src="/docs/manual/current/APP_MODE_SKINS.png" alt="Pantalla oficial de configuración Skins" loading="lazy"></div>
+<div class="current-copy"><h3>CÁLCULO · NETO / GROSS</h3><p>El selector muestra exactamente <b>NETO · GROSS</b>. NETO considera handicap; GROSS utiliza golpes reales. Esta decisión cambia quién gana cada hoyo, así que debe quedar definida antes del primer score.</p></div>
+<div class="current-copy"><h3>EMPATE · ACUMULA / DIVIDE / ANULA</h3><p>El selector muestra <b>ACUMULA · DIVIDE · ANULA</b>. ACUMULA lleva el valor del hoyo empatado al siguiente; DIVIDE reparte el valor según la lógica del juego; ANULA deja el skin sin ganador. Todos los participantes deben conocer esta regla antes de empezar.</p></div>
+<div class="current-copy"><h3>MONEDA</h3><p>Selecciona Q · QUETZALES o $ · DÓLARES únicamente para el valor económico del juego. La moneda no modifica gross, neto ni resultado deportivo.</p></div>
+<div class="current-copy"><h3>VALOR UNIDAD</h3><p>Define cuánto vale cada skin. Revisa el número y la moneda antes de iniciar para evitar diferencias posteriores entre jugadores.</p></div>
+<div class="sheet-nav"><a href="#juegos">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#skins-2">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="skins-2">
+<div class="sheet-head"><strong>43</strong><h2>Skins · ganadores, empates y acumulados</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage mode-real"><img src="/docs/manual/current/APP_MODE_SKINS.png" alt="Pantalla oficial de resultados Skins" loading="lazy"></div>
+<div class="current-copy"><h3>RESULTADO POR HOYO</h3><p>Después de registrar los scores del hoyo, la aplicación identifica el resultado según el criterio NETO o GROSS elegido.</p></div>
+<div class="current-copy"><h3>SI HAY GANADOR</h3><p>El skin se asigna al jugador correspondiente y se actualiza el acumulado.</p></div>
+<div class="current-copy"><h3>SI HAY EMPATE</h3><p>La aplicación aplica ACUMULA, DIVIDE o ANULA según la configuración inicial. No cambies esta política a mitad de ronda salvo acuerdo claro entre los jugadores.</p></div>
+<div class="current-copy"><h3>ACUMULADOS</h3><p>Revisa el total de skins y valor acumulado de cada jugador. Si un hoyo fue corregido, comprueba también que el acumulado se haya recalculado.</p></div>
+<div class="sheet-nav"><a href="#skins-1">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#skins-3">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="skins-3">
+<div class="sheet-head"><strong>44</strong><h2>Skins · revisar y cerrar</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage mode-real"><img src="/docs/manual/current/APP_MODE_SKINS.png" alt="Pantalla oficial de cierre Skins" loading="lazy"></div>
+<div class="current-copy"><h3>ANTES DEL ÚLTIMO RESULTADO</h3><p>Comprueba que los hoyos jugados tengan scores completos y que los skins asignados correspondan a la política seleccionada.</p></div>
+<div class="current-copy"><h3>VALOR ECONÓMICO</h3><p>Verifica moneda, valor unitario, skins ganados y acumulados. El resultado económico es complementario y no sustituye el resultado deportivo de la Score Card.</p></div>
+<div class="current-copy"><h3>CORRECCIONES</h3><p>Si corriges un gross o neto de un hoyo, vuelve a validar quién ganó ese skin y cualquier acumulado derivado.</p></div>
+<div class="current-copy"><h3>CIERRE DE RONDA</h3><p>Revisa que Skins y la Score Card principal estén completos y coherentes. Al cumplirse las condiciones de cierre de la ronda, la aplicación realiza el cierre automáticamente y abre la Tarjeta Digital Final.</p></div>
+<div class="sheet-nav"><a href="#skins-2">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#reglas">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet" id="reglas">
+<div class="sheet-head"><strong>45</strong><h2>Reglas de Golf</h2><a href="#indice">ÍNDICE</a></div><div class="current-copy"><h3>CAPTURA REAL PENDIENTE</h3><p>Esta hoja no mostrará una pantalla hasta disponer de una captura física real de LAB correspondiente a esta función. No se utilizarán simulaciones, SVG ni láminas diseñadas.</p></div>
+
+<div class="sheet-nav"><a href="#skins-3">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#ayuda">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="ayuda">
+<div class="sheet-head"><strong>46</strong><h2>Ayuda y navegación</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_ATAJOS_OVERLAY.png" alt="MENÚ actual" loading="lazy"></div><div class="current-copy"><h3>MENÚ</h3><p>Usa MENÚ para ir directo a Score Card, Torneos, General, Categorías, Buscar Jugador o Tablero de Mis Favoritos.</p></div><div class="current-copy"><h3>GUÍA</h3><p>GUÍA DE USUARIO abre este manual desde la aplicación.</p></div><div class="current-copy"><h3>REGRESAR</h3><p>ATRÁS vuelve sólo un nivel; MENÚ evita recorrer varias pantallas.</p></div>
+<div class="sheet-nav"><a href="#reglas">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#offline">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="offline">
+<div class="sheet-head"><strong>47</strong><h2>Sin conexión y caché</h2><a href="#indice">ÍNDICE</a></div>
+
+<div class="current-copy"><h3>ACTUALIZACIONES DENTRO DE LA MISMA VERSIÓN</h3><p>Una corrección puede mantenerse dentro de R106 y aun así llevar un identificador interno de hotfix. Cuando la aplicación detecta una compilación publicada distinta, muestra ACTUALIZAR y limpia el caché controlado antes de recargar.</p></div>
+<div class="current-copy"><h3>SI VES UNA PANTALLA ANTERIOR</h3><p>No asumas que el servidor sigue viejo: una PWA instalada puede estar mostrando una copia aprobada anterior. Usa ACTUALIZAR cuando aparezca; la aplicación invalida el caché de la versión anterior y carga la compilación publicada.</p></div>
+<div class="sheet-nav"><a href="#ayuda">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#privacidad">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="privacidad">
+<div class="sheet-head"><strong>48</strong><h2>Privacidad y seguridad</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_SCORECARD_ATAJOS.png" alt="Score Card vigente" loading="lazy"></div><div class="current-copy"><h3>DATOS</h3><p>Comparte sólo la información necesaria. Los datos de ronda y respaldos permanecen asociados al usuario/dispositivo según corresponda.</p></div><div class="current-copy"><h3>LIVE</h3><p>Los enlaces Live son de consulta para visitantes; revócalos cuando ya no deban estar activos.</p></div><div class="current-copy"><h3>SEGURIDAD</h3><p>No compartas credenciales y usa únicamente controles vigentes de la aplicación.</p></div>
+<div class="sheet-nav"><a href="#offline">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#ruta">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet" id="ruta">
+<div class="sheet-head"><strong>49</strong><h2>Ruta completa de uso</h2><a href="#indice">ÍNDICE</a></div><div class="current-copy"><h3>CAPTURA REAL PENDIENTE</h3><p>Esta hoja no mostrará una pantalla hasta disponer de una captura física real de LAB correspondiente a esta función. No se utilizarán simulaciones, SVG ni láminas diseñadas.</p></div>
+
+<div class="sheet-nav"><a href="#privacidad">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#soporte">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet" id="soporte">
+<div class="sheet-head"><strong>50</strong><h2>Soporte y verificación</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_ATAJOS_OVERLAY.png" alt="MENÚ y rutas de soporte vigentes" loading="lazy"></div><div class="current-copy"><h3>MANUAL</h3><p>Consulta primero esta Guía de Usuario para confirmar el flujo y los controles visibles.</p></div><div class="current-copy"><h3>REGLAS</h3><p>Para reglas de golf usa la sección específica de Reglas.</p></div><div class="current-copy"><h3>VERIFICACIÓN</h3><p>Si algo no coincide con la app, la pantalla real vigente prevalece y el manual debe actualizarse.</p></div>
+<div class="sheet-nav"><a href="#ruta">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#actual-registro">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-screen-sheet" id="actual-registro">
+<div class="sheet-head"><strong>ACT</strong><h2>VER RESULTADOS POR CATEGORÍA OFICIALES ACTUALES</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app category-focus"><img src="/docs/manual/current/APP_CATEGORIAS_OFICIALES.png" alt="Categorías oficiales vigentes: Campeonato A B C D Senior Super Senior y Femenina" loading="lazy"></div>
+<div class="screen-note">Lista gráfica vigente: CAMPEONATO · A · B · C · D · SENIOR · SUPER SENIOR · FEMENINA. CAMPEONATO usa MARCAS NEGRAS.</div>
+<div class="sheet-nav"><a href="#soporte">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#actual-scorecard">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-screen-sheet" id="actual-scorecard">
+<div class="sheet-head"><strong>ACT</strong><h2>SCORE CARD ACTUAL · MENÚ</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage"><img src="/docs/manual/current/APP_SCORECARD_ATAJOS.png" alt="SCORE CARD ACTUAL · MENÚ" loading="lazy"></div>
+<div class="screen-note">Score Card vigente con MENÚ y zona operativa actual.</div>
+<div class="sheet-nav"><a href="#actual-registro">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#actual-cierre">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-screen-sheet" id="actual-cierre">
+<div class="sheet-head"><strong>ACT</strong><h2>TARJETA FINAL ACTUAL</h2><a href="#indice">ÍNDICE</a></div><img src="/docs/manual/current/APP_TARJETA_FINAL_ATAJOS.png" alt="Captura real LAB de la aplicación">
+<div class="screen-stage"></div>
+<div class="screen-note">Tarjeta Digital Final vigente: modalidad validada antes de compartir, imagen ajustada al contenido y salida legible.</div>
+<div class="sheet-nav"><a href="#actual-scorecard">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#actual-correccion">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-screen-sheet" id="actual-correccion">
+<div class="sheet-head"><strong>ACT</strong><h2>CORRECCIÓN OFICIAL ACTUAL</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage"><img src="/docs/manual/current/APP_CORRECCION_ATAJOS.png" alt="CORRECCIÓN OFICIAL ACTUAL" loading="lazy"></div>
+<div class="screen-note">Corrección oficial vigente con MENÚ visible.</div>
+<div class="sheet-nav"><a href="#actual-cierre">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#actual-historial">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-screen-sheet" id="actual-historial">
+<div class="sheet-head"><strong>ACT</strong><h2>MIS RONDAS GUARDADAS</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage"><img src="/docs/manual/current/APP_HISTORIAL_ATAJOS.png" alt="MIS RONDAS GUARDADAS" loading="lazy"></div>
+<div class="screen-note">Historial vigente con MENÚ visible.</div>
+<div class="sheet-nav"><a href="#actual-correccion">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#actual-torneos">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-screen-sheet" id="actual-torneos">
+<div class="sheet-head"><strong>ACT</strong><h2>MIS TORNEOS ACTUAL</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage"><img src="/docs/manual/current/APP_TORNEOS_HUB.png" alt="MIS TORNEOS ACTUAL" loading="lazy"></div>
+<div class="screen-note">Centro de Torneos vigente.</div>
+<div class="sheet-nav"><a href="#actual-historial">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#actual-torneos-atajos">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-screen-sheet" id="actual-torneos-atajos">
+<div class="sheet-head"><strong>ACT</strong><h2>TORNEOS + MENÚ ACTUAL</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage"><img src="/docs/manual/current/APP_TORNEOS_ATAJOS.png" alt="TORNEOS + MENÚ ACTUAL" loading="lazy"></div>
+<div class="screen-note">MENÚ vigente dentro del recorrido de Torneos.</div>
+<div class="sheet-nav"><a href="#actual-torneos">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#actual-atajos">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-screen-sheet" id="actual-atajos">
+<div class="sheet-head"><strong>ACT</strong><h2>MENÚ ACTUAL</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage"><img src="/docs/manual/current/APP_ATAJOS_OVERLAY.png" alt="MENÚ ACTUAL" loading="lazy"></div>
+<div class="screen-note">Overlay MENÚ vigente.</div>
+<div class="sheet-nav"><a href="#actual-torneos-atajos">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#actual-campeonato-score">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-screen-sheet" id="actual-campeonato-score">
+<div class="sheet-head"><strong>ACT</strong><h2>CAMPEONATO · SCORE CARD ACTUAL</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage"><img src="/docs/manual/current/APP_CAMPEONATO_SCORECARD.png" alt="CAMPEONATO · SCORE CARD ACTUAL" loading="lazy"></div>
+<div class="screen-note">Score Card vigente de Campeonato.</div>
+<div class="sheet-nav"><a href="#actual-atajos">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#torneos">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet tournament-clean" id="torneos">
+<div class="sheet-head"><strong>T01</strong><h2>Torneos · índice visual</h2><a href="#indice">ÍNDICE</a></div><img src="/docs/manual/current/APP_TORNEOS_HUB.png" alt="Captura real LAB de la aplicación">
+<div class="current-copy"><h3>RUTA</h3><p>MENÚ → MIS TORNEOS → elegir torneo → MONITOR DEL TORNEO EN VIVO / VER RESULTADOS POR CATEGORÍA / BUSCAR JUGADOR / TABLERO DE MIS FAVORITOS.</p></div><div class="current-copy"><h3>REGLA</h3><p>Desde cualquier punto usa MENÚ para volver directo a MI SCORE CARD sin recorrer varias pantallas hacia atrás.</p></div>
+<div class="sheet-nav"><a href="#actual-campeonato-score">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#torneos-01">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet tournament-clean" id="torneos-01">
+<div class="sheet-head"><strong>T02</strong><h2>Abrir MENÚ</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_ATAJOS_OVERLAY.png" alt="Overlay MENÚ vigente" loading="lazy"></div><div class="current-copy"><h3>PASO</h3><p>Toca MENÚ. El panel abre MI SCORE CARD, MIS TORNEOS, MONITOR DEL TORNEO EN VIVO, VER RESULTADOS POR CATEGORÍA, BUSCAR JUGADOR y TABLERO DE MIS FAVORITOS.</p></div>
+<div class="sheet-nav"><a href="#torneos">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#torneos-02">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet tournament-clean" id="torneos-02">
+<div class="sheet-head"><strong>T03</strong><h2>Centro de Torneos</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_TORNEOS_HUB.png" alt="Centro de Torneos vigente" loading="lazy"></div><div class="current-copy"><h3>QUÉ HACES</h3><p>Elige un torneo guardado o agrega otro. El Centro permite guardar y consultar varios torneos.</p></div><div class="current-copy"><h3>MENÚ</h3><p>MENÚ permanece visible para regresar a tu Score Card.</p></div>
+<div class="sheet-nav"><a href="#torneos-01">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#torneos-03">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet tournament-clean" id="torneos-03">
+<div class="sheet-head"><strong>T04</strong><h2>Elegir un torneo</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_TORNEOS_HUB.png" alt="Centro de Torneos para elegir torneo" loading="lazy"></div><div class="current-copy"><h3>PASO</h3><p>Usa VER TORNEO o ENTRAR sobre el torneo correcto. Las vistas siguientes pertenecen sólo al torneo abierto.</p></div>
+<div class="sheet-nav"><a href="#torneos-02">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#torneos-04">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet tournament-clean" id="torneos-04">
+<div class="sheet-head"><strong>T05</strong><h2>Ver General</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_TORNEOS_HUB.png" alt="Centro de Torneos con acceso General" loading="lazy"></div><div class="current-copy"><h3>MONITOR DEL TORNEO EN VIVO</h3><p>Muestra la clasificación completa del torneo.</p></div><div class="current-copy"><h3>MÁS OPCIONES</h3><p>La vista vigente permite COMPARTIR, ACTUALIZAR y PANTALLA PÚBLICA.</p></div>
+<div class="sheet-nav"><a href="#torneos-03">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#torneos-05">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet tournament-clean" id="torneos-05">
+<div class="sheet-head"><strong>T06</strong><h2>Categorías y Buscar Jugador</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_TORNEOS_HUB.png" alt="Centro de Torneos con Categorías y búsqueda" loading="lazy"></div><div class="current-copy"><h3>VER RESULTADOS POR CATEGORÍA</h3><p>MONITOR DEL TORNEO EN VIVO, CAMPEONATO, A, B, C, D, SENIOR, SUPER SENIOR y FEMENINA.</p></div><div class="current-copy"><h3>BUSCAR</h3><p>BUSCAR JUGADOR abre jugadores del torneo actual. Desde MENÚ el acceso equivalente se llama BUSCAR JUGADOR.</p></div>
+<div class="sheet-nav"><a href="#torneos-04">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#torneos-06">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet tournament-clean" id="torneos-06">
+<div class="sheet-head"><strong>T07</strong><h2>Tablero de Mis Favoritos</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_TORNEOS_HUB.png" alt="Centro de Torneos con Tablero de Mis Favoritos" loading="lazy"></div><div class="current-copy"><h3>TABLERO DE MIS FAVORITOS</h3><p>Reúne jugadores y grupos que decidiste seguir dentro del torneo abierto.</p></div><div class="current-copy"><h3>ALCANCE</h3><p>Los Favoritos pertenecen al torneo; no modifican la Score Card.</p></div>
+<div class="sheet-nav"><a href="#torneos-05">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#torneos-07">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet tournament-clean" id="torneos-07">
+<div class="sheet-head"><strong>T08</strong><h2>Gestionar Tablero de Mis Favoritos</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_ATAJOS_OVERLAY.png" alt="MENÚ vigente para gestionar torneo" loading="lazy"></div><div class="current-copy"><h3>AGREGAR</h3><p>Busca jugador o grupo y usa SEGUIR cuando corresponda.</p></div><div class="current-copy"><h3>QUITAR</h3><p>Puedes DEJAR DE SEGUIR TABLERO DE MIS FAVORITOS o SALIR DE ESTE TORNEO desde la gestión vigente.</p></div>
+<div class="sheet-nav"><a href="#torneos-06">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#torneos-08">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet tournament-clean" id="torneos-08">
+<div class="sheet-head"><strong>T09</strong><h2>Volver a Mi Score Card</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_TORNEOS_ATAJOS.png" alt="MENÚ dentro de Torneos" loading="lazy"></div><div class="current-copy"><h3>PASO</h3><p>Abre MENÚ y toca MI SCORE CARD.</p></div><div class="current-copy"><h3>RESULTADO</h3><p>Regresas directo a la ronda activa sin perder scores ni configuración.</p></div>
+<div class="sheet-nav"><a href="#torneos-07">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#torneos-09">SIGUIENTE →</a></div>
+</section><section class="sheet master-sheet current-function-sheet tournament-clean" id="torneos-09">
+<div class="sheet-head"><strong>T10</strong><h2>MENÚ siempre contigo</h2><a href="#indice">ÍNDICE</a></div>
+<div class="screen-stage focus-app"><img src="/docs/manual/current/APP_ATAJOS_OVERLAY.png" alt="MENÚ universal vigente" loading="lazy"></div><div class="current-copy"><h3>FUNCIÓN</h3><p>MENÚ es el acceso universal entre Score Card y Torneos.</p></div><div class="current-copy"><h3>DESTINOS</h3><p>MI SCORE CARD, MIS TORNEOS, MONITOR DEL TORNEO EN VIVO, VER RESULTADOS POR CATEGORÍA, BUSCAR JUGADOR y TABLERO DE MIS FAVORITOS.</p></div>
+<div class="sheet-nav"><a href="#torneos-08">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#lab-campo">SIGUIENTE →</a></div>
+</section>
+<section class="sheet master-sheet current-function-sheet" id="lab-campo">
+  <div class="sheet-head"><strong>61</strong><h2>Campo y modalidad · pantalla real LAB</h2><a href="#indice">ÍNDICE</a></div>
+  <div class="screen-stage current-evidence"><img src="/docs/manual/current/CAMPO_MODALIDAD_REAL.webp" alt="Pantalla real LAB de selección de campo y modalidad" loading="eager"></div>
+  <div class="current-copy"><h3>QUÉ DEBES VER</h3><p>La pantalla de inicio del registro muestra la selección de campo y las modalidades disponibles antes de ingresar jugadores.</p></div>
+  <div class="current-copy"><h3>ACCIÓN</h3><p>Selecciona el campo y luego la modalidad. El registro de jugadores continúa debajo sin cambiar de pantalla.</p></div>
+  <div class="sheet-nav"><a href="#torneos-09">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#lab-registro">SIGUIENTE →</a></div>
+</section>
+<section class="sheet master-sheet current-function-sheet" id="lab-registro">
+  <div class="sheet-head"><strong>62</strong><h2>Registro de jugadores + MENÚ · pantalla real LAB</h2><a href="#indice">ÍNDICE</a></div>
+  <div class="screen-stage current-evidence"><img src="/docs/manual/current/REGISTRO_ATAJOS_REAL.webp" alt="Pantalla real LAB de registro de jugadores y MENÚ" loading="eager"></div>
+  <div class="current-copy"><h3>QUÉ DEBES VER</h3><p>Registro individual de jugador con NOMBRE, CATEGORÍA, HDCP, MARCAS y WhatsApp opcional, además del acceso MENÚ disponible en la pantalla.</p></div>
+  <div class="current-copy"><h3>FLUJO</h3><p>El siguiente jugador se habilita conforme avanzas en el registro, manteniendo visibles los jugadores que ya recibieron datos.</p></div>
+  <div class="sheet-nav"><a href="#lab-campo">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#lab-scorecard">SIGUIENTE →</a></div>
+</section>
+<section class="sheet master-sheet current-function-sheet" id="lab-scorecard">
+  <div class="sheet-head"><strong>63</strong><h2>Score Card / Control Manual · pantalla vigente</h2><a href="#indice">ÍNDICE</a></div><img src="/docs/manual/current/APP_SCORECARD_ATAJOS.png" alt="Captura real LAB de la aplicación">
+  <div class="screen-stage current-evidence"></div>
+  <div class="current-copy"><h3>QUÉ DEBES VER</h3><p>El Anotador vigente con teclado numérico visible para ingresar el Gross del jugador seleccionado.</p></div>
+  <div class="current-copy"><h3>ACCIÓN</h3><p>Toca la casilla Gross, selecciona 1–9 o X cuando corresponda y confirma con ENTER. La aplicación guarda el dato y continúa el flujo operativo.</p></div>
+  <div class="sheet-nav"><a href="#lab-registro">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#lab-fourball">SIGUIENTE →</a></div>
+</section>
+<section class="sheet master-sheet current-function-sheet" id="lab-fourball">
+  <div class="sheet-head"><strong>64</strong><h2>Four Ball corregido + MENÚ · pantalla real LAB</h2><a href="#indice">ÍNDICE</a></div>
+  <div class="screen-stage current-evidence"><img src="/docs/manual/current/FOURBALL_ATAJOS_REAL.webp" alt="Pantalla real LAB de Four Ball con MENÚ" loading="eager"></div>
+  <div class="current-copy"><h3>QUÉ DEBES VER</h3><p>La modalidad Four Ball en su presentación vigente, manteniendo disponible MENÚ para moverte a otras áreas sin abandonar el flujo.</p></div>
+  <div class="current-copy"><h3>RESULTADO</h3><p>Los equipos y la tarjeta permanecen dentro de la modalidad seleccionada mientras MENÚ conserva la navegación general.</p></div>
+  <div class="sheet-nav"><a href="#lab-scorecard">← ANTERIOR</a><a href="#indice">ÍNDICE</a><a href="#indice">SIGUIENTE →</a></div>
+</section></main><script>
+document.addEventListener("DOMContentLoaded",()=>{
+  const sheets=[...document.querySelectorAll("section.sheet")];
+  sheets.forEach((sheet,i)=>{
+    const nav=sheet.querySelector(":scope > .sheet-nav");
+    if(!nav)return;
+    const links=nav.querySelectorAll("a");
+    if(links.length<3)return;
+    links[0].href=i>0?"#"+sheets[i-1].id:"#portada";
+    links[0].textContent="← ANTERIOR";
+    links[1].href="#indice";
+    links[1].textContent="ÍNDICE";
+    links[2].href=i<sheets.length-1?"#"+sheets[i+1].id:"#portada";
+    links[2].textContent="SIGUIENTE →";
+  });
+});
+</script><script id="manual-anchor-stabilizer">
+(()=>{
+  const INTERNAL='a[href^="#"]';
+  let token=0;
+  function targetFor(hash){
+    if(!hash||hash==="#")return null;
+    try{return document.getElementById(decodeURIComponent(hash.slice(1)))}catch{return null}
+  }
+  function align(hash,{replace=false}={}){
+    const target=targetFor(hash); if(!target)return false;
+    const my=++token;
+    if(replace)history.replaceState(null,"",hash); else if(location.hash!==hash)history.pushState(null,"",hash);
+    const run=()=>{if(my!==token)return;target.scrollIntoView({block:"start",behavior:"auto"})};
+    run();
+    [40,120,260,520,900,1400,2200].forEach(ms=>setTimeout(run,ms));
+    document.fonts?.ready?.then(run).catch(()=>{});
+    const imgs=[...target.querySelectorAll("img")];
+    imgs.forEach(img=>{if(!img.complete)img.addEventListener("load",run,{once:true})});
+    return true;
+  }
+  document.addEventListener("click",event=>{
+    const link=event.target.closest?.(INTERNAL); if(!link)return;
+    const hash=link.getAttribute("href"); if(!targetFor(hash))return;
+    event.preventDefault(); align(hash);
+  });
+  window.addEventListener("hashchange",()=>align(location.hash,{replace:true}));
+  window.addEventListener("pageshow",()=>{if(location.hash)setTimeout(()=>align(location.hash,{replace:true}),0)});
+  window.addEventListener("load",()=>{if(location.hash)align(location.hash,{replace:true})});
+})();
+</script><nav class="manual-global-nav" aria-label="Navegación global del manual">
+<button type="button" id="manualGlobalBack">← ATRÁS</button>
+<a href="#portada">INICIO</a>
+<a class="primary" href="/index-grupal.html">MI RONDA</a>
+<a href="#indice">ÍNDICE</a>
+</nav><script>
+document.addEventListener("DOMContentLoaded",()=>{
+  const b=document.getElementById("manualGlobalBack");
+  if(b)b.addEventListener("click",()=>{
+    if(history.length>1) history.back();
+    else location.hash="portada";
+  });
+});
+</script><script id="gsc-manual-hotspots-v1">
+(()=>{
+ const shareParam=()=>new URL(location.href).searchParams.get("_vercel_share");
+ const route=(kind)=>{
+   let raw="/index-grupal.html?manual_action="+encodeURIComponent(kind);
+   if(kind.startsWith("hub:")) raw="/live-hub.html?shortcut="+encodeURIComponent(kind.slice(4));
+   const u=new URL(raw,location.origin), share=shareParam(); if(share)u.searchParams.set("_vercel_share",share); return u.pathname+u.search+u.hash;
+ };
+ const maps={
+  "APP_SETUP_CURRENT.png":[
+   {l:3,t:20,w:46,h:8,a:"setup",n:"Seleccionar campo"},
+   {l:3,t:30,w:94,h:22,a:"setup",n:"Modalidades"},
+   {l:3,t:54,w:94,h:24,a:"setup",n:"Registro de jugadores"},
+   {l:3,t:79,w:94,h:7,a:"hub:tournaments",n:"Centro de Torneos"},
+   {l:3,t:87,w:94,h:6,a:"history",n:"Ver rondas guardadas"},
+   {l:3,t:93,w:94,h:6,a:"account",n:"Respaldar / recuperar datos"}
+  ],
+  "APP_SCORECARD_ATAJOS.png":[
+   {l:77,t:2,w:20,h:8,a:"menu",n:"MENÚ"},
+   {l:2,t:9,w:96,h:18,a:"scorecard",n:"Información de campo"},
+   {l:2,t:28,w:96,h:38,a:"scorecard",n:"Score Card"},
+   {l:2,t:67,w:96,h:28,a:"manual",n:"Anotador / Control Manual"}
+  ],
+  "APP_ATAJOS_OVERLAY.png":[
+   {l:5,t:14,w:43,h:10,a:"scorecard",n:"Mi Score Card"},
+   {l:52,t:14,w:43,h:10,a:"hub:tournaments",n:"Mis Torneos"},
+   {l:5,t:26,w:90,h:10,a:"hub:general",n:"Monitor del Torneo en Vivo"},
+   {l:5,t:38,w:90,h:10,a:"hub:categories",n:"Resultados por Categoría"},
+   {l:5,t:50,w:90,h:10,a:"hub:search",n:"Buscar Jugador"},
+   {l:5,t:62,w:90,h:10,a:"hub:board",n:"Tablero de Mis Favoritos"},
+   {l:5,t:74,w:90,h:10,a:"manual",n:"Manual de Usuario"}
+  ],
+  "APP_TORNEOS_HUB.png":[
+   {l:75,t:2,w:22,h:8,a:"menu",n:"MENÚ"},
+   {l:4,t:18,w:92,h:12,a:"hub:tournaments",n:"Mis Torneos"},
+   {l:4,t:32,w:92,h:12,a:"hub:general",n:"Monitor General"},
+   {l:4,t:46,w:92,h:12,a:"hub:categories",n:"Resultados por Categoría"},
+   {l:4,t:60,w:92,h:12,a:"hub:search",n:"Buscar Jugador"},
+   {l:4,t:74,w:92,h:12,a:"hub:board",n:"Favoritos"}
+  ],
+  "APP_MODE_STABLEFORD.png":[
+   {l:76,t:2,w:21,h:8,a:"menu",n:"MENÚ"},{l:4,t:18,w:92,h:18,a:"stableford",n:"Configuración Stableford"},{l:4,t:38,w:92,h:38,a:"scorecard",n:"Score Card Stableford"}
+  ],
+  "APP_MODE_MATCH_PLAY.png":[
+   {l:76,t:2,w:21,h:8,a:"menu",n:"MENÚ"},{l:4,t:18,w:92,h:18,a:"setup",n:"Configuración Match Play"},{l:4,t:38,w:92,h:38,a:"scorecard",n:"Score Card Match Play"}
+  ],
+  "APP_MODE_FOUR_BALL.png":[
+   {l:76,t:2,w:21,h:8,a:"menu",n:"MENÚ"},{l:4,t:18,w:92,h:18,a:"setup",n:"Configuración Four Ball"},{l:4,t:38,w:92,h:38,a:"scorecard",n:"Score Card Four Ball"}
+  ],
+  "APP_MODE_SKINS.png":[
+   {l:76,t:2,w:21,h:8,a:"menu",n:"MENÚ"},{l:4,t:16,w:92,h:22,a:"setup",n:"Configurar Skins"},{l:4,t:40,w:92,h:34,a:"scorecard",n:"Resultados Skins"}
+  ],
+  "APP_MODE_UNIVERSALES.png":[
+   {l:76,t:2,w:21,h:8,a:"menu",n:"MENÚ"},{l:4,t:16,w:92,h:22,a:"setup",n:"Configurar Universales"},{l:4,t:40,w:92,h:34,a:"scorecard",n:"Resultados Universales"}
+  ],
+  "APP_TARJETA_FINAL_ATAJOS.png":[
+   {l:76,t:2,w:21,h:8,a:"menu",n:"MENÚ"},{l:3,t:14,w:94,h:56,a:"final",n:"Tarjeta Final"},{l:3,t:72,w:45,h:10,a:"history",n:"Rondas guardadas"},{l:52,t:72,w:45,h:10,a:"correction",n:"Corrección oficial"}
+  ],
+  "APP_CORRECCION_ATAJOS.png":[
+   {l:76,t:2,w:21,h:8,a:"menu",n:"MENÚ"},{l:4,t:16,w:92,h:68,a:"correction",n:"Corrección Oficial"}
+  ],
+  "APP_HISTORIAL_ATAJOS.png":[
+   {l:76,t:2,w:21,h:8,a:"menu",n:"MENÚ"},{l:3,t:16,w:94,h:56,a:"history",n:"Mis Rondas Guardadas"},{l:3,t:74,w:94,h:12,a:"stats",n:"Estadísticas"}
+  ],
+  "APP_ACCESS.png":[
+   {l:5,t:12,w:90,h:62,a:"account",n:"Acceso / Cuenta"},{l:5,t:76,w:90,h:12,a:"install",n:"Instalar aplicación"}
+  ],
+  "APP_CATEGORIAS_OFICIALES.png":[
+   {l:76,t:2,w:21,h:8,a:"menu",n:"MENÚ"},{l:3,t:15,w:94,h:70,a:"hub:categories",n:"Resultados por Categoría"}
+  ],
+  "APP_CAMPEONATO_SCORECARD.png":[
+   {l:76,t:2,w:21,h:8,a:"menu",n:"MENÚ"},{l:3,t:15,w:94,h:70,a:"scorecard",n:"Score Card Campeonato"}
+  ],
+  "APP_TORNEOS_ATAJOS.png":[
+   {l:76,t:2,w:21,h:8,a:"menu",n:"MENÚ"},{l:3,t:15,w:94,h:70,a:"hub:tournaments",n:"Centro de Torneos"}
+  ],
+  "MONITOR_TIEMPO_REAL_LAB.png":[
+   {l:3,t:12,w:94,h:62,a:"timer",n:"Monitor de Tiempo"}
+  ],
+  "OPERACION_RONDA_INFERIOR_REAL_LAB.png":[
+   {l:3,t:8,w:94,h:22,a:"final",n:"Tarjeta Final"},{l:3,t:32,w:94,h:20,a:"history",n:"Rondas guardadas"},{l:3,t:54,w:94,h:20,a:"setup",n:"Nueva ronda"}
+  ],
+  "CAMPO_MODALIDAD_REAL.webp":[
+   {l:3,t:10,w:94,h:35,a:"setup",n:"Campo y modalidad"},{l:76,t:2,w:21,h:8,a:"menu",n:"MENÚ"}
+  ],
+  "REGISTRO_ATAJOS_REAL.webp":[
+   {l:3,t:12,w:94,h:64,a:"setup",n:"Registro de jugadores"},{l:76,t:2,w:21,h:8,a:"menu",n:"MENÚ"}
+  ],
+  "SCORECARD_CONTROL_REAL.webp":[
+   {l:3,t:10,w:94,h:45,a:"scorecard",n:"Score Card"},{l:3,t:57,w:94,h:34,a:"manual",n:"Anotador"},{l:76,t:2,w:21,h:8,a:"menu",n:"MENÚ"}
+  ],
+  "FOURBALL_ATAJOS_REAL.webp":[
+   {l:3,t:12,w:94,h:70,a:"scorecard",n:"Four Ball"},{l:76,t:2,w:21,h:8,a:"menu",n:"MENÚ"}
+  ]
+ };
+ document.querySelectorAll(".screen-stage img").forEach(img=>{
+   const file=(img.getAttribute("src")||"").split("/").pop();
+   const defs=maps[file]; if(!defs)return;
+   const stage=img.closest(".screen-stage"); if(!stage||stage.querySelector(".manual-hotspot-layer"))return;
+   const layer=document.createElement("div"); layer.className="manual-hotspot-layer";
+   defs.forEach(d=>{
+     const a=document.createElement("a"); a.className="manual-hotspot"; a.href=route(d.a);
+     a.setAttribute("aria-label",d.n); a.textContent=d.n;
+     Object.assign(a.style,{left:d.l+"%",top:d.t+"%",width:d.w+"%",height:d.h+"%"});
+     layer.appendChild(a);
+   });
+   stage.appendChild(layer);
+   const syncLayer=()=>{
+     const sr=stage.getBoundingClientRect(),ir=img.getBoundingClientRect();
+     layer.style.left=(ir.left-sr.left)+"px";
+     layer.style.top=(ir.top-sr.top)+"px";
+     layer.style.width=ir.width+"px";
+     layer.style.height=ir.height+"px";
+   };
+   if(img.complete)syncLayer();else img.addEventListener("load",syncLayer,{once:true});
+   if("ResizeObserver" in window){const ro=new ResizeObserver(syncLayer);ro.observe(img);ro.observe(stage)}
+   addEventListener("resize",syncLayer,{passive:true});
+ });
+})();
+</script><script src="/app-update.js"></script><script src="/shortcuts-ui.js"></script></body></html>
+<!-- visual-qa-layout: compact-b0fca961 -->
+<!-- master-layout: all-74-v1 -->
+<!-- gray-real-screen-audit: current -->
+<!-- final-real-gray-audit: 2026-09-20 -->
+<!-- final-combined-audit: real-screens-gray-graphics -->
+<!-- final-qa-head: 6e4e24de -->

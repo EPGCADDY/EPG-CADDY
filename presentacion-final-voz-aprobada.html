@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>GOLF SCORE CARD GT · Presentación Final</title>
+<style>
+:root{--lime:#31ff00;--fg:#fff;--muted:#aaa}
+*{box-sizing:border-box}html,body{margin:0;background:#000;color:var(--fg);font-family:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100%}
+body{display:flex;align-items:center;justify-content:center;padding:12px}
+.wrap{width:min(100%,1100px)}
+.stage{position:relative;background:#000;border:1px solid #243024;border-radius:14px;overflow:hidden;aspect-ratio:16/9}
+video{width:100%;height:100%;object-fit:contain;background:#000;display:block}
+.start{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#000;z-index:4}
+button{border:2px solid var(--lime);background:#050505;color:var(--lime);font-weight:900;border-radius:12px;padding:18px 24px;font-size:clamp(18px,3vw,30px);min-height:58px}
+.info{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:10px;color:var(--muted);font-size:13px}
+.bar{height:4px;background:#152015;margin-top:10px;border-radius:4px;overflow:hidden}.bar>div{height:100%;width:0;background:var(--lime)}
+.badge{color:var(--lime);font-weight:800}.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="stage">
+    <video id="v" playsinline muted preload="auto"></video>
+    <div id="start" class="start"><button id="go" type="button">▶ REPRODUCIR PRESENTACIÓN FINAL</button></div>
+  </div>
+  <div class="bar"><div id="progress"></div></div>
+  <div class="info"><span class="badge">GOLF SCORE CARD GT · LAB REAL</span><span id="status">LISTO</span></div>
+</div>
+<audio id="a" preload="auto"></audio>
+<script>
+(()=>{
+const clips=[
+ {v:'https://cdn.creativeclaw.co/u/9cfd647d/videos/6c339998-9ae6-49b2-b52c-9163537e0431.mp4',a:'https://cdn.creativeclaw.co/u/9cfd647d/audio/e0caf14d-21ff-42fe-a0c5-2189f7ec8fa3.mp3'},
+ {v:'https://cdn.creativeclaw.co/u/9cfd647d/videos/31f76b25-e850-44cb-a504-de7d5f8342fd.mp4',a:'https://cdn.creativeclaw.co/u/9cfd647d/audio/3cf2bcaa-b194-41ec-b696-7bd5b561b90c.mp3'},
+ {v:'https://cdn.creativeclaw.co/u/9cfd647d/videos/7c391edf-c856-4d78-bd1e-c86d0693f71e.mp4',a:'https://cdn.creativeclaw.co/u/9cfd647d/audio/d61e3d83-bfec-4f19-8edf-af4701062a55.mp3'},
+ {v:'https://cdn.creativeclaw.co/u/9cfd647d/videos/df70b336-2298-43f7-96ea-d344ca25e513.mp4',a:'https://cdn.creativeclaw.co/u/9cfd647d/audio/5ff6e368-bbc8-411f-b7d9-05dc5c4fee6b.mp3'}
+];
+const v=document.getElementById('v'),a=document.getElementById('a'),go=document.getElementById('go'),start=document.getElementById('start'),status=document.getElementById('status'),progress=document.getElementById('progress');
+let i=0, running=false;
+function setClip(n){i=n;v.src=clips[i].v;a.src=clips[i].a;v.load();a.load();status.textContent=`TRAMO ${i+1} / ${clips.length}`;progress.style.width=`${(i/clips.length)*100}%`;}
+async function playCurrent(){setClip(i);try{await Promise.all([v.play(),a.play()]);running=true;}catch(e){status.textContent='TOCÁ REPRODUCIR PARA CONTINUAR';start.classList.remove('hidden');}}
+function next(){if(!running)return;v.pause();a.pause();if(i<clips.length-1){i++;playCurrent();}else{running=false;progress.style.width='100%';status.textContent='FINALIZADO';start.classList.remove('hidden');go.textContent='↻ REPRODUCIR DE NUEVO';}}
+a.addEventListener('ended',next);
+v.addEventListener('ended',()=>{ if(!a.ended){v.currentTime=Math.max(0,v.duration-0.05);v.pause();} });
+a.addEventListener('timeupdate',()=>{if(a.duration&&Number.isFinite(a.duration)){const frac=(i+a.currentTime/a.duration)/clips.length;progress.style.width=`${Math.min(100,frac*100)}%`;}});
+go.addEventListener('click',async()=>{start.classList.add('hidden');if(!running){i=0;}await playCurrent();});
+setClip(0);
+})();
+</script>
+</body></html>

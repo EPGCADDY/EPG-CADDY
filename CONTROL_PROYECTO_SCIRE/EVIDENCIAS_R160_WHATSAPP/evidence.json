@@ -1,0 +1,90 @@
+{
+  "release": "R160",
+  "type": "LOCAL_REAL_CHROMIUM_QA_FIXTURES",
+  "physicalIphone": false,
+  "whatsappDelivered": false,
+  "cases": [
+    {
+      "width": 390,
+      "test": "TORNEO opens without input focus; tap permits typing",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "kind": "private",
+      "firstMessage": "GOLF SCORE CARD GT\nTe ha invitado a participar en el grupo de Jaime Kirste.",
+      "secondMessage": "QA23456789",
+      "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R160_WHATSAPP/390-private.png",
+      "sha256": "1e9b006e67ae071df81327867f3319a99100d6a459e13f9866dcf1e46bc4a8d4",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "kind": "private",
+      "test": "cancellation/retry/source preserved",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "kind": "tournament",
+      "firstMessage": "GOLF SCORE CARD GT\nTe ha invitado a participar en el torneo Torneo QA.",
+      "secondMessage": "QA23456789",
+      "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R160_WHATSAPP/390-tournament.png",
+      "sha256": "1e9b006e67ae071df81327867f3319a99100d6a459e13f9866dcf1e46bc4a8d4",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "kind": "tournament",
+      "test": "cancellation/retry/source preserved",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "test": "Administration title and menu matching; no overflow",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "test": "TORNEO opens without input focus; tap permits typing",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "kind": "private",
+      "firstMessage": "GOLF SCORE CARD GT\nTe ha invitado a participar en el grupo de Jaime Kirste.",
+      "secondMessage": "QA23456789",
+      "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R160_WHATSAPP/430-private.png",
+      "sha256": "816de5d60c8eced33440e170955c7883e18ec026ade359c056dbd2976b78977b",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "kind": "private",
+      "test": "cancellation/retry/source preserved",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "kind": "tournament",
+      "firstMessage": "GOLF SCORE CARD GT\nTe ha invitado a participar en el torneo Torneo QA.",
+      "secondMessage": "QA23456789",
+      "screenshot": "CONTROL_PROYECTO_SCIRE/EVIDENCIAS_R160_WHATSAPP/430-tournament.png",
+      "sha256": "816de5d60c8eced33440e170955c7883e18ec026ade359c056dbd2976b78977b",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "kind": "tournament",
+      "test": "cancellation/retry/source preserved",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "test": "Administration title and menu matching; no overflow",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "status": "PASS"
+}

@@ -1,0 +1,84 @@
+name: LAB capture current access setup
+on:
+  push:
+    branches: [laboratorio]
+permissions:
+  contents: write
+jobs:
+  capture:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: laboratorio
+      - name: Install Chromium
+        run: |
+          mkdir -p /tmp/access-setup
+          cd /tmp/access-setup
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 --no-audit --no-fund
+          npx playwright install chromium
+      - name: Capture physical access and setup
+        run: |
+          python3 -m http.server 8765 >/tmp/access-setup-http.log 2>&1 &
+          sleep 2
+          mkdir -p access-setup
+          cat > /tmp/access-setup/capture.cjs <<'NODE'
+          const {chromium}=require('/tmp/access-setup/node_modules/playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const viewport={width:430,height:932};
+
+            const access=await browser.newPage({viewport,deviceScaleFactor:2});
+            await access.route('**/api/account**',r=>r.fulfill({status:401,contentType:'application/json',body:'{"ok":false}'}));
+            await access.goto('http://127.0.0.1:8765/index-grupal.html',{waitUntil:'networkidle'});
+            await access.waitForTimeout(350);
+            if(await access.locator('#gscAuthGate.visible').count()!==1) throw new Error('Access gate not visible');
+            await access.screenshot({path:'access-setup/APP_ACCESS.png',fullPage:false});
+            await access.close();
+
+            const setup=await browser.newPage({viewport,deviceScaleFactor:2});
+            await setup.route('**/api/account**',route=>{
+              const u=new URL(route.request().url());
+              if(u.searchParams.get('action')==='session') return route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"user":{"id":"setup-audit","email":"audit@example.com"}}'});
+              return route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"user":{"id":"setup-audit"}}'});
+            });
+            await setup.route('**/api/app-access**',route=>route.fulfill({status:200,contentType:'application/json',body:'{"ok":true,"role":"owner"}'}));
+            await setup.goto('http://127.0.0.1:8765/index-grupal.html',{waitUntil:'networkidle'});
+            await setup.waitForTimeout(500);
+            await setup.evaluate(()=>{
+              const overlay=document.getElementById('setupOverlay');
+              if(overlay){overlay.classList.add('visible');overlay.setAttribute('aria-hidden','false');overlay.style.display='block'}
+              const s1=document.getElementById('setupStep1'); if(s1)s1.classList.remove('hidden');
+              const s2=document.getElementById('setupStep2'); if(s2)s2.classList.add('hidden');
+              const detected=document.getElementById('detectedPlayers'); if(detected)detected.classList.add('hidden');
+              window.scrollTo(0,0);
+            });
+            await setup.waitForTimeout(180);
+            await setup.screenshot({path:'access-setup/APP_SETUP_CURRENT.png',fullPage:false});
+            await setup.close();
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+          node /tmp/access-setup/capture.cjs
+      - name: Publish screens
+        run: |
+          mkdir -p docs/manual/current
+          cp access-setup/APP_ACCESS.png docs/manual/current/APP_ACCESS.png
+          cp access-setup/APP_SETUP_CURRENT.png docs/manual/current/APP_SETUP_CURRENT.png
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/manual/current/APP_ACCESS.png docs/manual/current/APP_SETUP_CURRENT.png
+          if ! git diff --cached --quiet; then
+            git commit -m "LAB manual: publish current access and setup screens"
+            git pull --rebase origin laboratorio
+            git push origin HEAD:laboratorio
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: access-setup-current
+          path: access-setup
+          retention-days: 2
