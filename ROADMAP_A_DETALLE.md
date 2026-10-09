@@ -2014,3 +2014,8 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `test-r223-negative-handicap-campeonato-a.mjs`, `test-r224-scorecard-no-48h-owner-controls.mjs`, `test-r226-whatsapp-entry-code-prefill.mjs` | Las aserciones de release aceptan `20261008` o `20261009` para no bloquear R238 por fechas fijas heredadas. |
 | `ROADMAP_OVERALL.md`, `ROADMAP_A_DETALLE.md` | Registran el ajuste de compuerta en el mismo commit que desbloquea la publicación. |
 | `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` | Resella las fuentes activas después del ajuste de ROADMAP para que el inventario remoto no bloquee el build. |
+
+
+## R243 Guest 48h Score Card Voice
+- Se unifica la voz local femenina de resultados entre Score Card normal y Score Card invitado 48h mediante device-closures.js.
+- Regresion obligatoria: test-r243-guest48h-scorecard-shared-female-voice.mjs valida selector compartido, carga de invitado y conservacion de controles de audio.

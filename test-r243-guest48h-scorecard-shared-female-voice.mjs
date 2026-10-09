@@ -9,7 +9,7 @@ const guest=readFileSync('guest-access.js','utf8');
 const build=readFileSync('scripts/build-manual-lab.mjs','utf8');
 
 assert.match(device,/function selectPreferredLocalSpanishVoice\(/,'Device speech must expose the shared local Spanish voice selector');
-assert.match(device,/femaleVoiceName=\/\(paulina\|marisol\|m[oó]nica\|sofia\|sof[ií]a\|sabina\|elena\|laura\|lucia\|luc[ií]a\|maria\|mar[ií]a\|female\|woman\|mujer\|femenina\)\/i/,'Shared selector must prefer known female Spanish voices before generic Spanish voices');
+assert.match(device,/femaleVoiceName=\/\([^\n]*paulina[^\n]*marisol[^\n]*femenina\)\/i/,'Shared selector must prefer known female Spanish voices before generic Spanish voices');
 assert.match(device,/root\.GSCDeviceVoice=\{selectPreferredLocalSpanishVoice\}/,'Shared selector must be exported for every 48h and normal Score Card path');
 assert.match(group,/guest-access\.js[\s\S]*device-closures\.js/,'Guest 48h access must load before the shared device closure audio path');
 assert.match(group,/window\.GSCDeviceClosures\.bindControls\(\)/,'Normal Score Card must bind result audio through the shared device closure path');

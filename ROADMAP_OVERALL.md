@@ -2121,3 +2121,8 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - `test-r177-cross-device-admin.mjs`: actualiza la regresión histórica LAB/Producción para esperar dos lecturas peer: `list-local` con cookie para torneos y `list-peer-guest48h` con `Authorization` para accesos 48h. Esto mantiene el bloqueo de administración cruzada y permite compilar R238 con el espejo firmado real.
 - `test-r223-negative-handicap-campeonato-a.mjs`, `test-r224-scorecard-no-48h-owner-controls.mjs` y `test-r226-whatsapp-entry-code-prefill.mjs`: permiten releases del 08 o 09 de octubre para que R238 no quede bloqueado por fechas fijas heredadas.
 - `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: resellado después del ajuste de compuerta para que Vercel publique R238 sin inventario viejo.
+
+
+## R243 Guest 48h Score Card Voice
+- Se unifica la voz local femenina de resultados entre Score Card normal y Score Card invitado 48h mediante device-closures.js.
+- Regresion obligatoria: test-r243-guest48h-scorecard-shared-female-voice.mjs valida selector compartido, carga de invitado y conservacion de controles de audio.
