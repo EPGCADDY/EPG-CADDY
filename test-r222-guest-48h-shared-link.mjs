@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
 import {PGlite} from '@electric-sql/pglite';
 import {createGrant,redeemGuestToken,validateGuestToken,purgeExpiredAccess,recordGuestFeedback,ownerFeedback} from './api/_lib/app-access.js';
 
@@ -19,6 +20,12 @@ for(let index=1;index<=5;index++){
 assert.equal(await redeemGuestToken(grant.token,sql),null,'Sixth independent opening must be blocked');
 const activeInDb=await validateGuestToken(grant.token,{touch:false,sql});
 assert.equal(activeInDb.useCount,5,'Existing redeemed sessions remain valid until the 48h expiration');
+const appAccess=await readFile('api/app-access.js','utf8');
+assert.match(appAccess,/validateGuestToken/,'Redeem handler must be able to refresh an existing guest session');
+assert.match(appAccess,/cookieToken\(req,"gscg_app_access"\)===token\?await validateGuestToken\(token,\{touch:true\}\):await redeemGuestToken\(token\)/,'WhatsApp link reopen must validate the same browser token without consuming a new shared opening');
+const accessHtml=await readFile('access.html','utf8');
+assert.match(accessHtml,/\/api\/app-access\?action=redeem&token=/,'Invite page must keep redeeming the WhatsApp token');
+assert.match(accessHtml,/\/index-grupal\.html\?source=guest48h/,'Redeemed WhatsApp link must return to the Live/Score Card shell');
 const saved=await recordGuestFeedback(grant.token,{guestGroupId:'telefono-jaime',modality:'general',playerCount:4,holesUsed:3,annotationsCount:12,snapshot:{groupLabel:'Grupo Jaime 1',course:'El Pulte',mode:'general',players:[{id:'p1',name:'Jaime',holes:[{hole:1,gross:4,net:4,par:4}],totals:{holes:1,gross:4,net:4,relativeToPar:0}}]}},sql);
 assert.equal(saved,true,'Guest group must publish its score-card snapshot to the owner report');
 const savedSecond=await recordGuestFeedback(grant.token,{guestGroupId:'telefono-becky',modality:'general',playerCount:4,holesUsed:2,annotationsCount:8,snapshot:{groupLabel:'Grupo Becky 2',course:'El Pulte',mode:'general',players:[{id:'p2',name:'Becky',holes:[{hole:1,gross:5,net:5,par:4}],totals:{holes:1,gross:5,net:5,relativeToPar:1}}]}},sql);

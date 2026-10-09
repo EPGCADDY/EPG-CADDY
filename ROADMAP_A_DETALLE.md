@@ -2065,3 +2065,12 @@ Se ajusta `test-r177-cross-device-admin.mjs`: el relay de grupo privado sigue cu
 | `release.json`, `service-worker.js`, `index-grupal.html` | Identidad y cache pasan a R247 para que la pantalla visible confirme la corrección. |
 | `test-r237-cross-environment-48h-invitations.mjs` | Exige que el espejo LAB/Producción mande `ownerAccountId: account.id` y lea feedback de ese propietario. |
 | `test-r229-organizer-guest48h-live-card.mjs` | Exige la `X` interna cuadrada, de 54 px y recuadro verde, para la tarjeta Live 48h abierta desde Organizador. |
+
+## R248 · enlace WhatsApp 48h reabre la tarjeta Live · 9 octubre 2026
+
+| Archivo | Cambio |
+|---|---|
+| `api/app-access.js` | El canje `redeem` detecta si el mismo navegador ya trae la cookie `gscg_app_access` con el mismo token; en ese caso valida y refresca el acceso con `validateGuestToken(..., {touch:true})` sin consumir otro cupo. Un navegador distinto sigue usando `redeemGuestToken()` y conserva el límite de aperturas independientes. |
+| `test-r177-cross-device-admin.mjs` | Actualiza la regresión que bloqueó el build R247 para exigir el nuevo payload `ownerAccountId` del espejo firmado LAB/Producción. |
+| `test-r222-guest-48h-shared-link.mjs` | Agrega candado para el reingreso por el mismo enlace de WhatsApp: conserva `/invite/<token>`, vuelve a `index-grupal.html?source=guest48h` y no gasta un cupo adicional cuando la cookie coincide. |
+| `release.json`, `service-worker.js`, `index-grupal.html` | Identidad visible y cache pasan a R248 para publicar la corrección nueva y evitar servir el cliente anterior. |

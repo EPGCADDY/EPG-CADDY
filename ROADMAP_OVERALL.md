@@ -2159,3 +2159,10 @@ Una cookie de código caducada ya no bloquea una identidad de dispositivo válid
 - `event-administration-ui.js`: la tarjeta `TARJETA LIVE · INVITADO 48H` agrega una `X` interna cuadrada, con el mismo recuadro, tamaño y línea gráfica del cierre usado en el resto del recorrido.
 - `release.json`, `service-worker.js` e `index-grupal.html`: identidad visible pasa a R247 para confirmar la corrección en Laboratorio y Producción.
 - `test-r237-cross-environment-48h-invitations.mjs` y `test-r229-organizer-guest48h-live-card.mjs`: bloquean que LAB vuelva a depender sólo de variable de entorno para 48h o que la tarjeta Live invitada abra sin la `X` cuadrada de paridad gráfica.
+
+## R248 · enlace WhatsApp 48h reabre la tarjeta Live · 9 octubre 2026
+
+- `api/app-access.js`: si el invitado toca otra vez el mismo link de WhatsApp en el mismo navegador, `redeem` valida la cookie existente del mismo token y reabre la Score Card Live sin consumir otro cupo ni bloquear por límite de usos.
+- `test-r177-cross-device-admin.mjs`: corrige el candado que esperaba el payload viejo de `list-peer-guest48h` y ahora exige `ownerAccountId`, desbloqueando el build.
+- `test-r222-guest-48h-shared-link.mjs`: cubre el reingreso por `/invite/<token>` hacia `index-grupal.html?source=guest48h` y bloquea que vuelva a fallar el enlace compartido.
+- `release.json`, `service-worker.js` e `index-grupal.html`: identidad visible pasa a R248 para publicar la corrección del enlace 48h reabrible.

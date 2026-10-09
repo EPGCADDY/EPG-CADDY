@@ -3,7 +3,7 @@ import {createHash} from 'node:crypto';
 import {getDatabase} from './_lib/database.js';
 import {CODE_COOKIE,codeAccessEnabled,issueEntryCode,redeemEntryCode,revokeEntryCode,readCodeSession,codeSessionCookie} from './_lib/code-access.js';
 import {ensurePersonalAccess,limitPersonalAccess} from './_lib/personal-event-access.js';
-import { createGrant, accessCookie, guestModeCookie, clearAccessCookies, requireOwner, resolveAppAccess, revokeGrant, redeemGuestToken, recordGuestFeedback, ownerFeedback, purgeExpiredAccess } from "./_lib/app-access.js";
+import { createGrant, accessCookie, guestModeCookie, clearAccessCookies, requireOwner, resolveAppAccess, revokeGrant, redeemGuestToken, validateGuestToken, recordGuestFeedback, ownerFeedback, purgeExpiredAccess } from "./_lib/app-access.js";
 import { handleAppPreflight, isAllowedAppOrigin } from "./_lib/cors.js";
 import { noStore, readJson } from "./_lib/http.js";
 import { inviteOrigin } from "./_lib/invite-origin.js";
@@ -14,6 +14,13 @@ function fail(res,error){
   const status=Number(error?.status)||({ACCOUNT_UNAUTHORIZED:401,OWNER_REQUIRED:403,OWNER_NOT_CONFIGURED:503,DATABASE_NOT_CONFIGURED:503,ACCOUNT_AUTH_UNAVAILABLE:503}[code]||500);
   console.error("APP_ACCESS_FAILURE",JSON.stringify({code,status}));
   return res.status(status).json({ok:false,code});
+}
+
+function cookieToken(req,name){
+  const prefix=`${name}=`;
+  const raw=String(req.headers?.cookie||"").split(";").map(value=>value.trim()).find(value=>value.startsWith(prefix));
+  if(!raw)return "";
+  try{return decodeURIComponent(raw.slice(prefix.length))}catch{return raw.slice(prefix.length)}
 }
 
 export async function redeemCodeResponse(req,res,sql){
@@ -37,7 +44,8 @@ export default async function handler(req,res){
     }
     if(action==="redeem"&&req.method==="POST"){
       if(!isAllowedAppOrigin(req))return res.status(403).json({ok:false,code:"ORIGIN_NOT_ALLOWED"});
-      const token=String(req.query?.token||""),grant=await redeemGuestToken(token);
+      const token=String(req.query?.token||"");
+      const grant=cookieToken(req,"gscg_app_access")===token?await validateGuestToken(token,{touch:true}):await redeemGuestToken(token);
       if(!grant)return res.status(401).send("ENLACE INVÁLIDO, VENCIDO O SIN CUPOS");
       const seconds=Math.max(1,Math.floor((new Date(grant.expiresAt).getTime()-Date.now())/1000));
       res.setHeader("Set-Cookie",[accessCookie(token,seconds),guestModeCookie(seconds)]);
