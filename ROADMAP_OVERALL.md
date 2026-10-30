@@ -3964,3 +3964,17 @@ R177 compatibilidad: código de solo lectura disponible para torneo activo antes
 
 
 R177 verificación del código viewer: el test valida el evento desde la sesión autenticada creada al canjear el código, sin confiar en datos del cliente.
+
+
+## 30 octubre 2026 · Archivo de identidad aprobado: Golf Con Etiqueta
+
+Archivo documental de marca ordenado por el propietario, conservado en rama de archivo sin modificar main ni desplegar la aplicación. No es una nueva versión operativa.
+
+- `CONTROL_PROYECTO_SCIRE/ARCHIVO_MARCAS/GOLF_CON_ETIQUETA/`: reservorio de la marca.
+- `CONTROL_PROYECTO_SCIRE/ARCHIVO_MARCAS/GOLF_CON_ETIQUETA/Logo_Oficial_Dorado.png`: PNG aprobado, sin regenerar ni alterar; SHA-256 acd1a42f623b15ae62ad427a7c5e8e8a5465579e42efdc520a92a9139c3569c3.
+- `CONTROL_PROYECTO_SCIRE/ARCHIVO_MARCAS/GOLF_CON_ETIQUETA/identidad.json`: identificación, aprobación y hash del original.
+- `CONTROL_PROYECTO_SCIRE/ARCHIVO_MARCAS/GOLF_CON_ETIQUETA/README.md`: uso del sello; archivo independiente de la identidad de EPG Caddy.
+- `CONTROL_PROYECTO_SCIRE/MAPA_MAESTRO_DE_ARCHIVOS.md`: registro del archivo de marca.
+- `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: asiento documental simultáneo.
+
+Control de archivo: blob Git b79835d7b098c51d47ace7c351b9fc54f7d54e1c idéntico al PNG aprobado. Gate 0 y su prueba negativa pasan en la base d2fa042. Este asiento no afirma validación funcional integral, inventario de despliegue actualizado ni revisión física de aplicación; no se promueve a main.
