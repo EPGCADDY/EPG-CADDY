@@ -6,12 +6,18 @@ const PUBLIC_PATHS=new Set([
   "/service-worker.js","/app-update.js","/release.json","/manifest.webmanifest","/manual.webmanifest","/audio-touch-test.html"
 ]);
 const PRIVATE_GUEST_PREFIXES=["/api/account-backup","/api/backup","/api/commerce","/api/sync","/api/master-data"];
-const SCORECARD_ASSETS=new Set(['/score-entry-contract.js','/guest-access.js','/player-registry.js','/round-closure.js','/device-closures.js','/card-artifacts.js','/card-file-export.js','/card-library.js','/historical-analytics.js','/sync-queue.js','/master-data-sync.js','/account-backup.js','/four-ball.js','/stableford.js','/universales.js','/skins.js','/wolf.js','/vegas.js','/dots.js','/round-navigation.js','/golf-rules-offline.js','/timer-inactivity.js']);
+const SCORECARD_ASSETS=new Set(['/round-auto-save.js','/score-entry-contract.js','/guest-access.js','/player-registry.js','/round-closure.js','/device-closures.js','/card-artifacts.js','/card-file-export.js','/card-library.js','/historical-analytics.js','/sync-queue.js','/master-data-sync.js','/account-backup.js','/four-ball.js','/stableford.js','/universales.js','/skins.js','/wolf.js','/vegas.js','/dots.js','/round-navigation.js','/golf-rules-offline.js','/timer-inactivity.js']);
 
 export default async function accessGate(request){
   const url=new URL(request.url),path=url.pathname;
   const guestMode=(request.headers.get("cookie")||"").split(";").some(value=>value.trim()==="gsc_guest_mode=1");
   const codeMode=(request.headers.get('cookie')||'').split(';').some(value=>value.trim().startsWith('gsc_code_session='));
+  // Personal cloud backup authenticates the email account inside its handlers.
+  // Tournament/device cookies must not replace or block that account identity.
+  if(path==='/api/backup'||path==='/api/sync'){
+    try{const {requireAccountSession}=await import('./api/_lib/account-auth.js');await requireAccountSession({headers:{cookie:request.headers.get('cookie')||''}},{ownerOnly:true});return next()}
+    catch(error){return Response.json({ok:false,code:error?.code||'ACCOUNT_UNAUTHORIZED'},{status:error?.code==='ACCOUNT_AUTH_UNAVAILABLE'?503:401,headers:{'cache-control':'no-store'}})}
+  }
   if(codeMode&&PRIVATE_GUEST_PREFIXES.some(prefix=>path.startsWith(prefix)))return new Response(JSON.stringify({ok:false,code:'OWNER_DATA_FORBIDDEN'}),{status:403,headers:{'content-type':'application/json','cache-control':'no-store'}});
   if(path==="/api/account"&&guestMode&&!(request.method==="POST"&&["signin","signup"].includes(url.searchParams.get("action"))))return new Response(JSON.stringify({ok:false,code:"OWNER_DATA_FORBIDDEN"}),{status:403,headers:{"content-type":"application/json","cache-control":"no-store"}});
   if(path==="/api/account")return next();

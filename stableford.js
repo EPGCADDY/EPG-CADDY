@@ -142,7 +142,7 @@
       const baseRenderCourseInfo=renderCourseInfo;
       const safeRender=function(){
         const standard=["Negro","Azul","Blanco","Rojo","Amarillo"];
-        if(typeof TEES==="undefined"||standard.every(k=>TEES[k]))return baseRenderCourseInfo();
+        if(typeof TEES==="undefined"||standard.every(k=>TEES[k])||typeof ACTIVE_COURSE_KEY!=="undefined"&&ACTIVE_COURSE_KEY==="la_reunion")return baseRenderCourseInfo();
         const rows=standard.filter(k=>TEES[k]).map(k=>[k,TEES[k]]);
         const target=typeof $==="function"?$("courseInfo"):null;if(!target)return;
         target.innerHTML=`<div class="head">YARDAS</div><div class="head">COURSE RATING</div><div class="head">SLOPE RATING</div>${rows.map(([k,t])=>`<div style="text-align:left"><span class="tee-dot" style="background:${t.color}"></span><span style="color:${t.color};font-weight:800">${Number(t.total).toLocaleString("en-US")}</span></div><div style="text-align:center">${Number(t.rating).toFixed(1)}</div><div style="text-align:center">${Number(t.slope)}</div>`).join("")}`;

@@ -1,3 +1,4 @@
+import {relayPersonalCloud} from './_lib/personal-cloud.js';
 import { getDatabase } from "./_lib/database.js";
 import { requireAccountSession } from "./_lib/account-auth.js";
 import { handleAppPreflight } from "./_lib/cors.js";
@@ -21,8 +22,9 @@ export default async function handler(req, res) {
   if(handleAppPreflight(req,res))return;
   if (req.method !== "POST") { res.setHeader("Allow", "POST"); return res.status(405).json({ ok: false, code: "METHOD_NOT_ALLOWED" }); }
   try {
-    const account = await requireAccountSession(req);
+    const account = await requireAccountSession(req,{ownerOnly:true});
     const mutation = validateMutation(await readJson(req, 1_500_000));
+    if(await relayPersonalCloud(req,res,account,{payload:mutation}))return;
     const sql = getDatabase();
     const accountMetadata = JSON.stringify({ authUserId: account.id, authEmail: account.email, authName: account.name, claimedAt: new Date().toISOString() });
     const linked = await sql`
@@ -40,7 +42,7 @@ export default async function handler(req, res) {
     const applied = await applyEventBoundMutation(sql,mutation);
     if (!applied?.accepted) throw Object.assign(new Error("SYNC_NOT_APPLIED"), { code: "SYNC_NOT_APPLIED" });
     const serverAt = new Date().toISOString();
-    return res.status(applied.duplicate ? 200 : 201).json({ ok: true, duplicate: Boolean(applied.duplicate), payloadHash: mutation.payloadHash, serverAt, result: applied.result });
+    return res.status(applied.duplicate ? 200 : 201).json({ ok: true, accountId:account.id, duplicate: Boolean(applied.duplicate), payloadHash: mutation.payloadHash, serverAt, result: applied.result });
   } catch (error) {
     const rawCode = error?.code || "SYNC_FAILED";
     const message = String(error?.message || "");

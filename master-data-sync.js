@@ -101,6 +101,7 @@
         endedAt:iso(round.endedAt),
         durationSeconds:integer(round.durationSeconds),
         officialSnapshot:round.officialSnapshot||null,
+        ...(round.holesPlayed?{holesPlayed:round.holesPlayed}:{}),
         players:roundPlayers,
         cards,
         shareEvents:Array.isArray(round.shareEvents)?round.shareEvents.map((event,index)=>({clientEventId:text(event?.clientEventId)||`${text(round.id)}:share:${index+1}`,clientPlayerId:text(event?.clientPlayerId)||null,cardScope:["global","personal","package"].includes(event?.cardScope)?event.cardScope:"global",state:["PREPARED","CANCELLED","FAILED"].includes(event?.state)?event.state:"PREPARED",fallback:event?.fallback===true,occurredAt:iso(event?.occurredAt)||payload.capturedAt})):[]

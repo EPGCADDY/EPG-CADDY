@@ -60,9 +60,10 @@
       "courseKey": "la_reunion",
       "courseName": "La Reunión",
       "masterLibraryFileId": null,
-      "archivedOriginalCount": 0,
-      "productStatus": "not-enabled",
-      "sourceStatus": "internal-inventory-pending"
+      "archivedOriginalCount": 2,
+      "productStatus": "enabled-owner-confirmed-nine-repeated",
+      "sourceStatus": "new-physical-card-received-20261105",
+      "sourceFile": "data/courses/la-reunion/card-20261105.json"
     }
   ]
 }

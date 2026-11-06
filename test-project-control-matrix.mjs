@@ -23,7 +23,14 @@ for(const key of ["pulte","country_club","mayan_golf","hacienda_nueva","alta_vis
   assert.ok(item.archivedOriginalCount>=1,`Falta fotografía original ${key}`);
   assert.equal(item.sourceStatus,"archived");
 }
-assert.equal(registry.courses.find(course=>course.courseKey==="la_reunion")?.sourceStatus,"internal-inventory-pending");
+const reunion=registry.courses.find(course=>course.courseKey==="la_reunion");
+assert.equal(reunion.sourceStatus,"new-physical-card-received-20261105");
+assert.equal(reunion.archivedOriginalCount,2);
+assert.ok(fs.existsSync(reunion.sourceFile));
+const received=JSON.parse(fs.readFileSync(reunion.sourceFile,'utf8'));
+assert.equal(received.sources.length,2);
+for(const photo of received.sources)assert.ok(fs.existsSync(photo.path));
+assert.equal(received.activationStatus,"enabled-owner-confirmed-nine-repeated");
 const links=fs.readFileSync(new URL("05_MATRIZ_DE_ENLACES/ENLACES_OPERATIVOS.md",root),"utf8");
 assert.match(links,/ENTRADA OFICIAL ÚNICA[\s\S]*https:\/\/golf-score-card-gt\.vercel\.app\//);
 assert.match(links,/MODALIDADES[\s\S]*stableford_emergency=countryclub/);

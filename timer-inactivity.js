@@ -5,7 +5,7 @@
 })(typeof globalThis!=="undefined"?globalThis:this,function(){
   "use strict";
   const LIMIT_MS=30*60*1000; // compatibilidad histórica; no dispara cierre genérico
-  const NINE_HOLE_WAIT_MS=20*60*1000;
+  const NINE_HOLE_WAIT_MS=45*60*1000;
 
   function timestamp(value){
     const parsed=Date.parse(String(value||""));
@@ -24,12 +24,16 @@
   function hasScore(round,hole){
     return (round?.players||[]).some(p=>Number.isFinite(timestamp(p?.holes?.[hole]?.updatedAt)));
   }
-  function isNineHoleGap(round){
-    return !!(round?.configured&&!round?.endedAt&&hasScore(round,9)&&!hasScore(round,10));
+  function completedNine(round){
+    if(!round?.players?.length)return null;
+    for(const start of [1,10]){
+      const holes=Array.from({length:9},(_,i)=>start+i);
+      if(round.players.every(p=>holes.every(h=>Number.isInteger(p.holes?.[h]?.gross)&&p.holes[h].status!=='x'))&&!round.players.some(p=>Object.keys(p.holes||{}).some(h=>!holes.includes(Number(h)))))return holes;
+    }
+    return null;
   }
-  function nineHoleAnchor(round){
-    return scoreTime(round,9)??0;
-  }
+  function isNineHoleGap(round){return !!(round?.configured&&!round?.endedAt&&completedNine(round))}
+  function nineHoleAnchor(round){const holes=completedNine(round);if(!holes)return 0;const times=round.players.flatMap(p=>holes.map(h=>timestamp(p.holes[h].updatedAt))).filter(Number.isFinite);return times.length===round.players.length*9?Math.max(...times):0}
   function remainingMs(round,now=Date.now()){
     if(!isNineHoleGap(round))return 60*60*1000;
     return Math.max(0,NINE_HOLE_WAIT_MS-Math.max(0,Number(now)-nineHoleAnchor(round)));

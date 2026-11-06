@@ -13,7 +13,7 @@ const assets=[
   "assets/official-logos/golf-score-card-gt-pwa-512.png",
   "assets/official-logos/golf-score-card-gt-apple-touch-180.png",
   "player-registry.js",
-  "round-closure.js",
+  "round-closure.js", "round-auto-save.js",
   "card-artifacts.js",
   "card-file-export.js",
   "card-library.js",

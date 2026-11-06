@@ -20,6 +20,6 @@ assert.match(adminUi,/current_snapshot/,'Organizer guest group card must use the
 assert.match(adminUi,/GUEST_48H_ADMIN_BLOCKED/,'Guest 48h mode must remain blocked from Organizer');
 const releaseNumber=Number(String(release.label||'').replace(/^R/,''));
 assert.ok(releaseNumber>=227,'Release label must remain at R227 or later');
-assert.match(release.release,/^202610(08|09)-R\d+$/,'Release id must remain in the project release format');
+assert.match(release.release,/^\d{8}-R\d+$/,'Release id must remain in the project release format');
 
 console.log('PASS R227 guest 48h groups: Organizer shows individual invited groups while guests stay blocked from Organizer.');

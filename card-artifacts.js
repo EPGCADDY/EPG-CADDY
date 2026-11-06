@@ -90,7 +90,7 @@
   function approvedRoundTotals(snapshot,players=snapshot.players||[]){
     if(snapshot.mode==="stableford"){
       const rows=players.map(player=>{
-        const stats=stablefordPlayerStats(player),gross=(round)=>round.grossCount===9?round.gross:"—",totalGross=stats.grossCount===18?stats.gross:"—";
+        const stats=stablefordPlayerStats(player),gross=(round)=>round.grossCount===9?round.gross:"—",totalGross=stats.grossCount===(snapshot.holesPlayed?.length||18)?stats.gross:"—";
         return`<tr><td>${playerNameWithCategory(player,snapshot.stablefordCategory)}</td><td class="stableford-gross">${gross(stats.front)}</td><td class="points">${stats.front.points}</td><td class="stableford-gross">${gross(stats.back)}</td><td class="points">${stats.back.points}</td><td class="stableford-gross">${totalGross}</td><td class="points">${stats.points}</td></tr>`
       }).join("");
       return`<section class="approved-round-totals"><h2>RESULTADOS</h2><div class="table-wrap"><table><thead><tr><th rowspan="2">JUGADOR</th><th colspan="2">VUELTA IN</th><th colspan="2">VUELTA OUT</th><th colspan="2">VUELTA COMPLETA</th></tr><tr><th>GROSS</th><th class="points">PUNTOS</th><th>GROSS</th><th class="points">PUNTOS</th><th>GROSS</th><th class="points">PUNTOS</th></tr></thead><tbody>${rows}</tbody></table></div></section>`
@@ -102,7 +102,7 @@
         const net=complete&&items.every(score=>Number.isFinite(score.net))?items.reduce((sum,score)=>sum+score.net,0):hasStrokes?gross-hdcp:"—";
         return{gross,hdcp,net};
       };
-      const front=round(1,9),back=round(10,18),total=round(1,18),category=snapshot.mode==="stableford"?snapshot.stablefordCategory:undefined;
+      const front=round(1,9),back=round(10,18),total=snapshot.holesPlayed?.length===9?round(snapshot.holesPlayed[0],snapshot.holesPlayed[8]):round(1,18),category=snapshot.mode==="stableford"?snapshot.stablefordCategory:undefined;
       return`<tr><td>${playerNameWithCategory(player,category)}</td><td>${front.gross}</td><td>${front.hdcp}</td><td>${front.net}</td><td>${back.gross}</td><td>${back.hdcp}</td><td>${back.net}</td><td>${total.gross}</td><td>${total.hdcp}</td><td>${total.net}</td></tr>`
     }).join("");
     return`<section class="approved-round-totals"><h2>RESULTADOS</h2><div class="table-wrap"><table><thead><tr><th rowspan="2">JUGADOR</th><th colspan="3">VUELTA IN</th><th colspan="3">VUELTA OUT</th><th colspan="3">VUELTA COMPLETA</th></tr><tr><th>GROSS</th><th>HDCP</th><th>NETO</th><th>GROSS</th><th>HDCP</th><th>NETO</th><th>GROSS</th><th>HDCP</th><th>NETO</th></tr></thead><tbody>${rows}</tbody></table></div></section>`
@@ -110,7 +110,7 @@
 
   function shell(_title,snapshot,body,_summaryPlayers=snapshot.players||[]){
     const header=`<div class="global-clean-head"><img src="${esc(officialLogoUrl())}" alt="Golf Score Card GT"></div><div class="meta global-clean-meta"><span>CAMPO · ${esc(courseLabel(snapshot.course))}</span><span>MODALIDAD · ${esc(globalModeLabel(snapshot))}</span><span>FECHA · ${esc(new Date(snapshot.playedAt).toLocaleDateString("es-GT"))}</span></div>`;
-    return`<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Golf Score Card GT</title>${style}<body><main>${header}${body}</main></body></html>`;
+    return`<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Golf Score Card GT</title>${style}<body><main>${header}${snapshot.holesPlayed?.length===9?`<p>RECORRIDO · 9 HOYOS (${snapshot.holesPlayed[0]}–${snapshot.holesPlayed[8]})</p>`:""}${body}</main></body></html>`;
   }
 
   function strokeHalf(snapshot,from,to,label){
@@ -126,6 +126,7 @@
   }
 
   function globalCard(snapshot){
+    if(snapshot.holesPlayed?.length===9)return shell("Tarjeta Global · 9 hoyos",snapshot,strokeHalf(snapshot,snapshot.holesPlayed[0],snapshot.holesPlayed[8],"VUELTA DE 9 HOYOS"));
     return shell(snapshot.version>1?"Tarjeta Global corregida":"Tarjeta Global",snapshot,`${strokeHalf(snapshot,1,9,"PRIMERA VUELTA")}${strokeHalf(snapshot,10,18,"SEGUNDA VUELTA")}`);
   }
 

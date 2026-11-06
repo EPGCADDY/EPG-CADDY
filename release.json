@@ -1,7 +1,8 @@
 {
-  "release": "20261009-R249",
-  "label": "R249",
-  "published": "2026-10-09",
-  "version": "R249-DELETE-GUEST48H-INVITATION",
-  "generatedAt": "2026-10-09T20:40:00Z"
+  "release": "20261105-R250",
+  "label": "R250",
+  "published": "2026-11-05",
+  "version": "R250-ACCOUNT-HISTORY-AUTOSAVE",
+  "generatedAt": "2026-11-05T23:31:20.628881+00:00",
+  "candidate": false
 }

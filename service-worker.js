@@ -4,7 +4,7 @@ const CACHE_NAME="gscg-mobile-v363-recorded-mobile-behavior-v364-explicit-new-ro
 // Preserves the approved v407-r18-live-points-header behavior in this successor cache.
 const ACTIVE_CACHE_NAME=`${CACHE_NAME}-active-r148-entry-inspection`;
 const APPROVED_CACHE_NAME=`${CACHE_NAME}-approved-r148-entry-inspection`;
-const RELEASE_FALLBACK="20261009-R249";
+const RELEASE_FALLBACK="20261105-R250";
 let RELEASE=RELEASE_FALLBACK;
 const UPDATE_DIAGNOSTICS={stage:"boot",resources:{}};
 async function fetchPublishedRelease(){
@@ -44,6 +44,7 @@ const SHELL=[
   "/docs/manual/v311/manual-scg-apple-touch-v345-180.png",
   "/player-registry.js",
   "/round-closure.js",
+  "/round-auto-save.js",
   "/card-artifacts.js",
   "/card-file-export.js",
   "/card-library.js",
