@@ -1,0 +1,24 @@
+## R251 · Sólo1 espera, dos dígitos avanzan · 8 noviembre2026 Guatemala
+Fuente canónica: R250 desplegada, commit remoto fec9ce101057eec92c420bd0d868a7c136cf1238, árbol3e23bc1080c02abd34207d56054ad57b4f43faf2; checkout recuperado tras mantenimiento automático, no se atribuye borrado al propietario. Scope fijado por dos aclaraciones expresas: ÚNICAMENTE1 queda pendiente. 1+clic a otra casilla confirma1 y selecciona esa casilla;1+0..9 escribe10..19 una sola vez y selecciona al siguiente jugador.2–9 conservan su avance anterior. No se extiende la espera a2/3 ni se cambia el límite del motor de30. Se conservan0omisión/Xborrado y corrección individual de un dígito. Las correcciones de dos cifras avanzan al siguiente jugador por la orden nueva, sin modificar su score existente.
+Causa: cada tecla era un score definitivo y movía el cursor antes del segundo dígito. Solución preventiva: buffer únicamente para1 en el contrato compartido; no pasa por el escritor ni genera snapshots hasta que otro dígito o selección confirme el valor. Se usa applyManualScoreEntries como único escritor. Buffer visible sobrevive a render del mismo hoyo y se vincula a ID de ronda para impedir contaminación. Cambiar casilla/hoyo o ENTER confirma1; X cancela/borrar según estado. No hay temporizador de adivinación, segundo escritor ni cambios a membresías/pagos/arquitectura de nube/modalidades.
+Siete entradas: fuente/alcance arriba; aceptación=1manual/10–19automático/2–9igual; referencia=orden propietario; riesgo=score parcial, avance erróneo y cierre prematuro18; pruebas=writer real y navegador real más auditoría; reversión=reasignar aliases a deployments R250 de cada edición, sin reconstruir.
+Evidencia PASS: test-r251-two-digit-score.mjs, escritor real enVM:1–6jugadores,10..19,confirmación1,2–9inmediatos, foco/correcciones,0/X, aislamiento de ronda, una sola escritura. TestR32 conserva1–6jugadores/18hoyos/par3/4/5/Gross/Neto/resultado y ronda cerrada (12474escrituras). test-r251-two-digit-browser.mjs, Chromium real móvil390x844: teclas reales en General/Stableford/Match/Fourball/Universales;1+clic,10..19,2–9, render/reapertura conservan12, ENTERconfirma1, score18no cierra al primer1 y archiva11 tras segundo1; cero erroresJS. No es iPhone físico ni prueba de voz.
+Auditoría integral: prefijo pasó hasta test-lab-deployment-gate.mjs, que todavía esperaba la configuración remota costosa anterior aR250. Se actualizó exclusivamente su expectativa al pipeline aprobado de bajo consumo existente, manteniendo inyección negativa de fallo en TODAS las puertas y comprobando que la batería funcional sigue en el perfil local. El sufijo desde esa puerta hasta paridad de manual terminóexit0. No se cambió vercel.json ni se repitieron pruebas en Vercel durante desarrollo. G0, regresiones negativas, matriz de control, matrizrelease y entrada pública PASS. Navegador del sistema no inició en el entorno restringido; se usó Chromium headless compatible y fuentes OpenSans de su paquete. La espera de texto renderizado y selección de la ronda por ID corrigieron expectativas de la prueba, sin ocultar fallos de código funcional.
+Estado: paquete local verificado; publicación R251 pendiente a este punto. Autorización permanente de actualización en las tres ediciones conserva scope previo y coste mínimo; no hay nueva autorización que pedir. No tocar miembros ni cuentas bancarias.
+
+Archivos de esta versión:
+- `index-grupal.html`: implementación, regresión o trazabilidad de esta corrección.
+- `score-entry-contract.js`: implementación, regresión o trazabilidad de esta corrección.
+- `release.json`: implementación, regresión o trazabilidad de esta corrección.
+- `service-worker.js`: implementación, regresión o trazabilidad de esta corrección.
+- `scripts/build-manual-lab.mjs`: implementación, regresión o trazabilidad de esta corrección.
+- `test-lab-deployment-gate.mjs`: implementación, regresión o trazabilidad de esta corrección.
+- `test-lab-r32-keypad-contract.mjs`: implementación, regresión o trazabilidad de esta corrección.
+- `test-r251-two-digit-score.mjs`: implementación, regresión o trazabilidad de esta corrección.
+- `test-r251-two-digit-browser.mjs`: implementación, regresión o trazabilidad de esta corrección.
+- `docs/quality/20261108-r251-two-digit-score.md`: implementación, regresión o trazabilidad de esta corrección.
+- `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json`: implementación, regresión o trazabilidad de esta corrección.
+- `ROADMAP_OVERALL.md`: implementación, regresión o trazabilidad de esta corrección.
+- `ROADMAP_A_DETALLE.md`: implementación, regresión o trazabilidad de esta corrección.
+- `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`: implementación, regresión o trazabilidad de esta corrección.
+- `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: implementación, regresión o trazabilidad de esta corrección.

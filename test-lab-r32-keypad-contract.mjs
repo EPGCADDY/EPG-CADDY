@@ -59,6 +59,7 @@ for(const par of [3,4,5])for(const count of [4,1,2,3,5,6]){
     for(let key=1;key<=9;key++){
       const others=JSON.stringify(ctx.round.players.filter(q=>q.id!==p.id));
       assert.equal(ctx.roundScoreKeypadPress(String(key)),true);
+      if(key===1)assert.equal(ctx.flushRoundScoreKeypadPending(),true,"Confirm a single prefix digit by leaving its cell");
       assert.equal(manual.dataset.hole,String(hole),'Manual score must retain the hole until ENTER or navigation');
       assert.equal(p.holes[hole].gross,key);
       assert.equal(p.holes[hole].net,key-1);
@@ -80,3 +81,5 @@ ctx.round.officiallyClosedAt='2026-09-22';
 assert.equal(ctx.roundScoreKeypadPress('3'),false);
 assert.equal(JSON.stringify(ctx.round.players),before,'Closed round must not change');
 console.log(`PASS actual keypad/writer: 1–6 players, all 18 holes, pars 3/4/5, 1–9 literal, 0 omission, X deletion, repeated correction, Gross/Neto/result, closed round; ${writes} persisted writes. Browser/audio pending.`);
+
+export {ctx,manual,writes};
