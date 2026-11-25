@@ -3964,3 +3964,12 @@ R177 compatibilidad: código de solo lectura disponible para torneo activo antes
 
 
 R177 verificación del código viewer: el test valida el evento desde la sesión autenticada creada al canjear el código, sin confiar en datos del cliente.
+
+
+## Resultado acumulado por hoyo · 25 noviembre 2026
+
+Orden del propietario: la fila + / - bajo cada hoyo muestra el resultado neto acumulado desde el hoyo 1 hasta el hoyo seleccionado. Se conserva el acumulado al pasar del hoyo 9 al 10. Negativo verde, cero EVEN blanco, positivo rojo. Hoyos sin score vacíos y omitidos X; las correcciones recalculan las casillas siguientes. Los subtotales de vuelta conservan su alcance de nueve hoyos.
+- `index-grupal.html`: cambia sólo el render de las celdas de resultado a la suma derivada, compatible con rondas guardadas.
+- `test-cumulative-hole-result.mjs`: regresión de acumulado, colores, cambio de vuelta, corrección, huecos y omisiones.
+- `ROADMAP_OVERALL.md` y `ROADMAP_A_DETALLE.md`: registran el cambio en esta versión.
+Prueba local del render extraído: PASS en ambas bases. Pendiente build de proyecto y recorrido de la versión modificada en navegador. Sin certificación integral ni publicación de producción.
