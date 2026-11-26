@@ -2273,3 +2273,10 @@ Archivos de esta versión:
 - `ROADMAP_A_DETALLE.md`: implementación, regresión o trazabilidad de esta corrección.
 - `GOLF_SCORE_CARD_GT_PENDING_MATRIX.md`: implementación, regresión o trazabilidad de esta corrección.
 - `CONTROL_PROYECTO_SCIRE/01_DIRECTRICES_PEDIDOS_Y_ORDENES_PENDIENTES/REGISTRO_REINCIDENCIAS_CALIDAD.md`: implementación, regresión o trazabilidad de esta corrección.
+
+## R252 · Resultado acumulado por hoyo en Guatemala
+
+- Sobre la base oficial R251, el resultado de `index-grupal.html` suma neto contra par hasta el hoyo de cada columna. Conserva gross, neto, X y la entrada por teclado.
+- `test-cumulative-hole-result.mjs` verifica EVEN, colores, cambio de vuelta, corrección y hoyos omitidos.
+- `release.json` y `service-worker.js` sincronizan la versión; `CONTROL_PROYECTO_SCIRE/INVENTARIOS_V311.lock.json` sella la fuente antes de Preview.
+- El título de la tarjeta y su nombre para iPhone identifican Golf Score Card Guatemala. `scripts/build-manual-lab.mjs` ejecuta la prueba del acumulado antes de compilar.
